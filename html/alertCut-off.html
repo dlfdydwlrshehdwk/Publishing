@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>alert함수 차단하기</title>
+    <script src="../js/jquery-1.11.3.min.js"></script>
+</head>
+<body>
+    <div>두 버튼에는 alert함수가 들어가 있다.</div>
+    <button class="trigger1" onclick="alert1()">알림창이 안뜨는버튼</button>
+
+    <button class="trigger2" onclick="alert2()">알림창 뜨는버튼</button>
+
+    <script>
+        const originalAlert = window.alert; // 일반 alert를 저장!
+        window.alert = function() {}; // alert를 빈함수로 만들어 실행될게 없게 만든다!
+
+        function alert1 () { // alert이 들어있지만 위에서 alert를 빈함수로 만들어놓은 상태이기에 알림창이 띄워지지않는다.
+            alert('알림1')
+        }
+        
+        function alert2 () {
+            window.alert = originalAlert; // alert를 원래대로복귀
+            alert('알림2'); // 알림창을 띄움
+            window.alert = function() {}; // 알림창을 다시 빈함수로 만들어줌
+        }
+    </script>
+</body>
+</html>

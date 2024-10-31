@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>file</title>
+</head>
+<body>
+    <ul>
+        <li>
+            <div>일반 input file 파일명출력</div>
+            <input type="file" id="file1">
+            <span class="file1_txt"></span>
+        </li>
+        <li>
+            <div>파일리더 FileReader API 이미지 미리보기</div>
+            <input type="file" id="file2">
+            <img class="file2_img" src="" alt="">
+        </li>
+    </ul>
+
+    <script>
+        const file1 = document.getElementById('file1');
+        file1.onchange = function(e){
+            let files = e.target.files; // FileList 객체
+            console.log(files[0])
+            document.querySelector('.file1_txt').innerText=files[0].name
+        }
+
+        const file2 = document.getElementById('file2');
+        file2.onchange = function(e){
+            let fileReader = new FileReader(); // 파일리더사용
+            // fileReader.readAsText(e.target.files[0]); // 텍스트파일을 읽을때
+            fileReader.readAsDataURL(e.target.files[0]) // 파일을 읽음 ( 데이터 url로 만든느법 base64로 인코딩했다는뜻)
+            fileReader.onload = function(e){ // 파일리더 콜백함수
+                console.log(e.target.result)
+                document.querySelector('.file2_img').setAttribute('src',e.target.result)
+            }
+        }
+    </script>
+</body>
+</html>

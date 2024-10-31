@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파일 드래그 & 드롭</title>
+    <link rel="stylesheet" href="../css/drag&drop.css">
+</head>
+<body>
+    <div class="dropBox">
+        <h2>이곳에 파일을 드롭</h2>
+        <div class="preview"></div>
+    </div>
+
+    <script>
+        const drop = document.querySelector('.dropBox');
+        const title = document.querySelector('.dropBox h2')
+        drop.ondrop = (e) => {
+            e.preventDefault();
+
+            // 드롭된 파일 리스트 가져오기
+            const files = [...e.dataTransfer?.files];
+            // 파일정보는 FileList에 담겨져있는데 이때 문제는 해당 정보는 Arrays타입이 아니라 for문을 이용한 직접적인 접근이 아닌 이상 접근이 불가능하다는점
+            // 그래서 이 문제를 해결하기 위해 데이터를 새로운 배열로 바꿔준다
+            // 방법1 Array.from(files)
+            // 방법2 [...files]
+
+            // 드롭된 파일 리스트 텍스트 띄우기
+            title.innerHTML = files.map(file => file.name).join('<br>') // join은 왜하는지 몰?루 
+            handleUpdate(files)
+        }
+
+        // ondragover 이벤트가 없으면 onDrop 이벤트가 실행되지 않는다. 브라우저에서 읽어버리기 때문
+        drop.ondragover = (e) => {
+            e.preventDefault(); 
+        }
+        // 드래그해서 안으로 들어갈경우
+        drop.ondragenter = (e) => {
+            e.preventDefault();
+
+            drop.classList.add('active')
+        }
+        // 드래그해서 안에서 벗어날경우
+        drop.ondragleave = (e) => {
+            e.preventDefault();
+
+            drop.classList.remove('active')
+        }
+        // 파일데이터 넣으면 이미지 미리보기 해주는 함수 
+        function handleUpdate(fileList) {
+            const preview = document.querySelector('.preview');
+            console.log(fileList)
+            let fileReader = new FileReader();
+            fileReader.readAsDataURL(fileList[0])
+            fileReader.onload = function(e){
+                console.log(e.target.result)
+                let html = `<img width="200" height="200" src="${e.target.result}">`
+                preview.innerHTML += html
+            }
+        }
+    </script>
+</body>
+</html>
