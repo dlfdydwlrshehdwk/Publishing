@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>현재시간구하기</title>
+    <script src="../js/jQuery.min.js"></script>
+</head>
+<body>
+    <div class="date"></div>
+    <script>
+        // 요일구하기 2022-06-13 이런식의 데이터를 넣으면 그에 해당하는 요일을 리턴한다.
+        function getDayOfWeek(date){ //ex) getDayOfWeek('2022-06-13')
+            const week = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+            const dayOfWeek = week[new Date(date).getDay()];
+            return dayOfWeek;
+        }
+        // 채팅창 표기 날짜 요일/시:분/오전or오후 를 리턴
+        function chatGetDate() {
+            const today = new Date();
+            const year = today.getFullYear();
+            const month = ("0" + (1 + today.getMonth())).slice(-2);
+            const day = ("0" + today.getDate()).slice(-2);
+            const getDayofWeek = getDayOfWeek(`${year}-${month}-${day}`)
+            const hours = today.getHours() % 12 ? today.getHours() % 12 : 12;
+            const minutes = today.getMinutes() < 10 ? '0' + today.getMinutes() : today.getMinutes();
+            const ampm = today.getHours() >= 12 ? 'PM' : 'AM';
+
+            const date = `${getDayofWeek} ${hours}:${minutes} ${ampm}`
+            return date;
+        }
+        $('.date').append(chatGetDate())
+    </script>
+</body>
+</html>

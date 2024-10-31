@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>swiper centeredSlides + loop</title>
+    <link rel="stylesheet" href="../../css/reset.css">
+    <link rel="stylesheet" href="../../css/swiper-bundle.min.css">
+    <link rel="stylesheet" href="../../css/centeredSlides+loop.css">
+    <script src="../../js/jquery-1.11.3.min.js"></script>
+    <script src="../../js/swiper-bundle.min.js"></script>
+</head>
+<body>
+    <div class="swiper-container mySwiper">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide slide1">1</div>
+            <div class="swiper-slide slide2">2</div>
+            <div class="swiper-slide slide3">3</div>
+            <!-- <div class="swiper-slide slide1">1</div>
+            <div class="swiper-slide slide2">2</div>
+            <div class="swiper-slide slide3">3</div> -->
+        </div>
+    </div>
+    <div class="swiper-button-set">
+        <div class="swiper-button swiper-button-prev"></div>
+        <div class="swiper-button swiper-button-next"></div>
+    </div>
+
+    <script>
+        // 돔요소 복제 후 삽입
+        let cloneElement = $('.mySwiper .swiper-slide').clone();
+        $('.mySwiper .swiper-wrapper').append(cloneElement)
+
+        let swiper = new Swiper('.mySwiper', {
+            slidesPerView: 2, // 한번에 보여질 슬라이드 개수
+            slidesPerGroup: 1, // 한번 스와이프시 넘어갈 슬라이드 개수
+            spaceBetween: 100, // 슬라이드 간의 간격
+            loop: true, // 무한
+            centeredSlides: true , // 요소를 중앙배치
+            // loopedSlides: 2, 
+            navigation: { // 버튼
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev",
+            },
+            on: { // 콜백
+                slideChange: function(e){ // 슬라이드가 바뀔시 실행
+                    console.log(e.realIndex)
+                }
+            }
+        })
+
+        // 작업할때 주의사항
+        /*
+            요소가 3개면 슬라이드 될 시 비어있는 공간이 보인다.
+            그렇기에 요소를 클론을 하던 하드코딩을 하던 최소 2배정도는 해주어야한다. 
+            3개요소를 무한으로 돌릴건데 3개요소만 보인다면 최소 5개정도가 되어야함
+            그리고 루프이기때문에 같은요소여야 되기에 6개가 필요
+        */
+    </script>
+</body>
+</html>

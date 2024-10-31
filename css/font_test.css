@@ -1,0 +1,70 @@
+@font-face {
+    font-family: 'oswald';
+    src: url('../font/Oswald-ExtraLight.ttf') format('truetype');
+    font-style: normal;
+    font-weight: 200;
+}
+@font-face {
+    font-family: 'oswald';
+    src: url('../font/Oswald-Light.ttf') format('truetype');
+    font-style: normal;
+    font-weight: 300;
+    unicode-range: U+0020-002F, U+003A-0040, U+005B-0060, U+007B-007E; /* 특문 */
+}
+@font-face {
+    font-family: 'oswald';
+    src: url('../font/Oswald-Regular.ttf') format('truetype');
+    font-style: normal;
+    font-weight: 400;
+    unicode-range: U+0041-005A, U+0061-007A; /* 영어 대문자, 영어 소문자 */
+}
+@font-face {
+    font-family: 'oswald';
+    src: url('../font/Oswald-Medium.ttf') format('truetype');
+    font-style: normal;
+    font-weight: 500;
+    unicode-range: U+AC00-D7A3; /* 한글 */
+}
+@font-face {
+    font-family: 'oswald';
+    src: url('../font/Oswald-SemiBold.ttf') format('truetype');
+    font-style: normal;
+    font-weight: 600;
+}
+@font-face {
+    font-family: 'oswald';
+    src: url('../font/Oswald-Bold.ttf') format('truetype');
+    font-style: normal;
+    font-weight: 700;
+    unicode-range:U+0030-0039; /* 숫자 */
+}
+/* format 시  */
+/* 
+    eot - format 필요없음
+    ttf - truetype
+    woff - woff
+    otf - opentype
+    svg - svg
+    ?#iefix - embedded-opentype
+
+*/
+
+* {
+    /* oswald부터 적용 적용이안되면 다음 적용이 안되면 다음 이런식 */
+    font-family: oswald, monospace, sans-serif;
+}
+.text1-1 { font-weight: 300;}
+.text1-2 { font-weight: 500;}
+.text1-3 { font-weight: 700;}
+.text2-1 {font-weight: 300;}
+.text2-2 {font-weight: 400;}
+.text2-3 {font-weight: 500;}
+.text3-1 {font-weight: 300;}
+.text3-2 {font-weight: 500;}
+.text3-3 {font-weight: 700;}
+.text4-1 {font-weight: 300;}
+.text4-2 {font-weight: 400;}
+.text4-3 {font-weight: 500;}
+.text5-1 {font-weight: 300;}
+.text5-2 {font-weight: 400;}
+.text5-3 {font-weight: 500;}
