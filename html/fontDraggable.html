@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>드래그 상태 해제</title>
+    <style>
+        .selectable-text {
+            width: 300px;
+            padding: 20px;
+            margin: 10px 0;
+            background-color: lightgray;
+            border: 1px solid black;
+            cursor: text; /* 텍스트 커서 */
+            user-select: text; /* 텍스트 선택 가능 */
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <div class="selectable-text">
+        이 텍스트는 선택할 수 있습니다.
+    </div>
+    <div class="selectable-text">
+        이 텍스트도 선택 가능합니다.
+    </div>
+    <div class="selectable-text">
+        드래그 시 떠다니는 이미지를 제거합니다.
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            $('.selectable-text')
+                .on('dragstart', function (event) {
+                    // 떠다니는 이미지를 제거
+                    const transparentImage = new Image();
+                    transparentImage.src = '';
+                    event.originalEvent.dataTransfer.setDragImage(transparentImage, 0, 0);
+                })
+                .on('mousedown', function (event) {
+                    // 드래그 상태 해제
+                    window.getSelection().removeAllRanges();
+                });
+        });
+    </script>
+</body>
+</html>
