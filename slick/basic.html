@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>slick</title>
+    <!-- <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script> -->
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/slick.css">
+    <script src="../js/jquery-1.11.3.min.js"></script>
+    <script src="../js/slick.min.js"></script>
+    <style>
+        .slide { height: 100px; border: 1px solid #000; display: flex; align-items: center; justify-content: center;}
+        .slick-container {max-width: 600px; margin: 0 auto;}
+        .slick-container .slide {display: flex;}
+        .slick-container + .slick-container {margin-top: 20px;}
+        .slide-third {width: 170px;transition: .3s;transform-origin: 50% 50%;}
+    </style>
+</head>
+<body>
+    <h1>슬릭 기초</h1>
+    <div class="slick-container">
+        <h2>기본</h2>
+        <div class="slick-wrapper-first">
+            <div class="slide slide-first">1</div>
+            <div class="slide slide-first">2</div>
+            <div class="slide slide-first">3</div>
+            <div class="slide slide-first">4</div>
+            <div class="slide slide-first">5</div>
+        </div>
+        <script>
+            const slick1 = $('.slick-wrapper-first')
+            slick1.slick()
+        </script>
+    </div>
+
+
+    <div class="slick-container">
+        <h2>여러 요소</h2>
+        <div class="slick-wrapper-second">
+            <div class="slide slide-second">1</div>
+            <div class="slide slide-second">2</div>
+            <div class="slide slide-second">3</div>
+            <div class="slide slide-second">4</div>
+            <div class="slide slide-second">5</div>
+        </div>
+        <script>
+            const slick2 = $('.slick-wrapper-second')
+            slick2.slick({
+                infinite: false, // 루프
+                slidesToShow: 3, // 몇개 보여줄건지
+                slidesToScroll: 3 // 한번에 몇개의 슬라이드를 넘길건지
+            })
+        </script>
+    </div>
+
+    <div class="slick-container">
+        <h2>콜백</h2>
+        <div class="slick-wrapper-third">
+            <div class="slide slide-third">1</div>
+            <div class="slide slide-third">2</div>
+            <div class="slide slide-third">3</div>
+            <div class="slide slide-third">4</div>
+            <div class="slide slide-third">5</div>
+        </div>
+        <script>
+            const slick3 = $('.slick-wrapper-third')
+            slick3.slick({
+                infinite:false,
+                dots: true, // 페이지네이션
+                speed: 300, // 슬라이드 속도
+                slidesToShow: 3,
+                centerMode: true, // 요소 가운데
+                centerPadding: '40px',
+                variableWidth: true,
+            })
+            slick3.on('beforeChange',function(){
+                console.log('before')
+            })
+            slick3.on('afterChange',function(){
+                $('.slide-third').css({width : '170px'})
+                $('.slide-third.slick-center').css({width:'340px'})
+                console.log('after')
+            })
+        </script>
+    </div>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>centeredSlides+centerSize</title>
+    <link rel="stylesheet" href="../../css/reset.css">
+    <link rel="stylesheet" href="../../css/swiper-bundle.min.css">
+    <script src="../../js/jquery-1.11.3.min.js"></script>
+    <script src="../../js/swiper-bundle.min.js"></script>
+</head>
+<style>
+    .swiper-slide {transition: none; transform-origin: 50% 50%;}
+    .swiper-slide.transition-on { transition: .3s ease;}
+    /* .swiper-slide-active { width: 50% !important;} */
+    .slide1 {background-color: red;}
+    .slide2 {background-color: blue;}
+    .slide3 {background-color: yellow;}
+    .slide4 {background-color: green;}
+    .slide5 {background-color: pink;}
+    .slide6 {background-color: gray;}
+</style>
+<body>
+    <h1>가운데정렬 + 가운데요소만 사이즈 다르게 미완</h1>
+
+    <div class="swiper-container mySwiper">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide slide1">1</div>
+            <div class="swiper-slide slide2">2</div>
+            <div class="swiper-slide slide3">3</div>
+            <div class="swiper-slide slide4">4</div>
+            <div class="swiper-slide slide5">5</div>
+            <div class="swiper-slide slide6">6</div>
+        </div>
+    </div>
+    <div class="swiper-button-set">
+        <div class="swiper-button swiper-button-prev"></div>
+        <div class="swiper-button swiper-button-next"></div>
+    </div>
+
+    <script>
+        $(document).ready(function(){
+            let slideWidth;
+            let swiper = new Swiper('.mySwiper', {
+                slidesPerView: 5.5, // 한번에 보여질 슬라이드 개수
+                spaceBetween: 20, // 슬라이드 간의 간격
+                centeredSlides: true , // 요소를 중앙배치
+                observer: true,
+                observeParents: true,
+                navigation: { // 버튼
+                    nextEl: ".swiper-button-next",
+                    prevEl: ".swiper-button-prev",
+                },
+                on: { // 콜백
+                    slideChange: function(e){ // 슬라이드가 바뀔시 실행
+                        updateSlideSizes(this);
+                    },
+                    init: function(e){
+                        slideWidth = $('.swiper-slide-active').width()
+                        updateSlideSizes(this);
+                        setTimeout(()=>{
+                            $('.swiper-slide').addClass('transition-on')
+                        },50)
+                    },
+                }
+            })
+
+            function updateSlideSizes(swiper) {
+                console.log(slideWidth)
+
+                // $('.swiper-slide').each(function(){
+                //     $(this).css({width : slideWidth})
+                //     $('.swiper-slide-active').css({width : slideWidth * 2})
+                // })
+                // console.log($('.swiper-slide-active').width())
+                // console.log(swiper)
+            }
+            swiper.on('init', updateSlideSizes(swiper))
+        })
+
+    </script>
+</body>
+</html>
