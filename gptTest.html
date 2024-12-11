@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>.swiper-container {
+    width: 80%;
+    margin: auto;
+    overflow: visible; /* 양옆이 잘리지 않도록 */
+  }
+  
+  .swiper-wrapper {
+    transition: transform 0.3s ease;
+  }
+  
+  .swiper-slide {
+    text-align: center;
+    font-size: 18px;
+    background: lightgray;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    transition: width 0.3s ease;
+  }
+  
+  /* 활성 슬라이드 스타일 */
+  .swiper-slide-active {
+    width: 40vw !important;
+    background: #ffdd57;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* 나머지 슬라이드 */
+  .swiper-slide {
+    width: 20% !important;
+  }
+  </style>
+  <link
+  rel="stylesheet"
+  href="https://unpkg.com/swiper/swiper-bundle.min.css"
+/>
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+</head>
+<body><div class="swiper-container">
+  <div class="swiper-wrapper">
+    <div class="swiper-slide">Slide 1</div>
+    <div class="swiper-slide">Slide 2</div>
+    <div class="swiper-slide">Slide 3</div>
+    <div class="swiper-slide">Slide 4</div>
+    <div class="swiper-slide">Slide 5</div>
+  </div>
+  <!-- 네비게이션 버튼 -->
+  <div class="swiper-button-prev"></div>
+  <div class="swiper-button-next"></div>
+</div>
+
+<script>
+  const swiper = new Swiper('.swiper-container', {
+  slidesPerView: 'auto', // 슬라이드 크기 자동 조정
+  centeredSlides: true, // 활성 슬라이드를 항상 가운데에 배치
+  spaceBetween: 20, // 슬라이드 간격
+  navigation: {
+    nextEl: '.swiper-button-next',
+    prevEl: '.swiper-button-prev',
+  },
+  loop: true, // 무한 루프
+  on: {
+    // 슬라이드가 변경될 때마다 실행
+    slideChangeTransitionEnd: function () {
+      adjustWrapperPosition();
+    },
+  },
+});
+
+// 활성 슬라이드를 기준으로 Wrapper의 위치 조정
+function adjustWrapperPosition() {
+  const swiperWrapper = document.querySelector('.swiper-wrapper');
+  const activeSlide = document.querySelector('.swiper-slide-active');
+
+  // 활성 슬라이드의 너비와 위치
+  const activeWidth = activeSlide.offsetWidth;
+  const activeLeft = activeSlide.offsetLeft;
+
+  // 뷰포트 중앙 계산
+  const viewportCenter = window.innerWidth / 2;
+
+  // 활성 슬라이드를 뷰포트 중앙에 오도록 보정
+  const offset = viewportCenter - (activeLeft + activeWidth / 2);
+
+  swiperWrapper.style.transform = `translateX(${offset}px)`;
+}
+
+// 초기화 시 위치 조정
+adjustWrapperPosition();
+
+</script>
+</body>
+</html>
