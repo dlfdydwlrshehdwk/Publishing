@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GSAP Basic</title>
+    <script src="../../js/jquery-1.11.3.min.js"></script>
+    <script src="../../js/gsap.min.js"></script>
+    <style>
+        .box {width: 50px;height: 50px;border: 1px solid black;border-radius: 10%;}
+        .box + .box {margin-top: 10px;}
+    </style>
+</head>
+<body>
+    <h1>기초</h1>
+
+    <div class="section01">
+        <div class="txt-set">
+
+        </div>
+        <div class="box box1" style="background-color: antiquewhite;"></div>
+        <div class="box box2" style="background-color: aqua;"></div>
+        <div class="box box3" style="background-color: aquamarine;"></div>
+        <script>
+            gsap.to('.box1',{x :'50px'})
+        </script>
+    </div>
+
+</body>
+</html>
