@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <input type="file" id="videoInput" accept="video/mp4" />
+  <img id="thumbnail" style="width: 300px; height: auto;" />
+  
+  <script>
+    const videoInput = document.getElementById('videoInput');
+    const thumbnail = document.getElementById('thumbnail');
+    const video = document.createElement('video'); // 비디오 요소 생성
+  
+    videoInput.addEventListener('change', (event) => {
+      const file = event.target.files[0];
+      if (file) {
+        const objectURL = URL.createObjectURL(file);
+        video.src = objectURL;
+        video.load();
+  
+        // 영상이 로드되면 1초 지점으로 이동 후 캡처
+        video.onloadeddata = () => {
+          video.currentTime = 1; // 1초 지점으로 이동
+        };
+  
+        video.onseeked = () => {
+          const canvas = document.createElement('canvas');
+          canvas.width = video.videoWidth;
+          canvas.height = video.videoHeight;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+          thumbnail.src = canvas.toDataURL(); // 썸네일 설정
+        };
+      }
+    });
+  </script>
+  
+</body>
+</html>
