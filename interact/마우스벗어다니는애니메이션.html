@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./js/gsap-business/minified/gsap.min.js"></script>
+    <script src="./js/gsap-business/minified/Draggable.min.js"></script>
+</head>
+<style>
+    #container {
+        border: 1px solid #000;
+        border-radius: 10px;
+        overflow: hidden;
+        width: 1000px;
+        height: 800px;
+    }
+    #box {
+        width: 50px;
+        height: 50px;
+        border: 1px solid #000;
+
+    }
+
+</style>
+<body>
+    <div id="container">
+        <div id="box"></div>
+    </div>
+</body>
+<script>
+gsap.registerPlugin(Draggable);
+
+const box = document.querySelector("#box");
+const container = document.querySelector("#container");
+
+document.addEventListener("mousemove", (event) => {
+  const { clientX: mouseX, clientY: mouseY } = event;
+  const boxRect = box.getBoundingClientRect();
+  const containerRect = container.getBoundingClientRect();
+
+  const boxX = boxRect.left + boxRect.width / 2;
+  const boxY = boxRect.top + boxRect.height / 2;
+
+  const threshold = Math.max(boxRect.width, boxRect.height) * 1.5; // 감지 범위 유지
+  const speed = 0.3; // 기본 속도
+  const escapeBoost = 2.5; // 튀어나가는 힘 강화!
+
+  const deltaX = boxX - mouseX;
+  const deltaY = boxY - mouseY;
+  const distance = Math.sqrt(deltaX ** 2 + deltaY ** 2);
+
+  if (distance < threshold) {
+    let moveX = (deltaX / distance) * (threshold - distance) * speed * escapeBoost;
+    let moveY = (deltaY / distance) * (threshold - distance) * speed * escapeBoost;
+
+    // 박스가 컨테이너 밖으로 나가지 않도록 제한
+    let newX = boxRect.left + moveX;
+    let newY = boxRect.top + moveY;
+
+    if (newX < containerRect.left) newX = containerRect.left;
+    if (newX + boxRect.width > containerRect.right) newX = containerRect.right - boxRect.width;
+    if (newY < containerRect.top) newY = containerRect.top;
+    if (newY + boxRect.height > containerRect.bottom) newY = containerRect.bottom - boxRect.height;
+
+    // 1단계: 팍! 튀어나가기 (빠른 애니메이션)
+    gsap.to(box, { 
+      x: newX - containerRect.left, 
+      y: newY - containerRect.top, 
+      duration: 0.15,  // 짧고 강한 움직임
+      ease: "power2.out", 
+      onComplete: () => {
+        // 2단계: 부드럽게 안정화 (느린 애니메이션)
+        gsap.to(box, { 
+          x: `+=${moveX * 0.3}`, // 튀어나간 방향으로 살짝 추가 이동
+          y: `+=${moveY * 0.3}`,
+          duration: 0.3, 
+          ease: "power4.out" 
+        });
+      }
+    });
+  }
+});
+
+</script>
+</html>

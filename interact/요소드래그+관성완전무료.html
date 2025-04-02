@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/interactjs/dist/interact.min.js"></script>
+    <script src="./js/gsap-business/minified/gsap.min.js"></script>
+    <!-- interact.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/interactjs/dist/interact.min.js"></script>
+
+</head>
+<style>
+    #container {
+        width: 1000px;
+        border: 1px solid #000;
+        border-radius: 10px;
+        height: 1000px;
+        overflow: hidden;
+    }
+    #box {
+        width: 50px;
+        height: 50px;
+        border: 1px solid #000;
+    }
+</style>
+<body>
+    <div id="container">
+        <div id="box"></div>
+    </div>
+</body>
+<script>
+interact("#box").draggable({
+  inertia: {
+    resistance: 15, // 낮을수록 오래 이동
+    minSpeed: 100, // 이 속도 이하가 되면 멈춤
+    endSpeed: 10, // 감속 후 정지 기준 속도
+  },
+  modifiers: [
+    interact.modifiers.restrictRect({
+      restriction: "#container", // 컨테이너 내부 제한
+      endOnly: true,
+    }),
+  ],
+  listeners: {
+    move(event) {
+      const target = event.target;
+      const container = document.querySelector("#container");
+      const containerRect = container.getBoundingClientRect();
+      const boxRect = target.getBoundingClientRect();
+
+      let x = (parseFloat(target.getAttribute("data-x")) || 0) + event.dx;
+      let y = (parseFloat(target.getAttribute("data-y")) || 0) + event.dy;
+
+      let vx = event.velocityX; // 현재 속도
+      let vy = event.velocityY;
+
+      const damping = 0.7; // 반발력 (낮을수록 더 튕김)
+      let hitWall = false; // 충돌 여부 체크
+      let newX = x, newY = y; // 최종 이동 좌표
+
+      // 벽 충돌 감지 (한 번만 실행되도록 수정)
+      if (boxRect.left < containerRect.left) {
+        vx = Math.abs(vx) * damping; // 왼쪽 벽 충돌 → 오른쪽으로 튕김
+        newX = 0 + vx;
+        hitWall = true;
+      } else if (boxRect.right > containerRect.right) {
+        vx = -Math.abs(vx) * damping; // 오른쪽 벽 충돌 → 왼쪽으로 튕김
+        newX = containerRect.width - boxRect.width + vx;
+        hitWall = true;
+      }
+
+      if (boxRect.top < containerRect.top) {
+        vy = Math.abs(vy) * damping; // 위쪽 벽 충돌 → 아래쪽으로 튕김
+        newY = 0 + vy;
+        hitWall = true;
+      } else if (boxRect.bottom > containerRect.bottom) {
+        vy = -Math.abs(vy) * damping; // 아래쪽 벽 충돌 → 위쪽으로 튕김
+        newY = containerRect.height - boxRect.height + vy;
+        hitWall = true;
+      }
+
+      // 벽에 닿았을 때 한 번만 튕김
+      if (hitWall) {
+        gsap.to(target, {
+          x: newX,
+          y: newY,
+          duration: 0.5,
+          ease: "power2.out",
+          onComplete: () => {
+            // 충돌 후 추가 이동 방지 (현재 위치 저장)
+            target.setAttribute("data-x", newX);
+            target.setAttribute("data-y", newY);
+          },
+        });
+      } else {
+        target.style.transform = `translate(${x}px, ${y}px)`;
+        target.setAttribute("data-x", x);
+        target.setAttribute("data-y", y);
+      }
+    },
+  },
+});
+
+</script>
+</html>
