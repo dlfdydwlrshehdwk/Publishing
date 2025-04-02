@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./js/gsap-business/minified/gsap.min.js"></script>
+</head>
+<style>
+.sticker-wrap {
+    position: relative;
+    display: inline-block;
+    perspective: 800px; /* 3D 효과 */
+}
+
+.sticker {
+    width: 200px; /* 원하는 크기로 조정 */
+    transform-origin: bottom; /* 아래쪽부터 붙도록 설정 */
+    transform: rotateX(30deg); /* 처음엔 위쪽이 휘어있음 */
+    transition: transform 0.5s ease-out;
+}
+
+/* 스티커가 붙을 때 */
+.sticker-wrap:hover .sticker {
+    transform: rotateX(0deg);
+}
+
+
+</style>
+<body>
+    <div id="container">
+        <div class="sticker"><img src="./assets/img/dao.png" alt=""></div>
+    </div>
+</body>
+<script>
+const sticker = document.querySelector(".sticker");
+
+sticker.addEventListener("mouseenter", () => {
+    gsap.to(sticker, { 
+        rotationX: 0, 
+        duration: 0.5, 
+        ease: "power2.out" 
+    });
+});
+
+sticker.addEventListener("mouseleave", () => {
+    gsap.to(sticker, { 
+        rotationX: 30, 
+        duration: 0.5, 
+        ease: "power2.inOut" 
+    });
+});
+
+</script>
+</html>

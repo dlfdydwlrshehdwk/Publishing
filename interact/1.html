@@ -1,0 +1,62 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>gsap ScrollSmoother</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        .section {
+            position: relative;
+            height: 1000px;
+        }
+        .tit {
+            font-size: 50px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+        }
+    </style>
+    <script src="./js/gsap-business/minified/gsap.min.js"></script>
+    <script src="./js/gsap-business/minified/ScrollSmoother.min.js"></script>
+    <script src="./js/gsap-business/minified/ScrollTrigger.min.js"></script>
+    <script src="./js/gsap-business/minified/ScrollToPlugin.min.js"></script>
+</head>
+<body>
+    <div id="smooth-wrapper">
+        <div id="smooth-content">
+            <div class="section section01">
+                <div class="tit">a</div>
+            </div>
+            <div class="section section02">
+                <div class="tit">b</div>
+            </div>
+            <div class="section section03">
+                <div class="tit">c</div>
+            </div>
+            <div class="section section04">
+                <div class="tit">d</div>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function(){
+            
+            gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
+
+            ScrollSmoother.create({
+                smooth:1,
+                effects: false,
+                smoothTouch: 0.1,
+                normalizeScroll: true,
+            })
+
+            
+        })
+    </script>
+</body>
+</html>
