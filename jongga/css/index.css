@@ -1,0 +1,399 @@
+@font-face {
+  font-family: 'Uncut';
+  src: url('../font/UncutSans-Bold.woff2') format('woff2'),
+       url('../font/UncutSans-Bold.woff') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Uncut';
+  src: url('../font/UncutSans-Semibold.woff2') format('woff2'),
+       url('../font/UncutSans-Semibold.woff') format('woff');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Uncut';
+  src: url('../font/UncutSans-Medium.woff2') format('woff2'),
+       url('../font/UncutSans-Medium.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Uncut';
+  src: url('../font/UncutSans-Regular.woff2') format('woff2'),
+       url('../font/UncutSans-Regular.woff2') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Uncut';
+  src: url('../font/UncutSans-Light.woff2') format('woff2'),
+       url('../font/UncutSans-Light.woff2') format('woff');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Sirba";
+  src: url("https://db.onlinewebfonts.com/t/ae8076956bf317b754547efc4d40da85.eot");
+  src: url("https://db.onlinewebfonts.com/t/ae8076956bf317b754547efc4d40da85.eot?#iefix")format("embedded-opentype"),
+  url("https://db.onlinewebfonts.com/t/ae8076956bf317b754547efc4d40da85.woff2")format("woff2"),
+  url("https://db.onlinewebfonts.com/t/ae8076956bf317b754547efc4d40da85.woff")format("woff"),
+  url("https://db.onlinewebfonts.com/t/ae8076956bf317b754547efc4d40da85.ttf")format("truetype"),
+  url("https://db.onlinewebfonts.com/t/ae8076956bf317b754547efc4d40da85.svg#Sirba W01 Regular")format("svg");
+}
+
+* {
+  font-family: 'Sirba', sans-serif;
+}
+#header * {
+  font-family: 'Uncut', sans-serif;
+}
+img {
+  width: 100%;
+  vertical-align: middle;
+}
+
+.page_w {
+  max-width: 1920px;
+  margin: 0 auto;
+}
+
+.flex {
+  display: flex;
+}
+.flex.jcc {
+  justify-content: center;
+}
+.flex.aic {
+  align-items: center;
+}
+.flex.jcsb {
+  justify-content: space-between;
+}
+
+
+#header {
+  position: fixed;
+  padding: 0 4rem;
+  width: 100%;
+  top: 22px;
+  height: 56px;
+  z-index: 1000;
+}
+#header .sns_wrap {
+  position: relative;
+  margin-left: 65px;
+  gap: 30px;
+}
+#header .sns_wrap::before {
+  content: 'I';
+  display: block;
+  position: absolute;
+  font-size: 16px;
+  font-weight: 600;
+  color: rgb(255, 255, 255, 0.2);
+  left: -30px;
+  width: 5px;
+  text-align: center;
+  line-height: 1.3;
+}
+#header .chatbot {
+  margin-left: 30px;
+}
+.logo {
+  width: 72px;
+}
+#header .gnb a,
+#header .sns_wrap a,
+#header .chatbot a {
+  font-weight: 600;
+  font-size: 16px;
+  color: #fff;
+}
+#header .gnb {
+  gap: 30px;
+}
+#header .youtube a::before {
+  content: '';
+  background: url(../image/youtube.png) no-repeat center / cover;
+  display: inline-block;
+  margin-right: 8px;
+  width: 17px;
+  aspect-ratio: 17/12;
+}
+#header .insta a::before {
+  content: '';
+  background: url(../image/insta.png) no-repeat center / cover;
+  display: inline-block;
+  margin-right: 8px;
+  width: 12px;
+  aspect-ratio: 1/1;
+}
+#header .chatbot a {
+  background-color: #C11521;
+  width: 120px;
+  height: 36px;
+  border-radius: 4px;
+}
+#header .chatbot a::before {
+  content: '';
+  background: url(../image/chatbot.png) no-repeat center / cover;
+  display: inline-block;
+  margin-right: 4px;
+  width: 16px;
+  aspect-ratio: 1/1;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#cotainer {
+
+}
+
+.section {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+.section01 {
+  position: relative;
+  height: 100vh;
+}
+.section01 .marquee_wrap {
+  position: absolute;
+  top: 50%;
+  transform: translate(110px,-50%);
+}
+.section01 .marquee {
+  gap: 175px;
+}
+.section01 .marquee .text {
+  font-size: 200px;
+  color: #fff;
+  white-space: nowrap;
+}
+.section01 .btn_refresh {
+  position: absolute;
+  width: 103px;
+  height: 36px;
+  right: 40px;
+  bottom: 30px;
+  cursor: pointer;
+}
+
+.section02 .wrap {
+  padding: 176px 40px;
+}
+.section02 .tit {
+  color: #C11521;
+  font-size: 90px;
+  line-height: 1.3;
+}
+.section02 .desc {
+  font-family: 'Uncut', sans-serif;
+  color: #C11521;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 1.3;
+}
+.section .left {
+  margin-top: 50px;
+}
+.section02 .right {
+  gap: 20px;
+}
+
+.section03 .video_wrap {
+  position: relative;
+  aspect-ratio: 1920/640;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+.section03 .video_wrap .txt_set {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  text-align: center;
+  width: 100%;
+}
+.section03 .video_wrap .txt_set .tit {
+  font-size: 60px;
+  color: #fff;
+  line-height: 1.3;
+}
+.section03 .video_wrap .txt_set .desc {
+  font-size: 18px;
+  font-weight: 600;
+  font-family: 'Uncut', sans-serif;
+  color: #fff;
+  margin-top: 10px;
+  line-height: 1.3;
+}
+.section03 .rolling_img {
+  margin-top: 10px;
+}
+.section03 .rolling_img ul {
+  gap: 10px;
+  transform: translate3d(-15%, 0, 0);
+}
+.section03 .rolling_img ul > li {
+  width: 18.75%;
+  flex-shrink: 0;
+}
+.section03 .rolling_img ul > li img {
+  height: 100%;
+  object-fit: cover;
+}
+
+.section04 {
+  background-color: #fff;
+}
+.section04 .wrap {
+  padding: 173px 40px 160px;
+}
+.section04 .tit {
+  font-size: 90px;
+  line-height: 1.3;
+  color: #C11521;
+}
+.section04 .category_list {
+  gap: 30px;
+}
+.section04 .category_list .category {
+  color: #D4D4D4;
+  font-weight: 600;
+  font-size: 22px;
+  line-height: 1.3;
+  cursor: pointer;
+}
+.section04 .category_list .category.active {
+  color: #C11521;
+}
+.section04 .product_list {
+  margin-top: 2px;
+  gap: 20px;
+}
+.section04 .product_list .item {
+  width: 25%;
+}
+.section04 .product_name {
+  font-family: 'Uncut', sans-serif;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 1.3;
+  color: #000;
+}
+
+.section04 .product_option_list {
+  margin-top: 16px;
+  gap: 4px;
+}
+.section04 .product_option {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  padding: 5.5px 10px;
+  font-family: 'Uncut', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.3;
+  color: rgba(0, 0, 0, 0.7);
+}
+.section04 .thumbnail {
+  position: relative;
+  aspect-ratio: 445/520;
+  background-color: #F7F6F3;
+}
+.section04 .desc {
+  margin-top: 12px;
+}
+.section04 .thumbnail .product_img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.section05 {
+  position: relative;
+  aspect-ratio: 1920/950;
+}
+.section05 .bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+.section05 .alphabet_wrap {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+}
+.section05 .alphabet {
+  cursor: pointer;
+}
+.section05 .play_jongga {
+  position: absolute;
+  left: 40px;
+  bottom: 17px;
+  color: #fff;
+  font-family: 'Uncut', sans-serif;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 1.3;
+}
+.section05 .thumbnail_list {
+  position: absolute;
+  gap: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 17px;
+}
+.section05 .thumbnail_list .thumbnail {
+  cursor: pointer;
+}
+.section05 .btn_set {
+  position: absolute;
+  right: 27px;
+  bottom: 17px;
+  gap: 16px;
+}
+.section05 .btn_refresh,
+.section05 .btn_download {
+  cursor: pointer;
+}
