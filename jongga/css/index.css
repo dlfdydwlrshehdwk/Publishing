@@ -198,6 +198,19 @@ img {
   cursor: pointer;
 }
 
+/* section02 S */
+.section02 {
+  position: relative;
+  overflow: hidden;
+}
+.section02 canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
 .section02 .wrap {
   padding: 176px 40px;
 }
@@ -219,7 +232,7 @@ img {
 .section02 .right {
   gap: 20px;
 }
-
+/* section02 E */
 .section03 .video_wrap {
   position: relative;
   aspect-ratio: 1920/640;
