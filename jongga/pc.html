@@ -11,209 +11,254 @@
   <link rel="stylesheet" href="./css/index.css">
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
-  <script src="./js/lim/gsap.min.js"></script>
-  <script src="./js/lim/"></script>
+  <script src="./js/lim/gsap-business/minified/gsap.min.js"></script>
+  <script src="./js/lim/gsap-business/minified/Draggable.min.js"></script>
+  <script src="./js/lim/gsap-business/minified/InertiaPlugin.min.js"></script>
+  <script src="./js/lim/gsap-business/minified/ScrollSmoother.min.js"></script>
+  <script src="./js/lim/gsap-business/minified/ScrollTrigger.min.js"></script>
   <script src="./js/lim/jQuery.min.js"></script>
-  <script src="./js/lim/ScrollTrigger.min.js"></script>
   <script src="./js/index.js"></script>
-
-  <script src="./js/section01.js" defer></script>
   <script src="./js/section02.js" defer></script>
+  <!-- <script src="./js/section03.js" defer></script> -->
+  <script src="./js/section03_1.js" defer></script>
+  <script src="./js/section04.js" defer></script>
+  <script src="./js/section05.js" defer></script>
 </head>
-<body>
-  <div id="header">
-    <div class="wrap page_w flex jcsb aic">
-      <div class="left">
-        <h1 class="logo">
-          <img src="./image/Logo.png" alt="로고">
-        </h1>
-      </div>
-      <div class="right">
-        <div class="nav flex aic">
-          <ul class="gnb flex aic">
-            <li><a href="#">ABOUT US</a></li>
-            <li><a href="#">PRODUCTS</a></li>
-            <li><a href="#">RECIPES</a></li>
-            <li><a href="#">FIND A STORE</a></li>
-            <li><a href="#">CONTACT</a></li>
-          </ul>
-          <ul class="sns_wrap flex aic">
-            <li class="youtube"><a href="#">YOUTUBE</a></li>
-            <li class="insta"><a href="#">INSTAGRAM</a></li>
-          </ul>
-          <div class="chatbot"><a href="" class="flex aic jcc">CHAT BOT</a></div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div id="container">
-    <div class="section section01">
-      <!-- 텍스트 롤링  -->
-      <div class="marquee_wrap">
-        <div class="marquee flex">
-          <div class="text text1">JONGGA</div>
-          <div class="text text2">The Global Kimchi Brand</div>
-        </div>
-      </div>
-      <!-- 스티커 -->
-      <!-- 드래그 -->
-      <!-- 리프레쉬 -->
-      <div class="btn_refresh"><img src="./image/btn-refresh.png" alt="이미지"></div>
-    </div>
+<body class="oh smooth_wrapper">
+  <div class="smooth_content">
 
-    <div class="section section02">
-      <div class="wrap page_w">
-        <div class="flex jcsb">
-          <div class="left">
-            <h2 class="tit">ABOUT US</h2>
-            <p class="desc">Jongga, Koreans’ favorite Kimchi brand of all time,<br> 
-              has been elevating the legacy and culture of Kimchi since 1987.<br>
-              From tradition to innovation, we have grown and evolved.<br>
-              Experience the global legacy shaped by our passion.</p>
+    <div id="header">
+      <div class="wrap page_w flex jcsb aic">
+        <div class="left">
+          <h1 class="logo">
+            <img src="./image/Logo.png" alt="로고">
+          </h1>
+        </div>
+        <div class="right">
+          <div class="nav flex aic">
+            <ul class="gnb flex aic">
+              <li><a href="#">ABOUT US</a></li>
+              <li><a href="#">PRODUCTS</a></li>
+              <li><a href="#">RECIPES</a></li>
+              <li><a href="#">FIND A STORE</a></li>
+              <li><a href="#">CONTACT</a></li>
+            </ul>
+            <ul class="sns_wrap flex aic">
+              <li class="youtube"><a href="#">YOUTUBE</a></li>
+              <li class="insta"><a href="#">INSTAGRAM</a></li>
+            </ul>
+            <div class="chatbot"><a href="" class="flex aic jcc">CHAT BOT</a></div>
           </div>
-          <div class="right flex">
-            <div class="img_set">
-              <img src="./image/section2_1.png" alt="이미지">
+        </div>
+      </div>
+    </div>
+    <div id="container">
+      <div class="section section01">
+        <!-- 텍스트 롤링  -->
+        <div class="marquee_wrap">
+          <div class="marquee flex">
+            <div class="text text1">JONGGA</div>
+            <div class="text text2">The Global Kimchi Brand</div>
+          </div>
+        </div>
+        <!-- 스티커 -->
+        <div class="img_set sticker main_center"><img src="./image/sticker/4.png" alt="이미지"></div>
+        <!-- 드래그 -->
+        <!-- 리프레쉬 -->
+        <div class="btn_refresh"><img src="./image/btn-refresh.png" alt="이미지"></div>
+      </div>
+
+      <div class="section section02">
+        <div class="wrap page_w">
+          <div class="flex jcsb">
+            <div class="left">
+              <h2 class="tit">ABOUT US<span class="insert_arrow"><img src="./image/arrow_insert.png" alt="이미지"></span></h2>
+              <p class="desc">Jongga, Koreans’ favorite Kimchi brand of all time,<br> 
+                has been elevating the legacy and culture of Kimchi since 1987.<br>
+                From tradition to innovation, we have grown and evolved.<br>
+                Experience the global legacy shaped by our passion.</p>
             </div>
-            <div class="img_set">
-              <img src="./image/section2_2.png" alt="이미지">
+            <div class="right flex">
+              <div class="img_set">
+                <img src="./image/section2_1.png" alt="이미지">
+              </div>
+              <div class="img_set">
+                <img src="./image/section2_2.png" alt="이미지">
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <div class="section section03">
-      <div class="wrap">
-        <div class="video_wrap">
-          <div class="video_set"><img src="./image/section3_video.png" alt=""></div>
-          <div class="txt_set">
-            <h3 class="tit">Another Name of Kimchi</h3>
-            <p class="desc">Jongga, another name for Kimchi, is shaping the future of Kimchi<br>
-              loved by all generations around the world, beyond Korea.</p>
+      <div class="section section03">
+        <div class="wrap">
+          <div class="video_wrap">
+            <div class="video_set">
+              <video muted loop>
+                <source src="./video/about.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="txt_set">
+              <h3 class="tit">Another Name of Kimchi</h3>
+              <p class="desc">Jongga, another name for Kimchi, is shaping the future of Kimchi<br>
+                loved by all generations around the world, beyond Korea.</p>
+            </div>
+            <canvas id="section03_canvas"></canvas>
+            <div class="custom_cursor">SCATTER</div>
+          </div>
+          <div class="marquee_wrap flex">
+            <ul class="marquee flex">
+              <li><img src="./image/section3_1.png" alt="이미지"></li>
+              <li><img src="./image/section3_2.png" alt="이미지"></li>
+              <li><img src="./image/section3_3.png" alt="이미지"></li>
+              <li><img src="./image/section3_4.png" alt="이미지"></li>
+              <li><img src="./image/section3_5.png" alt="이미지"></li>
+              <li><img src="./image/section3_6.png" alt="이미지"></li>
+              <li><img src="./image/section3_7.png" alt="이미지"></li>
+            </ul>
           </div>
         </div>
-        <div class="rolling_img">
-          <ul class="img_list flex">
-            <li><img src="./image/section3_1.png" alt="이미지"></li>
-            <li><img src="./image/section3_2.png" alt="이미지"></li>
-            <li><img src="./image/section3_3.png" alt="이미지"></li>
-            <li><img src="./image/section3_4.png" alt="이미지"></li>
-            <li><img src="./image/section3_5.png" alt="이미지"></li>
-            <li><img src="./image/section3_6.png" alt="이미지"></li>
-            <li><img src="./image/section3_7.png" alt="이미지"></li>
+      </div>
+
+      <div class="section section04">
+        <div class="wrap page_w">
+          <div class="top_cont flex jcsb">
+            <h2 class="tit">PRODUCTS<span class="insert_arrow"><img src="./image/arrow_insert.png" alt="이미지"></span></h2>
+            <ul class="category_list flex aic">
+              <li class="category active">The Original</li>
+              <li class="category">Endless Variety</li>
+              <li class="category">With Creativity</li>
+            </ul>
+            <div class="custom_cursor">see more</div>
+          </div>
+          <ul class="product_list flex">
+            <li class="item">
+              <a href="">
+                <div class="thumbnail">
+                  <div class="product_img"><img src="./image/section4_1.png" alt=""></div>
+                  <div class="thumbnail_bg">
+                    <div class="circle circle1"></div>
+                    <div class="circle circle2"></div>
+                    <div class="circle circle3"></div>
+                    <div class="circle circle4"></div>
+                    <div class="circle circle5"></div>
+                    <div class="circle circle6"></div>
+                  </div>
+                </div>
+                <div class="desc">
+                  <div class="product_name">Original Kimchi, Pet 300g</div>
+                  <ul class="product_option_list flex">
+                    <li class="product_option">Gluten Free</li>
+                    <li class="product_option">No Added MSG</li>
+                  </ul>
+                </div>
+              </a>
+            </li>
+            <li class="item">
+              <a href="">
+                <div class="thumbnail">
+                  <div class="product_img"><img src="./image/section4_2.png" alt=""></div>
+                  <div class="thumbnail_bg">
+                    <div class="circle circle1"></div>
+                    <div class="circle circle2"></div>
+                    <div class="circle circle3"></div>
+                    <div class="circle circle4"></div>
+                    <div class="circle circle5"></div>
+                    <div class="circle circle6"></div>
+                  </div>
+                </div>
+                <div class="desc">
+                  <div class="product_name">Original Kimchi, Pouch 80g</div>
+                  <ul class="product_option_list flex">
+                    <li class="product_option">No Added Other Fructose(HFC)</li>
+                  </ul>
+                </div>
+              </a>
+            </li>
+            <li class="item">
+              <a href="">
+                <div class="thumbnail">
+                  <div class="product_img"><img src="./image/section4_3.png" alt=""></div>
+                  <div class="thumbnail_bg">
+                    <div class="circle circle1"></div>
+                    <div class="circle circle2"></div>
+                    <div class="circle circle3"></div>
+                    <div class="circle circle4"></div>
+                    <div class="circle circle5"></div>
+                    <div class="circle circle6"></div>
+                  </div>
+                </div>
+                <div class="desc">
+                  <div class="product_name">Original Kimchi, Cup 80g</div>
+                  <ul class="product_option_list flex">
+                    <li class="product_option">Gluten Free</li>
+                    <li class="product_option">No Added MSG</li>
+                  </ul>
+                </div>
+              </a>
+            </li>
+            <li class="item">
+              <a href="">
+                <div class="thumbnail">
+                  <div class="product_img"><img src="./image/section4_4.png" alt=""></div>
+                  <div class="thumbnail_bg">
+                    <div class="circle circle1"></div>
+                    <div class="circle circle2"></div>
+                    <div class="circle circle3"></div>
+                    <div class="circle circle4"></div>
+                    <div class="circle circle5"></div>
+                    <div class="circle circle6"></div>
+                  </div>
+                </div>
+                <div class="desc">
+                  <div class="product_name">Original Kimchi, Pet 1.5kg</div>
+                  <ul class="product_option_list flex">
+                    <li class="product_option">Gluten Free</li>
+                  </ul>
+                </div>
+              </a>
+            </li>
           </ul>
         </div>
       </div>
-    </div>
 
-    <div class="section section04">
-      <div class="wrap page_w">
-        <div class="top_cont flex jcsb">
-          <h2 class="tit">PRODUCTS</h2>
-          <ul class="category_list flex aic">
-            <li class="category active">The Original</li>
-            <li class="category">Endless Variety</li>
-            <li class="category">With Creativity</li>
+      <div class="section section05">
+        <div class="bg"><img src="./image/section5_bg_1.png" alt="이미지"></div>
+        <div class="wrap">
+          <div class="alphabet_wrap">
+            <div class="wrap flex jcc">
+              <div class="alphabet j draggable1"><img src="./image/j.png" alt=""></div>
+              <div class="alphabet o draggable1"><img src="./image/o.png" alt=""></div>
+              <div class="alphabet n draggable1"><img src="./image/n.png" alt=""></div>
+              <div class="alphabet g draggable1"><img src="./image/g.png" alt=""></div>
+              <div class="alphabet g draggable1"><img src="./image/g.png" alt=""></div>
+              <div class="alphabet a draggable1"><img src="./image/a.png" alt=""></div>
+            </div>
+          </div>  
+          <div class="play_jongga">Play Jongga <br>
+            : Express Your Creativity</div>
+          <ul class="thumbnail_list flex">
+            <li class="thumbnail active"><img src="./image/section5_1.png" alt=""></li>
+            <li class="thumbnail"><img src="./image/section5_2.png" alt=""></li>
+            <li class="thumbnail"><img src="./image/section5_3.png" alt=""></li>
+            <li class="thumbnail"><img src="./image/section5_4.png" alt=""></li>
           </ul>
-        </div>
-        <ul class="product_list flex">
-          <li class="item">
-            <a href="">
-              <div class="thumbnail">
-                <div class="product_img"><img src="./image/section4_1.png" alt=""></div>
-                <div class="thumbnail_bg"></div>
-              </div>
-              <div class="desc">
-                <div class="product_name">Original Kimchi, Pet 300g</div>
-                <ul class="product_option_list flex">
-                  <li class="product_option">Gluten Free</li>
-                  <li class="product_option">No Added MSG</li>
-                </ul>
-              </div>
-            </a>
-          </li>
-          <li class="item">
-            <a href="">
-              <div class="thumbnail">
-                <div class="product_img"><img src="./image/section4_2.png" alt=""></div>
-                <div class="thumbnail_bg"></div>
-              </div>
-              <div class="desc">
-                <div class="product_name">Original Kimchi, Pouch 80g</div>
-                <ul class="product_option_list flex">
-                  <li class="product_option">No Added Other Fructose(HFC)</li>
-                </ul>
-              </div>
-            </a>
-          </li>
-          <li class="item">
-            <a href="">
-              <div class="thumbnail">
-                <div class="product_img"><img src="./image/section4_3.png" alt=""></div>
-                <div class="thumbnail_bg"></div>
-              </div>
-              <div class="desc">
-                <div class="product_name">Original Kimchi, Cup 80g</div>
-                <ul class="product_option_list flex">
-                  <li class="product_option">Gluten Free</li>
-                  <li class="product_option">No Added MSG</li>
-                </ul>
-              </div>
-            </a>
-          </li>
-          <li class="item">
-            <a href="">
-              <div class="thumbnail">
-                <div class="product_img"><img src="./image/section4_4.png" alt=""></div>
-                <div class="thumbnail_bg"></div>
-              </div>
-              <div class="desc">
-                <div class="product_name">Original Kimchi, Pet 1.5kg</div>
-                <ul class="product_option_list flex">
-                  <li class="product_option">Gluten Free</li>
-                </ul>
-              </div>
-            </a>
-          </li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="section section05">
-      <div class="bg"><img src="./image/section5_bg_1.png" alt="이미지"></div>
-      <div class="wrap">
-        <div class="alphabet_wrap flex jcc">
-          <div class="alphabet j"><img src="./image/j.png" alt=""></div>
-          <div class="alphabet o"><img src="./image/o.png" alt=""></div>
-          <div class="alphabet n"><img src="./image/n.png" alt=""></div>
-          <div class="alphabet g"><img src="./image/g.png" alt=""></div>
-          <div class="alphabet g"><img src="./image/g.png" alt=""></div>
-          <div class="alphabet a"><img src="./image/a.png" alt=""></div>
-        </div>  
-        <div class="play_jongga">Play Jongga <br>
-          : Express Your Creativity</div>
-        <ul class="thumbnail_list flex">
-          <li class="thumbnail active"><img src="./image/section5_1.png" alt=""></li>
-          <li class="thumbnail"><img src="./image/section5_2.png" alt=""></li>
-          <li class="thumbnail"><img src="./image/section5_3.png" alt=""></li>
-          <li class="thumbnail"><img src="./image/section5_4.png" alt=""></li>
-        </ul>
-        <div class="btn_set flex">
-          <div class="btn_refresh"><img src="./image/section5_btn_refresh.png" alt=""></div>
-          <div class="btn_download"><img src="./image/btn-download.png" alt=""></div>
+          <div class="btn_set flex">
+            <div class="btn_refresh"><img src="./image/section5_btn_refresh.png" alt=""></div>
+            <div class="btn_download"><img src="./image/btn-download.png" alt=""></div>
+          </div>
         </div>
       </div>
+
+      <div class="section section06">
+
+      </div>
+
     </div>
-
-
-
-    <div class="section section06">
-
-    </div>
-
+    <div id="footer"></div>
   </div>
-  <div id="footer"></div>
-  <div id="intro"></div>
+  <div id="intro">
+    <div class="img_set dn"><img src="./image/intro_0.png" alt="이미지"></div>
+  </div>
 </body>
 </html>
