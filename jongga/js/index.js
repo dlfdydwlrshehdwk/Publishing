@@ -49,6 +49,8 @@ document.addEventListener('DOMContentLoaded',function(){
             intro.classList.add('dn');
             header.classList.add('opa1');
             body.classList.remove('oh');
+            section01Marquee();
+            section01VideoPlay();
           }
         });
         gsap.to(container, {
@@ -59,7 +61,7 @@ document.addEventListener('DOMContentLoaded',function(){
       },1000)
     }, 3000)
   } 
-  // intro();
+  intro();
 
   // 테스트할때 켜기
   function test(){
@@ -73,7 +75,7 @@ document.addEventListener('DOMContentLoaded',function(){
     header.classList.add('opa1');
     body.classList.remove('oh');
   } 
-  test();
+  // test();
 
   // 마우스 휠 방향에 따른 헤더 숨김 처리
   function headerScrollAni(){
@@ -85,4 +87,15 @@ document.addEventListener('DOMContentLoaded',function(){
       }
     });
   } headerScrollAni();
+
+  function section01Marquee(){
+    document.querySelector('.section01 .marquee_wrap').classList.add('on');
+  }
+
+  function section01VideoPlay(){
+    const video = document.querySelector('.section01 video');
+    if(video) {
+      video.play();
+    }
+  }
 })
