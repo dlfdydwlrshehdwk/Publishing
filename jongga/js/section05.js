@@ -1,140 +1,154 @@
+import {createStickerManager} from './initializeSticker.js';
+
+const section05Sticker = createStickerManager('.section05 .sticker_wrap');
+// GSAP 플러그인 등록 (Draggable, InertiaPlugin 사용을 위해)
 gsap.registerPlugin(Draggable, InertiaPlugin);
 
 document.addEventListener('DOMContentLoaded', () => {
+  // 알파벳 래퍼의 초기 클론 생성 (리셋 시 사용)
   const jonggaClone = document.querySelector('.section05 .alphabet_wrap .wrap').cloneNode(true);
-  const bounds = document.querySelector(".section05"); // 드래그 가능한 영역
-  let thunmbnailIndex = 0;
 
-  function draggable1() {
+  // 드래그 가능한 영역 설정
+  const bounds = document.querySelector(".section05");
+
+  // 커서 요소 및 위치 관련 변수 정의
+  const customCursor = document.querySelector('.section05 .custom_cursor');
+  let mouse = { x: 0, y: 0 }; // 실제 마우스 위치
+  let pos = { x: 0, y: 0 };   // 커서가 따라가는 위치
+  let isInside = false;       // 마우스가 대상 영역 안에 있는지 여부
+  let isDragging = false;     // 드래그 중인지 여부
+  let speed = 0.1;            // 커서 따라가는 속도
+  let thumbnailIndex = 0;     // 선택된 썸네일 인덱스
+
+  // 커서 움직임을 부드럽게 애니메이션하는 함수 (무한 반복)
+  function animateCursor() {
+    if (isInside) {
+      pos.x += (mouse.x - pos.x) * speed;
+      pos.y += (mouse.y - pos.y) * speed;
+      customCursor.style.transform = `translate(${pos.x}px, ${pos.y}px)`;
+    }
+    requestAnimationFrame(animateCursor);
+  }
+  animateCursor(); // 커서 애니메이션 최초 실행
+
+  // 각 알파벳 요소에 대해 Draggable 기능 적용
+  function initDraggables() {
     document.querySelectorAll(".draggable1").forEach((el) => {
-      let lastX = 0; // 이전 X 좌표를 저장
-      let lastTime = Date.now(); // 이전 프레임의 시간 저장
-      let currentTilt = 0; // 현재 기울기 (회전) 값
+      let lastX = 0; // 이전 X 좌표
+      let lastTime = Date.now(); // 이전 프레임 시간
+      let currentTilt = 0; // 현재 회전 값
 
       Draggable.create(el, {
-        type: "x,y", // X, Y 방향으로 드래그 가능
-        bounds: bounds, // 드래그 가능한 범위를 .section05 내부로 제한
-        inertia: true, // 관성을 적용하여 자연스럽게 던져지는 효과 추가
+        type: "x,y",        // X, Y 방향 드래그 허용
+        bounds: bounds,     // 드래그 가능한 영역 제한
+        inertia: true,      // 관성 효과 사용
 
-        onDrag: function () {
-          const customCursor = document.querySelector('.section05 .custom_cursor');
-
-
-
-
-          if (!this.target) return; // 안전 체크
-
-          let now = Date.now(); // 현재 시간
-          let deltaTime = (now - lastTime) / 1000; // 이전 프레임과의 시간 차이 (초 단위)
-          let velocityX = (this.x - lastX) / deltaTime; // X 이동 속도 계산 (px/s)
-
-          // 🎯 새로운 기울기 값 계산 (속도에 따라 반대 방향으로 회전)
-          let targetTilt = gsap.utils.clamp(-5, 5, velocityX * -0.01); 
-          // - velocityX가 클수록 더 많이 기울어짐
-          // - -0.01 값을 **늘리면** 기울기가 더 커짐, **줄이면** 더 작아짐
-          // - clamp(-5, 5, …) → 최대 -5도 ~ 5도까지만 기울어지도록 제한
-
-          currentTilt = gsap.utils.interpolate(currentTilt, targetTilt, 0.1); 
-          // - 기존 기울기와 새로운 기울기를 **부드럽게 보간 (interpolate)**
-          // - 마지막 값이 0.1 → **이 값을 늘리면 빠르게 따라가고, 줄이면 더 부드럽게 전환됨**
-
-          gsap.to(this.target, {
-            rotation: currentTilt, // 적용된 기울기 값
-            duration: 0.1, // 빠르게 반응하도록 duration 조절
-            ease: "power1.out" // 부드러운 움직임
-          });
-
-          lastX = this.x; // 현재 X 좌표 저장 (다음 프레임에서 비교할 기준)
-          lastTime = now; // 현재 시간 저장 (속도 계산에 사용)
+        // 드래그 시작 시 호출
+        onDragStart: function () {
+          isDragging = true; // 드래그 중 플래그 설정
         },
 
-        onDragEnd: function () {
+        // 드래그 중 호출
+        onDrag: function () {
+          // 커서 위치를 드래그 포인터 위치로 업데이트
+          mouse.x = this.pointerX;
+          mouse.y = this.pointerY;
 
-          const customCursor = document.querySelector('.section05 .custom_cursor');
-    // 드래그 끝났을 때 원래 위치로 되돌리기
-    customCursor.style.transform = `translate3d(0px, 0px, 0)`;
-          if (!this.target) return;
+          // 드래그 속도를 계산하여 회전 효과 적용
+          const now = Date.now();
+          const deltaTime = (now - lastTime) / 1000;
+          const velocityX = (this.x - lastX) / deltaTime;
+          const targetTilt = gsap.utils.clamp(-5, 5, velocityX * -0.01);
+          currentTilt = gsap.utils.interpolate(currentTilt, targetTilt, 0.1);
+
+          // 회전 애니메이션 적용
           gsap.to(this.target, {
-            rotation: 0, // 드래그 끝나면 원래대로 복귀
-            duration: 0.3, // 자연스럽게 돌아가도록 0.3초 설정
-            ease: "power2.out"
+            rotation: currentTilt,
+            duration: 0.1,
+            ease: "power1.out"
           });
+
+          // 현재 좌표 및 시간 저장
+          lastX = this.x;
+          lastTime = now;
+        },
+
+        // 드래그 종료 시 호출
+        onDragEnd: function () {
+          isDragging = false; // 드래그 중 플래그 해제
         }
       });
     });
   }
-  draggable1();
 
-  function section05CustomCursor() {
+  // 커서 대상 영역 설정 및 마우스 이벤트 처리
+  function setupCustomCursorZones() {
     const cursorZones = document.querySelectorAll('.section05 .alphabet');
-    const cursorBox = document.querySelector('.section05 .custom_cursor');
-    let mouse = { x: 0, y: 0 };
-    let pos = { x: 0, y: 0 };
-    let isInside = false;
-  
-    const speed = 0.1;
 
-    cursorZones.forEach(function(cursorzone) {
-      cursorzone.addEventListener('mouseenter', (e) => {
-        cursorBox.style.opacity = 1;
+    cursorZones.forEach(zone => {
+      // 마우스가 영역에 진입할 때
+      zone.addEventListener('mouseenter', (e) => {
+        customCursor.style.opacity = 1;
         isInside = true;
         mouse.x = e.clientX;
         mouse.y = e.clientY + window.scrollY;
         pos.x = mouse.x;
         pos.y = mouse.y;
-        cursorBox.style.transform = `translate(${pos.x}px, ${pos.y}px)`;
+        customCursor.style.transform = `translate(${pos.x}px, ${pos.y}px)`;
       });
 
-      cursorzone.addEventListener('mouseleave', () => {
-        cursorBox.style.opacity = 0;
+      // 마우스가 영역을 벗어날 때
+      zone.addEventListener('mouseleave', () => {
+        customCursor.style.opacity = 0;
         isInside = false;
       });
 
-      cursorzone.addEventListener('mousemove', (e) => {
+      // 마우스가 영역 안에서 움직일 때
+      zone.addEventListener('mousemove', (e) => {
         mouse.x = e.clientX;
         mouse.y = e.clientY + window.scrollY;
       });
-
-      function animateCursor() {
-        if (isInside) {
-          pos.x += (mouse.x - pos.x) * speed;
-          pos.y += (mouse.y - pos.y) * speed;
-          cursorBox.style.transform = `translate(${pos.x}px, ${pos.y}px)`;
-        }
-        requestAnimationFrame(animateCursor);
-      }
-      animateCursor();
     });
   }
-  section05CustomCursor();
 
+  // 새로고침 버튼 클릭 시 리셋
   const section05BtnRefresh = document.querySelector('.section05 .btn_refresh');
-  section05BtnRefresh.addEventListener('click', function () {
-    console.log('refresh');
+  section05BtnRefresh.addEventListener('click', () => {
     section05Reset();
+    section05Sticker.reset(true);
   });
 
+  // 썸네일 클릭 이벤트 설정
   const section05Thumbnails = document.querySelectorAll('.section05 .thumbnail_list > li');
   section05Thumbnails.forEach((list, index) => {
+    // 초기 선택 상태 저장
     if (list.classList.contains('active')) {
-      thunmbnailIndex = index;
+      thumbnailIndex = index;
     }
+
     list.addEventListener('click', () => {
-      thunmbnailIndex = index;
-      document.querySelector('.section05 .bg img').src = `./image/section5_bg_${thunmbnailIndex + 1}.png`;
-      section05Reset();
+      // 선택된 썸네일의 인덱스를 저장하고 배경 이미지 변경
+      document.querySelectorAll('.section05 .sticker-box').forEach(ele=>{
+        ele.remove();
+      })
+      thumbnailIndex = index;
+      section05Sticker.reset(true);
+      document.querySelector('.section05 .bg img').src = `./image/section5_bg_${thumbnailIndex + 1}.png`;
+      section05Reset(); // 리셋 실행
     });
   });
 
+  // section05를 리셋하고 커서/드래그를 재설정하는 함수
   function section05Reset() {
-    const section05AlphabetWrap = document.querySelector('.section05 .alphabet_wrap');
-    console.log('Reset Start!');
-    section05AlphabetWrap.innerHTML = '';
-    const newClone = jonggaClone.cloneNode(true);
-    section05AlphabetWrap.appendChild(newClone);
-    draggable1(); // 복사본에 대해 드래그 실행
-    section05CustomCursor();
+    const wrap = document.querySelector('.section05 .alphabet_wrap');
+    wrap.innerHTML = ''; // 기존 내용 제거
+    const newClone = jonggaClone.cloneNode(true); // 초기 복사본 복원
+    wrap.appendChild(newClone);
+    initDraggables(); // 드래그 기능 재설정
+    setupCustomCursorZones(); // 커서 영역 재설정
   }
 
-  
+  // 초기 실행
+  initDraggables();
+  setupCustomCursorZones();
 });

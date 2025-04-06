@@ -1,11 +1,14 @@
+import {createStickerManager} from './initializeSticker.js';
+
 document.addEventListener('DOMContentLoaded',function(){
   // GSAP ScrollSmoother 초기화
   gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
+  const section01Sticker = createStickerManager('.section01 .sticker_wrap');
 
   ScrollSmoother.create({
       wrapper: ".smooth-wrapper", // 스크롤을 감싸는 요소
       content: ".smooth-content", // 스크롤 콘텐츠
-      smooth: 1.5, // 부드러운 스크롤 속도 (값이 클수록 느려짐)
+      smooth: 1, // 부드러운 스크롤 속도 (값이 클수록 느려짐)
       effects: true // ScrollTrigger와 함께 애니메이션 효과 활성화
   });
 
@@ -14,6 +17,10 @@ document.addEventListener('DOMContentLoaded',function(){
   const body = document.body;
   const header = document.getElementById('header');
 
+    // 리프레쉬 버튼
+    document.querySelector('.section01 .btn_refresh').addEventListener('click',function(){
+      section01Sticker.reset();
+    })
 
   function intro(){
     const intro = document.getElementById('intro');
@@ -51,6 +58,7 @@ document.addEventListener('DOMContentLoaded',function(){
             body.classList.remove('oh');
             section01Marquee();
             section01VideoPlay();
+            section01Sticker.createRandom();
           }
         });
         gsap.to(container, {
