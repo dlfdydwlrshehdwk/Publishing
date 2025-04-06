@@ -28,10 +28,11 @@ const tl1 = gsap.timeline();
 
 // 타임라인에 애니메이션 추가
 tl1
-.to({}, {duration: 1})
+.to({}, {duration: .5})
 .to('.qwer', {width: '100%',height: '100vh',duration: 1})
 .to('.qwer .depth1 .dim', {autoAlpha:.3} ,"<+.5")
 .to('.qwer .depth1 .img2 img',{autoAlpha:0,filter:"blur(10px)"})
+.to({}, {duration: .2})
 .to('.qwer .depth1 .img3', {autoAlpha:1, filter:'blur(0px)'})
 .to('.qwer .depth1 .dim', {autoAlpha:1})
 .to('.qwer .depth1 .img3', {autoAlpha:0, filter:'blur(10px)'})
@@ -44,7 +45,7 @@ window.onload = function() {
   ScrollTrigger.create({
     trigger: ".section07",
     start: "bottom bottom",
-    end: "3000px",
+    end: "4000px",
     pin: true,
     pinSpacing: true,
     scrub: true,

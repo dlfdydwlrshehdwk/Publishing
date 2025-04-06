@@ -151,4 +151,13 @@ document.addEventListener('DOMContentLoaded', () => {
   // 초기 실행
   initDraggables();
   setupCustomCursorZones();
+
+  ScrollTrigger.create({
+    trigger: '.section05',
+    start: 'top center',    // 시작 지점 section03 맨 밑바닥
+    once: true,             // 한 번만 실행
+    onEnter: () => {
+      section05Sticker.createRandom();
+    }
+  });
 });

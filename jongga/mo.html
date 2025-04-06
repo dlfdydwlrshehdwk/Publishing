@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MO</title>
+
+  <link rel="stylesheet" href="./css/reset.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+  <link rel="stylesheet" href="./cssMo/index.css">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script src="./js/lim/gsap-business/minified/gsap.min.js"></script>
+  <script src="./js/lim/gsap-business/minified/Draggable.min.js"></script>
+  <script src="./js/lim/gsap-business/minified/InertiaPlugin.min.js"></script>
+  <script src="./js/lim/gsap-business/minified/ScrollSmoother.min.js"></script>
+  <script src="./js/lim/gsap-business/minified/ScrollTrigger.min.js"></script>
+  <script src="./js/lim/jQuery.min.js"></script>
+</head>
+<body class="oh ">
+
+    <div id="header">
+      <div class="wrap page_w flex jcsb aic">
+        <div class="left">
+          <h1 class="logo">
+            <img src="./image/Logo.png" alt="로고">
+          </h1>
+        </div>
+        <div class="right">
+          <div class="nav flex aic">
+            <ul class="gnb flex aic">
+              <li><a href="#">ABOUT US</a></li>
+              <li><a href="#">PRODUCTS</a></li>
+              <li><a href="#">RECIPES</a></li>
+              <li><a href="#">FIND A STORE</a></li>
+              <li><a href="#">CONTACT</a></li>
+            </ul>
+            <ul class="sns_wrap flex aic">
+              <li class="youtube"><a href="#">YOUTUBE</a></li>
+              <li class="insta"><a href="#">INSTAGRAM</a></li>
+            </ul>
+            <div class="chatbot"><a href="" class="flex aic jcc">CHAT BOT</a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="container" class="smooth-wrapper">
+      <div class="wrap smooth-content">
+        <div class="section section01" data-area="sticker">
+          <div class="video_set">
+            <video muted loop>
+              <source src="./video/main.mp4" type="video/mp4">
+            </video>
+          </div>
+          <!-- 텍스트 롤링  -->
+          <div class="marquee_wrap flex">
+            <div class="marquee flex">
+              <div class="text text1">JONGGA</div>
+              <div class="text text2">The Global Kimchi Brand</div>
+            </div>
+            <div class="marquee flex">
+              <div class="text text1">JONGGA</div>
+              <div class="text text2">The Global Kimchi Brand</div>
+            </div>
+          </div>
+          <!-- 센터스티커 -->
+          <div class="img_set sticker sticker-box main_center"><img src="./image/sticker/4.png" alt="이미지"></div>
+          <!-- 스티커 -->
+          <div class="sticker_wrap"></div>
+          <!-- 리프레쉬 -->
+          <div class="btn_refresh"><img src="./image/btn-refresh.png" alt="이미지"></div>
+        </div>
+  
+        <div class="section section02">
+          <div class="wrap page_w">
+            <div class="flex jcsb">
+              <div class="left">
+                <h2 class="tit">ABOUT US<span class="insert_arrow"><img src="./image/arrow_insert.png" alt="이미지"></span></h2>
+                <p class="desc">Jongga, Koreans’ favorite Kimchi brand of all time,<br> 
+                  has been elevating the legacy and culture of Kimchi since 1987.<br>
+                  From tradition to innovation, we have grown and evolved.<br>
+                  Experience the global legacy shaped by our passion.</p>
+              </div>
+              <div class="right flex">
+                <div class="img_set">
+                  <img src="./image/section2_1.png" alt="이미지">
+                </div>
+                <div class="img_set">
+                  <img src="./image/section2_2.png" alt="이미지">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+  
+        <div class="section section03">
+          <div class="wrap">
+            <div class="video_wrap">
+              <div class="video_set">
+                <video muted loop>
+                  <source src="./video/about.mp4" type="video/mp4">
+                </video>
+              </div>
+              <div class="txt_set">
+                <h3 class="tit">Another Name of Kimchi</h3>
+                <p class="desc">Jongga, another name for Kimchi, is shaping the future of Kimchi<br>
+                  loved by all generations around the world, beyond Korea.</p>
+              </div>
+              <canvas id="section03_canvas"></canvas>
+              <div class="custom_cursor">SCATTER</div>
+            </div>
+            <div class="marquee_wrap flex">
+              <ul class="marquee flex">
+                <li><img src="./image/section3_1.png" alt="이미지"></li>
+                <li><img src="./image/section3_2.png" alt="이미지"></li>
+                <li><img src="./image/section3_3.png" alt="이미지"></li>
+                <li><img src="./image/section3_4.png" alt="이미지"></li>
+                <li><img src="./image/section3_5.png" alt="이미지"></li>
+                <li><img src="./image/section3_6.png" alt="이미지"></li>
+                <li><img src="./image/section3_7.png" alt="이미지"></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+  
+        <div class="section section04">
+          <div class="wrap page_w">
+            <div class="top_cont flex jcsb">
+              <h2 class="tit">PRODUCTS<span class="insert_arrow"><img src="./image/arrow_insert.png" alt="이미지"></span></h2>
+              <ul class="category_list flex aic">
+                <li class="category active">The Original</li>
+                <li class="category">Endless Variety</li>
+                <li class="category">With Creativity</li>
+              </ul>
+              <div class="custom_cursor">see more</div>
+            </div>
+            <ul class="product_list flex">
+              <li class="item">
+                <a href="">
+                  <div class="thumbnail">
+                    <div class="product_img"><img src="./image/section4_1.png" alt=""></div>
+                    <div class="thumbnail_bg">
+                      <div class="circle circle1"></div>
+                      <div class="circle circle2"></div>
+                      <div class="circle circle3"></div>
+                      <div class="circle circle4"></div>
+                      <div class="circle circle5"></div>
+                      <div class="circle circle6"></div>
+                    </div>
+                  </div>
+                  <div class="desc">
+                    <div class="product_name">Original Kimchi, Pet 300g</div>
+                    <ul class="product_option_list flex">
+                      <li class="product_option">Gluten Free</li>
+                      <li class="product_option">No Added MSG</li>
+                    </ul>
+                  </div>
+                </a>
+              </li>
+              <li class="item">
+                <a href="">
+                  <div class="thumbnail">
+                    <div class="product_img"><img src="./image/section4_2.png" alt=""></div>
+                    <div class="thumbnail_bg">
+                      <div class="circle circle1"></div>
+                      <div class="circle circle2"></div>
+                      <div class="circle circle3"></div>
+                      <div class="circle circle4"></div>
+                      <div class="circle circle5"></div>
+                      <div class="circle circle6"></div>
+                    </div>
+                  </div>
+                  <div class="desc">
+                    <div class="product_name">Original Kimchi, Pouch 80g</div>
+                    <ul class="product_option_list flex">
+                      <li class="product_option">No Added Other Fructose(HFC)</li>
+                    </ul>
+                  </div>
+                </a>
+              </li>
+              <li class="item">
+                <a href="">
+                  <div class="thumbnail">
+                    <div class="product_img"><img src="./image/section4_3.png" alt=""></div>
+                    <div class="thumbnail_bg">
+                      <div class="circle circle1"></div>
+                      <div class="circle circle2"></div>
+                      <div class="circle circle3"></div>
+                      <div class="circle circle4"></div>
+                      <div class="circle circle5"></div>
+                      <div class="circle circle6"></div>
+                    </div>
+                  </div>
+                  <div class="desc">
+                    <div class="product_name">Original Kimchi, Cup 80g</div>
+                    <ul class="product_option_list flex">
+                      <li class="product_option">Gluten Free</li>
+                      <li class="product_option">No Added MSG</li>
+                    </ul>
+                  </div>
+                </a>
+              </li>
+              <li class="item">
+                <a href="">
+                  <div class="thumbnail">
+                    <div class="product_img"><img src="./image/section4_4.png" alt=""></div>
+                    <div class="thumbnail_bg">
+                      <div class="circle circle1"></div>
+                      <div class="circle circle2"></div>
+                      <div class="circle circle3"></div>
+                      <div class="circle circle4"></div>
+                      <div class="circle circle5"></div>
+                      <div class="circle circle6"></div>
+                    </div>
+                  </div>
+                  <div class="desc">
+                    <div class="product_name">Original Kimchi, Pet 1.5kg</div>
+                    <ul class="product_option_list flex">
+                      <li class="product_option">Gluten Free</li>
+                    </ul>
+                  </div>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+  
+        <div class="section section05" data-area="sticker">
+          <div class="bg"><img src="./image/section5_bg_1.png" alt="이미지"></div>
+          <div class="sticker_wrap"></div>
+          <!-- <div class="wrap"> -->
+            <div class="alphabet_wrap">
+              <div class="wrap flex jcc">
+                <div class="alphabet j draggable1"><img src="./image/j.png" alt=""></div>
+                <div class="alphabet o draggable1"><img src="./image/o.png" alt=""></div>
+                <div class="alphabet n draggable1"><img src="./image/n.png" alt=""></div>
+                <div class="alphabet g draggable1"><img src="./image/g.png" alt=""></div>
+                <div class="alphabet g draggable1"><img src="./image/g.png" alt=""></div>
+                <div class="alphabet a draggable1"><img src="./image/a.png" alt=""></div>
+              </div>
+            </div>  
+            <div class="play_jongga">Play Jongga <br>
+              : Express Your Creativity</div>
+            <ul class="thumbnail_list flex">
+              <li class="thumbnail active"><img src="./image/section5_1.png" alt=""></li>
+              <li class="thumbnail"><img src="./image/section5_2.png" alt=""></li>
+              <li class="thumbnail"><img src="./image/section5_3.png" alt=""></li>
+              <li class="thumbnail"><img src="./image/section5_4.png" alt=""></li>
+            </ul>
+            <div class="btn_set flex">
+              <div class="btn_refresh"><img src="./image/section5_btn_refresh.png" alt=""></div>
+              <div class="btn_download"><img src="./image/btn-download.png" alt=""></div>
+            </div>
+          <!-- </div> -->
+          <div class="custom_cursor">CLICK AND DRAG</div>
+        </div>
+  
+        <div class="section section06">
+  
+        </div>
+
+        <div class="section section07">
+          <div class="wrap flex page_w">
+            <div class="left">
+              <div class="img_set"><img src="./image/section07/1.png" alt="이미지"></div>
+              <div class="img_set"><img src="./image/section07/2.png" alt="이미지"></div>
+              <div class="img_set"><img src="./image/section07/5.png" alt="이미지"></div>
+              <div class="img_set"><img src="./image/section07/6.png" alt="이미지"></div>
+            </div>
+            <div class="center">
+              <div class="txt_set">
+                <img src="./image/section07/10.png" alt="이미지">
+              </div>
+              <div class="qwer">
+                <div class="wrap">
+                  <div class="depth1">
+                    <div class="img_set img1"><img src="./image/section07/9.jpg" alt="이미지"></div>
+                    <div class="img_set img2"><img src="./image/section07/11.png" alt="이미지"></div>
+                    <div class="img_set img3"><img src="./image/section07/13.png" alt="이미지"></div>
+                    <div class="dim"></div>
+                  </div>
+                  <div class="depth2">
+                    <div class="continental swiper">
+                      <ul class="swiper-wrapper">
+                        <li class="swiper-slide">
+                          <p class="name">ASIA</p>
+                          <ul class="detail">
+                            <li>Korea(123)</li>
+                            <li>China(456)</li>
+                            <li>Hon kong(78)</li>
+                            <li>India(90)</li>
+                            <li>Indonesia(12)</li>
+                            <li>Japan(3)</li>
+                            <li>Philippines(45)</li>
+                            <li>Taiwan(78)</li>
+                            <li>Thailand(9)</li>
+                            <li>Vietnam(10)</li>
+                          </ul>
+                        </li>
+                        <li class="swiper-slide">
+                          <p class="name">EUROPE</p>
+                          <ul class="detail">
+                            <li>Austria(12)</li>
+                            <li>Denmar(3)</li>
+                            <li>France(4)</li>
+                            <li>Germany(567)</li>
+                            <li>Spain(8)</li>
+                            <li>Netherlands(90)</li>
+                            <li>Belgium(12)</li>
+                            <li>Poland(3)</li>
+                            <li>Sweden(45)</li>
+                            <li>Protugal(6)</li>
+                            <li>Romania(78)</li>
+                          </ul>
+                        </li>
+                        <li class="swiper-slide">
+                          <p class="name">North America</p>
+                          <ul class="detail">
+                            <li>United States(90)</li>
+                            <li>Canada(12)</li>
+                            <li>Mexico(3)</li>
+                          </ul>
+                        </li>
+                        <li class="swiper-slide">
+                          <p class="name">Oceania</p>
+                          <ul class="detail">
+                            <li>Korea(123)</li>
+                            <li>China(456)</li>
+                            <li>Hon kong(78)</li>
+                            <li>India(90)</li>
+                            <li>Indonesia(12)</li>
+                          </ul>
+                        </li>
+                        <li class="swiper-slide">
+                          <p class="name">AFRICA</p>
+                          <ul class="detail">
+                            <li>South Africa(45)</li>
+                          </ul>
+                        </li>
+                        <li class="swiper-slide">
+                          <p class="name">ASIA</p>
+                          <ul class="detail">
+                            <li>Korea(123)</li>
+                            <li>China(456)</li>
+                            <li>Hon kong(78)</li>
+                            <li>India(90)</li>
+                            <li>Indonesia(12)</li>
+                            <li>Japan(3)</li>
+                            <li>Philippines(45)</li>
+                            <li>Taiwan(78)</li>
+                            <li>Thailand(9)</li>
+                            <li>Vietnam(10)</li>
+                          </ul>
+                        </li>
+                        <li class="swiper-slide">
+                          <p class="name">EUROPE</p>
+                          <ul class="detail">
+                            <li>Austria(12)</li>
+                            <li>Denmar(3)</li>
+                            <li>France(4)</li>
+                            <li>Germany(567)</li>
+                            <li>Spain(8)</li>
+                            <li>Netherlands(90)</li>
+                            <li>Belgium(12)</li>
+                            <li>Poland(3)</li>
+                            <li>Sweden(45)</li>
+                            <li>Protugal(6)</li>
+                            <li>Romania(78)</li>
+                          </ul>
+                        </li>
+                        <li class="swiper-slide">
+                          <p class="name">North America</p>
+                          <ul class="detail">
+                            <li>United States(90)</li>
+                            <li>Canada(12)</li>
+                            <li>Mexico(3)</li>
+                          </ul>
+                        </li>
+                        <li class="swiper-slide">
+                          <p class="name">Oceania</p>
+                          <ul class="detail">
+                            <li>Korea(123)</li>
+                            <li>China(456)</li>
+                            <li>Hon kong(78)</li>
+                            <li>India(90)</li>
+                            <li>Indonesia(12)</li>
+                          </ul>
+                        </li>
+                        <li class="swiper-slide">
+                          <p class="name">AFRICA</p>
+                          <ul class="detail">
+                            <li>South Africa(45)</li>
+                          </ul>
+                        </li>
+                      </ul>
+                    </div>
+                    <div class="global">
+                      <div class="img_set"><img src="./image/section07/14.png" alt="이미지"></div>
+                      <div class="ripple_set">
+                        <div class="ripple active asia">
+                          <span>Asia</span>
+                          <div class="circles">
+                            <div class="circle1"></div>
+                            <div class="circle2"></div>
+                            <div class="circle3"></div>
+                          </div>
+                        </div>
+                        <div class="ripple europe">
+                          <span>Europe</span>
+                          <div class="circles">
+                            <div class="circle1"></div>
+                            <div class="circle2"></div>
+                            <div class="circle3"></div>
+                          </div>
+                        </div>
+                        <div class="ripple america">
+                          <span>North America</span>
+                          <div class="circles">
+                            <div class="circle1"></div>
+                            <div class="circle2"></div>
+                            <div class="circle3"></div>
+                          </div>
+                        </div>
+                        <div class="ripple oceania">
+                          <span>Oceania</span>
+                          <div class="circles">
+                            <div class="circle1"></div>
+                            <div class="circle2"></div>
+                            <div class="circle3"></div>
+                          </div>
+                        </div>
+                        <div class="ripple africa">
+                          <span>Africa</span>
+                          <div class="circles">
+                            <div class="circle1"></div>
+                            <div class="circle2"></div>
+                            <div class="circle3"></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="right">
+              <div class="img_set"><img src="./image/section07/3.png" alt="이미지"></div>
+              <div class="img_set"><img src="./image/section07/4.png" alt="이미지"></div>
+              <div class="img_set"><img src="./image/section07/7.png" alt="이미지"></div>
+              <div class="img_set"><img src="./image/section07/8.png" alt="이미지"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="footer"><img src="./image/footer.png" alt="이미지"></div>
+  <div id="intro">
+    <div class="img_set dn"><img src="./image/intro_0.png" alt="이미지"></div>
+  </div>
+</body>
+</html>
