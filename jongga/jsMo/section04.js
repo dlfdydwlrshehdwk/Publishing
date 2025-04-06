@@ -1,4 +1,16 @@
 document.addEventListener('DOMContentLoaded',function(){
+
+  console.log('a')
+  let swiper = new Swiper(".section04 .swiper", {
+    slidesPerView: 1.45,
+    spaceBetween: 25,
+    pagination: {
+      el: ".section04 .swiper-pagination",
+      type: "progressbar",
+    },
+  });
+
+
   // 랜덤위치 동그라미 생성
   function event1(){
     const thumbnailEls = document.querySelectorAll('.thumbnail');
@@ -191,7 +203,7 @@ document.addEventListener('DOMContentLoaded',function(){
   }
 
   // event1();
-  event2();
+  // event2();
 
   const cursorBox = document.querySelector('.section04 .custom_cursor');
   const cursorZone = document.querySelector('.section04 .tit');

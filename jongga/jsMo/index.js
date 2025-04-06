@@ -17,11 +17,6 @@ document.addEventListener('DOMContentLoaded',function(){
   const body = document.body;
   const header = document.getElementById('header');
 
-    // 리프레쉬 버튼
-    document.querySelector('.section01 .btn_refresh').addEventListener('click',function(){
-      section01Sticker.reset();
-    })
-
   function intro(){
     const intro = document.getElementById('intro');
     const introImgSet = document.querySelector('#intro .img_set');
@@ -69,7 +64,7 @@ document.addEventListener('DOMContentLoaded',function(){
       },1000)
     }, 3000)
   } 
-  intro();
+  // intro();
 
   // 테스트할때 켜기
   function test(){
@@ -83,7 +78,7 @@ document.addEventListener('DOMContentLoaded',function(){
     header.classList.add('opa1');
     body.classList.remove('oh');
   } 
-  // test();
+  test();
 
   // 마우스 휠 방향에 따른 헤더 숨김 처리
   function headerScrollAni(){

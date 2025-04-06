@@ -1,4 +1,10 @@
 document.addEventListener('DOMContentLoaded',function(){
+
+    let swiper = new Swiper(".section02 .swiper", {
+        slidesPerView: 1.001,
+        spaceBetween: 20,
+      });
+
   const { Engine, Render, World, Bodies, Runner } = Matter;
 
   const engine = Engine.create();

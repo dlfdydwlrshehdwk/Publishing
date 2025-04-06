@@ -312,11 +312,11 @@ export function createStickerManager(area) {
   
     const stickerSets = {
       a: { front: './image/sticker/1.png', back: './image/sticker/back1.png', width: 80, height: 80 },
-      b: { front: './image/sticker/2.png', back: './image/sticker/back2.png', width: 120, height: 120 },
-      c: { front: './image/sticker/3.png', back: './image/sticker/back3.png', width: 122, height: 96 },
+      b: { front: './image/sticker/2.png', back: './image/sticker/back2.png', width: 80, height: 80 },
+      c: { front: './image/sticker/3.png', back: './image/sticker/back3.png', width: 186, height: 186 },
       d: { front: './image/sticker/4.png', back: './image/sticker/back4.png', width: 120, height: 120 },
-      e: { front: './image/sticker/5.png', back: './image/sticker/back5.png', width: 186.5, height: 186.5 },
-      f: { front: './image/sticker/6.png', back: './image/sticker/back6.png', width: 80, height: 80 }
+      e: { front: './image/sticker/5.png', back: './image/sticker/back5.png', width: 120, height: 120 },
+      f: { front: './image/sticker/6.png', back: './image/sticker/back6.png', width: 122, height: 94 }
     };
   
     const stickerArea = document.querySelector(area);
