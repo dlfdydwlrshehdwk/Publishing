@@ -1,4 +1,5 @@
 import {createStickerManager} from './initializeSticker.js';
+import { setupDraggableWithCursor } from './draggableWithCursor.js';
 
 document.addEventListener('DOMContentLoaded',function(){
   // GSAP ScrollSmoother 초기화
@@ -109,26 +110,9 @@ document.addEventListener('DOMContentLoaded',function(){
     }
   }
 
-    const cursor = document.querySelector('.section01 .custom_cursor');
-    // 스티커 위에 올라갔을 때 보여주기
-    document.addEventListener('mouseenter', e => {
-      const target = e.target;
-    
-      if (!target || !(target instanceof Element)) return;
 
-      if (e.target.closest('.section01 .sticker-front')) {
-        cursor.classList.add('active');
-      }
-    }, true);
+  const customCursor = document.querySelector(".section01 .custom_cursor")
+  const mainCenter = document.querySelector('.section01 .main_center');
 
-    // 벗어나면 숨기기
-    document.addEventListener('mouseleave', e => {
-      const target = e.target;
-    
-      if (!target || !(target instanceof Element)) return;
-    
-      if (target.closest('.section01 .sticker-front')) {
-        cursor.classList.remove('active');
-      }
-    }, true);
+  setupDraggableWithCursor(mainCenter,mainCenter,customCursor)
 })

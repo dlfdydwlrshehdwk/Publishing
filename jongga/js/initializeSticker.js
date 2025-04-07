@@ -1,5 +1,5 @@
 export function createStickerManager(area) {
-  console.log(area)
+  
     let resetFunction;
     let cleanup;
     let resizeTimeout;
@@ -123,7 +123,6 @@ export function createStickerManager(area) {
         offsetX = e.clientX - rect.left;
         offsetY = e.clientY - rect.top;
         moveTarget.style.zIndex = '1000';
-        isDragging = true;
         customCursor.style.opacity = 1;
       });
   
@@ -187,7 +186,7 @@ export function createStickerManager(area) {
   
     function handleClick(e) {
       if (preventNextClick) {
-        preventNextClick = false;
+        window.preventNextClick = false;
         return;
       }
   

@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="./css/index.css">
 
   <script type="module" src="./js/initializeSticker.js"></script>
+  <script type="module" src="./js/draggableWithCursor.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
   <script src="./js/lim/gsap-business/minified/gsap.min.js"></script>
@@ -73,10 +74,11 @@
               <div class="text text2">The Global Kimchi Brand</div>
             </div>
           </div>
-          <!-- 센터스티커 -->
-          <div class="img_set sticker sticker-box main_center"><img src="./image/sticker/4.png" alt="이미지"></div>
           <!-- 스티커 -->
-          <div class="sticker_wrap"></div>
+          <div class="sticker_wrap">
+            <!-- 센터스티커 -->
+            <div class="img_set sticker sticker-front sticker-box main_center"><img src="./image/sticker/4.png" alt="이미지"></div>
+          </div>
           <!-- 리프레쉬 -->
           <div class="btn_refresh"><img src="./image/btn-refresh.png" alt="이미지"></div>
           <!-- 커서 -->

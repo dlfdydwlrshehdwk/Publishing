@@ -284,13 +284,20 @@ img {
 .section01 .sticker {
   position: absolute;
 }
-.section01 .sticker.main_center {
+.section01 .main_center {
   width: auto;
   height: auto;
   top: 50%;
   left: 50%;
   transform: translate(-50%,-50%);
   position: absolute;
+  transition: none;
+}
+.section01 .main_center {
+  transition: none;
+}
+.section01 .main_center img {
+  transform: translateY(0);
 }
 .section01 .video_set {
   width: 100%;
@@ -683,10 +690,6 @@ img {
   top: 0;
   left: 0;
   text-transform: uppercase;
-}
-.section01 .custom_cursor.active,
-.section05 .custom_cursor.active {
-  opacity: 1;
 }
 
 
