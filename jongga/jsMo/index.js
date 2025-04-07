@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded',function(){
       },1000)
     }, 3000)
   } 
-  intro();
+  // intro();
 
   // 테스트할때 켜기
   function test(){
@@ -78,18 +78,29 @@ document.addEventListener('DOMContentLoaded',function(){
     header.classList.add('opa1');
     body.classList.remove('oh');
   } 
-  // test();
+  test();
 
-  // 마우스 휠 방향에 따른 헤더 숨김 처리
-  function headerScrollAni(){
-    document.addEventListener('wheel',(event)=>{
-      if(event.deltaY < 0) { // 위로
-        header.classList.remove('hide');
-      } else if(event.deltaY > 0) { // 아래로
+  // 스크롤 방향에 따른 헤더 숨김 처리
+  function headerScrollAni() {
+    let lastScrollTop = 0;
+    const header = document.querySelector('#header'); // header 요소 선택 (필요 시 수정)
+  
+    window.addEventListener('scroll', () => {
+      const currentScroll = window.scrollY;
+  
+      if (currentScroll > lastScrollTop) {
+        // 아래로 스크롤
         header.classList.add('hide');
+      } else {
+        // 위로 스크롤
+        header.classList.remove('hide');
       }
+  
+      lastScrollTop = currentScroll <= 0 ? 0 : currentScroll; // 음수 방지
     });
-  } headerScrollAni();
+  }
+  
+  headerScrollAni();
 
   function section01Marquee(){
     document.querySelector('.section01 .marquee_wrap').classList.add('on');

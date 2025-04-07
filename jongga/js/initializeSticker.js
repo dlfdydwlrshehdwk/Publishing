@@ -1,310 +1,11 @@
-// function initializeSticker(area) {
-//     let resetFunction;
-//     let cleanup;
-//     let resizeTimeout;
-//     let preventNextClick = false; // 드래그 후 클릭 방지용 플래그
-  
-//     function initialize() {
-//       const isAble = document.querySelector(area);
-//       if (!isAble) return;
-  
-//       const MAX_STICKERS = 16;
-//       const activeStickers = [];
-//       const lastFourTypes = [];
-//       let stickerSizeFactor = calculateSizeFactor();
-  
-//       const stickerSets = {
-//         a: { front: './image/sticker/1.png', back: './image/sticker/back1.png', width: 80, height: 80 },
-//         b: { front: './image/sticker/2.png', back: './image/sticker/back2.png', width: 120, height: 120 },
-//         c: { front: './image/sticker/3.png', back: './image/sticker/back3.png', width: 122, height: 96 },
-//         d: { front: './image/sticker/4.png', back: './image/sticker/back4.png', width: 120, height: 120 },
-//         e: { front: './image/sticker/5.png', back: './image/sticker/back5.png', width: 186.5, height: 186.5 },
-//         f: { front: './image/sticker/6.png', back: './image/sticker/back6.png', width: 80, height: 80 }
-//       };
-  
-//       const stickerArea = document.querySelector(area);
-//       if (!stickerArea) return null;
-  
-//       function calculateSizeFactor() {
-//         const viewportWidth = window.innerWidth;
-//         return viewportWidth < 576 ? 0.6 :
-//           viewportWidth < 768 ? 0.75 :
-//           viewportWidth < 992 ? 0.85 :
-//           viewportWidth < 1200 ? 0.9 : 1;
-//       }
-  
-//       function getRandomNumber(min, max) {
-//         return Math.random() * (max - min) + min;
-//       }
-  
-//       function getRandomStickerSet() {
-//         const allTypes = Object.keys(stickerSets);
-//         const availableTypes = allTypes.filter(type => !lastFourTypes.includes(type));
-//         const randomSet = availableTypes.length ?
-//           availableTypes[Math.floor(Math.random() * availableTypes.length)] :
-//           allTypes[Math.floor(Math.random() * allTypes.length)];
-  
-//         lastFourTypes.push(randomSet);
-//         if (lastFourTypes.length > 4) lastFourTypes.shift();
-  
-//         return { ...stickerSets[randomSet], type: randomSet };
-//       }
-  
-//       function createSticker(x, y, parentElement) {
-//         const stickerSet = getRandomStickerSet();
-//         const randomRotation = getRandomNumber(-60, 60);
-//         const randomScale = getRandomNumber(1, 1.2) * stickerSizeFactor;
-//         const adjustedWidth = stickerSet.width * randomScale;
-//         const adjustedHeight = stickerSet.height * randomScale;
-  
-//         const fragment = document.createDocumentFragment();
-//         const stickerBox = document.createElement('div');
-//         stickerBox.className = 'sticker-box';
-//         stickerBox.style.position = 'absolute';
-//         stickerBox.style.left = `${x - (adjustedWidth / 2)}px`;
-//         stickerBox.style.top = `${y - adjustedHeight}px`;
-  
-//         const stickerAnim = document.createElement('div');
-//         stickerAnim.className = 'sticker-anim';
-//         stickerAnim.style.cssText = `
-//           width: ${adjustedWidth}px;
-//           height: ${adjustedHeight * 2}px;
-//           transform: rotate(${randomRotation}deg) scale(0);
-//           opacity: 0;
-//         `;
-  
-//         const template = `
-//           <div class="sticker sticker-back">
-//             <img src="${stickerSet.back}" alt="Sticker Back" loading="lazy">
-//           </div>
-//           <div class="sticker sticker-front">
-//             <img src="${stickerSet.front}" alt="Sticker Front" loading="lazy">
-//           </div>
-//         `;
-//         stickerAnim.innerHTML = template;
-//         stickerBox.appendChild(stickerAnim);
-  
-//         const stickers = stickerAnim.querySelectorAll('.sticker');
-//         stickers.forEach(sticker => {
-//           sticker.style.width = `${adjustedWidth}px`;
-//           sticker.style.height = `${adjustedHeight}px`;
-//         });
-  
-//         fragment.appendChild(stickerBox);
-//         parentElement.appendChild(fragment);
-//         activeStickers.push(stickerBox);
-  
-//         requestAnimationFrame(() => {
-//           stickerAnim.style.transition = 'transform 0.3s ease-out, opacity 0.3s ease-out';
-//           stickerAnim.style.transform = `rotate(${randomRotation}deg) scale(1)`;
-//           stickerAnim.style.opacity = '1';
-//           requestAnimationFrame(() => {
-//             setTimeout(() => {
-//               stickerBox.classList.add('active');
-              
-//             }, 300);
-//           });
-//         });
-  
-//         const front = stickerAnim.querySelector('.sticker-front');
-//         // if (front) makeDraggable(front, stickerBox);
-//       }
-  
-//       function makeDraggable(handleEl, moveTarget) {
-//         let offsetX = 0;
-//         let offsetY = 0;
-//         let isDragging = false;
-//         let dragMoved = false;
-  
-//         handleEl.addEventListener('mousedown', e => {
-//           e.preventDefault();
-//           isDragging = true;
-//           dragMoved = false;
-  
-//           const rect = moveTarget.getBoundingClientRect();
-//           offsetX = e.clientX - rect.left;
-//           offsetY = e.clientY - rect.top;
-//           moveTarget.style.zIndex = '1000';
-//         });
-  
-//         document.addEventListener('mousemove', e => {
-//           if (!isDragging) return;
-//           dragMoved = true;
-  
-//           const parentRect = moveTarget.parentElement.getBoundingClientRect();
-//           const x = e.clientX - parentRect.left - offsetX;
-//           const y = e.clientY - parentRect.top - offsetY;
-//           moveTarget.style.left = `${x}px`;
-//           moveTarget.style.top = `${y}px`;
-//         });
-  
-//         document.addEventListener('mouseup', () => {
-//           if (isDragging && dragMoved) {
-//             preventNextClick = true;
-//           }
-//           isDragging = false;
-//           moveTarget.style.zIndex = '';
-//         });
-//       }
-  
-//       function placeRandomStickers() {
-//         if (!stickerArea) return;
-  
-//         const rect = stickerArea.getBoundingClientRect();
-//         const usedTypes = new Set();
-  
-//         const stickersToRemove = [...activeStickers];
-//         activeStickers.length = 0;
-//         lastFourTypes.length = 0;
-  
-//         stickersToRemove.forEach(sticker => {
-//           sticker.classList.add('remove');
-//           setTimeout(() => sticker.remove(), 300);
-//         });
-  
-//         setTimeout(() => {
-//           const numStickers = window.innerWidth < 768 ? 3 : 5;
-//           const allTypes = Object.keys(stickerSets);
-  
-//           for (let i = 0; i < numStickers; i++) {
-//             const availableTypes = allTypes.filter(type => !usedTypes.has(type));
-//             if (availableTypes.length === 0) break;
-  
-//             const randomType = availableTypes[Math.floor(Math.random() * availableTypes.length)];
-//             usedTypes.add(randomType);
-  
-//             const stickerSet = stickerSets[randomType];
-//             const scaledWidth = stickerSet.width * stickerSizeFactor;
-//             const scaledHeight = stickerSet.height * stickerSizeFactor;
-//             const margin = Math.max(scaledWidth, scaledHeight);
-  
-//             const x = getRandomNumber(margin, rect.width - margin);
-//             const y = getRandomNumber(margin, rect.height - margin);
-  
-//             createSticker(x, y, stickerArea);
-//           }
-//         }, 300);
-//       }
-  
-//       function removeOldestSticker() {
-//         if (activeStickers.length > 0) {
-//           const oldestSticker = activeStickers.shift();
-//           oldestSticker.classList.add('remove');
-//           setTimeout(() => oldestSticker.remove(), 300);
-//         }
-//       }
-  
-//       function handleClick(e) {
-//         if (preventNextClick) {
-//           preventNextClick = false;
-//           return;
-//         }
-  
-//         const isRefreshBtn = e.target.closest('.btn_refresh');
-//         const isThumbnail = e.target.closest('.thumbnail');
-//         if (isRefreshBtn || isThumbnail) return;
-  
-//         const clickStickerArea = e.target.closest(area);
-//         if (!clickStickerArea) return;
-  
-//         const rect = clickStickerArea.getBoundingClientRect();
-//         const x = e.clientX - rect.left;
-//         const y = e.clientY - rect.top;
-  
-//         const adjustedMaxStickers = window.innerWidth < 768 ? Math.floor(MAX_STICKERS * 0.75) : MAX_STICKERS;
-//         if (activeStickers.length >= adjustedMaxStickers) removeOldestSticker();
-  
-//         createSticker(x, y, clickStickerArea);
-//       }
-  
-//       function handleTouch(e) {
-//         const isRefreshBtn = e.target.closest('.btn_refresh');
-//         if (isRefreshBtn) return;
-  
-//         const touchStickerArea = e.target.closest(area);
-//         if (!touchStickerArea) return;
-  
-//         e.preventDefault();
-  
-//         const touch = e.touches[0];
-//         const rect = touchStickerArea.getBoundingClientRect();
-//         const x = touch.clientX - rect.left;
-//         const y = touch.clientY - rect.top;
-  
-//         const adjustedMaxStickers = window.innerWidth < 768 ? Math.floor(MAX_STICKERS * 0.75) : MAX_STICKERS;
-//         if (activeStickers.length >= adjustedMaxStickers) removeOldestSticker();
-  
-//         createSticker(x, y, touchStickerArea);
-//       }
-  
-//       function handleResize() {
-//         clearTimeout(resizeTimeout);
-//         resizeTimeout = setTimeout(() => {
-//           stickerSizeFactor = calculateSizeFactor();
-//           if (!stickerArea) return;
-  
-//           const rect = stickerArea.getBoundingClientRect();
-//           activeStickers.forEach(sticker => {
-//             const width = parseFloat(sticker.style.width);
-//             const height = parseFloat(sticker.style.height) / 2;
-//             const x = getRandomNumber(width / 2, rect.width - width / 2);
-//             const y = getRandomNumber(height, rect.height - height);
-//             sticker.style.left = `${x - (width / 2)}px`;
-//             sticker.style.top = `${y - height}px`;
-//           });
-//         }, 200);
-//       }
-  
-//       if (typeof cleanup === 'function') cleanup();
-//       document.addEventListener('click', handleClick);
-//       if (stickerArea) stickerArea.addEventListener('touchstart', handleTouch, { passive: false });
-//       window.addEventListener('resize', handleResize, { passive: true });
-  
-//       cleanup = () => {
-//         document.removeEventListener('click', handleClick);
-//         if (stickerArea) stickerArea.removeEventListener('touchstart', handleTouch);
-//         window.removeEventListener('resize', handleResize);
-//         activeStickers.forEach(sticker => sticker.classList.add('remove'));
-//         setTimeout(() => {
-//           activeStickers.forEach(sticker => sticker.remove());
-//           activeStickers.length = 0;
-//           lastFourTypes.length = 0;
-//         }, 300);
-//       };
-  
-//       resetFunction = (shouldRecreate = true) => {
-//         activeStickers.forEach(sticker => sticker.classList.add('remove'));
-//         setTimeout(() => {
-//           activeStickers.forEach(sticker => sticker.remove());
-//           activeStickers.length = 0;
-//           lastFourTypes.length = 0;
-//           stickerSizeFactor = calculateSizeFactor();
-//           if (shouldRecreate) placeRandomStickers();
-//         }, 300);
-//       };
-  
-//       window.resetStickers = (shouldRecreate = true) => {
-//         if (typeof resetFunction === 'function') resetFunction(shouldRecreate);
-//       };
-  
-//       window.clearStickers = () => {
-//         if (typeof resetFunction === 'function') resetFunction(false);
-//       };
-  
-//       window.createRandomStickers = placeRandomStickers;
-  
-//       return cleanup;
-//     }
-  
-//     return initialize();
-//   }
-
 export function createStickerManager(area) {
+  console.log(area)
     let resetFunction;
     let cleanup;
     let resizeTimeout;
     let preventNextClick = false;
-  
+    const customCursor = document.querySelector(area).closest('.section').querySelector('.custom_cursor');
+
     const MAX_STICKERS = 16;
     const activeStickers = [];
     const lastFourTypes = [];
@@ -401,7 +102,7 @@ export function createStickerManager(area) {
       });
   
       const front = stickerAnim.querySelector('.sticker-front');
-    //   if (front) makeDraggable(front, stickerBox);
+      if (front) makeDraggable(front, stickerBox);
     }
   
     function makeDraggable(handleEl, moveTarget) {
@@ -409,6 +110,10 @@ export function createStickerManager(area) {
       let offsetY = 0;
       let isDragging = false;
       let dragMoved = false;
+      let mouse = { x: 0, y: 0 };
+      let pos = { x: 0, y: 0 };
+      let speed = 0.1;
+      let isInside = false;
   
       handleEl.addEventListener('mousedown', e => {
         e.preventDefault();
@@ -418,6 +123,8 @@ export function createStickerManager(area) {
         offsetX = e.clientX - rect.left;
         offsetY = e.clientY - rect.top;
         moveTarget.style.zIndex = '1000';
+        isDragging = true;
+        customCursor.style.opacity = 1;
       });
   
       document.addEventListener('mousemove', e => {
@@ -437,6 +144,44 @@ export function createStickerManager(area) {
         }
         isDragging = false;
         moveTarget.style.zIndex = '';
+
+        if (isDragging) {
+          setTimeout(() => {
+            isDragging = false;
+            customCursor.style.opacity = 0;
+          }, 100); // 약간의 딜레이를 주면 부드럽게 느껴짐
+        }
+      });
+      function animateCursor() {
+        if (isInside || isDragging) {
+          pos.x += (mouse.x - pos.x) * speed;
+          pos.y += (mouse.y - pos.y) * speed;
+          customCursor.style.transform = `translate(${pos.x}px, ${pos.y}px)`;
+        }
+        requestAnimationFrame(animateCursor);
+      }
+      animateCursor(); // 최초 실행 (단 한 번만 실행되도록 조절할 것!)
+      
+      handleEl.addEventListener('mouseenter', (e) => {
+        customCursor.style.opacity = 1;
+        isInside = true;
+        mouse.x = e.clientX;
+        mouse.y = e.clientY + window.scrollY;
+        pos.x = mouse.x;
+        pos.y = mouse.y;
+        customCursor.style.transform = `translate(${pos.x}px, ${pos.y}px)`;
+      });
+      
+      handleEl.addEventListener('mouseleave', () => {
+        if (!isDragging) {
+          customCursor.style.opacity = 0;
+          isInside = false;
+        }
+      });
+      
+      handleEl.addEventListener('mousemove', (e) => {
+        mouse.x = e.clientX;
+        mouse.y = e.clientY + window.scrollY;
       });
     }
   

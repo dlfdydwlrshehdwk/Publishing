@@ -52,7 +52,6 @@ window.onload = function() {
     animation: tl1,
     // markers:true,
   });
-
 };
 
 })

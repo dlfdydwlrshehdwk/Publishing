@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded',function(){
 
-  console.log('a')
   let swiper = new Swiper(".section04 .swiper", {
     slidesPerView: 1.45,
     spaceBetween: 25,
