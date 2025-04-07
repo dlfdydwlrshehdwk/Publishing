@@ -1,9 +1,8 @@
 document.addEventListener('DOMContentLoaded',()=>{
 
   let swiper = new Swiper('.continental', {
-    slidesPerView: '4.5',
+    slidesPerView: 'auto',
     loop: true,
-    centeredSlides: true,
     on: {
       init: function(){
 
@@ -29,7 +28,7 @@ const tl1 = gsap.timeline();
 // 타임라인에 애니메이션 추가
 tl1
 .to({}, {duration: .5})
-.to('.qwer', {width: '100%',height: '100vh',duration: 1})
+.to('.qwer', {width: '100%',height: '100vh',duration: 1,bottom:0})
 .to('.qwer .depth1 .dim', {autoAlpha:.3} ,"<+.5")
 .to('.qwer .depth1 .img2 img',{autoAlpha:0,filter:"blur(10px)"})
 .to({}, {duration: .2})
