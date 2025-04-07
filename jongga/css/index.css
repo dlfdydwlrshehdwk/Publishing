@@ -235,8 +235,13 @@ img {
   width: 100%;
   height: 100%;
 }
-.section {
-  
+.btn_top {
+  position: fixed;
+  height: 40px;
+  width: 40px;
+  bottom: 50px;
+  right: 40px;
+  cursor: pointer;
 }
 /* section01 S */
 .section01 {
@@ -252,14 +257,25 @@ img {
   /* z-index: 1; */
 }
 .section01 .marquee {
+  position: relative;
   gap: 175px;
   padding-right: 175px;
+}
+.section01 .marquee::before {
+  content: '';
+  background: url(../image/symbol2.png) no-repeat center / cover;
+  width: 70px;
+  top: 50%;
+  right: calc(100% + 28px);
+  position: absolute;
+  aspect-ratio: 70 / 69;
 }
 .section01 .marquee .text {
   font-size: 200px;
   color: #fff;
   white-space: nowrap;
   text-transform: uppercase;
+  letter-spacing: -4px;
 }
 .section01 .marquee_wrap.on {
   animation: marqueeAnimation 30s linear infinite;

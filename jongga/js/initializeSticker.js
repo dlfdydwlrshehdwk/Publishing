@@ -213,6 +213,10 @@ export function createStickerManager(area) {
       activeStickers.length = 0;
       lastFourTypes.length = 0;
       stickerSizeFactor = calculateSizeFactor();
+      const mainCenter = document.querySelector('.main_center');
+      if(mainCenter) {
+        mainCenter.remove();
+      }
       if(shouldRecreate) placeRandomStickers(); // 리셋 후 랜덤 스티커 생성
     }, 300);
   }

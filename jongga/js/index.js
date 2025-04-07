@@ -27,7 +27,14 @@ document.addEventListener('DOMContentLoaded', () => {
   const intro = document.getElementById('intro');
   const introImgSet = document.querySelector('#intro .img_set');
   const introImage = document.querySelector('#intro img');
+  const btnTop = document.querySelector('.btn_top');
 
+  btnTop.addEventListener('click',function(){
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  })
   // .main_center 드래그 설정
   setupDraggableWithCursor(mainCenter, mainCenter, customCursor);
 
