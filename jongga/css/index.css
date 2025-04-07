@@ -289,7 +289,6 @@ img {
   height: auto;
   top: 50%;
   left: 50%;
-  transform: translate(-50%,-50%);
   position: absolute;
   transition: none;
 }
@@ -623,13 +622,16 @@ img {
   transform: translate(-50%, -50%);
   width: 100%;
   user-select: none;
+  pointer-events: none;
 }
 .section05 .alphabet_wrap .wrap {
   gap: 10px;
+  pointer-events: none;
 }
 .section05 .alphabet {
   cursor: pointer;
   user-select: none;
+  pointer-events: auto;
 }
 .section05 .play_jongga {
   position: absolute;
@@ -664,8 +666,7 @@ img {
 .section05 .btn_download {
   cursor: pointer;
 }
-.section01 .custom_cursor,
-.section05 .custom_cursor {
+.custom_cursor_sticker {
   position: fixed;
   width: 159px;
   height: 36px;
