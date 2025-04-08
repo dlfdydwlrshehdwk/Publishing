@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded',()=>{
 
   let swiper = new Swiper('.continental', {
-    slidesPerView: '4.5',
+    slidesPerView: 'auto',
     loop: true,
     centeredSlides: true,
     grabCursor: true, 

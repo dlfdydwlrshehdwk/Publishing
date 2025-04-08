@@ -842,6 +842,7 @@ img {
 .section07 .qwer .continental ul > li {
   height: auto;
   width: auto;
+  margin-right: 160px;
 }
 .section07 .qwer .continental .name {
   font-weight: 400;
@@ -891,6 +892,7 @@ img {
   position: absolute;
   bottom: 0;
   opacity: 0;
+  width: 100%;
 }
 .ripple_set {
   opacity: 0;
