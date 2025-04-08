@@ -8,12 +8,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // GSAP ScrollSmoother 초기화
   gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
-  ScrollSmoother.create({
-    wrapper: ".smooth-wrapper",
-    content: ".smooth-content",
-    smooth: 1,
-    effects: true
-  });
+  if (!ScrollTrigger.isTouch) {
+    ScrollSmoother.create({
+      wrapper: ".smooth-wrapper",
+      content: ".smooth-content",
+      smooth: 1,
+      effects: true
+    });
+  }
 
   const section01Sticker = createStickerManager('.section01 .sticker_wrap');
   const customCursor = document.querySelector('.custom_cursor_sticker');

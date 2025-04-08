@@ -155,7 +155,7 @@ document.addEventListener('DOMContentLoaded', () => {
   ];
 
   // 이미지별 반지름 설정 (index 맞춰서)
-  const imageSizeList = [30, 40, 50, 35, 45, 50, 30, 40];
+  const imageSizeList = [15, 20, 25, 17, 23, 25, 15, 20];
 
   const loadedImages = [];
   let loadedCount = 0;
@@ -237,7 +237,7 @@ document.addEventListener('DOMContentLoaded', () => {
       imgPaths.forEach((src, index) => {
         const img = new Image();
         img.onload = () => {
-          loadedImages.push({ img, radius: imageSizeList[index] });
+          loadedImages.push({ img, radius: imageSizeList[index]});
           loadedCount++;
           if (loadedCount === imgPaths.length) {
             init(); // 모든 이미지 로딩 완료 시 초기화
