@@ -242,6 +242,12 @@ img {
   bottom: 50px;
   right: 40px;
   cursor: pointer;
+  opacity: 0;
+  transition: opacity .3s;
+}
+.btn_top.active {
+  opacity: 1;
+
 }
 /* section01 S */
 .section01 {

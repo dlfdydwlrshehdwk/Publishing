@@ -28,6 +28,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const introImgSet = document.querySelector('#intro .img_set');
   const introImage = document.querySelector('#intro img');
   const btnTop = document.querySelector('.btn_top');
+  const section02 = document.querySelector('.section02')
+  let section02TriggerY = section02.offsetTop / 2;
+  let isPinned = false;
 
   btnTop.addEventListener('click',function(){
     window.scrollTo({
@@ -45,6 +48,16 @@ document.addEventListener('DOMContentLoaded', () => {
       section01Sticker.reset();
     });
   }
+
+  gsap.ticker.add(() => {
+    const scrollY = ScrollSmoother.get().scrollTop();
+  
+    if (!isPinned && scrollY >= section02TriggerY) {
+      btnTop.classList.add('active');
+    } else {
+      btnTop.classList.remove('active');
+    }
+  });
 
   // 마우스 좌표 추적
   document.addEventListener('mousemove', (e) => {
@@ -147,6 +160,41 @@ document.addEventListener('DOMContentLoaded', () => {
     mainCenter.style.left = `${left}px`;
   }
 
+
+  // GSAP 타임라인 생성
+const tl1 = gsap.timeline();
+
+// 타임라인에 애니메이션 추가
+tl1
+.to({}, {duration: .5})
+.to('.qwer', {width: '100%',height: '100vh',duration: 1})
+.to('.qwer .depth1 .dim', {autoAlpha:.3} ,"<+.5")
+.to('.qwer .depth1 .img2 img',{autoAlpha:0,filter:"blur(10px)"})
+.to({}, {duration: .2})
+.to('.qwer .depth1 .img3', {autoAlpha:1, filter:'blur(0px)'})
+.to('.qwer .depth1 .dim', {autoAlpha:1})
+.to('.qwer .depth1 .img3', {autoAlpha:0, filter:'blur(10px)'})
+.fromTo('.qwer .global', {autoAlpha:0,y:20},{autoAlpha:1,y:0})
+.to('#footer',{autoAlpha:1},"<")
+.to({}, {duration: .5})
+.fromTo('.qwer .continental', {y:-10,autoAlpha:0,filter:'blur(5px)'},{y:0,autoAlpha:1,filter:'blur(0px)'})
+.to('.ripple_set',{autoAlpha:1})
+window.onload = function() {
+  ScrollTrigger.create({
+    trigger: ".section07",
+    start: "bottom bottom",
+    end: "4000px",
+    pin: true,
+    pinSpacing: true,
+    scrub: true,
+    animation: tl1,
+    // markers:true,
+    onEnter: () => isPinned = true,
+    onEnterBack: () => isPinned = true,
+    onLeave: () => isPinned = false,
+    onLeaveBack: () => isPinned = false,
+  });
+};
   // 창 크기 변경 시 다시 중앙 정렬
   window.addEventListener('resize', centerMainCenter);
   
