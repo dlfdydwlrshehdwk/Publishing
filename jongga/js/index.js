@@ -115,8 +115,8 @@ document.addEventListener('DOMContentLoaded', () => {
           autoAlpha: 1,
           ease: 'power2.inOut'
         });
-      }, 1000);
-    }, 3000);
+      }, 1);
+    }, 3);
   }
 
   function startSection01() {
