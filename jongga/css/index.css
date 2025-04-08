@@ -313,6 +313,10 @@ img {
   left: 50%;
   position: absolute;
   transition: none;
+  cursor: grab;
+}
+.section01 .main_center:active {
+  cursor: grabbing;
 }
 .section01 .main_center {
   transition: none;
@@ -993,10 +997,10 @@ img {
 }
 .sticker-box .sticker-front {
   pointer-events: auto;
-  /* cursor: grab; */
+  cursor: grab;
 }
 .sticker-box .sticker-front:active {
-  /* cursor: grabbing; */
+  cursor: grabbing;
 }
 .sticker-box img {
   pointer-events: none;
