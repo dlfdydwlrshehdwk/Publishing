@@ -1,9 +1,10 @@
 document.addEventListener('DOMContentLoaded',()=>{
 
   let swiper = new Swiper('.continental', {
-    slidesPerView: '4.5',
+    slidesPerView: 'auto',
     loop: true,
     centeredSlides: true,
+    grabCursor: true, 
     on: {
       init: function(){
 
@@ -23,35 +24,24 @@ document.addEventListener('DOMContentLoaded',()=>{
   });
 
 
-// GSAP 타임라인 생성
-const tl1 = gsap.timeline();
 
-// 타임라인에 애니메이션 추가
-tl1
-.to({}, {duration: .5})
-.to('.qwer', {width: '100%',height: '100vh',duration: 1})
-.to('.qwer .depth1 .dim', {autoAlpha:.3} ,"<+.5")
-.to('.qwer .depth1 .img2 img',{autoAlpha:0,filter:"blur(10px)"})
-.to({}, {duration: .2})
-.to('.qwer .depth1 .img3', {autoAlpha:1, filter:'blur(0px)'})
-.to('.qwer .depth1 .dim', {autoAlpha:1})
-.to('.qwer .depth1 .img3', {autoAlpha:0, filter:'blur(10px)'})
-.fromTo('.qwer .global', {autoAlpha:0,y:20},{autoAlpha:1,y:0})
-.to('#footer',{autoAlpha:1},"<")
-.to({}, {duration: .5})
-.fromTo('.qwer .continental', {y:-10,autoAlpha:0,filter:'blur(5px)'},{y:0,autoAlpha:1,filter:'blur(0px)'})
-.to('.ripple_set',{autoAlpha:1})
-window.onload = function() {
-  ScrollTrigger.create({
-    trigger: ".section07",
-    start: "bottom bottom",
-    end: "4000px",
-    pin: true,
-    pinSpacing: true,
-    scrub: true,
-    animation: tl1,
-    // markers:true,
+  const continental = document.querySelector('.continental');
+  const cursor = continental.querySelector('.continental_cursor');
+  
+  continental.addEventListener('pointerenter', () => {
+    cursor.classList.add('active');
   });
-};
 
+  continental.addEventListener('pointerleave', () => {
+    cursor.classList.remove('active');
+  });
+
+  // 드래그 중에도 따라가게 하기 위해 pointermove 사용
+  continental.addEventListener('pointermove', (e) => {
+    const rect = continental.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    cursor.style.transform = `translate(${x}px, ${y}px)`;
+  });
 })

@@ -242,6 +242,12 @@ img {
   bottom: 50px;
   right: 40px;
   cursor: pointer;
+  opacity: 0;
+  transition: opacity .3s;
+}
+.btn_top.active {
+  opacity: 1;
+
 }
 /* section01 S */
 .section01 {
@@ -307,6 +313,10 @@ img {
   left: 50%;
   position: absolute;
   transition: none;
+  cursor: grab;
+}
+.section01 .main_center:active {
+  cursor: grabbing;
 }
 .section01 .main_center {
   transition: none;
@@ -391,6 +401,14 @@ img {
   outline: none !important;
   border: none;
   pointer-events: none;
+}
+.section03 .video_set {
+  width: 100%;
+  height: 100%;
+}
+.section03 .video_set video {
+  width: 100%;
+  height: 100%;
 }
 .section03 .custom_cursor {
   position: fixed;
@@ -823,6 +841,8 @@ img {
 }
 .section07 .qwer .continental ul > li {
   height: auto;
+  width: auto;
+  margin-right: 160px;
 }
 .section07 .qwer .continental .name {
   font-weight: 400;
@@ -872,6 +892,7 @@ img {
   position: absolute;
   bottom: 0;
   opacity: 0;
+  width: 100%;
 }
 .ripple_set {
   opacity: 0;
@@ -917,7 +938,7 @@ img {
 }
 .ripple.america {
   top: 35%;
-  left: 16%;
+  left: 17%;
 }
 .ripple.oceania {
   top: 67%;
@@ -963,7 +984,34 @@ img {
 }
 
 
-
+.section07 .continental_cursor {
+  position: absolute;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity .2s;
+  height: 36px;
+  padding: 0 16px;
+  border-radius: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 1);
+  border: 1px solid #B4926C66;
+  background: rgba(180, 146, 108, 0.4);
+  font-family: 'Uncut', sans-serif;
+  backdrop-filter: blur(10px);
+  box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.2);
+  font-weight: 600;
+  font-size: 16px;
+  will-change: transform;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  top: 0;
+  left: 0;
+}
+.section07 .continental_cursor.active {
+  opacity: 1;
+}
 
 
 
@@ -979,10 +1027,10 @@ img {
 }
 .sticker-box .sticker-front {
   pointer-events: auto;
-  /* cursor: grab; */
+  cursor: grab;
 }
 .sticker-box .sticker-front:active {
-  /* cursor: grabbing; */
+  cursor: grabbing;
 }
 .sticker-box img {
   pointer-events: none;
