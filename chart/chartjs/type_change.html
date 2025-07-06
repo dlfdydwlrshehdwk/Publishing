@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=\, initial-scale=1.0">
+  <title>Document</title>
+    <script src="../../js/chart.umd.js"></script>
+  <link rel="stylesheet" href="../../css/reset.css">
+</head>
+<body>
+  <canvas id="myChart"></canvas>
+<button id="changeChart">Change to Pie</button>
+
+<script>
+const ctx = document.getElementById('myChart').getContext('2d');
+
+const myChart = new Chart(ctx, {
+    type: 'bar', // 처음에는 bar chart
+    data: {
+        labels: ['Red', 'Blue', 'Yellow', 'Green'],
+        datasets: [{
+            label: 'Votes',
+            data: [12, 19, 3, 5],
+            backgroundColor: [
+                'rgba(255,99,132,0.6)',
+                'rgba(54,162,235,0.6)',
+                'rgba(255,206,86,0.6)',
+                'rgba(75,192,192,0.6)'
+            ],
+            borderColor: '#fff',
+            borderWidth: 2
+        }]
+    },
+    options: {
+        animation: {
+            duration: 1000,
+            easing: 'easeInOutQuart'
+        },
+        plugins: {
+            tooltip: {
+                enabled: true
+            }
+        },
+        onClick: (event, elements) => {
+          // 클릭한 요소 가져오기
+          const points = myChart.getElementsAtEventForMode(event, 'nearest', { intersect: true }, true);
+
+          if (points.length) {
+              const firstPoint = points[0];
+              const label = myChart.data.labels[firstPoint.index];
+              const value = myChart.data.datasets[firstPoint.datasetIndex].data[firstPoint.index];
+
+              // 원하는 동작 예시
+              alert(`클릭한 항목: ${label} / 값: ${value}`);
+
+              // 페이지 이동 예시
+              // if (label === '1번') {
+              //     window.location.href = 'https://example.com/page1';
+              // }
+          }
+      },
+    }
+});
+
+// 버튼 클릭 시 타입 변경
+document.getElementById('changeChart').addEventListener('click', () => {
+    myChart.config.type = 'pie'; // 타입 변경
+    myChart.update({
+        duration: 1000,
+        easing: 'easeOutElastic'
+    });
+});
+</script>
+
+</body>
+</html>

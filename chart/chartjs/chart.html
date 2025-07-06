@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="../../js/chart.umd.js"></script>
+  <link rel="stylesheet" href="../../css/reset.css">
+  <style>
+    #myChart {
+      width: 100%;
+      max-height: 100vh;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="myChart" width="400" height="400"></canvas>
+</body>
+<script>
+  // chart.js 통합
+    const ctx = document.getElementById('myChart').getContext('2d');
+    const myChart = new Chart(ctx, {
+        type: 'pie', 
+        // 차트타입
+        // bar - 막대 차트 (가로/세로)
+        // horizontalBar - 수평 막대 차트
+        // line - 선 그래프
+        // pie - 원형 차트
+        // doughnut - 도넛 차트
+        // radar - 레이더 차트
+        // scatter - 산점도 (scatter plot) X, Y 값으로 그리는 산점도
+        // bubble - 버블 차트 크기가 있는 산점도
+        // polarArea - Polar Area 방사형 면적 차트
+        data: {
+            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+            datasets: [{
+                label: '# of Votes',
+                data: [12, 19, 3, 5, 2, 3],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true // y축 0부터 시작
+                }
+            }
+        }
+    });
+</script>
+
+</html>

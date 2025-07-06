@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>여러 개 도넛 프로그레스</title>
+    <style>
+        .progress-wrap {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            margin: 20px;
+            display: inline-block;
+        }
+
+        svg {
+            transform: rotate(-90deg);
+        }
+
+        .circle-bg {
+            fill: none;
+            stroke: #eee;
+            stroke-width: 20;
+        }
+
+        .circle-fg {
+            fill: none;
+            stroke: #00bcd4;
+            stroke-width: 20;
+            stroke-linecap: round;
+            stroke-dasharray: 0 999;
+            transition: stroke-dasharray 2s ease;
+        }
+
+        .percent-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+
+<div id="progressContainer"></div>
+
+<script>
+    function createDonutProgress(container, percent, color) {
+        const r = 80;
+        const circumference = 2 * Math.PI * r;
+        const dash = (percent / 100) * circumference;
+
+        // 엘리먼트 생성
+        const wrap = document.createElement('div');
+        wrap.className = 'progress-wrap';
+
+        wrap.innerHTML = `
+            <svg width="200" height="200">
+                <circle class="circle-bg" cx="100" cy="100" r="${r}" />
+                <circle class="circle-fg" cx="100" cy="100" r="${r}" />
+            </svg>
+            <div class="percent-text">0%</div>
+        `;
+
+        container.appendChild(wrap);
+
+        const fg = wrap.querySelector('.circle-fg');
+        const text = wrap.querySelector('.percent-text');
+
+        // 색상 지정
+        if (color) fg.style.stroke = color;
+
+        // 애니메이션 시작
+        fg.style.strokeDasharray = `0 ${circumference}`;
+        setTimeout(() => {
+            fg.style.strokeDasharray = `${dash} ${circumference}`;
+        }, 100);
+
+        // 텍스트 증가 애니메이션
+        let current = 0;
+        const interval = setInterval(() => {
+            if (current >= percent) {
+                current = percent;
+                clearInterval(interval);
+            }
+            text.textContent = `${current}%`;
+            current++;
+        }, 2000 / percent);
+    }
+
+    // 예시 데이터
+    const dataList = [
+        { percent: 75, color: '#ff5722' },
+        { percent: 120, color: '#4caf50' },
+        { percent: 300, color: '#3f51b5' }
+    ];
+
+    const container = document.getElementById('progressContainer');
+
+    dataList.forEach(data => {
+        createDonutProgress(container, data.percent, data.color);
+    });
+</script>
+
+</body>
+</html>

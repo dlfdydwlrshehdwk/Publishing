@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>도넛 호버 시 DOM 중앙 퍼센트</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            padding: 50px;
+            background: #f5f5f5;
+        }
+        .chart-container {
+            position: relative;
+            width: 400px;
+            height: 400px;
+        }
+        #centerLabel {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 24px;
+            font-weight: bold;
+            color: #222;
+            pointer-events: none;
+            user-select: none;
+        }
+        canvas {
+            background: #fff;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+
+<div class="chart-container">
+    <canvas id="myChart" width="400" height="400"></canvas>
+    <span id="centerLabel"></span>
+</div>
+
+<script>
+    const centerSpan = document.getElementById('centerLabel');
+
+    const config = {
+        type: 'doughnut',
+        data: {
+            labels: ['A', 'B', 'C'],
+            datasets: [{
+                data: [100, 200, 150],
+                backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56']
+            }]
+        },
+        options: {
+            onHover: function(evt, elements, chart) {
+                if (!elements.length) {
+                    centerSpan.textContent = '';
+                    return;
+                }
+
+                const index = elements[0].index;
+                const dataset = chart.data.datasets[0];
+                const value = dataset.data[index];
+                const total = dataset.data.reduce((a, b) => a + b, 0);
+                const percent = Math.round((value / total) * 100);
+
+                centerSpan.textContent = `${percent}%`;
+            },
+            plugins: {
+                legend: { display: true },
+                tooltip: { enabled: true }
+            }
+        }
+    };
+
+    const ctx = document.getElementById('myChart').getContext('2d');
+    new Chart(ctx, config);
+</script>
+
+</body>
+</html>

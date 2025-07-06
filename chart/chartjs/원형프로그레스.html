@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>원형 프로그레스바</title>
+    <style>
+        .progress-wrap {
+            position: relative;
+            width: 200px;
+            height: 200px;
+        }
+
+        svg {
+            transform: rotate(-90deg); /* 12시 방향에서 시작 */
+        }
+
+        .circle-bg {
+            fill: none;
+            stroke: #eee;
+            stroke-width: 20;
+        }
+
+        .circle-fg {
+            fill: none;
+            stroke: #00bcd4;
+            stroke-width: 20;
+            stroke-linecap: round;
+            stroke-dasharray: 0 999;
+            transition: stroke-dasharray 2s ease;
+        }
+
+        .percent-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+
+<div class="progress-wrap">
+    <svg width="200" height="200">
+        <circle class="circle-bg" cx="100" cy="100" r="80"/>
+        <circle class="circle-fg" cx="100" cy="100" r="80"/>
+    </svg>
+    <div class="percent-text" id="percentText">0%</div>
+</div>
+
+<script>
+    // 퍼센트 (100 이상도 가능)
+    const percent = 90;
+
+    const fg = document.querySelector('.circle-fg');
+    const text = document.getElementById('percentText');
+
+    const r = 80;
+    const circumference = 2 * Math.PI * r;
+
+    // 퍼센트에 비례한 stroke 길이 설정
+    const dash = (percent / 100) * circumference;
+
+    // 시각 효과: 0 → n% 애니메이션
+    fg.style.strokeDasharray = `0 ${circumference}`;
+    setTimeout(() => {
+        fg.style.strokeDasharray = `${dash} ${circumference}`;
+    }, 100);
+
+    // 텍스트 증가 애니메이션
+    let current = 0;
+    const interval = setInterval(() => {
+        if (current >= percent) {
+            current = percent;
+            clearInterval(interval);
+        }
+        text.textContent = `${current}%`;
+        current++;
+    }, 2000 / percent);
+</script>
+
+</body>
+</html>

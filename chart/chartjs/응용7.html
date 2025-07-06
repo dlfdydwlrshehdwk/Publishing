@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>도넛 각 조각에 호버 시 퍼센트</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            padding: 50px;
+            background: #f5f5f5;
+        }
+        canvas {
+            background: #fff;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="myChart" width="400" height="400"></canvas>
+
+    <script>
+        const arcHoverLabelPlugin = {
+            id: 'arcHoverLabelPlugin',
+            afterDatasetDraw(chart) {
+                const {ctx} = chart;
+                const dataset = chart.data.datasets[0];
+                const meta = chart.getDatasetMeta(0);
+                const total = dataset.data.reduce((a, b) => a + b, 0);
+
+                const activeElements = chart.getActiveElements();
+                if (!activeElements.length) return;
+
+                ctx.save();
+                ctx.font = 'bold 14px sans-serif';
+                ctx.fillStyle = '#000';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+
+                activeElements.forEach(active => {
+                    const index = active.index;
+                    const arc = meta.data[index];
+                    const value = dataset.data[index];
+                    const percent = Math.round((value / total) * 100);
+
+                    const midAngle = (arc.startAngle + arc.endAngle) / 2;
+                    const radius = (arc.outerRadius + arc.innerRadius) / 2 + 10; // 살짝 위로
+                    const x = arc.x + Math.cos(midAngle) * radius;
+                    const y = arc.y + Math.sin(midAngle) * radius;
+
+                    ctx.fillText(`${percent}%`, x, y);
+                });
+
+                ctx.restore();
+            }
+        };
+
+        const config = {
+            type: 'doughnut',
+            data: {
+                labels: ['A', 'B', 'C'],
+                datasets: [{
+                    data: [100, 200, 150],
+                    backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56']
+                }]
+            },
+            options: {
+                animation: false,
+                plugins: {
+                    tooltip: { enabled: true },
+                    legend: { display: true }
+                },
+                hover: {
+                    mode: 'nearest',
+                    intersect: true
+                }
+            },
+            plugins: [arcHoverLabelPlugin]
+        };
+
+        const ctx = document.getElementById('myChart').getContext('2d');
+        new Chart(ctx, config);
+    </script>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>도넛 호버 → 퍼센트 중앙 표시</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="../../css/reset.css">
+    <style>
+        #myChart {
+        width: 100%;
+        max-height: 100vh;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="myChart" width="400" height="400"></canvas>
+
+    <script>
+        let hoveredPercent = null;
+
+        const centerTextPlugin = {
+            id: 'centerTextPlugin',
+            afterDraw(chart) {
+                if (hoveredPercent === null) return;
+
+                const {ctx} = chart;
+                const meta = chart.getDatasetMeta(0);
+                if (!meta || !meta.data[0]) return;
+
+                const centerX = meta.data[0].x;
+                const centerY = meta.data[0].y;
+
+                ctx.save();
+                ctx.font = 'bold 28px sans-serif';
+                ctx.fillStyle = '#000';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(`${hoveredPercent}%`, centerX, centerY);
+                ctx.restore();
+            }
+        };
+
+        const config = {
+            type: 'doughnut',
+            data: {
+                labels: ['A', 'B', 'C'],
+                datasets: [{
+                    data: [100, 200, 150],
+                    backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56']
+                }]
+            },
+            options: {
+                onHover: function(evt, elements, chart) {
+                    if (!elements.length) {
+                        hoveredPercent = null;
+                        chart.draw(); // 실시간 반영
+                        return;
+                    }
+
+                    const index = elements[0].index;
+                    const dataset = chart.data.datasets[0];
+                    const value = dataset.data[index];
+                    const total = dataset.data.reduce((a, b) => a + b, 0);
+                    hoveredPercent = Math.round((value / total) * 100);
+                    chart.draw(); // 실시간 반영
+                },
+                plugins: {
+                    legend: { display: true },
+                    tooltip: { enabled: true }
+                }
+            },
+            plugins: [centerTextPlugin]
+        };
+
+        const ctx = document.getElementById('myChart').getContext('2d');
+        new Chart(ctx, config);
+    </script>
+</body>
+</html>

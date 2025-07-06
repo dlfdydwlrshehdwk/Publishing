@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="../../js/chart.umd.js"></script>
+  <link rel="stylesheet" href="../../css/reset.css">
+  <style>
+    #myChart {
+      width: 100%;
+      max-height: 100vh;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="myChart" width="400" height="400"></canvas>
+</body>
+<script>
+  // chart.js 통합
+    const ctx = document.getElementById('myChart').getContext('2d');
+    const config = {
+    type: 'bar', // 차트 타입: 'line', 'bar', 'pie', 'doughnut', etc.
+    data: {
+        labels: ['1월', '2월', '3월'],
+        datasets: [{
+            label: '매출',
+            data: [100, 200, 150],
+            backgroundColor: '#4BC0C0', // 막대 색상
+            borderWidth: 1
+        }]
+    },
+    options: {
+        responsive: true, // 반응형 여부
+        maintainAspectRatio: false, // true면 aspect ratio 유지
+
+        onClick: function(evt, elements, chart) {
+            // 차트 클릭 시 호출
+            console.log('클릭된 요소:', elements);
+        },
+
+        onResize: function(chart, size) {
+            // 차트 리사이즈 시 호출
+            console.log('차트 크기 변경됨:', size);
+        },
+
+        plugins: {
+            tooltip: {
+                enabled: true, // 툴팁 표시 여부
+                callbacks: {
+                    title: function(context) {
+                        // 툴팁의 제목
+                        return '제목: ' + context[0].label;
+                    },
+                    label: function(context) {
+                        // 툴팁 본문
+                        return '값: ' + context.formattedValue;
+                    },
+                    footer: function(context) {
+                        // 툴팁 하단
+                        return '총 ' + context.length + '개 항목';
+                    }
+                }
+            },
+
+            legend: {
+                display: true, // 범례 표시 여부
+                position: 'top', // top, bottom, left, right
+                labels: {
+                    filter: function(legendItem, data) {
+                        // 특정 범례 제외
+                        return legendItem.text !== '숨기기';
+                    },
+                    generateLabels: function(chart) {
+                        // 커스텀 범례 생성
+                        return Chart.defaults.plugins.legend.labels.generateLabels(chart);
+                    }
+                },
+                onClick: function(evt, legendItem, legend) {
+                    // 범례 클릭 시
+                    console.log('범례 클릭:', legendItem);
+                }
+            },
+        },
+
+        animation: {
+            duration: 1000, // 애니메이션 시간(ms)
+            easing: 'easeOutBounce', // easing 효과
+            onComplete: function() {
+                // 애니메이션 끝난 후
+                console.log('애니메이션 완료');
+            },
+            onProgress: function(animation) {
+                // 애니메이션 진행 중
+                // console.log('프레임 진행 중:', animation.currentStep);
+                // var percent = Math.round((animation.currentStep / animation.numSteps) * 100);
+                // console.log('진행률:', percent + '%');
+            }
+        },
+        // x,y 축 관련
+        scales: {
+            x: {
+                beginAtZero: true, // 0부터 시작
+                ticks: {
+                    callback: function(value, index, ticks) {
+                        // X축 값 표시 형식
+                        return value + '월';
+                    }
+                }
+            },
+            y: {
+                beginAtZero: true,
+                ticks: {
+                    callback: function(value) {
+                        // Y축 값 표시 형식
+                        return value + '만원';
+                    }
+                }
+            }
+        }
+    }
+};
+
+    const myChart = new Chart(ctx, config);
+</script>
+
+</html>
+

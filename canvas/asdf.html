@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="../css/reset.css">
+</head>
+<body>
+<canvas id="myCanvas" width="500" height="500"></canvas>
+<script>
+    var canvas = document.getElementById('myCanvas');
+    var ctx = canvas.getContext('2d');
+    var circles = [];
+
+    // 초기화
+    for (var i = 0; i < 50; i++) {
+        circles.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            r: Math.random() * 20 + 10,
+            vx: (Math.random() - 0.5) * 0.5,
+            vy: (Math.random() - 0.5) * 0.5
+        });
+    }
+
+    function animate() {
+        // 캔버스를 어둡게 덮어, 잔상처럼 보이게 하기
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
+        ctx.globalCompositeOperation = 'source-over';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        ctx.globalCompositeOperation = 'lighter';
+
+        for (var i = 0; i < circles.length; i++) {
+            var c = circles[i];
+
+            // 움직이기
+            c.x += c.vx;
+            c.y += c.vy;
+
+            // 경계 반사
+            if (c.x < 0 || c.x > canvas.width) c.vx *= -1;
+            if (c.y < 0 || c.y > canvas.height) c.vy *= -1;
+
+            // 그리기
+            var grad = ctx.createRadialGradient(c.x, c.y, 0, c.x, c.y, c.r);
+            grad.addColorStop(0, 'rgba(255,255,255,0.2)');
+            grad.addColorStop(1, 'rgba(255,255,255,0)');
+
+            ctx.fillStyle = grad;
+            ctx.beginPath();
+            ctx.arc(c.x, c.y, c.r, 0, Math.PI * 2);
+            ctx.fill();
+        }
+
+        requestAnimationFrame(animate);
+    }
+
+    animate();
+</script>
+
+
+</body>
+</html>
