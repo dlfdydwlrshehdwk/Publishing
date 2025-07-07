@@ -99,12 +99,9 @@ top: calc((100vh - 97px) / 2 + 97px);
   width: 300%;
   height: 300%;
   mix-blend-mode: multiply;
-  /* animation: section1_animation 5s ease-in-out infinite */
 }
 
 #container .section2 {
-  /* position: fixed; */
-  /* top: 97px; */
   left: 0;
   background-color: #000;
   z-index: 99;
@@ -123,8 +120,6 @@ top: calc((100vh - 97px) / 2 + 97px);
 }
 
 #container .section3 {
-  /* position: fixed; */
-  /* top: 97px; */
   left: 0;
   z-index: 300;
   background: #000;
