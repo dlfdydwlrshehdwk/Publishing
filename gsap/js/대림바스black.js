@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function(){
-  // return
+  
   gsap.registerPlugin(ScrollTrigger);
 
   // 1. Lenis 인스턴스 생성
@@ -27,25 +27,102 @@ document.addEventListener('DOMContentLoaded', function(){
   // gsap.ticker.add((time) => lenis.raf(time * 1000));
   // gsap.ticker.lagSmoothing(0);
 
-  const headerH = document.querySelector('#header').scrollHeight;
+  const headerH = document.querySelector('#header').clientHeight;
+  const windowH = window.innerHeight - headerH;
+  const stringWindowH = windowH.toString();
+  function calcWindowH (num = 1){
+    return (num * windowH).toString();
+  }
+  console.log(calcWindowH(3))
+
   // section1 -> section2 
   ScrollTrigger.create({
     trigger: ".section1",
     start: `top ${headerH}`,
-    end: '1000',
+    end: stringWindowH,
     scrub: true,
     pin: true,
-    // markers:true,
-    pinType: 'transform',
+    markers:true,
+    // pinType: 'transform',
     anticipatePin: 1,
     onUpdate: (self) => {
       const progress = self.progress;
-      gsap.to('.section1', {opacity: 1 - progress});
-      gsap.to('.section2', {opacity: progress});
+      gsap.to('.content1', {opacity: 1 - progress});
+      gsap.to('.content2', {opacity: progress});
     }
   })
 
+  // section2 -> section3 
+  ScrollTrigger.create({
+    trigger: ".section2",
+    start: `top ${headerH}`,
+    end: stringWindowH,
+    scrub: true,
+    pin: true,
+    markers:true,
+    // pinType: 'transform',
+    anticipatePin: 1,
+    onUpdate: (self) => {
+      const progress = self.progress;
+      gsap.to('.content2', {opacity: 1 - progress});
+      gsap.to('.content3', {opacity: progress});
+    }
+  })
 
+  // section3 -> section4 
+  const section3TitleSet = document.querySelectorAll('.content3 .title_set');
+  ScrollTrigger.create({
+    trigger: ".section3",
+    start: `top ${headerH}`,
+    end: calcWindowH(4),
+    scrub: true,
+    pin: true,
+    markers:true,
+    // pinType: 'transform',
+    anticipatePin: 1,
+    onUpdate: (self) => {
+      const progress = self.progress;
+      console.log(progress)
+      section3TitleSet.forEach(ele => {
+        ele.classList.remove('on')
+      })
+      if(progress < 0.25) {
+        section3TitleSet[0].classList.add('on')
+      } else if (progress < 0.5) {
+        section3TitleSet[1].classList.add('on')
+      } else if (progress < .75) {
+        section3TitleSet[2].classList.add('on')
+
+      }
+
+      if (progress < 0.75) {
+          gsap.to('.content3', { opacity: 1 });
+          gsap.to('.content4', { opacity: 0 });
+      } else {
+          // progress 0.75~1.0 → 0~1로 리매핑
+          const localProgress = (progress - 0.75) / 0.25;
+          gsap.to('.content3', { opacity: 1 - localProgress });
+          gsap.to('.content4', { opacity: localProgress });
+      }
+    }
+  })
+
+  // section4 -> section5 
+  ScrollTrigger.create({
+    trigger: ".section4",
+    start: `top ${headerH}`,
+    end: calcWindowH(),
+    scrub: true,
+    pin: true,
+    markers:true,
+    // pinType: 'transform',
+    anticipatePin: 1,
+    onUpdate: (self) => {
+      const progress = self.progress;
+      gsap.to('.content4', {opacity: 1 - progress});
+      gsap.to('.content5', {opacity: progress});
+    }
+  })
 
 
 

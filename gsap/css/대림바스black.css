@@ -6,7 +6,7 @@ body {
 }
 /* _header */
 #header {
-  /* opacity: 0; */
+  opacity: 0;
   position: fixed;
   top: 0;
   left: 0;
@@ -24,7 +24,7 @@ body {
 .pagination {
   position: fixed;
   left: 72px;
-top: calc((100vh - 97px) / 2 + 97px);
+  top: calc((100vh - 97px) / 2 + 97px);
   transform: translateY(-50%);
   z-index: 9999;
 }
@@ -66,50 +66,75 @@ top: calc((100vh - 97px) / 2 + 97px);
   margin-top: 97px;
   min-height: calc(100vh - 97px);
 }
-#container section img {
+.fixed_content img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 #container section {
+  width: 100%;
+  height: calc(100vh - 97px);
   position: relative;
+}
+.fixed_content {
+  position: fixed;
+  top:97px;
+  left: 0;
   overflow: hidden;
   width: 100%;
   height: calc(100vh - 97px);
 }
-#container .section1 {
-  z-index: 100;
-}
-.section1 .title {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%,-50%);
-  z-index: 200;
-}
-.section1 .bg,
-.section1 .mask {
+.fixed_content .content {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
 }
-.section1 .mask {
+.content .bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.fixed_bg {
+  background: #000;
+  position: fixed;
+  top: 97px;
+  left: 0;
+  width: 100%;
+  height: calc(100vh - 97px);
+}
+/* content1 */
+.content1 .title {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  z-index: 200;
+}
+.content1 .bg,
+.content1 .bg2,
+.content1 .mask {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.content1 .mask {
   width: 300%;
   height: 300%;
   mix-blend-mode: multiply;
   animation: section1_animation 5s ease-in-out infinite
 }
-
-#container .section2 {
-  position: fixed;
-  top: 97px;
-  left: 0;
-  background-color: #000;
-  z-index: 99;
+/* content2 */
+.content2 {
+  position: relative;
+  background: #000;
 }
-.section2 .title {
+.content2 .title {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -121,16 +146,11 @@ top: calc((100vh - 97px) / 2 + 97px);
   text-align: center;
   color: #fff;
 }
-
-#container .section3 {
-  position: fixed;
-  top: 97px;
-  left: 0;
-  z-index: 300;
-  background: #000;
-  z-index: 98;
+/* content3 */
+.content3 {
+  opacity: 0;
 }
-.section3 .title_wrapper {
+.content3 .title_wrapper {
   position: absolute;
   top: 50%;
   left: 58.4375%;
@@ -138,26 +158,30 @@ top: calc((100vh - 97px) / 2 + 97px);
   display: flex;
   flex-direction: column;
   gap: 130px;
+  z-index: 1;
 }
-.section3 .title,
-.section3 .category {
+.content3 .title,
+.content3 .category {
   color: rgba(255, 255, 255, 0.1);
 }
-.section3 .title {
-  opacity: 0.1;
+.content3 .title {
   font-size: 40px;
   font-weight: 800;
   line-height: 1.5;
+  transition: color .5s;
 }
-.section3 .category {
+.content3 .category {
   margin-top: 20px;
   font-size: 16px;
   font-weight: 500;
   line-height: 1.5;
+  transition: color .5s;
 }
-.section3 .title_set.on .title,
-.section3 .title_set.on .category {
+.content3 .title_set.on .title {
   color: #fff;
+}
+.content3 .title_set.on .category {
+  color: rgba(255, 255, 255, 0.4);
 }
 @keyframes section1_animation {
   0% {
@@ -174,16 +198,61 @@ top: calc((100vh - 97px) / 2 + 97px);
   }
 }
 
-.section4 {
+/* content4 */
+.content4 {
   background-color: #000;
+  opacity: 0;
 }
-.section4 .title {
+.content4 .title {
   color: #fff;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%,-50%);
 }
+
+/* content5 */
+.content5 {
+  opacity: 0;
+}
+
+
+
+.content1 {z-index: 100;}
+.content2 {z-index: 99;}
+.content3 {z-index: 98;}
+.content4 {z-index: 97;}
+.content5 {z-index: 96;}
+.content6 {z-index: 95;}
+.content7 {z-index: 94;}
+.content8 {z-index: 93;}
+.content9 {z-index: 92;}
+.content10 {z-index: 91;}
+.content11 {z-index: 90;}
+.content12 {z-index: 89;}
+.content13 {z-index: 88;}
+.content14 {z-index: 87;}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /* _footer */
 
 
