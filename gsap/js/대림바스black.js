@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function(){
-  return
+  // return
   gsap.registerPlugin(ScrollTrigger);
 
   // 1. Lenis 인스턴스 생성
