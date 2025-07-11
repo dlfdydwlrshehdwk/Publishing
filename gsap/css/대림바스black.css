@@ -282,6 +282,7 @@ body {
   bottom: 86.91%;
 }
 
+/* content6 */
 .content6 {
   opacity: 0;
 }
@@ -300,6 +301,11 @@ body {
   margin-top: 60px;
   text-align: center;
 }
+
+/* content7 */
+.content7 {
+  opacity: 0;
+}
 .content7 .title {
   position: absolute;
   top: 50%;
@@ -311,25 +317,48 @@ body {
   letter-spacing: -0.4px;
   color: #fff;
 }
+
+/* content8 */
+.content8,
+.content8 .bg,
+.content8 .item {
+  opacity: 0;
+}
+.content8 .bg,
+.content8 .item,
+.contenn8 .sub_title {
+  transition: .3s;
+}
 .content8 .title_wrap {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%,-50%);
 }
-.content8 .sub_title {
+.content8 .sub_title_wrap {
   position: absolute;
   top: 100%;
   margin-top: 40px;
   left: 50%;
   transform: translateX(-50%);
+  width: 100%;
+  overflow: hidden;
+}
+.content8 .sub_title_wrap .sub_title {
   font-size: 24px;
   font-weight: 500;
   color: #fff;
   line-height: 1;
   letter-spacing: -0.24px;
+  text-align: center;
+  width: 100%;
 }
-.content8 .bg1 {
+.content8 .sub_title_wrap .sub_title + .sub_title {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.fixed_content > .content.content8 > .bg.bg1 {
   height: auto;
   top: auto;
   bottom: 0;
@@ -358,6 +387,11 @@ body {
 .sub_title2 {
   opacity: 0;
 }
+
+/* content9 */
+.content9 {
+  opacity: 0;
+}
 .content9 .title {
   position: absolute;
   top: 50%;
@@ -371,6 +405,9 @@ body {
 }
 
 /* COLUMN */
+.content10 {
+  opacity: 0;
+}
 .content10 .title_wrap {
   position: absolute;
   top: 50%;
@@ -413,7 +450,21 @@ body {
   bottom: -30.273%;
 }
 
-
+.content11 {
+  opacity: 0;
+}
+.content12 {
+  opacity: 0;
+}
+.content13 {
+  opacity: 0;
+}
+.content14 {
+  opacity: 0;
+}
+.content15 {
+  opacity: 0;
+}
 
 
 

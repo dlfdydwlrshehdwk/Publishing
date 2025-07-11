@@ -11,6 +11,7 @@
 <script src="https://unpkg.com/lenis@1.3.4/dist/lenis.min.js"></script> 
   <script src="../../js/gsap.min.js"></script>
   <script src="../../js/ScrollTrigger.min.js"></script>
+  <script src="../../js/ScrollToPlugin.min.js"></script>
   <script src="../js/대림바스black.js" defer></script>
 </head>
 <body>
@@ -26,15 +27,15 @@
     <section class="section4 tech"></section>
     <section class="section5 tech"></section>
     <section class="section6 tech"></section>
-    <section class="dn section7 thor"></section>
-    <section class="dn section8 thor"></section>
-    <section class="dn section9 column"></section>
-    <section class="dn section10 column"></section>
-    <section class="dn section11 lusso"></section>
-    <section class="dn section12 lusso"></section>
-    <section class="dn section13 valle"></section>
-    <section class="dn section14 valle"></section>
-    <section class="dn section15 product"></section>
+    <section class="section7 thor"></section>
+    <section class="section8 thor"></section>
+    <section class="section9 column"></section>
+    <section class="section10 column"></section>
+    <section class="section11 lusso"></section>
+    <section class="section12 lusso"></section>
+    <section class="section13 valle"></section>
+    <section class="section14 valle"></section>
+    <section class="section15 product"></section>
 
     <div class="fixed_bg"></div>
 
@@ -91,12 +92,12 @@
           <div class="sub_title">SERIES</div>
         </div>
       </div>
-      <div class="dn content content7">
+      <div class="content content7">
         <div class="bg"><img src="../asset/image/pc_section7_bg.png" alt=""></div>
         <div class="title">공간을 채우는 오브제</div>
       </div>
-      <div class="dn content content8">
-        <div class="dn bg bg1"><img src="../asset/image/pc_section8_item1.png" alt=""></div>
+      <div class="content content8">
+        <div class="bg bg1"><img src="../asset/image/pc_section8_item1.png" alt=""></div>
         <div class="bg bg2"><img src="../asset/image/pc_section8_bg.png" alt=""></div>
         <div class="item item1"><img src="../asset/image/pc_section8_item2.png" alt=""></div>
         <div class="item item2"><img src="../asset/image/pc_section8_item3.png" alt=""></div>
@@ -104,15 +105,17 @@
         <div class="item item4"><img src="../asset/image/pc_section8_item5.png" alt=""></div>
         <div class="title_wrap">
           <div class="title"><img src="../asset/image/pc_title_thor.png" alt=""></div>
-          <div class="sub_title sub_title1">무게감 있는 바디</div>
-          <div class="sub_title sub_title2">직선과 곡선의 조화</div>
+          <div class="sub_title_wrap">
+            <div class="sub_title sub_title1">무게감 있는 바디</div>
+            <div class="sub_title sub_title2">직선과 곡선의 조화</div>
+          </div>
         </div>
       </div>
-      <div class="dn content content9">
+      <div class="content content9">
         <div class="bg"><img src="../asset/image/pc_section9_bg.png" alt=""></div>
         <div class="title">프레임을 벗어난 감각적인 솔루션</div>
       </div>
-      <div class="dn content content10">
+      <div class="content content10">
         <div class="bg bg1"><img src="../asset/image/pc_section10_bg1.png" alt=""></div>
         <div class="bg bg2"><img src="../asset/image/pc_section10_bg2.png" alt=""></div>
         <div class="bg bg3"><img src="../asset/image/pc_section10_bg3.png" alt=""></div>
@@ -124,11 +127,11 @@
         </div>
         <div class="item item2"><img src="../asset/image/pc_section10_item2.png" alt=""></div>
       </div>
-      <div class="dn content content11">
+      <div class="content content11">
         <div class="bg"></div>
         <div class="title">섬세한 디테일이 창조해 낸 아트피스</div>
       </div>
-      <div class="dn content content12">
+      <div class="content content12">
         <div class="bg"><img src="../asset/image/pc_section12_bg1.png" alt=""></div>
         <div class="bg"><img src="../asset/image/pc_section12_bg2.png" alt=""></div>
         <div class="bg"><img src="../asset/image/pc_section12_bg3.png" alt=""></div>
@@ -140,11 +143,11 @@
           <div class="sub_title sub_title2">Chrome</div>
         </div>
       </div>
-      <div class="dn content content13">
+      <div class="content content13">
         <div class="bg"></div>
         <div class="title">여백 속 독보적인 시그니처 아이콘</div>
       </div>
-      <div class="dn content content14">
+      <div class="content content14">
         <div class="bg bg1"><img src="../asset/image/pc_section14_bg1.png" alt=""></div>
         <div class="bg bg1"><img src="../asset/image/pc_section14_bg2.png" alt=""></div>
         <div class="bg bg1"><img src="../asset/image/pc_section14_bg3.png" alt=""></div>
@@ -154,7 +157,7 @@
           <div class="sub_title">슬림한 핸들 디자인</div>
         </div>
       </div>
-      <div class="dn content content15">
+      <div class="content content15">
         <div class="inner">
           <h2 class="title"><img src="../asset/image/pc_title_black.png" alt=""></h2>
           <div class="content">
@@ -196,12 +199,13 @@
 
     <div class="pagination">
       <ul>
-        <li class="on"><a href="">BLACK</a></li>
-        <li><a href="">TECH</a></li>
-        <li><a href="">COLUMN</a></li>
-        <li><a href="">LUSSO</a></li>
-        <li><a href="">VALLE</a></li>
-        <li><a href="">PRODUCT</a></li>
+        <li class="on"><a href="javascript:void(0);" data-target="black">BLACK</a></li>
+        <li><a href="javascript:void(0);" data-target="tech">TECH</a></li>
+        <li><a href="javascript:void(0);" data-target="thor">THOR</a></li>
+        <li><a href="javascript:void(0);" data-target="column">COLUMN</a></li>
+        <li><a href="javascript:void(0);" data-target="lusso">LUSSO</a></li>
+        <li><a href="javascript:void(0);" data-target="valle">VALLE</a></li>
+        <li><a href="javascript:void(0);" data-target="product">PRODUCT</a></li>
       </ul>
     </div>
   </div>
