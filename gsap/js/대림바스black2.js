@@ -41,42 +41,72 @@ document.addEventListener('DOMContentLoaded', function(){
 
   function calcWindowH (num = 1){
     // return (num * windowH).toString();
-    return (num * 500).toString();
+    return (num * 400).toString();
   }
 
-  // section1 -> section2 
-  gsap.set('.content1', {opacity: 1})
-  ScrollTrigger.create({
-    trigger: ".section1",
-    start: `top ${headerH}`,
-    end: calcWindowH(),
-    scrub: true,
-    pin: true,
-    anticipatePin: 1,
-    onUpdate: (self) => {
-      const progress = self.progress;
-      gsap.set('.content1', {opacity: 1 - progress});
-      gsap.set('.content2', {opacity: progress});
-    }
-  })
+// section1 -> section2
+const section1Timeline = gsap.timeline({ paused: true });
+section1Timeline
+  .to('.content1', { opacity: 0, duration: 1, ease: 'none' })
+  .to('.content2', { opacity: 1, duration: 1, ease: 'none' });
 
-  // section2 -> section3 
-  ScrollTrigger.create({
-    trigger: ".section2",
-    start: `top ${headerH}`,
-    end: calcWindowH(),
-    scrub: true,
-    pin: true,
-    anticipatePin: 1,
-    onUpdate: (self) => {
-      const progress = self.progress;
-      gsap.to('.content2', {opacity: 1 - progress});
-      gsap.to('.content3', {opacity: progress});
-    }
-  })
+ScrollTrigger.create({
+  trigger: ".section1",
+  start: `top ${headerH}`,
+  end: calcWindowH(),
+  scrub: true,
+  pin: true,
+  anticipatePin: 1,
+  onUpdate: (self) => {
+    section1Timeline.progress(self.progress);
+  }
+});
 
-  // section3 -> section4 
+// section2 -> section3
+const section2Timeline = gsap.timeline({ paused: true });
+section2Timeline
+  .to('.content2', { opacity: 0, duration: 1, ease: 'none' }, 0)
+  .to('.content3', { opacity: 1, duration: 1, ease: 'none' }, 0);
+
+ScrollTrigger.create({
+  trigger: ".section2",
+  start: `top ${headerH}`,
+  end: calcWindowH(),
+  scrub: true,
+  pin: true,
+  anticipatePin: 1,
+  onUpdate: (self) => {
+    section2Timeline.progress(self.progress);
+  }
+});
+
+  // section3 -> section4 +
   const section3TitleSet = document.querySelectorAll('.content3 .title_set');
+  // 1. timeline 생성
+  const section3Timeline = gsap.timeline({ paused: true });
+
+  // 타이틀 on/off 함수
+  function setTitleOn(idx) {
+    section3TitleSet.forEach((ele, i) => {
+      ele.classList.toggle('on', i === idx);
+    });
+  }
+
+  // timeline 구성
+  section3Timeline
+    // 타이틀1 on
+    .call(() => setTitleOn(0), null, 0)
+    // 타이틀2 on
+    .call(() => setTitleOn(1), null, 0.25)
+    // 타이틀3 on
+    .call(() => setTitleOn(2), null, 0.5)
+    // bg 이동 (0~1 구간에서 yPercent -10까지)
+    .to('.content3 .bg img', { yPercent: -10, duration: 1, ease: 'none' }, 0)
+    // 화면전환 (0.75~1 구간에서 opacity 전환)
+    .to('.content3', { opacity: 0, duration: 0.25, ease: 'none' }, 0.75)
+    .to('.content4', { opacity: 1, duration: 0.25, ease: 'none' }, 0.75);
+
+  // 2. ScrollTrigger에서 timeline 동기화
   ScrollTrigger.create({
     trigger: ".section3",
     start: `top ${headerH}`,
@@ -85,44 +115,18 @@ document.addEventListener('DOMContentLoaded', function(){
     pin: true,
     anticipatePin: 1,
     onUpdate: (self) => {
-      const progress = self.progress;
-
-      // 이미지 위로
-      // const maxYPercent = -24.62;
-      const maxYPercent = -10;
-      const yValue = progress * maxYPercent;
-      gsap.set('.content3 .bg img', {
-          yPercent: yValue
-      });
-
-      // 타이틀 on 초기화
-      section3TitleSet.forEach(ele => {
-        ele.classList.remove('on')
-      })
-      
-      // 타이틀 on 토글
-      if(progress < 0.25) {
-        section3TitleSet[0].classList.add('on')
-      } else if (progress < 0.5) {
-        section3TitleSet[1].classList.add('on')
-      } else if (progress < .75) {
-        section3TitleSet[2].classList.add('on')
-      }
-
-      // 화면전환
-      if (progress < 0.75) {
-          gsap.to('.content3', { opacity: 1 });
-          gsap.to('.content4', { opacity: 0 });
-      } else {
-          // progress 0.75~1.0 → 0~1로 리매핑
-          const localProgress = (progress - 0.75) / 0.25;
-          gsap.to('.content3', { opacity: 1 - localProgress });
-          gsap.to('.content4', { opacity: localProgress });
-      }
+      section3Timeline.progress(self.progress);
     }
-  })
-
+  });
   // section4 -> section5 
+  // 1. timeline 생성
+  const section4Timeline = gsap.timeline();
+
+  section4Timeline
+    .to('.content4', { opacity: 0, duration: 1, ease: 'none' }, 0)
+    .to('.content5', { opacity: 1, duration: 1, ease: 'none' }, 0);
+
+  // 2. ScrollTrigger에서 timeline 동기화
   ScrollTrigger.create({
     trigger: ".section4",
     start: `top ${headerH}`,
@@ -130,12 +134,10 @@ document.addEventListener('DOMContentLoaded', function(){
     scrub: true,
     pin: true,
     anticipatePin: 1,
-    onUpdate: (self) => {
-      const progress = self.progress;
-      gsap.to('.content4', {opacity: 1 - progress});
-      gsap.to('.content5', {opacity: progress});
-    }
-  })
+    // onUpdate: (self) => {
+    //   section4Timeline.progress(self.progress);
+    // }
+  });
 
   // section5 -> section6 
   const section5Item1 = document.querySelector('.content5 .item1 .main_image');
@@ -158,14 +160,15 @@ document.addEventListener('DOMContentLoaded', function(){
       const progress = self.progress;
 
       // 모든 아이템/라인 숨김
-      gsap.set([section5Item1, section5Item2, section5Item3, section5Line1, section5Line2, section5Line3], { opacity: 0, y: 10 });
+      gsap.set([section5Item1, section5Item2, section5Item3, section5Line1, section5Line2, section5Line3], { opacity: 0 });
+
       // progress에 맞게 아이템 등장
-      if(progress >= section5Split * 1) gsap.set(section5Item1, {opacity:1, y: 0 });
-      if(progress >= section5Split * 2) gsap.set(section5Item2, {opacity:1, y: 0 });
-      if(progress >= section5Split * 3) gsap.set(section5Item3, {opacity:1, y: 0 });
-      if(progress >= section5Split * 4) gsap.set(section5Line1, {opacity:1, y: 0 });
-      if(progress >= section5Split * 5) gsap.set(section5Line2, {opacity:1, y: 0 });
-      if(progress >= section5Split * 6) gsap.set(section5Line3, {opacity:1, y: 0 });
+      if(progress >= section5Split * 1) gsap.set(section5Item1, {opacity:1 });
+      if(progress >= section5Split * 2) gsap.set(section5Line1, {opacity:1 });
+      if(progress >= section5Split * 3) gsap.set(section5Item2, {opacity:1 });
+      if(progress >= section5Split * 4) gsap.set(section5Line2, {opacity:1 });
+      if(progress >= section5Split * 5) gsap.set(section5Item3, {opacity:1 });
+      if(progress >= section5Split * 6) gsap.set(section5Line3, {opacity:1 });
 
       // 화면전환
       if (progress < section5Split * (section5Length - 1)) {
@@ -179,7 +182,7 @@ document.addEventListener('DOMContentLoaded', function(){
       }
     }
   })
-
+  return
   // section6 -> section7 
   ScrollTrigger.create({
     trigger: ".section6",
@@ -224,7 +227,7 @@ document.addEventListener('DOMContentLoaded', function(){
       const progress = Math.round(rawProgress * 1000) / 1000;
       // 화면전환
       gsap.to('.content8', {opacity: 1 - progress});
-      // gsap.to('.content9', {opacity: progress});
+      gsap.to('.content9', {opacity: progress});
 
       // bg 확대
       gsap.to('.content8 .bg', {scale: 1 + 0.5 * progress, overwrite: 'auto'})
@@ -232,7 +235,7 @@ document.addEventListener('DOMContentLoaded', function(){
   })
 
   // section9 -> section10 
-  const section9Length = 11;
+  const section9Length = 10;
   const section9Split = 1 / section9Length;
   const section9BgWrap = document.querySelector('.content9 .bg_wrap')
   const section9BgWrap2 = document.querySelector('.content9 .bg_wrap2')
@@ -253,61 +256,55 @@ document.addEventListener('DOMContentLoaded', function(){
       const rawProgress = (progress - step * section9Split) / section9Split; // 일반 progress 각섹션에 맞게 1등분씩 된 조정되지 않은 진행률
       const localProgress = Math.round(rawProgress * 1000) / 1000; // 소수점 3자리 까지
       const clampedProgress = Math.min(1, Math.max(0, localProgress)); // localProgress에서 소수점 끝자리 보정
-      const fixedProgress = clampedProgress >= 0.95 ? 1 : clampedProgress;
-      const targetX = fixedProgress * -50;
+
       // 초기화
       if(step >=0) {
-        gsap.to(section9Title, {opacity: 1});
+        gsap.to(section9Title, {opacity: 1, duration: 0.3});
       } else {
-        gsap.to(section9Title, {opacity:0});
+        gsap.to(section9Title, {opacity:0, duration: 0.3});
       }
 
       // 분기별
       switch(step) {
         case 0:
-          gsap.to('.content9', {opacity: clampedProgress});
           break;
-        case 1: 
-          break
-        case 2: 
-          break
-        case 3:
-          gsap.to(section9SubTitle1, { opacity: clampedProgress });
-          gsap.to(section9BgWrap, { opacity: clampedProgress });
+        case 1:
+          gsap.to(section9SubTitle1, { opacity: localProgress });
+          gsap.to(section9BgWrap, { opacity: localProgress });
           break;
+        case 2:
+          break;
+        case 3: 
+          gsap.to(section9SubTitle1, { opacity: 1- localProgress });
+          gsap.to(section9BgWrap, {xPercent: clampedProgress * -50})
+          break
         case 4:
           break;
-        case 5: 
-          gsap.to(section9SubTitle1, { opacity: 1- clampedProgress });
-          gsap.to(section9BgWrap, {xPercent: targetX})
+        case 5:
+          gsap.to(section9SubTitle2, { opacity: localProgress });
           break
-        case 6:
-          break;
-        case 7:
-          gsap.to(section9SubTitle2, { opacity: clampedProgress });
-          break
-        case 8: 
+        case 6: 
           gsap.to(section9SubTitle2, { opacity: 1 - localProgress });
-          gsap.to(section9BgWrap2, {xPercent: targetX})
+          gsap.to(section9BgWrap2, {xPercent: clampedProgress * -50})
           break
-        case 9:
+        case 7:
           break;
-        case 10:
+        case 8:
           break;
       }
       // 정확하게 50%를 만들기 위함
-      // if (step === 4) {
-      //   const targetX = clampedProgress >= 0.98 ? -50 : clampedProgress * -50;
-      //   gsap.to(section9BgWrap, { xPercent: targetX });
-      // }
-      // if (step === 6) {
-      //   const targetX = clampedProgress >= 0.98 ? -50 : clampedProgress * -50;
-      //   gsap.to(section9BgWrap2, { xPercent: targetX });
-      // }
-      // if (step === 8) {
-      //     gsap.to('.content9', {opacity: 1 - clampedProgress});
-      //     gsap.to('.content10', {opacity: clampedProgress});
-      // }
+      if (step === 3) {
+        const targetX = clampedProgress >= 0.98 ? -50 : clampedProgress * -50;
+        gsap.to(section9BgWrap, { xPercent: targetX });
+      }
+      if (step === 5) {
+        const targetX = clampedProgress >= 0.98 ? -50 : clampedProgress * -50;
+        gsap.to(section9BgWrap2, { xPercent: targetX });
+      }
+      if (step === 7) {
+          gsap.to('.content9', {opacity: 1 - clampedProgress});
+          gsap.to('.content10', {opacity: clampedProgress});
+      }
 
     }
   })
@@ -481,6 +478,7 @@ document.addEventListener('DOMContentLoaded', function(){
       gsap.to('.content13', {opacity: 1 - progress});
       gsap.to('.content14', {opacity: progress});
       if(progress > 0) {
+        section14Video.playbackRate = 0.8; // 영상 조금 느리게 재생
         section14Video.play();
         gsap.set('.content14 .title', {opacity: progress})
       } else {
@@ -491,7 +489,6 @@ document.addEventListener('DOMContentLoaded', function(){
   })
 
   // section14 -> section15 
-  const section14Length = 1;
   ScrollTrigger.create({
     trigger: ".section14",
     start: `top ${headerH}`,
@@ -596,77 +593,110 @@ document.addEventListener('DOMContentLoaded', function(){
     }
   })
 
-  // section18 -> section19 
+  // // section18 -> section19 
   const section18Length = 14;
   const section18Split = 1 / section18Length;
-  const section18bg2 = document.querySelector('.content18 .bg2')
+  const section18bg2Wrap = document.querySelector('.content18 .bg_wrap2')
+  const section18bg2Img = document.querySelector('.content18 .bg_wrap2 img');
   const section18bg3 = document.querySelector('.content18 .bg3')
-  gsap.set([section18bg2, section18bg3], {yPercent: 100});
-  ScrollTrigger.create({
-    trigger: ".section18",
-    start: `top ${headerH}`,
-    end: calcWindowH(section18Length),
-    scrub: true,
-    pin: true,
-    anticipatePin: 1,
-    onUpdate: (self) => {
-      const progress = self.progress;
-      const step = Math.floor(progress / section18Split);
-      const rawProgress = (progress - step * section18Split) / section18Split; // 일반 progress 각섹션에 맞게 1등분씩 된 조정되지 않은 진행률
-      const localProgress = Math.round(rawProgress * 1000) / 1000; // 소수점 3자리 까지
-      const clampedProgress = Math.min(1, Math.max(0, localProgress)); // localProgress에서 소수점 끝자리 보정
+  gsap.set([section18bg2Wrap, section18bg3], {yPercent: 100});
+  gsap.set([section18bg2Img], {yPercent: -50});
+  // ScrollTrigger.create({
+  //   trigger: ".section18",
+  //   start: `top ${headerH}`,
+  //   end: calcWindowH(section18Length),
+  //   scrub: true,
+  //   pin: true,
+  //   anticipatePin: 1,
+  //   onUpdate: (self) => {
+  //     // const progress = self.progress;
+  //     // const step = Math.floor(progress / section18Split);
+  //     // const rawProgress = (progress - step * section18Split) / section18Split; // 일반 progress 각섹션에 맞게 1등분씩 된 조정되지 않은 진행률
+  //     // const localProgress = Math.round(rawProgress * 1000) / 1000; // 소수점 3자리 까지
+  //     // const clampedProgress = Math.min(1, Math.max(0, localProgress)); // localProgress에서 소수점 끝자리 보정
 
-      // yPercent시 소수점 끝자리 방지 변수 0 - 100 (사이즈 딱 맞게)
-      const targetY = 
-      clampedProgress <= 0.02 ? 0 : 
-      clampedProgress >= 0.98 ? -100 : 
-      Math.round(clampedProgress * -100) * 1000 / 1000;
+  //     // // yPercent시 소수점 끝자리 방지 변수 0 - 100 (사이즈 딱 맞게)
+  //     // const targetY = 
+  //     // clampedProgress <= 0.02 ? 0 : 
+  //     // clampedProgress >= 0.98 ? -100 : 
+  //     // Math.round(clampedProgress * -100) * 1000 / 1000;
 
-      switch (step) {
-        case 0:
-          gsap.set('.content18', {opacity: clampedProgress});
-          break;
-        case 1:
-          break;
-        case 2:
-          gsap.set('.content18 .bg1', {opacity: clampedProgress});
-          gsap.set('.content18 .sub_title', {opacity: clampedProgress}); 
-          break;
-        case 3:
-          break;
-        case 4:
-          gsap.set('.content18 .bg1', {yPercent: targetY});
-          break;
-        case 5:
-          break;
-        case 6: 
-          gsap.set('.content18 .bg2', {yPercent: targetY + 100, opacity: clampedProgress});
-          break;
-        case 7: 
-          gsap.set('.content18 .bg2',{x: -15 * clampedProgress });
-          break;
-        case 8:
-          gsap.set('.content18 .bg2', {yPercent: targetY, opacity: 1 - clampedProgress});
-          break;
-        case 9: 
-          gsap.set('.content18 .sub_title', {opacity: 1 - clampedProgress});
-          break;
-        case 10:
-          gsap.set('.content18 .bg3', {yPercent: targetY + 100, opacity: clampedProgress});
-          break;
-        case 12: 
-          gsap.set('.content18 .title', {opacity: 1 - clampedProgress});
-          break
-        case 13:
-          gsap.set('.content18 .bg3', {opacity: 1 - clampedProgress});
-          gsap.set('.content19', {opacity: clampedProgress});
-          break
-        case 14: 
-           gsap.set('.content19', {opacity: 1- progress});
-          break
-      }
-    }
-  })
+  //     // switch (step) {
+  //     //   case 0:
+  //     //     gsap.to('.content18', {opacity: clampedProgress});
+  //     //     break;
+  //     //   case 1:
+  //     //     break;
+  //     //   case 2:
+  //     //     gsap.to('.content18 .bg1', {opacity: clampedProgress});
+  //     //     gsap.to('.content18 .sub_title', {opacity: clampedProgress}); 
+  //     //     break;
+  //     //   case 3:
+  //     //     break;
+  //     //   case 4:
+  //     //     gsap.to('.content18 .bg1', {yPercent: targetY});
+  //     //     break;
+  //     //   case 5:
+  //     //     break;
+  //     //   case 6: 
+  //     //     gsap.to('.content18 .bg2_wrap2', {yPercent: targetY + 100, opacity: clampedProgress});
+  //     //     break;
+  //     //   case 7: 
+  //     //     gsap.to('.content18 .bg_wrap2 img',{x: -100 * clampedProgress });
+  //     //     break;
+  //     //   case 8:
+  //     //     gsap.to('.content18 .bg_wrap2', {yPercent: targetY, opacity: 1 - clampedProgress});
+  //     //     break;
+  //     //   case 9: 
+  //     //     gsap.to('.content18 .sub_title', {opacity: 1 - clampedProgress});
+  //     //     break;
+  //     //   case 10:
+  //     //     gsap.to('.content18 .bg3', {yPercent: targetY + 100, opacity: clampedProgress});
+  //     //     break;
+  //     //   case 12: 
+  //     //     gsap.to('.content18 .title', {opacity: 1 - clampedProgress});
+  //     //     break
+  //     //   case 13:
+  //     //     gsap.to('.content18 .bg3', {opacity: 1 - clampedProgress});
+  //     //     gsap.to('.content19', {opacity: clampedProgress});
+  //     //     break
+  //     //   case 14: 
+  //     //      gsap.to('.content19', {opacity: 1- progress});
+  //     //     break
+  //     // }
+  //   }
+  // })
+  // 1. timeline 생성 (애니메이션 순서대로 추가)
+const tl = gsap.timeline({ paused: true });
+
+tl
+  .to('.content18', { opacity: 1, duration: 1 }, 0)
+  .to('.content18 .bg1', { opacity: 1, duration: 1 }, 1 * 2)
+  .to('.content18 .sub_title', { opacity: 1, duration: 1 }, 1 * 2)
+  .to('.content18 .bg1', { yPercent: -100, opacity: 0, duration: 1 }, 1 * 4)
+  .to({},{},1 * 5)
+  .to('.content18 .bg_wrap2', { yPercent: 0, opacity: 1, duration: 1 }, 1 * 6)
+  .to('.content18 .bg_wrap2 img', { x: -100, yPercent : -50, duration: 1 }, 1 * 7)
+  .to('.content18 .bg_wrap2', { yPercent: 0, opacity: 0, duration: 1 }, 1 * 8)
+  .to('.content18 .sub_title', { opacity: 0, duration: 1 }, 1 * 9)
+  .to('.content18 .bg3', { yPercent: 0, opacity: 1, duration: 1 }, 1 * 10)
+  .to('.content18 .title', { opacity: 0, duration: 1 }, 1 * 12)
+  .to('.content18 .bg3', { opacity: 0, duration: 1 }, 1 * 13)
+  .to('.content19', { opacity: 1, duration: 1 }, 1 * 13)
+  .to('.content19', { opacity: 0, duration: 1 }, 1 * 14);
+
+// 2. ScrollTrigger에서 timeline의 progress를 동기화
+ScrollTrigger.create({
+  trigger: ".section18",
+  start: `top ${headerH}`,
+  end: calcWindowH(section18Length),
+  scrub: true,
+  pin: true,
+  anticipatePin: 1,
+  onUpdate: (self) => {
+    tl.progress(self.progress);
+  }
+});
 
   // // section19 -> section20
   //   ScrollTrigger.create({

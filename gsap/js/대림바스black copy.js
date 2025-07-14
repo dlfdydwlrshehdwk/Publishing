@@ -40,8 +40,7 @@ document.addEventListener('DOMContentLoaded', function(){
   const windowH = window.innerHeight - headerH;
 
   function calcWindowH (num = 1){
-    // return (num * windowH).toString();
-    return (num * 500).toString();
+    return (num * windowH).toString();
   }
 
   // section1 -> section2 
@@ -52,6 +51,8 @@ document.addEventListener('DOMContentLoaded', function(){
     end: calcWindowH(),
     scrub: true,
     pin: true,
+    // markers:true,
+    // pinType: 'transform',
     anticipatePin: 1,
     onUpdate: (self) => {
       const progress = self.progress;
@@ -158,14 +159,15 @@ document.addEventListener('DOMContentLoaded', function(){
       const progress = self.progress;
 
       // 모든 아이템/라인 숨김
-      gsap.set([section5Item1, section5Item2, section5Item3, section5Line1, section5Line2, section5Line3], { opacity: 0, y: 10 });
+      gsap.set([section5Item1, section5Item2, section5Item3, section5Line1, section5Line2, section5Line3], { opacity: 0 });
+
       // progress에 맞게 아이템 등장
-      if(progress >= section5Split * 1) gsap.set(section5Item1, {opacity:1, y: 0 });
-      if(progress >= section5Split * 2) gsap.set(section5Item2, {opacity:1, y: 0 });
-      if(progress >= section5Split * 3) gsap.set(section5Item3, {opacity:1, y: 0 });
-      if(progress >= section5Split * 4) gsap.set(section5Line1, {opacity:1, y: 0 });
-      if(progress >= section5Split * 5) gsap.set(section5Line2, {opacity:1, y: 0 });
-      if(progress >= section5Split * 6) gsap.set(section5Line3, {opacity:1, y: 0 });
+      if(progress >= section5Split * 1) gsap.set(section5Item1, {opacity:1 });
+      if(progress >= section5Split * 2) gsap.set(section5Item2, {opacity:1 });
+      if(progress >= section5Split * 3) gsap.set(section5Item3, {opacity:1 });
+      if(progress >= section5Split * 4) gsap.set(section5Line1, {opacity:1 });
+      if(progress >= section5Split * 5) gsap.set(section5Line2, {opacity:1 });
+      if(progress >= section5Split * 6) gsap.set(section5Line3, {opacity:1 });
 
       // 화면전환
       if (progress < section5Split * (section5Length - 1)) {
@@ -224,7 +226,7 @@ document.addEventListener('DOMContentLoaded', function(){
       const progress = Math.round(rawProgress * 1000) / 1000;
       // 화면전환
       gsap.to('.content8', {opacity: 1 - progress});
-      // gsap.to('.content9', {opacity: progress});
+      gsap.to('.content9', {opacity: progress});
 
       // bg 확대
       gsap.to('.content8 .bg', {scale: 1 + 0.5 * progress, overwrite: 'auto'})
@@ -232,7 +234,7 @@ document.addEventListener('DOMContentLoaded', function(){
   })
 
   // section9 -> section10 
-  const section9Length = 11;
+  const section9Length = 7;
   const section9Split = 1 / section9Length;
   const section9BgWrap = document.querySelector('.content9 .bg_wrap')
   const section9BgWrap2 = document.querySelector('.content9 .bg_wrap2')
@@ -253,61 +255,52 @@ document.addEventListener('DOMContentLoaded', function(){
       const rawProgress = (progress - step * section9Split) / section9Split; // 일반 progress 각섹션에 맞게 1등분씩 된 조정되지 않은 진행률
       const localProgress = Math.round(rawProgress * 1000) / 1000; // 소수점 3자리 까지
       const clampedProgress = Math.min(1, Math.max(0, localProgress)); // localProgress에서 소수점 끝자리 보정
-      const fixedProgress = clampedProgress >= 0.95 ? 1 : clampedProgress;
-      const targetX = fixedProgress * -50;
+
       // 초기화
       if(step >=0) {
-        gsap.to(section9Title, {opacity: 1});
+        gsap.to(section9Title, {opacity: 1, duration: 0.3});
       } else {
-        gsap.to(section9Title, {opacity:0});
+        gsap.to(section9Title, {opacity:0, duration: 0.3});
       }
 
       // 분기별
       switch(step) {
         case 0:
-          gsap.to('.content9', {opacity: clampedProgress});
           break;
-        case 1: 
-          break
-        case 2: 
-          break
+        case 1:
+          gsap.to(section9SubTitle1, { opacity: localProgress });
+          gsap.to(section9BgWrap, { opacity: localProgress });
+          break;
+        case 2:
+          gsap.to(section9SubTitle1, { opacity: 1- localProgress });
+          gsap.to(section9BgWrap, {xPercent: clampedProgress * -50})
+          break;
         case 3:
-          gsap.to(section9SubTitle1, { opacity: clampedProgress });
-          gsap.to(section9BgWrap, { opacity: clampedProgress });
+          gsap.to(section9SubTitle2, { opacity: localProgress });
           break;
         case 4:
-          break;
-        case 5: 
-          gsap.to(section9SubTitle1, { opacity: 1- clampedProgress });
-          gsap.to(section9BgWrap, {xPercent: targetX})
-          break
-        case 6:
-          break;
-        case 7:
-          gsap.to(section9SubTitle2, { opacity: clampedProgress });
-          break
-        case 8: 
           gsap.to(section9SubTitle2, { opacity: 1 - localProgress });
-          gsap.to(section9BgWrap2, {xPercent: targetX})
+          gsap.to(section9BgWrap2, {xPercent: clampedProgress * -50})
+          break;
+        case 5:
+          break;
+          // 화면전환
+        case 6: 
           break
-        case 9:
-          break;
-        case 10:
-          break;
       }
       // 정확하게 50%를 만들기 위함
-      // if (step === 4) {
-      //   const targetX = clampedProgress >= 0.98 ? -50 : clampedProgress * -50;
-      //   gsap.to(section9BgWrap, { xPercent: targetX });
-      // }
-      // if (step === 6) {
-      //   const targetX = clampedProgress >= 0.98 ? -50 : clampedProgress * -50;
-      //   gsap.to(section9BgWrap2, { xPercent: targetX });
-      // }
-      // if (step === 8) {
-      //     gsap.to('.content9', {opacity: 1 - clampedProgress});
-      //     gsap.to('.content10', {opacity: clampedProgress});
-      // }
+      if (step === 2) {
+        const targetX = clampedProgress >= 0.98 ? -50 : clampedProgress * -50;
+        gsap.to(section9BgWrap, { xPercent: targetX });
+      }
+      if (step === 4) {
+        const targetX = clampedProgress >= 0.98 ? -50 : clampedProgress * -50;
+        gsap.to(section9BgWrap2, { xPercent: targetX });
+      }
+      if (step === 6) {
+          gsap.to('.content9', {opacity: 1 - clampedProgress});
+          gsap.to('.content10', {opacity: clampedProgress});
+      }
 
     }
   })
