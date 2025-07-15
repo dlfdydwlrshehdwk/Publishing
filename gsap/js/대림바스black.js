@@ -1,15 +1,84 @@
+$(document).ready(function(){
+  $('select').niceSelect();
+})
 document.addEventListener('DOMContentLoaded', function(){
 
   gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
-  // swiper
-  const swiperEle = document.querySelectorAll('.content15 .category_list')
-  swiperEle.forEach(ele => {
-      new Swiper(ele, {
-        slidesPerView: 3,
-        spaceBetween: 40,
-      })
-  })
+  let productTrigger;
+  let mainTimeline;
+  let swiperInstances = [];
+  let headerH = 0;
+  let windowH = 0;
+  const labelList = ["black", "tech", "thor", "column", "lusso", "valle", "product"];
+  let timelineLength = 50
+  let totalDuration = 0;
+  // mainTimeline.duration();
+  let scrollContainerHeight = 0;
+
+  function updateTotalDuration() {
+      totalDuration = mainTimeline?.duration?.() || 0;
+  }
+  function recalcLayoutValues() {
+    headerH = document.querySelector('#header').clientHeight;
+    windowH = window.innerHeight - headerH;
+    scrollContainerHeight = parseFloat(calcWindowH(timelineLength)); // timelineLength는 상수 or 별도 설정
+  }
+  // content15 재설정 함수
+  function initScrollTriggerForContent15() {
+      // 기존 ScrollTrigger 제거
+      if (productTrigger) {
+          productTrigger.kill();
+      }
+
+      // 다시 생성
+      productTrigger = ScrollTrigger.create({
+          id: "product-trigger",
+          trigger: ".content15",
+          start: `top+=${headerH}`,
+          end: `+=100%`,
+          scrub: true,
+          pin: true,
+          pinSpacing: true,
+          animation: gsap.timeline()
+              .to(".content15", { opacity: 1, duration: 0.5 })
+              .addLabel("product")
+      });
+  }
+
+  // swiper 초기화
+  function initSwiperIfNeeded() {
+      // 768px 이상일 때만 swiper 작동
+      const shouldEnable = window.innerWidth >= 768;
+  
+      // 이미 만들어진 swiper 모두 제거
+      swiperInstances.forEach(swiper => swiper.destroy(true, true));
+      swiperInstances = [];
+  
+      if (shouldEnable) {
+          const swiperEle = document.querySelectorAll('.content15 .category_list');
+          swiperEle.forEach(ele => {
+              const swiper = new Swiper(ele, {
+                  slidesPerView: 3,
+                  spaceBetween: 40,
+              });
+              swiperInstances.push(swiper);
+          });
+      }
+  }
+  
+
+  
+  // resize 시 throttle 적용
+  window.addEventListener('resize', _.throttle(() => {
+    recalcLayoutValues();
+    createMainTimeline();
+    initScrollTriggerForContent15();
+    initSwiperIfNeeded();
+    updateTotalDuration(); // duration 값 갱신
+    ScrollTrigger.refresh();
+  },200));
+  
 
   // 1. Lenis 인스턴스 생성
   const lenis = new Lenis({
@@ -36,240 +105,260 @@ document.addEventListener('DOMContentLoaded', function(){
   // gsap.ticker.add((time) => lenis.raf(time * 1000));
   // gsap.ticker.lagSmoothing(0);
 
-  const headerH = document.querySelector('#header').clientHeight;
-  const windowH = window.innerHeight - headerH;
-  const section3TitleSet = document.querySelectorAll('.content3 .title_set');
   function calcWindowH (num = 1){
     return (num * windowH).toString();
-    // return (num * 500).toString();
   }
-  let timelineLength = 40
-  // 초기화
-  gsap.set('.content1', {opacity:1});
-  gsap.set('.content5', {yPercent: 5})
-  gsap.set(['.content5 .item1 .main_image','.content5 .item2 .main_image', '.content5 .itme3 .main_image', '.content5 .item .line', '.content5 .item2 .line', '.content5 .item3 .line'], {y:10});
-  gsap.set(['.content7 .title', '.content9 .title', '.content10 .sub_title1', '.content10 .sub_title2', '.content11 .title', '.content13 .title'],{y: 20})
-  gsap.set(['.content8 .sub_title', '.content10  .item_wrap', '.content10 .bg3','.content12 .sub_title1','.content12 .sub_title2', '.content14 .sub_title', '.content14 .bg_wrap2'],{yPercent: 100})
-  gsap.set('.content14 .bg_wrap .bg img', {yPercent: -50})
-  const mainTimeline = gsap.timeline({
-    scrollTrigger: {
-      trigger: ".scroll_container",
-      start: `top ${headerH}`,
-      end: () => calcWindowH(timelineLength), // 또는 scroll_container의 height와 맞게
-      scrub: true,
-      pin: true,
-      anticipatePin: 1,
-      // markers: true,
+  function createMainTimeline() {
+    // const headerH = document.querySelector('#header').clientHeight;
+    // const windowH = window.innerHeight - headerH;
+    const section3TitleSet = document.querySelectorAll('.content3 .title_set');
+
+    recalcLayoutValues();
+
+    if(mainTimeline) {
+      mainTimeline.scrollTrigger?.kill();
+      mainTimeline.kill();
     }
-  });
-  mainTimeline
-  .addLabel("black")
-  .to({}, { duration: 0.3 })
-  // content1 → content2
-  .to('.content1', { opacity: 0, duration: 1 })
-  .to('.content2', { opacity: 1, duration: 1 })
-  // content2 → content3
-  .to('.content2', { opacity: 0, duration: 1 })
-  .to({}, { duration: 0.5 })
-  .to('.content3', {opacity: 1, duration: 1})
-  .addLabel('tech')
-  .to({}, { duration: 0.3 })
-  .to('.content3', {
-    duration: 3,
-    onUpdate: function () {
-      const progress = this.progress();
-      const activeIndex = progress < 0.33 ? 0 : progress < 0.66 ? 1 : 2;
-      section3TitleSet.forEach((el, i) => {
-        el.classList.toggle('on', i === activeIndex);
-      });
-      // yPercent 애니메이션
-      const maxY = -10;
-      const yValue = progress * maxY;
-      gsap.set('.content3 .bg img', { yPercent: yValue });
-    }
-  })
-  .to({}, { duration: 0.3 })
-  // content3 → content4
-  .to('.content3', { opacity: 0, duration: 1 })
-  .to('.content4', { opacity: 1, duration: 1 })
-  // content4 -> content5
-  .to('.content4', {opacity: 0, duration: 1})
-  .to('.content5', {opacity:1, yPercent: 0, duration:1},'<')
-  .to('.content5 .item1 .main_image', {opacity:1, y:0, duration:1})
-  .to('.content5 .item1 .line', {opacity:1, y:0, duration:1})
-  .to('.content5 .item2 .main_image', {opacity:1, y:0, duration:1})
-  .to('.content5 .item2 .line', {opacity:1, y:0, duration:1})
-  .to('.content5 .item3 .main_image', {opacity:1, y:0, duration:1})
-  .to('.content5 .item3 .line', {opacity:1, y:0, duration:1})
-  .to({}, { duration: 1 })
-  // content5 -> content6
-  .to('.content5', {opacity: 0, duration: 1})
-  .to('.content6', {opacity: 1, duration: 1})
-  .to('.content6', {opacity: 0, duration: 1})
-  // content6 -> content7
-  .to('.content7', {opacity: 1, duration: 1})
-  .to('.content7 .title', {opacity: 1, y:0, duration: 1})
-  .addLabel("thor")
-  .to('.content7', {opacity: 0, duration: 1,})
-  .to('.content7 .bg', {scale: 1.2, duration: 1},"<")
-  // content7 -> content8
-  .to('.content8', {opacity: 1, duration: 1})
-  .to('.content8 .title', {opacity: 1, duration: 1})
-  .to({}, { duration: .5 })
-  .to('.content8 .bg_wrap', {opacity: 1, duration: 1})
-  .to('.content8 .sub_title1', {opacity: 1, yPercent:0, duration: 1})
-  .to({}, { duration: .5 })
-  .to('.content8 .bg_wrap', {xPercent: -50, duration: 1})
-  .to('.content8 .bg2', {opacity:1, duration: 1}, "<")
-  .to('.content8 .sub_title1', {opacity:0, yPercent: -100, duration: 1},"<")
-  .to('.content8 .sub_title2', {opacity:1, yPercent:0, duration:1})
-  .to({}, { duration: .5 })
-  .to('.content8 .bg_wrap2', {xPercent: -50, duration: 1})
-  .to('.content8 .fake_dim', {opacity: 1, duration: 1}, "<")
-  .to('.content8 .sub_title2', {opacity: 0, yPercent: -100, duration: 1},'<')
-  .to({}, { duration: .5 })
-  .to('.content8', {opacity: 0, duration: 1})
-  .to('.content8 .bg_wrap2', {xPercent: -100, duration: 1},"<")
-  .to({}, { duration: 1 })
-  // content8 -> content9
-  .to('.content9', {opacity: 1, duration: 1})
-  .to('.content9 .title', {opacity: 1, y: 0, duration: 1})
-    .addLabel("column")
-  .to({}, { duration: .5 })
-  .to('.content9 .bg', {scale: 1.2, duration: 1})
-  .to(".content9", {opacity: 0, duration: 1}, "<")
-  .to('.content10', {opacity: 1, duration: 1})
-  .to({}, { duration: .5 })
-  .to('.content10 .bg1', {opacity: 1, duration: 1})
-  .to({}, { duration: .5 })
-  .to('.content10 .bg2', {opacity: 1, duration: 0})
-  .to({}, { duration: 2 })
-  .to('.content10 .bg1', {opacity: 0, yPercent: -100, duration: 1})
-  .to('.content10 .bg2', {opacity: 0, yPercent: -100, duration: 1},"<")
-  .to({}, {duration: 1})
-  .to('.content10  .item_wrap', {yPercent: 0, opacity: 1, duration: 1})
-  .to('.content10 .sub_title1', {opacity: 1, y: 0, duration: .5})
-  .to({}, { duration: .5 })
-  .to('.content10  .item1', {
-    left: `${17.291 + (14 - 17.291)}%`,
-    top: `${-6.526 + (0 - -6.526)}%`,
-    duration: 1
-  })
-  .to('.content10  .item2', {
-    right: `${11.875 - 5}%`,
-    bottom: `${-30.273 + 5}%`,
-    duration: 1
-  }, "<")
-  .to({}, { duration: .5 })
-  .to('.content10 .item_wrap', {yPercent: -100, opacity: 0, duration: 1})
-  .to('.content10 .sub_title1', {y: -20, opacity: 0, duration: .5})
-  .to({}, { duration: .5 })
-  .to('.content10 .bg3', {yPercent: 0, opacity: 1, duration: 1})
-  .to('.content10 .sub_title2', {y: 0, opacity: 1, duration: .5})
-  .to({}, { duration: .5 })
-  .to('.content10 .bg3 img', {y: -50, duration: .5})
-  .to('.content10', {opacity: 0, duration: 1}, "<")
-  // content10 -> content11
-  .to({}, { 
-    duration: 1,
-    onStart: function () {
-      const video = document.querySelector('.content11 video');
-      if (video) {
-        video.currentTime = 0; // 영상 초기화
-        video.playbackRate = 0.8; // 재생속도 설정
-        video.play(); // 영상 실행
+    // 초기화
+    gsap.set('.content1', {opacity:1});
+    gsap.set('.content5', {yPercent: 5})
+    gsap.set(['.content5 .item1 .main_image','.content5 .item2 .main_image', '.content5 .itme3 .main_image', '.content5 .item .line', '.content5 .item2 .line', '.content5 .item3 .line'], {y:10});
+    gsap.set(['.content7 .title', '.content9 .title', '.content10 .sub_title1', '.content10 .sub_title2', '.content11 .title', '.content13 .title'],{y: 20})
+    gsap.set(['.content8 .sub_title', '.content10  .item_wrap', '.content10 .bg3','.content12 .sub_title1','.content12 .sub_title2', '.content14 .sub_title', '.content14 .bg_wrap2'],{yPercent: 100})
+    gsap.set('.content14 .bg_wrap .bg img', {yPercent: -50})
+    mainTimeline = gsap.timeline({
+      scrollTrigger: {
+        trigger: ".scroll_container",
+        start: `top ${headerH}`,
+        end: () => calcWindowH(timelineLength), // 또는 scroll_container의 height와 맞게
+        scrub: true,
+        pin: true,
+        anticipatePin: 1,
+        // markers: true,
       }
-    }
-  })
-  .to('.content11', {opacity: 1, duration: 1})
-  .to('.content11 .title', {opacity: 1, y: 0, duration: 1})
-  .addLabel("lusso")
-  .to({}, { duration: .5 })
-  .to('.content11 .bg', {scale: 1.2, opacity: 1, duration: 1})
-  .to('.content11', {opacity: 0, duration: 1}, "<")
-  .to({}, { duration: 1 })
-  // content11 -> content12
-  .to('.content12', {opacity: 1, duration: 1})
-  .to('.content12 .title', {opacity: 1, duration: 1})
-  .to({}, { duration: .5 })
-  .to('.content12 .bg1', {opacity: 1, duration: 1})
-  .to('.content12 .sub_title1', {yPercent: 0, opacity: 1, duration: 1})
-  .to({}, { duration: .5 })
-  .to('.content12 .bg1', {scale: 1.2, opacity: 0, duration: 1})
-  .to({}, { duration: .5 })
-  .to('.content12 .bg2', {opacity: 1, duration: 1})
-  .to({}, { duration: .5 })
-  .to('.content12 .bg2', {scale: 1.2, opacity: 0, duration: 1})
-  .to('.content12 .sub_title1', {yPercent: -100, opacity: 0, duration: 1},"<")
-  .to({}, { duration: .5 })
-  .to('.content12 .bg3', {opacity: 1, duration: 1})
-  .to('.content12 .sub_title2', {y: 0, opacity: 1, duration: 1})
-  .to({}, { duration: .5 })
-  .to('.content12 .bg4', {opacity: 1, duration: 1})
-  .to({}, { duration: .5 })
-  .to('.content12 .bg5', {opacity: 1, duration: 1})
-  .to({}, { duration: .5 })
-  .to('.content12', {opacity: 0, duration: 1})
-  .to({}, { duration: 1 })
-  // content12 -> content13
-  .to('.content13', {opacity: 1, duration: 1})
-  .to('.content13 .title', {opacity: 1, y: 0, duration: 1})
-  .addLabel("valle")
-  .to({}, { duration: .5 })
-  .to('.content13 .bg', {scale: 1.2, opacity: 0, duration: 1})
-  .to('.content13', {opacity: 0, duration: 1}, "<")
-  // content13 -> content14
-  .to('.content14', {opacity: 1, duration: 1})
-  .to('.content14 .title', {opacity: 1, duration: 1}, '<')
-  .to({}, { 
-    duration: .5,
-    onStart: function () {
-      const video = document.querySelector('.content14 video');
-      if (video) {
-        video.currentTime = 0; // 영상 초기화
-        video.playbackRate = 1; // 재생속도 설정
-        video.play(); // 영상 실행
+    });
+    mainTimeline
+    .addLabel("black")
+    .to({}, { duration: 0.3 })
+    // content1 → content2
+    .to('.content1', { opacity: 0, duration: 1 })
+    .to('.content2', { opacity: 1, duration: 1 })
+    .to({}, { duration: 0.5 })
+    // content2 → content3
+    .to('.content2', { opacity: 0, duration: 1 })
+    .to({}, { duration: 0.5 })
+    .to('.content3', {opacity: 1, duration: 1})
+    .addLabel('tech')
+    .to({}, { duration: 0.3 })
+    .to('.content3', {
+      duration: 3,
+      onUpdate: function () {
+        const progress = this.progress();
+        const activeIndex = progress < 0.33 ? 0 : progress < 0.66 ? 1 : 2;
+        section3TitleSet.forEach((el, i) => {
+          el.classList.toggle('on', i === activeIndex);
+        });
+        // yPercent 애니메이션
+        const maxY = -10;
+        const yValue = progress * maxY;
+        gsap.set('.content3 .bg img', { yPercent: yValue });
       }
-    }
-  })
-  .to('.content14 .bg1', {opacity: 1, duration: 1})
-  // .to('.content14 .mask', {opacity: 1, duration: 1})
-  .to('.content14 .sub_title', {opacity: 1, duration: 1, y: 0})
-  .to({}, { duration: .5 })
-  .to('.content14 .bg1', {opacity: 0, yPercent: -100, duration: 1})
-  .to('.content14 .bg_wrap2', {opacity: 1, yPercent: 0, duration: 1})
-  .to({}, { duration: .5 })
-  .to('.content14 .bg_wrap2 img', {x:-100, duration: 1})
-  .to({}, { duration: .5 })
-  .to('.content14 .bg_wrap2', {opacity: 0, yPercent: -100, duration: 1})
-  .to('.content14 .sub_title', {opacity: 0, yPercent: -100, duration: 1})
-  .to({}, { duration: .5 })
-  .to('.content14 .bg3', {opacity: 1, yPercent:0, duration: 1})
-  .to({}, { duration: .5 })
-  .to('.content14', {opacity: 0, duration: 1})
-  .to({}, { duration: .5 })
-  // .to('.content15', {opacity: 1, duration: 1})
+    })
+    .to({}, { duration: 0.3 })
+    // content3 → content4
+    .to('.content3', { opacity: 0, duration: 1 })
+    .to('.content4', { opacity: 1, duration: 1 })
+    .to({}, { duration: 0.5 }) 
+    // content4 -> content5
+    .to('.content4', {opacity: 0, duration: 1})
+    .to('.content5', {opacity:1, yPercent: 0, duration:1},'<')
+    .to('.content5 .item1 .main_image', {opacity:1, y:0, duration:1})
+    .to('.content5 .item1 .line', {opacity:1, y:0, duration:1})
+    .to('.content5 .item2 .main_image', {opacity:1, y:0, duration:1})
+    .to('.content5 .item2 .line', {opacity:1, y:0, duration:1})
+    .to('.content5 .item3 .main_image', {opacity:1, y:0, duration:1})
+    .to('.content5 .item3 .line', {opacity:1, y:0, duration:1})
+    .to({}, { duration: 1 })
+    // content5 -> content6
+    .to('.content5', {opacity: 0, duration: 1})
+    .to({}, { duration: 1 })
+    .to('.content6', {opacity: 1, duration: 1})
+    .to({}, { duration: 1 })
+    .to('.content6', {opacity: 0, duration: 1})
+    .to({}, { duration: 0.5 })
+    // content6 -> content7
+    .to('.content7', {opacity: 1, duration: 1})
+    .to('.content7 .title', {opacity: 1, y:0, duration: 1})
+    .addLabel("thor")
+    .to('.content7', {opacity: 0, duration: 1,})
+    .to('.content7 .bg', {scale: 1.2, duration: 1},"<")
+    // content7 -> content8
+    .to('.content8', {opacity: 1, duration: 1})
+    .to('.content8 .title', {opacity: 1, duration: 1})
+    .to({}, { duration: .5 })
+    .to('.content8 .bg_wrap', {opacity: 1, duration: 1})
+    .to('.content8 .sub_title1', {opacity: 1, yPercent:0, duration: 1})
+    .to({}, { duration: .5 })
+    .to('.content8 .bg_wrap', {xPercent: -50, duration: 2})
+    .to('.content8 .bg2', {opacity:1, duration: 1}, "<")
+    .to('.content8 .sub_title1', {opacity:0, yPercent: -100, duration: 1},"<")
+    .to('.content8 .sub_title2', {opacity:1, yPercent:0, duration:1})
+    .to({}, { duration: .5 })
+    .to('.content8 .bg_wrap2', {xPercent: -50, duration: 2})
+    .to('.content8 .fake_dim', {opacity: 1, duration: 1}, "<")
+    .to('.content8 .sub_title2', {opacity: 0, yPercent: -100, duration: 1},'<')
+    .to({}, { duration: .5 })
+    .to('.content8', {opacity: 0, duration: 1})
+    .to('.content8 .bg_wrap2', {xPercent: -100, duration: 2},"<")
+    .to({}, { duration: 1 })
+    // content8 -> content9
+    .to('.content9', {opacity: 1, duration: 1})
+    .to('.content9 .title', {opacity: 1, y: 0, duration: 1})
+      .addLabel("column")
+    .to({}, { duration: .5 })
+    .to('.content9 .bg', {scale: 1.2, duration: 1})
+    .to(".content9", {opacity: 0, duration: 1}, "<")
+    .to('.content10', {opacity: 1, duration: 1})
+    .to({}, { duration: .5 })
+    .to('.content10 .bg1', {opacity: 1, duration: 1})
+    .to({}, { duration: .5 })
+    .to('.content10 .bg2', {opacity: 1, duration: 0})
+    .to({}, { duration: 2 })
+    .to('.content10 .bg1', {opacity: 0, yPercent: -100, duration: 1})
+    .to('.content10 .bg2', {opacity: 0, yPercent: -100, duration: 1},"<")
+    .to({}, {duration: 1})
+    .to('.content10  .item_wrap', {yPercent: 0, opacity: 1, duration: 1})
+    .to('.content10 .sub_title1', {opacity: 1, y: 0, duration: .5})
+    .to({}, { duration: .5 })
+    .to('.content10  .item1', {
+      left: `${17.291 + (14 - 17.291)}%`,
+      top: `${-6.526 + (0 - -6.526)}%`,
+      duration: 1
+    })
+    .to('.content10  .item2', {
+      right: `${11.875 - 5}%`,
+      bottom: `${-30.273 + 5}%`,
+      duration: 1
+    }, "<")
+    .to({}, { duration: .5 })
+    .to('.content10 .item_wrap', {yPercent: -100, opacity: 0, duration: 1})
+    .to('.content10 .sub_title1', {y: -20, opacity: 0, duration: .5})
+    .to({}, { duration: .5 })
+    .to('.content10 .bg3', {yPercent: 0, opacity: 1, duration: 1})
+    .to('.content10 .sub_title2', {y: 0, opacity: 1, duration: .5})
+    .to({}, { duration: .5 })
+    .to('.content10 .bg3 img', {y: -50, duration: .5})
+    .to('.content10', {opacity: 0, duration: 1}, "<")
+    // content10 -> content11
+    .to({}, { 
+      duration: 1,
+      onStart: function () {
+        const video = document.querySelector('.content11 video');
+        if (video) {
+          video.currentTime = 0; // 영상 초기화
+          video.playbackRate = 0.8; // 재생속도 설정
+          video.play(); // 영상 실행
+        }
+      }
+    })
+    .to('.content11', {opacity: 1, duration: 1})
+    .to('.content11 .title', {opacity: 1, y: 0, duration: 1})
+    .addLabel("lusso")
+    .to({}, { duration: 1 })
+    .to('.content11 .bg', {scale: 1.2, opacity: 1, duration: 1})
+    .to('.content11', {opacity: 0, duration: 1}, "<")
+    .to({}, { duration: 1 })
+    // content11 -> content12
+    .to('.content12', {opacity: 1, duration: 1})
+    .to('.content12 .title', {opacity: 1, duration: 1})
+    .to({}, { duration: .5 })
+    .to('.content12 .bg1', {opacity: 1, duration: 1})
+    .to('.content12 .sub_title1', {yPercent: 0, opacity: 1, duration: 1})
+    .to({}, { duration: .5 })
+    .to('.content12 .bg1', {scale: 1.2, opacity: 0, duration: 1})
+    .to({}, { duration: .5 })
+    .to('.content12 .bg2', {opacity: 1, duration: 1})
+    .to({}, { duration: .5 })
+    .to('.content12 .bg2', {scale: 1.2, opacity: 0, duration: 1})
+    .to('.content12 .sub_title1', {yPercent: -100, opacity: 0, duration: 1},"<")
+    .to({}, { duration: .5 })
+    .to('.content12 .bg3', {opacity: 1, duration: 1})
+    .to('.content12 .sub_title2', {y: 0, opacity: 1, duration: 1})
+    .to({}, { duration: .5 })
+    .to('.content12 .bg4', {opacity: 1, duration: 1})
+    .to({}, { duration: .5 })
+    .to('.content12 .bg5', {opacity: 1, duration: 1})
+    .to({}, { duration: .5 })
+    .to('.content12', {opacity: 0, duration: 1})
+    .to({}, { duration: 1 })
+    // content12 -> content13
+    .to('.content13', {opacity: 1, duration: 1})
+    .to('.content13 .title', {opacity: 1, y: 0, duration: 1})
+    .addLabel("valle")
+    .to({}, { duration: .5 })
+    .to('.content13 .bg', {scale: 1.2, opacity: 0, duration: 1})
+    .to('.content13', {opacity: 0, duration: 1}, "<")
+    // content13 -> content14
+    .to('.content14', {opacity: 1, duration: 1})
+    .to('.content14 .title', {opacity: 1, duration: 1}, '<')
+    .to({}, { 
+      duration: .5,
+      onStart: function () {
+        const video = document.querySelector('.content14 video');
+        if (video) {
+          video.currentTime = 0; // 영상 초기화
+          video.playbackRate = 1; // 재생속도 설정
+          video.play(); // 영상 실행
+        }
+      }
+    })
+    .to('.content14 .bg1', {opacity: 1, duration: 1})
+    .to({}, { duration: .5 })
+    .to('.content14 .sub_title', {opacity: 1, duration: 1, y: 0})
+    .to({}, { duration: .5 })
+    .to('.content14 .bg1', {opacity: 0, yPercent: -100, duration: 1})
+    .to({}, { duration: 1 })
+    .to('.content14 .bg_wrap2', {opacity: 1, yPercent: 0, duration: 1})
+    .to({}, { duration: 1 })
+    .to('.content14 .bg_wrap2 img', {x:-100, duration: 1})
+    .to({}, { duration: .5 })
+    .to('.content14 .bg_wrap2', {opacity: 0, yPercent: -100, duration: 1})
+    .to('.content14 .sub_title', {opacity: 0, yPercent: -100, duration: 1})
+    .to({}, { duration: .5 })
+    .to('.content14 .bg3', {opacity: 1, yPercent:0, duration: 1})
+    .to({}, { duration: 1 })
+    .to('.content14', {opacity: 0, duration: 1})
+    .to({}, { duration: .5 })
+
+  }
+
+  // 최초 1회 실행
+  createMainTimeline();
+  initScrollTriggerForContent15();
+  initSwiperIfNeeded();
+  updateTotalDuration();
+  ScrollTrigger.refresh();
 
   // content14 -> content15
-  ScrollTrigger.create({
-    id: "product-trigger",
-      trigger: ".content15",
-      start: `top+=${headerH} top`,
-      end: `+=100%`,
-      scrub: true,
-      pin: true,
-      pinSpacing: true,
-      animation: gsap.timeline()
-        .to(".content15",{ opacity: 1, duration: 0.5 })
-        .addLabel("product")
-  });
+  // productTrigger = ScrollTrigger.create({
+  //   id: "product-trigger",
+  //     trigger: ".content15",
+  //     start: `top +=${headerH}`,
+  //     end: `+=100%`,
+  //     scrub: true,
+  //     pin: true,
+  //     pinSpacing: true,
+  //     animation: gsap.timeline()
+  //       .to(".content15",{ opacity: 1, duration: 0.5 })
+  //       .addLabel("product")
+  // });
 
 
 
 
-  const labelList = ["black", "tech", "thor", "column", "lusso", "valle", "product"];
-  const totalDuration = mainTimeline.duration();
-  const scrollContainerHeight = parseFloat(calcWindowH(timelineLength)); // 전체 scrollTrigger 범위(px)
+  // const labelList = ["black", "tech", "thor", "column", "lusso", "valle", "product"];
+  // const totalDuration = mainTimeline.duration();
+  // const scrollContainerHeight = parseFloat(calcWindowH(timelineLength)); // 전체 scrollTrigger 범위(px)
 
   const paginationItems = document.querySelectorAll(".pagination li");
 
@@ -279,18 +368,21 @@ document.addEventListener('DOMContentLoaded', function(){
 
           const label = labelList[index];
 
-if (label === "product") {
-const st = ScrollTrigger.getById("product-trigger");
-if (!st) return;
+          console.log(label)
+  if (label === "product") {
+      const st = ScrollTrigger.getById("product-trigger");
+      
+      console.log(st)
+      if (!st) return;
 
-const y = st.start + (st.end - st.start) * 1;
+      const y = st.start + (st.end - st.start) * 1;
 
-lenis.scrollTo(y, {
-    duration: 1,
-    onComplete: () => ScrollTrigger.update()
-});
-    return;
-}
+      lenis.scrollTo(y, {
+          duration: 1,
+          onComplete: () => ScrollTrigger.update()
+      });
+      return;
+  }
           const labelTime = mainTimeline.labels[label];
 
           console.log('label',label)
@@ -313,7 +405,7 @@ function updatePaginationByLabel() {
     const scrollY = window.scrollY || window.pageYOffset; // 현재 스크롤 위치 (픽셀)
 
     // 1. content15(product)의 ScrollTrigger 가져오기
-    const productTrigger = ScrollTrigger.getAll().find(trigger =>
+    productTrigger = ScrollTrigger.getAll().find(trigger =>
         trigger.trigger?.classList?.contains('content15')
     );
 
@@ -394,3 +486,4 @@ function preventClick(e) {
   e.stopPropagation();
   e.preventDefault();
 }
+

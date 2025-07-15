@@ -5,22 +5,28 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>대림바스BLACK</title>
   <link rel="stylesheet" href="../../css/reset.css">
-  <link rel="stylesheet" href="../css/대림바스black.css">
   <link rel="stylesheet" href="../../css/swiper-bundle.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/css/nice-select.min.css" />
+  <link rel="stylesheet" href="../css/대림바스black.css">
 
+  <!-- lodash CDN (throttle) -->
+  <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
+  <!-- nice-select -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/js/jquery.nice-select.min.js"></script>
   <script src="../../js/swiper-bundle.min.js"></script>
-<script src="https://unpkg.com/lenis@1.3.4/dist/lenis.min.js"></script> 
+  <script src="https://unpkg.com/lenis@1.3.4/dist/lenis.min.js"></script> 
   <script src="../../js/gsap.min.js"></script>
   <script src="../../js/ScrollTrigger.min.js"></script>
   <script src="../../js/ScrollToPlugin.min.js"></script>
-  <script src="../js/대림바스black.js" defer></script>
+  <script src="../js/대림바스black.js"></script>
 </head>
 <body>
   <header id="header">
     <img src="../asset/image/gnb.png" alt="헤더이미지">
   </header>
 
-  <div id="container">
+  <div id="container" class="container_black">
 
     <div class="scroll_container"></div>
 
@@ -187,7 +193,27 @@
         <div class="left"></div>
         <div class="right category_content">
           <h2 class="title"><img src="../asset/image/pc_title_black.png" alt=""></h2>
-          <div class="content_box">
+          <div class="mo mo_main_category">
+            <select name="main_cate" id="main_cate">
+              <option value="bathroom">BATHROOM</option>
+              <option value="kitchen">KITCHEN</option>
+              <option value="accessory">ACCESSORY</option>
+            </select>
+          </div>
+          <div class="mo mo_sub_category">
+            <div class="inner">
+              <ul>
+                <li class="on">THOR</li>
+                <li>COLUMN</li>
+                <li>LUSSO</li>
+                <li>VALLE</li>
+                <li>VELO</li>
+                <li>ROTONDO</li>
+                <li>DURO</li>
+              </ul>
+            </div>
+          </div>
+          <div class="content_box active">
             <div class="category_wrap">
               <div class="category_head">
                 <div class="category_title">BATHROOM</div>
@@ -202,7 +228,7 @@
                 </ul>
               </div>
               <div class="swiper category_list">
-                <div class="swiper-wrapper">
+                <div class="swiper-wrapper grid_set">
                   <div class="swiper-slide">
                     <a href="">
                       <div class="main_image"><img src="../asset/image/test.png" alt=""></div>
@@ -268,7 +294,7 @@
                 </ul>
               </div>
               <div class="swiper category_list">
-                <div class="swiper-wrapper">
+                <div class="swiper-wrapper grid_set">
                   <div class="swiper-slide">
                     <a href="">
                       <div class="main_image"><img src="../asset/image/test.png" alt=""></div>
@@ -334,7 +360,7 @@
                 </ul>
               </div>
               <div class="swiper category_list">
-                <div class="swiper-wrapper">
+                <div class="swiper-wrapper grid_set">
                   <div class="swiper-slide">
                     <a href="">
                       <div class="main_image"><img src="../asset/image/test.png" alt=""></div>
