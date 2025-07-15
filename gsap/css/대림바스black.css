@@ -555,6 +555,7 @@ body {
   margin-top: 40px;
   width: 100%;
   text-align: center;
+  overflow: hidden;
 }
 .content12 .sub_title {
   opacity: 0;
@@ -611,10 +612,10 @@ body {
 }
 .content14 .mask {
   position: absolute;
-  bottom: 0;
+  bottom: 0%;
   left: 0;
   width: 100%;
-  aspect-ratio: 1920/500;
+  aspect-ratio: 1920 / 200;
   mix-blend-mode: multiply;
 }
 .content14 .mask video {
