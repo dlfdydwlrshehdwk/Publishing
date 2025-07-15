@@ -51,28 +51,31 @@ body {
 }
 .pagination li {
   position: relative;
-  opacity: 0.1;
   font-weight: 500;
   letter-spacing: -0.14px;
   transition: .3s;
   padding-left: 12px;
 }
 .pagination li a {
+  position: relative;
   font-size: 14px;
-    color: #fff;
+  color: rgba(255,255,255,0.2);
 }
-.pagination li.on {
-  opacity: 1;
+.pagination li.on a {
+  color: #fff;
 }
-.pagination li:before {
+.pagination li a:before {
   content: '';
   width: 4px;
   height: 4px;
   border-radius: 100%;
   position: absolute;
-  left: 0;
+  right: calc(100% + 10px);
   top: 50%;
   transform: translateY(-50%);
+  background-color: rgba(255,255,255,0.2);
+}
+.pagination li.on a:before {
   background-color: #fff;
 }
 
@@ -806,6 +809,103 @@ body {
 
 }
 @media (max-width: 767px) {
+  /* _pagination */
+  .pagination {
+    width: 100%;
+    left: 0;
+    right: 0;
+    top: auto;
+    bottom: 0;
+    transform: none;
+    overflow-x: auto;
+    white-space: nowrap;
+    scroll-behavior: smooth;
+    height: auto;
+  }
+  .pagination ul {
+    display: inline-flex;
+    flex-direction: row;
+    gap: 0;
+    width: max-content;
+  }
+  .pagination li {
+    width: fit-content;
+    position: relative;
+    font-weight: 500;
+    letter-spacing: -0.14px;
+    transition: .3s;
+    padding-left: 12px;
+    padding: 25px 20px;
+    display: flex;
+    gap: 7px;
+    align-items: center;
+    justify-content: center;
+  }
+  .pagination li a:before {
+    right: calc(100% + 7px);
+  }
+
+
+
+
+
+  /* toast */
+  .toast {
+    position: fixed;
+    bottom: 100px;
+    width: calc(100% - 35px);
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(26, 26, 26, 0.9);
+    border-radius: 4px;
+    transition: .5s;
+  }
+  .toast::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 7px solid transparent;
+    border-right: 7px solid transparent;
+    border-top: 7px solid rgba(26, 26, 26, 0.9);
+  }
+  .toast .inner {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    align-items: center;
+    padding: 14px 10px;
+  }
+  .toast .icon {
+    width: 12px;
+    height: 11px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .toast .icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .toast ul {
+    overflow: hidden;
+  }
+  .toast li {
+    font-size: 14px;
+    letter-spacing: -0.14px;
+    color: #fff;
+  }
+
+
+
+
+
+
+
   .content1 .title {
     width: 228px;
     height: 38px;

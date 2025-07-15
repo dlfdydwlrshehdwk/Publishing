@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', function(){
   let productTrigger;
   let mainTimeline;
   let swiperInstances = [];
+  let paginationSwiper = null;
   let headerH = 0;
   let windowH = 0;
   const labelList = ["black", "tech", "thor", "column", "lusso", "valle", "product"];
@@ -35,7 +36,7 @@ document.addEventListener('DOMContentLoaded', function(){
       productTrigger = ScrollTrigger.create({
           id: "product-trigger",
           trigger: ".content15",
-          start: `top+=${headerH}`,
+          start: `top ${headerH}`,
           end: `+=100%`,
           scrub: true,
           pin: true,
@@ -73,8 +74,9 @@ document.addEventListener('DOMContentLoaded', function(){
   window.addEventListener('resize', _.throttle(() => {
     recalcLayoutValues();
     createMainTimeline();
-    initScrollTriggerForContent15();
     initSwiperIfNeeded();
+    initPaginationSwiper();
+    initScrollTriggerForContent15();
     updateTotalDuration(); // duration 값 갱신
     ScrollTrigger.refresh();
   },200));
@@ -104,6 +106,32 @@ document.addEventListener('DOMContentLoaded', function(){
   // 4. (선택) GSAP ticker에 동기화하려면 아래도 추가 가능
   // gsap.ticker.add((time) => lenis.raf(time * 1000));
   // gsap.ticker.lagSmoothing(0);
+
+  function initPaginationSwiper() {
+    const isMobile = window.innerWidth <= 767;
+    const swiperContainer = document.querySelector('.pagination.swiper'); // ✅ Swiper 대상은 div.swiper여야 함
+
+    if (!swiperContainer) return;
+
+    if (isMobile) {
+        if (paginationSwiper) {
+            paginationSwiper.destroy(true, true);
+        }
+
+        paginationSwiper = new Swiper(swiperContainer, {
+            slidesPerView: 'auto',
+            centeredSlides: true,
+            spaceBetween: 20,
+            freeMode: true,
+        });
+    } else {
+        if (paginationSwiper) {
+            paginationSwiper.destroy(true, true);
+            paginationSwiper = null;
+        }
+    }
+  } initPaginationSwiper();
+
 
   function calcWindowH (num = 1){
     return (num * windowH).toString();
@@ -334,10 +362,10 @@ document.addEventListener('DOMContentLoaded', function(){
 
   // 최초 1회 실행
   createMainTimeline();
-  initScrollTriggerForContent15();
   initSwiperIfNeeded();
   updateTotalDuration();
-  ScrollTrigger.refresh();
+  initScrollTriggerForContent15();
+  // ScrollTrigger.refresh();
 
   // content14 -> content15
   // productTrigger = ScrollTrigger.create({
