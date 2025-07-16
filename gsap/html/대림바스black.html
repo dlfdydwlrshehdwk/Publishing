@@ -11,9 +11,6 @@
 
   <!-- lodash CDN (throttle) -->
   <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
-  <!-- nice-select -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/js/jquery.nice-select.min.js"></script>
   <script src="../../js/swiper-bundle.min.js"></script>
   <script src="https://unpkg.com/lenis@1.3.4/dist/lenis.min.js"></script> 
   <script src="../../js/gsap.min.js"></script>
@@ -35,14 +32,29 @@
     <div class="fixed_content">
       <!-- BLACK -->
       <div class="content content1">
-        <div class="title"><img src="../asset/image/pc_title_black.png" alt="이미지"></div>
-        <div class="bg bg1 pc"><img src="../asset/image/pc_section1_bg_dark.png" alt="이미지"></div>
-        <div class="bg bg2 pc"><img src="../asset/image/pc_section1_bg_light.png" alt=""></div>
-        <div class="mask"><img src="../asset/image/pc_section1_mask_black.png" alt="이미지"></div>
+        <div class="title_wrap">
+          <div class="title"><img src="../asset/image/pc_title_black.png" alt="이미지"></div>
+        </div>
+        <div class="bg bg1">
+          <img class="pc" src="../asset/image/pc_section1_bg_dark.png" alt="이미지">
+          <img class="mo" src="../asset/image/mo_section1_bg_dark.png" alt="이미지">
+        </div>
+        <div class="bg bg2">
+          <img class="pc" src="../asset/image/pc_section1_bg_light.png" alt="이미지">
+          <img class="mo" src="../asset/image/mo_section1_bg_light.png" alt="이미지">
+        </div>
+        <div class="mask">
+          <img class="pc" src="../asset/image/pc_section1_mask_black.png" alt="이미지">
+          <img class="mo" src="../asset/image/mo_section1_mask_black.png" alt="이미지">
+        </div>
       </div>
+
       <div class="content content2">
-          <div class="title">하이엔드의 새로운 기준, 블랙</div>
+        <div class="title_wrap">
+          <div class="title title_font">하이엔드의 새로운 기준<span class="pc_inline">,</span> 블랙</div>
+        </div>
       </div>
+
       <div class="content content3">
           <div class="title_wrapper">
             <div class="title_set">
@@ -58,57 +70,110 @@
               <div class="title">고광택 금속 텍스쳐</div>
             </div>
           </div>
-          <div class="bg"><img src="../asset/image/pc_section3_bg.png" alt=""></div>
+          <div class="bg">
+            <img class="pc" src="../asset/image/pc_section3_bg.png" alt="">
+            <img class="mo" src="../asset/image/mo_section3_bg.png" alt="">
+          </div>
       </div>
+
       <div class="content content4">
-          <div class="title">트렌드를 이끄는 새로운 패러다임의 완성</div>
+        <div class="title_wrap">
+          <div class="title title_font">트렌드를 이끄는 <br class="mo">새로운 패러다임의 완성</div>
+        </div>
       </div>
+
       <div class="content content5">
-        <div class="bg"><img src="../asset/image/pc_section5_bg.png" alt=""></div>
+        <div class="bg">
+          <img class="pc" src="../asset/image/pc_section5_bg.png" alt="">
+          <img class="mo" src="../asset/image/mo_section5_bg.png" alt="">
+        </div>
+
         <div class="item_wrap">
-          <div class="item item1">
-            <div class="main_image"><img src="../asset/image/pc_section5_item1.png" alt=""></div>
-            <div class="line"><img src="../asset/image/pc_section5_line1.png" alt=""><div><p>POLISHED</p><p>CHROME</p></div></div>
+          <div class="inner">
+            <div class="item item1">
+              <div class="main_image">
+                <img class="pc" src="../asset/image/pc_section5_item1.png" alt="">
+                <img class="mo" src="../asset/image/mo_section5_item1.png" alt="">
+              </div>
+              <div class="line"><img class="pc" src="../asset/image/pc_section5_line1.png" alt=""><div><p>POLISHED</p><p>CHROME</p></div></div>
+            </div>
+            <div class="item item2">
+              <div class="main_image">
+                <img class="pc" src="../asset/image/pc_section5_item2.png" alt="">
+                <img class="mo" src="../asset/image/mo_section5_item2.png" alt="">
+              </div>
+              <div class="line"><img class="pc" src="../asset/image/pc_section5_line2.png" alt=""><div><p>BRUSHED</p><p>NICKEL</p></div></div>
+            </div>
+            <div class="item item3">
+              <div class="main_image">
+                <img class="pc" src="../asset/image/pc_section5_item3.png" alt="">
+                <img class="mo" src="../asset/image/mo_section5_item3.png" alt="">
+              </div>
+              <div class="line"><img class="pc" src="../asset/image/pc_section5_line3.png" alt=""><div><p>BRUSHED</p><p>GUN METAL</p></div></div>
+            </div>
           </div>
-          <div class="item item2">
-            <div class="main_image"><img src="../asset/image/pc_section5_item2.png" alt=""></div>
-            <div class="line"><img src="../asset/image/pc_section5_line2.png" alt=""><div><p>BRUSHED</p><p>NICKEL</p></div></div>
-          </div>
-          <div class="item item3">
-            <div class="main_image"><img src="../asset/image/pc_section5_item3.png" alt=""></div>
-            <div class="line"><img src="../asset/image/pc_section5_line3.png" alt=""><div><p>BRUSHED</p><p>GUN METAL</p></div></div>
+          <div class="mo item_title">
+            <div class="item_title1"><p>POLISHED</p><p>CHROME</p></div>
+            <div class="item_title2"><p>BRUSHED</p><p>NICKEL</p></div>
+            <div class="item_title3"><p>BRUSHED</p><p>GUN METAL</p></div>
           </div>
         </div>
       </div>
+
       <div class="content content6">
         <div class="title_wrap">
           <div class="title"><img src="../asset/image/pc_title_black.png" alt="이미지"></div>
-          <div class="sub_title">SERIES</div>
+          <div class="sub_title_wrap">
+            <div class="sub_title">SERIES</div>
+          </div>
         </div>
       </div>
+
       <!-- THOR -->
       <div class="content content7">
-        <div class="bg"><img src="../asset/image/pc_section7_bg.png" alt=""></div>
-        <div class="title">공간을 채우는 오브제</div>
+        <div class="bg">
+          <img class="pc" src="../asset/image/pc_section7_bg.png" alt="">
+          <img class="mo" src="../asset/image/mo_section7_bg.png" alt="">
+        </div>
+        <div class="title_wrap">
+          <div class="title title_font">공간을 채우는 <br class="mo">오브제</div>
+        </div>
       </div>
+
       <div class="content content8">
-        <div class="bg_wrap">
-          <div class="bg bg1"><img src="../asset/image/pc_section8_item1.png" alt=""></div>
+        <!-- <div class="bg_wrap"> -->
+          <div class="bg bg1">
+            <img class="pc" src="../asset/image/pc_section8_item1.png" alt="">
+            <img class="mo" src="../asset/image/mo_section8_item1.png" alt="">
+          </div>
           <div class="bg bg2">
-            <img src="../asset/image/pc_section8_bg.png" alt="">
+            <img class="pc" src="../asset/image/pc_section8_bg.png" alt="">
+            <img class="mo" src="../asset/image/mo_section8_bg.png" alt="">
             <div class="fake_dim"></div>
             <div class="bg_wrap2">
               <div class="bg bg3">
-                <div class="item item1"><img src="../asset/image/pc_section8_item2.png" alt=""></div>
-                <div class="item item2"><img src="../asset/image/pc_section8_item3.png" alt=""></div>
+                <div class="item item1">
+                  <img class="pc" src="../asset/image/pc_section8_item2.png" alt="">
+                  <img class="mo" src="../asset/image/mo_section8_item2.png" alt="">
+                </div>
+                <div class="item item2">
+                  <img class="pc" src="../asset/image/pc_section8_item3.png" alt="">
+                  <img class="mo" src="../asset/image/mo_section8_item3.png" alt="">
+                </div>
               </div>
               <div class="bg bg4">
-                <div class="item item3"><img src="../asset/image/pc_section8_item4.png" alt=""></div>
-                <div class="item item4"><img src="../asset/image/pc_section8_item5.png" alt=""></div>
+                <div class="item item3">
+                  <img class="pc" src="../asset/image/pc_section8_item4.png" alt="">
+                  <img class="mo" src="../asset/image/mo_section8_item4.png" alt="">
+                </div>
+                <div class="item item4">
+                  <img class="pc" src="../asset/image/pc_section8_item5.png" alt="">
+                  <img class="mo" src="../asset/image/mo_section8_item5.png" alt="">
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        <!-- </div> -->
 
         <div class="title_wrap">
           <div class="title"><img src="../asset/image/pc_title_thor.png" alt=""></div>
@@ -121,40 +186,79 @@
       
       <!-- COLUMN -->
       <div class="content content9"> 
-        <div class="bg"><img src="../asset/image/pc_section9_bg.png" alt=""></div>
-        <div class="title">프레임을 벗어난 감각적인 솔루션</div>
+        <div class="bg">
+          <img class="pc" src="../asset/image/pc_section9_bg.png" alt="">
+          <img class="mo" src="../asset/image/mo_section9_bg.png" alt="">
+        </div>
+
+        <div class="title_wrap">
+          <div class="title title_font">프레임을 벗어난 <br class="mo">감각적인 솔루션</div>
+        </div>
       </div>
 
       <div class="content content10">
-        <div class="bg bg1"><img src="../asset/image/pc_section10_bg1.png" alt=""></div>
-        <div class="bg bg2"><img src="../asset/image/pc_section10_bg2.png" alt=""></div>
-        <div class="bg bg3"><img src="../asset/image/pc_section10_bg3.png" alt=""></div>
+        <div class="bg bg1">
+          <img class="pc" src="../asset/image/pc_section10_bg1.png" alt="">
+          <img class="mo" src="../asset/image/mo_section10_bg1.png" alt="">
+        </div>
+        <div class="bg bg2">
+          <img class="pc" src="../asset/image/pc_section10_bg2.png" alt="">
+          <img class="mo" src="../asset/image/mo_section10_bg2.png" alt="">
+        </div>
+        <div class="bg bg3">
+          <img class="pc" src="../asset/image/pc_section10_bg3.png" alt="">
+          <img class="mo" src="../asset/image/mo_section10_bg3.png" alt="">
+        </div>
         <div class="item_wrap item_wrap1">
-          <div class="item item1"><img src="../asset/image/pc_section10_item1.png" alt=""></div>
+          <div class="item item1">
+            <img class="pc" src="../asset/image/pc_section10_item1.png" alt="">
+            <img class="mo" src="../asset/image/mo_section10_item1.png" alt="">
+          </div>
         </div>
         <div class="title_wrap">
-          <div class="title">COLUMN</div>
+          <div class="title"><img src="../asset/image/title_column.png" alt=""></div>
           <div class="sub_title_wrap">
             <div class="sub_title sub_title1">스핀 헤어라인</div>
             <div class="sub_title sub_title2">레버리스 디자인</div>
           </div>
         </div>
         <div class="item_wrap item_wrap2">
-          <div class="item item2"><img src="../asset/image/pc_section10_item2.png" alt=""></div>
+          <div class="item item2">
+            <img class="pc" src="../asset/image/pc_section10_item2.png" alt="">
+            <img class="mo" src="../asset/image/mo_section10_item2.png" alt="">
+          </div>
         </div>
       </div>
 
       <!-- LUSSO -->
       <div class="content content11">
         <div class="bg"><video src="../asset/video/lusso.mp4" muted loop playsinline></video></div>
-        <div class="title">섬세한 디테일이 창조해 낸 아트피스</div>
+        <div class="title_wrap">
+          <div class="title title_font">섬세한 디테일이 <br class="mo">창조해 낸 아트피스</div>
+        </div>
       </div>
+
        <div class="content content12">
-        <div class="bg bg1"><img src="../asset/image/pc_section12_bg1.png" alt=""></div>
-        <div class="bg bg2"><img src="../asset/image/pc_section12_bg2.png" alt=""></div>
-        <div class="bg bg3"><img src="../asset/image/pc_section12_bg3.png" alt=""></div>
-        <div class="bg bg4"><img src="../asset/image/pc_section12_bg4.png" alt=""></div>
-        <div class="bg bg5"><img src="../asset/image/pc_section12_bg5.png" alt=""></div>
+        <div class="bg bg1">
+          <img class="pc" src="../asset/image/pc_section12_bg1.png" alt="">
+          <img class="mo" src="../asset/image/mo_section12_bg1.png" alt="">
+        </div>
+        <div class="bg bg2">
+          <img class="pc" src="../asset/image/pc_section12_bg2.png" alt="">
+          <img class="mo" src="../asset/image/mo_section12_bg2.png" alt="">
+        </div>
+        <div class="bg bg3">
+          <img class="pc" src="../asset/image/pc_section12_bg3.png" alt="">
+          <img class="mo" src="../asset/image/mo_section12_bg3.png" alt="">
+        </div>
+        <div class="bg bg4">
+          <img class="pc" src="../asset/image/pc_section12_bg4.png" alt="">
+          <img class="mo" src="../asset/image/mo_section12_bg4.png" alt="">
+        </div>
+        <div class="bg bg5">
+          <img class="pc" src="../asset/image/pc_section12_bg5.png" alt="">
+          <img class="mo" src="../asset/image/mo_section12_bg5.png" alt="">
+        </div>
 
         <div class="title_wrap">
           <div class="title"><img src="../asset/image/pc_title_lusso.png" alt=""></div>
@@ -168,18 +272,31 @@
       </div>
       <!-- VALLE -->
       <div class="content content13">
-        <div class="bg"><img src="../asset/image/pc_section17_bg.png" alt=""></div>
-        <div class="title">여백 속 독보적인 시그니처 아이콘</div>
+        <div class="bg">
+          <img class="pc" src="../asset/image/pc_section17_bg.png" alt="">
+          <img class="mo" src="../asset/image/mo_section17_bg.png" alt="">
+        </div>
+        <div class="title_wrap">
+          <div class="title title_font">여백 속 독보적인 시그니처 아이콘</div>
+        </div>
       </div>
+
       <div class="content content14">
         <div class="bg bg1">
-          <img src="../asset/image/pc_section18_bg1.png" alt="">
+          <img class="pc" src="../asset/image/pc_section18_bg1.png" alt="">
+          <img class="mo" src="../asset/image/mo_section18_bg1.png" alt="">
           <div class="mask"><video src="../asset/video/valle.mp4" autoplay muted playsinline loop></video></div>
         </div>
         <div class="bg_wrap bg_wrap2">
-          <div class="bg bg2"><img src="../asset/image/pc_section18_bg2.png" alt=""></div>
+          <div class="bg bg2">
+            <img class="pc" src="../asset/image/pc_section18_bg2.png" alt="">
+            <img class="mo" src="../asset/image/mo_section18_bg2.png" alt="">
+          </div>
         </div>
-        <div class="bg bg3"><img src="../asset/image/pc_section18_bg3.png" alt=""></div>
+        <div class="bg bg3">
+          <img class="pc" src="../asset/image/pc_section18_bg3.png" alt="">
+          <img class="mo" src="../asset/image/mo_section18_bg3.png" alt="">
+        </div>
 
         <div class="title_wrap">
           <div class="title"><img src="../asset/image/pc_title_valle.png" alt=""></div>
@@ -196,11 +313,12 @@
         <div class="right category_content">
           <h2 class="title"><img src="../asset/image/pc_title_black.png" alt=""></h2>
           <div class="mo mo_main_category">
-            <select name="main_cate" id="main_cate">
-              <option value="bathroom">BATHROOM</option>
-              <option value="kitchen">KITCHEN</option>
-              <option value="accessory">ACCESSORY</option>
-            </select>
+            <ul>
+              <li class="on">BATHROOM</li>
+              <li>KITCHEN</li>
+              <li>ACCESSORY</li>
+              <li>Test</li>
+            </ul>
           </div>
           <div class="mo mo_sub_category">
             <div class="inner">
