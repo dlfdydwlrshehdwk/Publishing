@@ -140,6 +140,9 @@ document.addEventListener('DOMContentLoaded', function(){
       mainTimeline.kill();
     }
 
+    // 상태 변수
+    let title2Triggered = false;
+    let title3Triggered = false;
     // 초기화 공통
     gsap.set('.content1', {opacity:1});
     gsap.set('.content5 .bg', {yPercent: 5})
@@ -158,7 +161,7 @@ document.addEventListener('DOMContentLoaded', function(){
         trigger: ".scroll_container",
         start: `top ${headerH}`,
         end: () => calcWindowH(timelineLength),
-        scrub: .7,
+        scrub: .6,
         pin: true,
         anticipatePin: 1,
         // markers: true,
@@ -214,17 +217,20 @@ document.addEventListener('DOMContentLoaded', function(){
       .to('.content5', {opacity: 0, duration: 1});
     } else {
       mainTimeline
-      // .to('.content5 .item2 .main_image', {opacity:1, y:0, duration:0},"<")
-      // .to('.content5 .item3 .main_image', {opacity:1, y:0, duration:0},"<")
       .to({}, { duration: .5 })
       .to('.content5 .item1 .main_image', {opacity:1, y:0, duration: 1})
+      .to('.content5 .item2 .main_image', {opacity:1, y:0, duration:0},"<")
+      .to('.content5 .item3 .main_image', {opacity:1, y:0, duration:0},"<")
       .to('.content5 .item_title1', {opacity: 1, y: 0, duration:1},"<")
-      // .to('.content5 .item_wrap .inner', {xPercent: -100, duration: 4})
-      // .to('.content5 .item1 .main_image', {opacity:1, y:0, duration:.7},"<")
-      // .to('.content5 .item2 .main_image', {opacity:1, y:0, duration:.7},"<+.7")
-      // .to('.content5 .item3 .main_image', {opacity:1, y:0, duration:.7},"<+.7")
+      .to('.content5 .item_wrap .inner', {xPercent: -100, duration: 4})
+
+      .to('.content5 .item_title1', {opacity: 0, y: -20, duration: .5}, "<")
+      .to('.content5 .item_title2', {opacity: 1, y: 0, duration: .5}, "<+.5")
+      .to('.content5 .item_title2', {opacity: 0, y: -20, duration: .5}, "<+0.5")
+      .to('.content5 .item_title3', {opacity: 1, y: 0, duration: .5}, "<+0.5")
+      .to('.content5 .item_title3', {opacity: 0, y: -20, duration: .5}, "<+0.5")
       // content5 -> content6
-      .to('.content5', {opacity: 0, duration: 1},"<+.7")
+      .to('.content5', {opacity: 0, duration: 1},"<")
     }
     mainTimeline
     .to({}, { duration: 1 })
@@ -248,24 +254,37 @@ document.addEventListener('DOMContentLoaded', function(){
     .to({}, { duration: 1 })
     .to('.content8 .sub_title1', {opacity:0, yPercent: -100, duration: 1})
     .to('.content8 .bg1', {opacity: 0, duration: 1}, "<")
-    .to({}, { duration: 1 })
-    // .to('.content8')
-    .to('.content8 .bg_wrap2', {xPercent: -100, duration: 8, ease: "power1.out"})
-    .to('.content8 .bg2', {opacity:1, duration: 2},'<')
-    .to('.content8 .sub_title2', {opacity:1, yPercent:0, duration:1},"<")
-    // .to({}, { duration: .5 })
-    .to('.content8 .fake_dim', {opacity: 1, duration: 1}, "<+2")
-    .to('.content8 .sub_title2', {opacity: 0, yPercent: -100, duration: 1},'<+.5')
-    .to({}, { duration: 1 },"<+1")
-    .to('.content8', {opacity: 0, duration: 1},"<+2")
-    // .to('.content8 .bg_wrap2', {xPercent: -100, duration: 2},"<")
-    .to({}, { duration: 1 })
+    .to({}, { duration: 1 });
+    if(windowW > 767) {
+      mainTimeline
+      .to('.content8 .bg_wrap2', {xPercent: -100, duration: 8, ease: "power1.out"})
+      .to('.content8 .bg2', {opacity:1, duration: 2},'<')
+      .to('.content8 .sub_title2', {opacity:1, yPercent:0, duration:1},"<")
+      .to('.content8 .fake_dim', {opacity: 1, duration: 1}, "<+2")
+      .to('.content8 .sub_title2', {opacity: 0, yPercent: -100, duration: 1},'<+.5')
+      .to('.content8', {opacity: 0, duration: 2},"<+3")
+          .to({}, { duration: 1 });
+    } else {
+      mainTimeline
+      // bg등장
+      .to('.content8 .bg_wrap2', {yPercent: -70, duration: 8})
+      .to('.content8 .bg2', {opacity:1, duration: 2},'<')
+      .to('.content8 .sub_title2', {opacity:1, yPercent:0, duration:1},"<+.5")
+      .to('.content8 .sub_title2', {opacity: 0, yPercent: -100, duration: 1},'<+2')
+      // .to('.content8 .fake_dim', {opacity: 1, duration: 1}, "<+1")
+      .to('.content8', {opacity: 0, duration: 2},"<+2");
+    }
+
+
+
+    mainTimeline
     // content8 -> content9
     .to('.content9', {opacity: 1, duration: 1})
     .to('.content9 .title', {opacity: 1, y: 0, duration: 1})
     .addLabel("column")
-    .to({}, { duration: .5 })
+    .to({}, { duration: 1 })
     .to('.content9 .bg', {scale: 1.2, duration: 1})
+    // content9 -> content10
     .to(".content9", {opacity: 0, duration: 1}, "<")
     .to('.content10', {opacity: 1, duration: 1})
     .to({}, { duration: .5 })
@@ -278,19 +297,36 @@ document.addEventListener('DOMContentLoaded', function(){
     .to({}, {duration: 1})
     .to('.content10  .item_wrap', {opacity: 1, duration: 1})
     .to('.content10 .sub_title1', {opacity: 1, y: 0, duration: .5})
-    .to({}, { duration: .5 })
-    .to('.content10  .item1', {
-      left: `${17.291 + (14 - 17.291)}%`,
-      top: `${-6.526 + (0 - -6.526)}%`,
-      duration: 1
-    })
-    .to('.content10  .item2', {
-      right: `${11.875 - 5}%`,
-      bottom: `${-30.273 + 5}%`,
-      duration: 1
-    }, "<")
+    .to({}, { duration: .5 });
+    if(windowW > 767) {
+      mainTimeline
+      .to('.content10  .item1', {
+        left: `${17.291 + (14 - 17.291)}%`,
+        top: `${-6.526 + (0 - -6.526)}%`,
+        duration: 1
+      })
+      .to('.content10  .item2', {
+        right: `${11.875 - 5}%`,
+        bottom: `${-30.273 + 5}%`,
+        duration: 1
+      }, "<");
+
+    } else {
+      mainTimeline
+      .to('.content10  .item1', {
+        right: `${-57 + 5}%`,
+        top: `${11.528 + 3}%`,
+        duration: 1
+      })
+      .to('.content10  .item2', {
+        left: `${-54 + 5}%`,
+        bottom: `${4 + 4}%`,
+        duration: 1
+      }, "<");
+    }
+    mainTimeline
     .to('.content10 .item_wrap', {opacity: 0, duration: 1.3}, "<+.7")
-    .to('.content10 .sub_title1', {y: -20, opacity: 0, duration: .5},"<")
+    .to('.content10 .sub_title1', {y: -20, opacity: 0, duration: 1},"<")
     .to({}, { duration: .5 })
     .to('.content10 .bg3', {yPercent: 0,  duration: 1})
     .to('.content10 .bg3', {opacity: 1,  duration: 1},"<+.3")
@@ -372,8 +408,15 @@ document.addEventListener('DOMContentLoaded', function(){
     .to('.content14 .bg1', {opacity: 0, yPercent: -100, duration: 1})
     .to({}, { duration: 1 })
     .to('.content14 .bg_wrap2', {opacity: 1, yPercent: 0, duration: 1})
-    .to({}, { duration: 1 })
-    .to('.content14 .bg_wrap2 img', {x:-100, duration: 1})
+    .to({}, { duration: 1 });
+    if(windowW > 767) {
+      mainTimeline
+      .to('.content14 .bg_wrap2 img', {x:-100, duration: 1});
+    } else {
+      mainTimeline
+      .to('.content14 .bg_wrap2 img', {x:-20, duration: 1});
+    }
+    mainTimeline
     .to({}, { duration: .5 })
     .to('.content14 .bg_wrap2', {opacity: 0, yPercent: -100, duration: 1})
     .to('.content14 .sub_title', {opacity: 0, yPercent: -100, duration: 1})

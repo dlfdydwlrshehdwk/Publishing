@@ -5,29 +5,29 @@ body {
   display: none !important;
 }
 .pc {
-  display: block;
+  display: block !important;
 }
 .mo {
-  display: none;
+  display: none !important;
 }
 .pc_inline {
-  display: inline;
+  display: inline !important;
 }
 .mo_inline {
-  display: none;
+  display: none !important;
 }
 @media (max-width: 767px) {
   .pc {
-    display: none;
+    display: none !important;
   }
   .mo {
-    display: block;
+    display: block !important;
   }
   .pc_inline {
-    display: none;
+    display: none !important;
   }
   .mo_inline {
-    display: inline;
+    display: inline !important;
   }
 }
 /* _header */
@@ -142,9 +142,15 @@ body {
   left: 50%;
   transform: translate(-50%,-50%);
   text-align: center;
+  width: 100%;
+}
+.title_wrap .title {
+  margin: 0 auto;
+  width: fit-content;
 }
 .sub_title_wrap {
-  position: relative;
+  position: absolute;
+  top: 100%;
   margin-top: 40px;
   text-align: center;
   overflow: hidden;
@@ -377,7 +383,7 @@ body {
   flex: 1;
 }
 
-.fixed_content > .content.content8 > .bg.bg1 {
+.content.content8 > .bg.bg1 {
   height: auto;
   top: auto;
   bottom: 0;
@@ -391,7 +397,7 @@ body {
   opacity: 1;
 }
 .content8 .bg_wrap2 {
-  transform: translateX(50%);
+  transform: translateX(35%);
 }
 .content8 .item {
   position: absolute;
@@ -447,17 +453,6 @@ body {
 .content10 .title {
   width: 628px;
   height: 103px;
-}
-.content10 .sub_title_wrap {
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  color: #fff;
-  margin-top: 40px;
-  width: 100%;
-  text-align: center;
-  overflow: hidden;
 }
 .content10 .sub_title {
   opacity: 0;
@@ -521,13 +516,15 @@ body {
   opacity: 0;
 }
 .content14 .mask {
-  position: absolute;
-  bottom: -.5%;
-  left: 0;
-  width: 100%;
-  aspect-ratio: 1920 / 200;
-  mix-blend-mode: multiply;
-  transform: scaleY(.5);
+    position: absolute;
+    bottom: 4.5%;
+    left: 0;
+    width: 100%;
+    aspect-ratio: 1920 / 200;
+    /* height: 200px; */
+    mix-blend-mode: multiply;
+    transform: scaleY(.5);
+    transform-origin: bottom;
 }
 .content14 .mask video {
   width: 100%;
@@ -701,9 +698,25 @@ body {
   height: 100px;
   width: 100%;
 }
-
+@media (max-width : 1880px) {
+  .content14 .mask {
+    bottom: 5.5%;
+  }
+}
+@media (max-width : 1850px) {
+  .content14 .mask {
+    bottom: 6.5%;
+  }
+}
+@media (max-width : 1750px) {
+  .content14 .mask {
+    bottom: 8.5%;
+  }
+}
 @media (max-width : 1680px) {
-  
+  .content14 .mask {
+    bottom: 9.5%;
+  }
 }
 @media (max-width : 1440px) {
   
@@ -897,6 +910,10 @@ body {
   .content5 .item_title > div + div {
       position: absolute;
       opacity: 0;
+      width: 100%;
+
+      top: 0;
+      opacity: 0;
   }
   .content5 .item_title > div > p {
     color: #fff;
@@ -921,25 +938,95 @@ body {
   .content8 .title {
     width: 142px;
   }
-  .content8 .bg1 {
+  .content.content8 > .bg.bg1 {
     width: 100%;
     height: 100%;
     margin: 0;
   }
+  .content8 .bg_wrap2 {
+    display: block;
+    transform: none;
+    width: 100%;
+    height: 200%;
+
+    transform: translateY(20%);
+  }
+  .content8 .bg_wrap2 .bg3,
+  .content8 .bg_wrap2 .bg4 {
+    height: 50%;
+  }
+  .content8 .bg_wrap2 .bg4 {
+    position: absolute;
+    top: 0;
+  }
+  .content8 .item1 {
+    top: -9%;
+    left: -5.375%;
+    width: 58.645%;
+    min-width: auto;
+  }
+  .content8 .item2 {
+    top: 24%;
+    left: auto;
+    width: 58.645%;
+    min-width: auto;
+    height: fit-content;
+    right: 5%;
+  }
+  .content8 .item3 {
+    top: 73%;
+    left: 2%;
+    width: 31%;
+    min-width: auto;
+    height: fit-content;
+  }
+  .content8 .item4 {
+    top: 95%;
+    left: auto;
+    width: 24.645%;
+    min-width: auto;
+    right: -2%;
+  }
 
   .content10 .title {
     width: 209.5px;
-    height: 36px;
-    /* 없어도됨 이미지 처리 할 예정 */
-    font-size: 70px; 
+    height: auto;
   }
+  .content10 .item1 {
+    right: -57%;
+    top: 11.528%;
+    left: auto;
+    width: fit-content;
+    height: auto;
+    max-width: 355px;
+  }
+  .content10 .item2 {
+    right: auto;
+    bottom: 4%;
+    left: -54%;
+    top: auto;
+    max-width: 392px;
+  }
+  .content10 .bg3 img {
+    height: calc(100% + 100px);
+  }
+
   .content12 .title {
     width: 170px;
-    height: 36px;
+    height: auto;
+    margin: 0 auto;
   }
   .content14 .title {
     width: 168px;
-    height: 35px;
+    height: auto;
+  }
+  .content14 .mask {
+    bottom: 30.5%;
+    transform: scaleY(1);
+  }
+  .content14 .bg_wrap2 .bg > img {
+    object-fit: cover;
+    width: calc(100% + 100px);
   }
 
   .content15 {
