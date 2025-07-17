@@ -10,13 +10,15 @@ document.addEventListener('DOMContentLoaded', function(){
   let headerH = 0;
   let windowH = 0;
   const labelList = ["black", "tech", "thor", "column", "lusso", "valle", "product"];
-  let timelineLength = 50
+  let timelineLength = isMobileBrowser() ? 60 : 60;
   let totalDuration = 0;
   let scrollContainerHeight = 0;
+  let isUserNavigating = false; // 모바일 페이지네이션 상태변수
 
   function updateTotalDuration() {
       totalDuration = mainTimeline?.duration?.() || 0;
   }
+  // 헤더높이 윈도우 높이 재계산
   function recalcLayoutValues() {
     headerH = document.querySelector('#header').clientHeight;
     windowH = window.innerHeight - headerH;
@@ -78,7 +80,6 @@ document.addEventListener('DOMContentLoaded', function(){
 
           const swiperEle2 = document.querySelectorAll('.content15 .category_head .swiper');
           swiperEle2.forEach(ele => {
-            console.log(ele)
             const swiper2 = new Swiper(ele, {
               slidesPerView: 'auto',
               // spaceBetween: 50,
@@ -89,8 +90,7 @@ document.addEventListener('DOMContentLoaded', function(){
       }
   }
 
-
-  // visualViewport 지원 여부로 모바일 브라우저 감지
+  //모바일 브라우저 감지
   function isMobileBrowser() {
     // User Agent 체크 (가장 확실한 방법)
     const userAgent = navigator.userAgent.toLowerCase();
@@ -108,8 +108,8 @@ document.addEventListener('DOMContentLoaded', function(){
     
     return isMobileUA || isMobileDevice || (hasTouch && isSmallScreen);
   }
+
   // resize 시 throttle 적용
-  
   window.addEventListener('resize', _.throttle(() => {
 
     if(isMobileBrowser()) return;
@@ -128,10 +128,10 @@ document.addEventListener('DOMContentLoaded', function(){
   // 1. Lenis 인스턴스 생성
   const lenis = new Lenis({
       smooth: true,
-      lerp: 0.1,             // 부드러움 정도 (0.0 ~ 1.0)
-      wheelMultiplier: 1.0,  // 마우스 휠 속도
-      touchMultiplier: 1.0,  // 터치 스크롤 속도
       smoothTouch: true,     // 모바일도 적용여부
+      lerp: isMobileBrowser() ? 0.05 : 0.1,             // 부드러움 정도 (0.0 ~ 1.0)
+      wheelMultiplier: isMobileBrowser() ? 0.7 : 1.0,  // 마우스 휠 속도
+      touchMultiplier: isMobileBrowser() ? 0.4 : 1.0,  // 터치 스크롤 속도
   });
 
   // 2. Lenis의 스크롤 이벤트와 ScrollTrigger 연동
@@ -139,6 +139,7 @@ document.addEventListener('DOMContentLoaded', function(){
       ScrollTrigger.update();
       // Lenis 스크롤이 일어날 때마다 pagination 업데이트 실행
       updatePaginationByLabel();
+      // Lenis 스크롤이 일어날 때마다 프로그레스바 업데이트 실행(mo전용)
       updateScrollProgressBar();
   });
 
@@ -153,6 +154,7 @@ document.addEventListener('DOMContentLoaded', function(){
   // gsap.ticker.add((time) => lenis.raf(time * 1000));
   // gsap.ticker.lagSmoothing(0);
 
+  // 페이지네이션 스와이퍼 
   function initPaginationSwiper() {
     const isMobile = window.innerWidth <= 767;
     const swiperContainer = document.querySelector('.pagination.swiper');
@@ -181,6 +183,8 @@ document.addEventListener('DOMContentLoaded', function(){
   function calcWindowH (num = 1){
     return (num * windowH).toString();
   }
+
+  // 메인 인터랙션 타임라인
   function createMainTimeline() {
     const section3TitleSet = document.querySelectorAll('.content3 .title_set');
     const windowW = window.innerWidth;
@@ -192,9 +196,6 @@ document.addEventListener('DOMContentLoaded', function(){
       mainTimeline.kill();
     }
 
-    // 상태 변수
-    let title2Triggered = false;
-    let title3Triggered = false;
     // 초기화 공통
     gsap.set('.content1', {opacity:1});
     gsap.set('.content5 .bg', {yPercent: 5})
@@ -213,10 +214,9 @@ document.addEventListener('DOMContentLoaded', function(){
         trigger: ".scroll_container",
         start: `top ${headerH}`,
         end: () => calcWindowH(timelineLength),
-        scrub: .6,
+        scrub: .7,
         pin: true,
         anticipatePin: 1,
-        // markers: true,
       }
     });
     mainTimeline
@@ -225,13 +225,13 @@ document.addEventListener('DOMContentLoaded', function(){
     // content1 → content2
     .to('.content1', { opacity: 0, duration: 1 })
     .to('.content2', { opacity: 1, duration: 1 })
-    .to({}, { duration: 0.5 })
+    .to({}, { duration: 1 })
     // content2 → content3
     .to('.content2', { opacity: 0, duration: 1 })
-    .to({}, { duration: 0.5 })
+    .to({}, { duration: 1 })
     .to('.content3', {opacity: 1, duration: 1})
     .addLabel('tech')
-    .to({}, { duration: 0.3 })
+    .to({}, { duration: 0.5 })
     .to('.content3', {
       duration: 3,
       onUpdate: function () {
@@ -246,11 +246,11 @@ document.addEventListener('DOMContentLoaded', function(){
         gsap.set('.content3 .bg img', { yPercent: yValue });
       }
     })
-    .to({}, { duration: 0.3 })
+    .to({}, { duration: 0.5 })
     // content3 → content4
     .to('.content3', { opacity: 0, duration: 1 })
     .to('.content4', { opacity: 1, duration: 1 })
-    .to({}, { duration: 0.5 }) 
+    .to({}, { duration: 1 }) 
     // content4 -> content5
     .to('.content4', {opacity: 0, duration: 1})
     .to({}, { duration: 1 }) 
@@ -269,18 +269,42 @@ document.addEventListener('DOMContentLoaded', function(){
       .to('.content5', {opacity: 0, duration: 1});
     } else {
       mainTimeline
-      .to({}, { duration: .5 })
+      .to({}, { duration: 1 })
       .to('.content5 .item1 .main_image', {opacity:1, y:0, duration: 1})
       .to('.content5 .item2 .main_image', {opacity:1, y:0, duration:0},"<")
       .to('.content5 .item3 .main_image', {opacity:1, y:0, duration:0},"<")
       .to('.content5 .item_title1', {opacity: 1, y: 0, duration:1},"<")
-      .to('.content5 .item_wrap .inner', {xPercent: -100, duration: 4})
+      .to({}, { duration: 1.5 })
+      .to('.content5 .item_wrap .inner', {
+        xPercent: -100,
+        yPercent: -40,
+        duration: 8,
+        onUpdate: function(){
+          const progress = this.progress();
+          const items = document.querySelectorAll('.content5 .item');
+
+          items.forEach(function(item, index) {
+            const total = items.length;
+            const sectionStart = index / total;
+            const sectionEnd = (index + 1) / total;
+
+            let itemProgress = (progress - sectionStart) / (sectionEnd - sectionStart);
+            itemProgress = Math.min(Math.max(itemProgress, 0), 1); // clamp 0~1
+
+            // 사선으로 부드럽게 올라가고 되돌아옴
+            const y = -60 * itemProgress;
+            const x = 0;
+
+            item.style.transform = `translate(${x}px, ${y}px)`;
+          });
+        }
+      })
 
       .to('.content5 .item_title1', {opacity: 0, y: -20, duration: .5}, "<")
-      .to('.content5 .item_title2', {opacity: 1, y: 0, duration: .5}, "<+.5")
-      .to('.content5 .item_title2', {opacity: 0, y: -20, duration: .5}, "<+0.5")
-      .to('.content5 .item_title3', {opacity: 1, y: 0, duration: .5}, "<+0.5")
-      .to('.content5 .item_title3', {opacity: 0, y: -20, duration: .5}, "<+0.5")
+      .to('.content5 .item_title2', {opacity: 1, y: 0, duration: .5}, "<+1")
+      .to('.content5 .item_title2', {opacity: 0, y: -20, duration: .5}, "<+1")
+      .to('.content5 .item_title3', {opacity: 1, y: 0, duration: .5}, "<+1")
+      .to('.content5 .item_title3', {opacity: 0, y: -20, duration: .5}, "<+1")
       // content5 -> content6
       .to('.content5', {opacity: 0, duration: 1},"<")
     }
@@ -294,7 +318,7 @@ document.addEventListener('DOMContentLoaded', function(){
     .to('.content7', {opacity: 1, duration: 1})
     .to('.content7 .title', {opacity: 1, y:0, duration: 1})
     .addLabel("thor")
-    .to({}, { duration: 0.5 })
+    .to({}, { duration: 1 })
     .to('.content7', {opacity: 0, duration: 1,})
     .to('.content7 .bg', {scale: 1.2, duration: 1},"<")
     // content7 -> content8
@@ -344,8 +368,8 @@ document.addEventListener('DOMContentLoaded', function(){
     .to({}, { duration: .5 })
     .to('.content10 .bg2', {opacity: 1, duration: 0})
     .to({}, { duration: 2 })
-    .to('.content10 .bg1', {opacity: 0, yPercent: -100, duration: 1})
-    .to('.content10 .bg2', {opacity: 0, yPercent: -100, duration: 1},"<")
+    .to('.content10 .bg1', {opacity: 0, yPercent: -100, duration: 2, ease: "power1.out"})
+    .to('.content10 .bg2', {opacity: 0, yPercent: -100, duration: 2, ease: "power1.out"},"<")
     .to({}, {duration: 1})
     .to('.content10  .item_wrap', {opacity: 1, duration: 1})
     .to('.content10 .sub_title1', {opacity: 1, y: 0, duration: .5})
@@ -353,37 +377,46 @@ document.addEventListener('DOMContentLoaded', function(){
     if(windowW > 767) {
       mainTimeline
       .to('.content10  .item1', {
-        left: `${17.291 + (14 - 17.291)}%`,
-        top: `${-6.526 + (0 - -6.526)}%`,
+        // left: `${17.291 + (14 - 17.291)}%`,
+        // top: `${-6.526 + (0 - -6.526)}%`,
+        xPercent: -6,
+        yPercent: 7,
         duration: 1
       })
       .to('.content10  .item2', {
-        right: `${11.875 - 5}%`,
-        bottom: `${-30.273 + 5}%`,
+        // right: `${11.875 - 5}%`,
+        // bottom: `${-30.273 + 5}%`,
+        xPercent: 6,
+        yPercent: -7,
         duration: 1
       }, "<");
 
     } else {
       mainTimeline
       .to('.content10  .item1', {
-        right: `${-57 + 5}%`,
-        top: `${11.528 + 3}%`,
+        // right: `${-57 + 5}%`,
+        // top: `${11.528 + 3}%`,
+        xPercent: -10,
+        yPercent: 6,
         duration: 1
       })
       .to('.content10  .item2', {
-        left: `${-54 + 5}%`,
-        bottom: `${4 + 4}%`,
+        // left: `${-54 + 5}%`,
+        // bottom: `${4 + 4}%`,
+        xPercent: 6,
+        yPercent: -4,
         duration: 1
       }, "<");
     }
     mainTimeline
-    .to('.content10 .item_wrap', {opacity: 0, duration: 1.3}, "<+.7")
-    .to('.content10 .sub_title1', {y: -20, opacity: 0, duration: 1},"<")
     .to({}, { duration: .5 })
-    .to('.content10 .bg3', {yPercent: 0,  duration: 1})
+    .to('.content10 .item_wrap', {opacity: 0, duration: 1.3}, "<+.3")
+    .to('.content10 .sub_title1', {y: -20, opacity: 0, duration: 1},"<")
+    .to({}, { duration: 1 })
+    .to('.content10 .bg3', {yPercent: 0,  duration: 2})
     .to('.content10 .bg3', {opacity: 1,  duration: 1},"<+.3")
     .to('.content10 .sub_title2', {y: 0, opacity: 1, duration: .5})
-    .to({}, { duration: .5 })
+    .to({}, { duration: 1 })
     .to('.content10 .bg3 img', {y: -50, duration: .5})
     .to('.content10', {opacity: 0, duration: 1}, "<+.2")
     // content10 -> content11
@@ -415,7 +448,7 @@ document.addEventListener('DOMContentLoaded', function(){
     .to('.content12 .bg1', {scale: 1.2, opacity: 0, duration: 1})
     .to({}, { duration: .5 })
     .to('.content12 .bg2', {opacity: 1, duration: 1})
-    .to({}, { duration: .5 })
+    .to({}, { duration: 1 })
     .to('.content12 .bg2', {scale: 1.2, opacity: 0, duration: 1})
     .to('.content12 .sub_title1', {yPercent: -100, opacity: 0, duration: 1},"<")
     .to({}, { duration: .5 })
@@ -436,7 +469,7 @@ document.addEventListener('DOMContentLoaded', function(){
     .to('.content13', {opacity: 1, duration: 1})
     .to('.content13 .title', {opacity: 1, y: 0, duration: 1})
     .addLabel("valle")
-    .to({}, { duration: .5 })
+    .to({}, { duration: 1 })
     .to('.content13 .bg', {scale: 1.2, opacity: 0, duration: 1})
     .to('.content13', {opacity: 0, duration: 1}, "<")
     // content13 -> content14
@@ -454,12 +487,12 @@ document.addEventListener('DOMContentLoaded', function(){
       }
     })
     .to('.content14 .bg1', {opacity: 1, duration: 1})
-    .to({}, { duration: .5 })
-    .to('.content14 .sub_title', {opacity: 1, duration: 1, yPercent: 0})
-    .to({}, { duration: .5 })
-    .to('.content14 .bg1', {opacity: 0, yPercent: -100, duration: 1})
     .to({}, { duration: 1 })
-    .to('.content14 .bg_wrap2', {opacity: 1, yPercent: 0, duration: 1})
+    .to('.content14 .sub_title', {opacity: 1, duration: 1, yPercent: 0})
+    .to({}, { duration: 1 })
+    .to('.content14 .bg1', {opacity: 0, yPercent: -100, duration: 2, ease: "power2.out"})
+    .to({}, { duration: 1 })
+    .to('.content14 .bg_wrap2', {opacity: 1, yPercent: 0, duration: 2, ease: "power2.out"})
     .to({}, { duration: 1 });
     if(windowW > 767) {
       mainTimeline
@@ -469,14 +502,14 @@ document.addEventListener('DOMContentLoaded', function(){
       .to('.content14 .bg_wrap2 img', {x:-20, duration: 1});
     }
     mainTimeline
-    .to({}, { duration: .5 })
-    .to('.content14 .bg_wrap2', {opacity: 0, yPercent: -100, duration: 1})
-    .to('.content14 .sub_title', {opacity: 0, yPercent: -100, duration: 1})
-    .to({}, { duration: .5 })
-    .to('.content14 .bg3', {opacity: 1, yPercent:0, duration: 1})
+    .to({}, { duration: 1 })
+    .to('.content14 .bg_wrap2', {opacity: 0, yPercent: -100, duration: 2, ease: "power2.out"})
+    .to('.content14 .sub_title', {opacity: 0, yPercent: -100, duration: 2, ease: "power2.out"})
+    .to({}, { duration: 1 })
+    .to('.content14 .bg3', {opacity: 1, yPercent:0, duration: 2})
     .to({}, { duration: 1 })
     .to('.content14', {opacity: 0, duration: 1})
-    .to({}, { duration: .5 })
+    .to({}, { duration: 1 })
   }
 
   // 최초 1회 실행
@@ -488,10 +521,16 @@ document.addEventListener('DOMContentLoaded', function(){
   initFixedBoxFadeTrigger();
   ScrollTrigger.refresh();
 
+  // 페이지네이션 클릭 이동
   const paginationItems = document.querySelectorAll(".pagination li");
   paginationItems.forEach((ele, index) => {
       ele.addEventListener('click', function (e) {
           e.preventDefault();
+
+          isUserNavigating = true;
+          
+          setPaginationOn(index);
+            
           const label = labelList[index];
           if (label === "product") {
               const st = ScrollTrigger.getById("product-trigger");
@@ -502,27 +541,35 @@ document.addEventListener('DOMContentLoaded', function(){
 
               lenis.scrollTo(y, {
                   duration: 1,
-                  onComplete: () => ScrollTrigger.update()
+                  onComplete: () => {
+                    ScrollTrigger.update();
+                    isUserNavigating = false;
+                  }
+
               });
               return;
+          } else {
+            const labelTime = mainTimeline.labels[label];
+  
+            if (labelTime === undefined) return;
+  
+            const progress = labelTime / totalDuration;
+            const scrollToY = headerH + scrollContainerHeight * progress;
+  
+            lenis.scrollTo(scrollToY, {
+                duration: 1,
+                onComplete: () => {
+                  ScrollTrigger.update();
+                  isUserNavigating = false;
+                }
+            });
           }
-          const labelTime = mainTimeline.labels[label];
-
-          // console.log('label',label)
-          // console.log('labelTime',labelTime)
-          if (labelTime === undefined) return;
-
-          const progress = labelTime / totalDuration;
-          const scrollToY = headerH + scrollContainerHeight * progress;
-
-          lenis.scrollTo(scrollToY, {
-              duration: 1,
-              onComplete: () => ScrollTrigger.update()
-          });
       });
   });
 
+  // 스크롤 위치에 따른 페이지네이션 
   function updatePaginationByLabel() {
+      if(isUserNavigating) return;
       const scrollY = window.scrollY || window.pageYOffset; // 현재 스크롤 위치 (픽셀)
 
       // 1. content15(product)의 ScrollTrigger 가져오기
@@ -609,6 +656,7 @@ document.addEventListener('DOMContentLoaded', function(){
     })
   })
 
+  // pc전용 페이지네이션 숨기기
   function initFixedBoxFadeTrigger() {
     const fixedBox = document.querySelector('.fixed-box');
     const footer = document.querySelector('footer');
@@ -637,6 +685,7 @@ document.addEventListener('DOMContentLoaded', function(){
       });
   }
 
+  // 스크롤에 따른 프로그레스바 mo전용
   function updateScrollProgressBar() {
     const bar = document.querySelector('.pagination .progress .bar');
     if (!bar) return;
@@ -661,6 +710,7 @@ document.addEventListener('DOMContentLoaded', function(){
   
 })
 
+// 모바일 토스트
 function mobileToast(){
   const windowW = window.innerWidth;
 

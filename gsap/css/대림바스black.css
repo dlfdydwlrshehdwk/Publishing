@@ -858,13 +858,44 @@ body.black #header .submenu_in {
   
 }
 @media (max-width: 1280px) {
-
+  .container_black .content10 .item1 {
+    width: 66%;
+  }
+  .container_black .content10 .item2 {
+    width: 66%;
+  }
+  .container_black .content14 .mask {
+      bottom: 11.5%;
+  }
 }
 @media (max-width: 1024px) {
 
 }
 @media (max-width: 989px) {
   /* 요거 */
+  .container_black .content8 .item1 {
+    width: 13.645%;
+  }
+  .container_black .content8 .item2 {
+    right: 9.708%;
+    width: 13.645%;
+  }
+  .container_black .content8 .item3 {
+    left: 10.76%;
+    width: 24.52%;
+  }
+  .container_black .content8 .item4 {
+    right: 20.052%;
+    width: 18.093%;
+  }
+  .container_black .content10 .item1 {
+    left: 18.291%;
+    top: -4.526%;
+  }
+  .container_black .content10 .item2 {
+    right: 11.875%;
+    bottom: -12.273%;
+  }
 }
 @media (max-width: 767px) {
   /* _pagination */
@@ -879,6 +910,7 @@ body.black #header .submenu_in {
     white-space: nowrap;
     scroll-behavior: smooth;
     height: auto;
+    background: #000;
   }
   .container_black .pagination ul {
     display: inline-flex;
@@ -1033,10 +1065,10 @@ body.black #header .submenu_in {
   .container_black .content5 .item1 {
     transform: none;
   }
-  .container_black .content5 .item2 {
+  .container_black .content5 .item2 img{
     transform: translateY(20%);
   }
-  .container_black .content5 .item3 {
+  .container_black .content5 .item3  img {
     transform: translateY(40%);
   }
   .container_black .content5 .item .line {
@@ -1149,20 +1181,22 @@ body.black #header .submenu_in {
     height: auto;
   }
   .container_black .content10 .item1 {
-    right: -57%;
-    top: 11.528%;
-    left: auto;
-    width: fit-content;
-    height: auto;
-    max-width: 355px;
+      right: -32%;
+      top: 19.528%;
+      left: auto;
+      width: fit-content;
+      height: auto;
+      max-width: 355px;
+      width: 80%;
   }
-  .container_black .content10 .item2 {
-    right: auto;
-    bottom: 4%;
-    left: -54%;
-    top: auto;
-    max-width: 392px;
-  }
+    .container_black .content10 .item2 {
+      right: auto;
+      bottom: 10%;
+      left: -28%;
+      top: auto;
+      max-width: 392px;
+      width: 80%;
+    }
   .container_black .content10 .bg3 img {
     height: calc(100% + 100px);
   }
@@ -1314,7 +1348,12 @@ body.black #header .submenu_in {
     display: block;
   }
 }
-
+@media (max-width: 480px) {
+  .container_black .content14 .mask {
+    bottom: 28.5%;
+    transform: scaleY(1);
+  }
+}
 
 
 
