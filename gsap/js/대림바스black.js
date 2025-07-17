@@ -1,10 +1,11 @@
 document.addEventListener('DOMContentLoaded', function(){
-
+  document.body.classList.add('black')
   gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
   let productTrigger;
   let mainTimeline;
   let swiperInstances = [];
+  let swiperInstances2 = [];
   let paginationSwiper = null;
   let headerH = 0;
   let windowH = 0;
@@ -51,21 +52,68 @@ document.addEventListener('DOMContentLoaded', function(){
       // 이미 만들어진 swiper 모두 제거
       swiperInstances.forEach(swiper => swiper.destroy(true, true));
       swiperInstances = [];
+      swiperInstances2.forEach(swiper => swiper.destroy(true, true));
+      swiperInstances2 = [];
   
       if (shouldEnable) {
           const swiperEle = document.querySelectorAll('.content15 .category_list');
           swiperEle.forEach(ele => {
               const swiper = new Swiper(ele, {
                   slidesPerView: 3,
-                  spaceBetween: 40,
+                  spaceBetween: 12,
+                  breakpoints: {
+                    1441: {
+                      spaceBetween: 40,
+                    }, 
+                    980: {
+                      spaceBetween: 20,
+                    },
+                    768: {
+                      spaceBetween: 12,
+                    }
+                  }
               });
               swiperInstances.push(swiper);
           });
+
+          const swiperEle2 = document.querySelectorAll('.content15 .category_head .swiper');
+          swiperEle2.forEach(ele => {
+            console.log(ele)
+            const swiper2 = new Swiper(ele, {
+              slidesPerView: 'auto',
+              // spaceBetween: 50,
+              // breakpoints
+            })
+            swiperInstances2.push(swiper2);
+          })
       }
   }
 
+
+  // visualViewport 지원 여부로 모바일 브라우저 감지
+  function isMobileBrowser() {
+    // User Agent 체크 (가장 확실한 방법)
+    const userAgent = navigator.userAgent.toLowerCase();
+    const mobileKeywords = ['android', 'iphone', 'ipad', 'ipod', 'blackberry', 'windows phone', 'mobile'];
+    const isMobileUA = mobileKeywords.some(keyword => userAgent.includes(keyword));
+    
+    // 터치 지원 여부
+    const hasTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    
+    // 화면 크기
+    const isSmallScreen = window.innerWidth <= 768;
+    
+    // 모바일 기기인지 확인
+    const isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    
+    return isMobileUA || isMobileDevice || (hasTouch && isSmallScreen);
+  }
   // resize 시 throttle 적용
+  
   window.addEventListener('resize', _.throttle(() => {
+
+    if(isMobileBrowser()) return;
+
     recalcLayoutValues();
     createMainTimeline();
     initSwiperIfNeeded();
@@ -73,6 +121,7 @@ document.addEventListener('DOMContentLoaded', function(){
     initScrollTriggerForContent15();
     updateTotalDuration(); // duration 값 갱신
     mobileToast();
+    initFixedBoxFadeTrigger();
     ScrollTrigger.refresh();
   },200));
 
@@ -88,6 +137,9 @@ document.addEventListener('DOMContentLoaded', function(){
   // 2. Lenis의 스크롤 이벤트와 ScrollTrigger 연동
   lenis.on('scroll', () => {
       ScrollTrigger.update();
+      // Lenis 스크롤이 일어날 때마다 pagination 업데이트 실행
+      updatePaginationByLabel();
+      updateScrollProgressBar();
   });
 
   // 3. requestAnimationFrame 루프
@@ -433,10 +485,10 @@ document.addEventListener('DOMContentLoaded', function(){
   updateTotalDuration();
   initScrollTriggerForContent15();
   mobileToast();
+  initFixedBoxFadeTrigger();
   ScrollTrigger.refresh();
 
   const paginationItems = document.querySelectorAll(".pagination li");
-
   paginationItems.forEach((ele, index) => {
       ele.addEventListener('click', function (e) {
           e.preventDefault();
@@ -470,46 +522,46 @@ document.addEventListener('DOMContentLoaded', function(){
       });
   });
 
-function updatePaginationByLabel() {
-    const scrollY = window.scrollY || window.pageYOffset; // 현재 스크롤 위치 (픽셀)
+  function updatePaginationByLabel() {
+      const scrollY = window.scrollY || window.pageYOffset; // 현재 스크롤 위치 (픽셀)
 
-    // 1. content15(product)의 ScrollTrigger 가져오기
-    productTrigger = ScrollTrigger.getAll().find(trigger =>
-        trigger.trigger?.classList?.contains('content15')
-    );
+      // 1. content15(product)의 ScrollTrigger 가져오기
+      productTrigger = ScrollTrigger.getAll().find(trigger =>
+          trigger.trigger?.classList?.contains('content15')
+      );
 
-    // 2. 현재 스크롤이 content15 영역에 있으면 pagination의 product 항목을 활성화
-    if (productTrigger && scrollY >= productTrigger.start && scrollY < productTrigger.end) {
-        setPaginationOn(labelList.indexOf('product')); // 'product'가 labelList의 몇 번째인지 찾아 활성화
-        return; // product 처리 후 종료
-    }
+      // 2. 현재 스크롤이 content15 영역에 있으면 pagination의 product 항목을 활성화
+      if (productTrigger && scrollY >= productTrigger.start && scrollY < productTrigger.end) {
+          setPaginationOn(labelList.indexOf('product')); // 'product'가 labelList의 몇 번째인지 찾아 활성화
+          return; // product 처리 후 종료
+      }
 
-    // 3. 나머지 영역은 mainTimeline 기준으로 처리
-    const scrollStart = mainTimeline.scrollTrigger.start; // timeline 시작 위치
-    const scrollEnd = mainTimeline.scrollTrigger.end;     // timeline 끝 위치
-    const totalScrollRange = scrollEnd - scrollStart;     // 전체 스크롤 거리
+      // 3. 나머지 영역은 mainTimeline 기준으로 처리
+      const scrollStart = mainTimeline.scrollTrigger.start; // timeline 시작 위치
+      const scrollEnd = mainTimeline.scrollTrigger.end;     // timeline 끝 위치
+      const totalScrollRange = scrollEnd - scrollStart;     // 전체 스크롤 거리
 
-    const currentProgress = (scrollY - scrollStart) / totalScrollRange; // 현재 스크롤의 progress 비율 (0~1)
+      const currentProgress = (scrollY - scrollStart) / totalScrollRange; // 현재 스크롤의 progress 비율 (0~1)
 
-    // progress가 timeline 범위를 벗어나면 처리하지 않음
-    if (currentProgress < 0 || currentProgress > 1) return;
+      // progress가 timeline 범위를 벗어나면 처리하지 않음
+      if (currentProgress < 0 || currentProgress > 1) return;
 
-    const currentTime = currentProgress * mainTimeline.duration(); // progress를 기준으로 현재 timeline 시간 계산
+      const currentTime = currentProgress * mainTimeline.duration(); // progress를 기준으로 현재 timeline 시간 계산
 
-    let activeIndex = 0; // 기본 활성 인덱스
-    for (let i = 0; i < labelList.length; i++) {
-        const currentLabelTime = mainTimeline.labels[labelList[i]];               // 현재 label의 시간
-        const nextLabelTime = mainTimeline.labels[labelList[i + 1]] ?? Infinity;  // 다음 label의 시간 (없으면 무한대)
+      let activeIndex = 0; // 기본 활성 인덱스
+      for (let i = 0; i < labelList.length; i++) {
+          const currentLabelTime = mainTimeline.labels[labelList[i]];               // 현재 label의 시간
+          const nextLabelTime = mainTimeline.labels[labelList[i + 1]] ?? Infinity;  // 다음 label의 시간 (없으면 무한대)
 
-        // 현재 시간(currentTime)이 해당 label 구간 내에 있으면 해당 인덱스를 활성화
-        if (currentTime >= currentLabelTime && currentTime < nextLabelTime) {
-            activeIndex = i;
-            break;
-        }
-    }
+          // 현재 시간(currentTime)이 해당 label 구간 내에 있으면 해당 인덱스를 활성화
+          if (currentTime >= currentLabelTime && currentTime < nextLabelTime) {
+              activeIndex = i;
+              break;
+          }
+      }
 
-    setPaginationOn(activeIndex); // 해당 인덱스의 pagination li에 .on 클래스 추가
-}
+      setPaginationOn(activeIndex); // 해당 인덱스의 pagination li에 .on 클래스 추가
+  }
 
   // 전달받은 인덱스에 해당하는 pagination li에만 .on 클래스 추가
   function setPaginationOn(index) {
@@ -520,9 +572,6 @@ function updatePaginationByLabel() {
           }
       });
   }
-
-  // Lenis 스크롤이 일어날 때마다 pagination 업데이트 실행
-  lenis.on('scroll', updatePaginationByLabel);
 
   // content15 메인카테고리 모바일 탭
   const moMainCategory = document.querySelectorAll('.content15 .mo_main_category li');
@@ -542,7 +591,7 @@ function updatePaginationByLabel() {
     })
   })
 
-    // content15 서브카테고리 모바일 탭
+  // content15 서브카테고리 모바일 탭
   const moSubCategory = document.querySelectorAll('.content15 .mo_sub_category li');
   moSubCategory.forEach(li => {
     li.addEventListener('click', function(){
@@ -560,7 +609,56 @@ function updatePaginationByLabel() {
     })
   })
 
+  function initFixedBoxFadeTrigger() {
+    const fixedBox = document.querySelector('.fixed-box');
+    const footer = document.querySelector('footer');
+      // 조건: PC 전용
+      if (window.innerWidth < 768) {
+          ScrollTrigger.getById('fixed-box-trigger')?.kill();
+          document.querySelector('.fixed-box')?.classList.remove('disabled');
+          return;
+      }
 
+      if (!fixedBox || !footer) return;
+
+      ScrollTrigger.create({
+          id: 'fixed-box-trigger',
+          trigger: footer,
+          start: 'top bottom',     // footer가 보이기 시작할 때
+          end: 'top center',       // footer가 화면 중간에 올 때까지
+          scrub: true,
+          onUpdate: (self) => {
+              if (self.progress > 0) {
+                  fixedBox.classList.add('disabled');
+              } else {
+                  fixedBox.classList.remove('disabled');
+              }
+          }
+      });
+  }
+
+  function updateScrollProgressBar() {
+    const bar = document.querySelector('.pagination .progress .bar');
+    if (!bar) return;
+  
+    const scrollStart = mainTimeline.scrollTrigger.start;
+    const scrollEnd = mainTimeline.scrollTrigger.end;
+    const totalScroll = scrollEnd - scrollStart;
+    const scrollY = window.scrollY || window.pageYOffset;
+  
+    let percent = 0;
+  
+    if (scrollY >= scrollStart && scrollY <= scrollEnd) {
+        percent = ((scrollY - scrollStart) / totalScroll) * 100;
+    } else if (scrollY > scrollEnd) {
+        percent = 100;
+    } else {
+        percent = 0;
+    }
+  
+    bar.style.width = `${percent}%`;
+  }
+  
 })
 
 function mobileToast(){
