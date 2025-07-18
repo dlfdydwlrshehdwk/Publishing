@@ -9,13 +9,11 @@ document.addEventListener('DOMContentLoaded', function(){
   let paginationSwiper = null;
   let headerH = 0;
   let windowH = 0;
-  const clickLabelList = ["click_black", "click_tech", "click_thor", "click_column", "click_lusso", "click_valle", "click_product"];
-  const scrollLabelList =['scroll_black', 'scroll_tech', 'scroll_thor', 'scroll_column', 'scroll_lusso', 'scroll_valle', 'scroll_product'];
+  const labelList = ["black", "tech", "thor", "column", "lusso", "valle", "product"];
   let timelineLength = isMobileBrowser() ? 90 : 60;
   let totalDuration = 0;
   let scrollContainerHeight = 0;
   let isUserNavigating = false; // 모바일 페이지네이션 상태변수
-  let scrollCancelTimer = null;
 
   function updateTotalDuration() {
       totalDuration = mainTimeline?.duration?.() || 0;
@@ -38,16 +36,15 @@ document.addEventListener('DOMContentLoaded', function(){
           id: "product-trigger",
           trigger: ".content15",
           start: `top ${headerH}`,
-          end: ()=>calcWindowH(),
-          scrub: .7,
+          end: `+=100%`,
+          scrub: true,
           // pin: true,
           // pinType: 'transform',
           // pinSpacing: true,
           // markers:true,
           animation: gsap.timeline()
               .to(".content15", { opacity: 1, duration: 0.5 })
-              .addLabel("scroll_product")
-              .addLabel("click_product")
+              .addLabel("product")
       });
   }
 
@@ -237,8 +234,7 @@ document.addEventListener('DOMContentLoaded', function(){
       }
     });
     mainTimeline
-    .addLabel("scroll_black")
-    .addLabel("click_black")
+    .addLabel("black")
     .to({}, { duration: 0.3 })
     // content1 → content2
     .to('.content1', { opacity: 0, duration: 1 })
@@ -247,10 +243,9 @@ document.addEventListener('DOMContentLoaded', function(){
     // content2 → content3
     .to('.content2', { opacity: 0, duration: 1 })
     .to({}, { duration: 1 })
-    .addLabel('scroll_tech')
     .to('.content3', {opacity: 1, duration: 1})
+    .addLabel('tech')
     .to({}, { duration: 0.5 })
-    .addLabel('click_tech')
     .to('.content3', {
       duration: 3,
       onUpdate: function () {
@@ -334,10 +329,9 @@ document.addEventListener('DOMContentLoaded', function(){
     .to('.content6', {opacity: 0, duration: 1})
     .to({}, { duration: 0.5 })
     // content6 -> content7
-    .addLabel('scroll_thor')
     .to('.content7', {opacity: 1, duration: 1})
     .to('.content7 .title', {opacity: 1, y:0, duration: 1})
-    .addLabel("click_thor")
+    .addLabel("thor")
     .to({}, { duration: 1 })
     .to('.content7', {opacity: 0, duration: 1,})
     .to('.content7 .bg', {scale: 1.2, duration: 1},"<")
@@ -359,7 +353,7 @@ document.addEventListener('DOMContentLoaded', function(){
       .to('.content8 .fake_dim', {opacity: 1, duration: 1}, "<+2")
       .to('.content8 .sub_title2', {opacity: 0, yPercent: -100, duration: 1},'<+.5')
       .to('.content8', {opacity: 0, duration: 2},"<+3")
-      .to({}, { duration: 1 });
+          .to({}, { duration: 1 });
     } else {
       mainTimeline
       // bg등장
@@ -375,10 +369,9 @@ document.addEventListener('DOMContentLoaded', function(){
 
     mainTimeline
     // content8 -> content9
-    .addLabel('scroll_column')
     .to('.content9', {opacity: 1, duration: 1})
     .to('.content9 .title', {opacity: 1, y: 0, duration: 1})
-    .addLabel("click_column")
+    .addLabel("column")
     .to({}, { duration: 1 })
     .to('.content9 .bg', {scale: 1.2, duration: 1})
     // content9 -> content10
@@ -432,7 +425,6 @@ document.addEventListener('DOMContentLoaded', function(){
     .to({}, { duration: 1 })
     .to('.content10 .bg3 img', {y: -50, duration: .5})
     .to('.content10', {opacity: 0, duration: 1}, "<+.2")
-    .addLabel('scroll_lusso')
     // content10 -> content11
     .to({}, { 
       duration: 1,
@@ -447,7 +439,7 @@ document.addEventListener('DOMContentLoaded', function(){
     })
     .to('.content11', {opacity: 1, duration: 1})
     .to('.content11 .title', {opacity: 1, y: 0, duration: 1})
-    .addLabel("click_lusso")
+    .addLabel("lusso")
     .to({}, { duration: 1 })
     .to('.content11 .bg', {scale: 1.2, opacity: 1, duration: 1})
     .to('.content11', {opacity: 0, duration: 1}, "<")
@@ -480,10 +472,9 @@ document.addEventListener('DOMContentLoaded', function(){
     .to('.content12', {opacity: 0, duration: 1})
     .to({}, { duration: 1 })
     // content12 -> content13
-    .addLabel("scroll_valle")
     .to('.content13', {opacity: 1, duration: 1})
     .to('.content13 .title', {opacity: 1, y: 0, duration: 1})
-    .addLabel("click_valle")
+    .addLabel("valle")
     .to({}, { duration: 1 })
     .to('.content13 .bg', {scale: 1.2, opacity: 0, duration: 1})
     .to('.content13', {opacity: 0, duration: 1}, "<")
@@ -546,23 +537,23 @@ document.addEventListener('DOMContentLoaded', function(){
           
           setPaginationOn(index);
             
-          const label = clickLabelList[index];
-          if (label === "click_product") {
+          const label = labelList[index];
+          if (label === "product") {
               const st = ScrollTrigger.getById("product-trigger");
               
               if (!st) return;
 
               const y = st.start + (st.end - st.start) * 1;
 
-              // lenis.scrollTo(y, {
-              //     duration: 1,
-              //     onComplete: () => {
-              //       ScrollTrigger.update();
-              //       isUserNavigating = false;
-              //     }
-              // });
-              // return;
-              scrollWithFallback(y);
+              lenis.scrollTo(y, {
+                  duration: 1,
+                  onComplete: () => {
+                    ScrollTrigger.update();
+                    isUserNavigating = false;
+                  }
+
+              });
+              return;
           } else {
             const labelTime = mainTimeline.labels[label];
   
@@ -571,21 +562,19 @@ document.addEventListener('DOMContentLoaded', function(){
             const progress = labelTime / totalDuration;
             const scrollToY = headerH + scrollContainerHeight * progress;
   
-            // lenis.scrollTo(scrollToY, {
-            //     duration: 1,
-            //     onComplete: () => {
-            //       ScrollTrigger.update();
-            //       isUserNavigating = false;
-            //     }
-            // });
-            scrollWithFallback(scrollToY);
+            lenis.scrollTo(scrollToY, {
+                duration: 1,
+                onComplete: () => {
+                  ScrollTrigger.update();
+                  isUserNavigating = false;
+                }
+            });
           }
       });
   });
 
   // 스크롤 위치에 따른 페이지네이션 
   function updatePaginationByLabel() {
-    console.log(isUserNavigating)
       if(isUserNavigating) return;
       const scrollY = window.scrollY || window.pageYOffset; // 현재 스크롤 위치 (픽셀)
 
@@ -596,7 +585,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
       // 2. 현재 스크롤이 content15 영역에 있으면 pagination의 product 항목을 활성화
       if (productTrigger && scrollY >= productTrigger.start && scrollY < productTrigger.end) {
-          setPaginationOn(scrollLabelList.indexOf('scroll_product')); // 'product'가 labelList의 몇 번째인지 찾아 활성화
+          setPaginationOn(labelList.indexOf('product')); // 'product'가 labelList의 몇 번째인지 찾아 활성화
           return; // product 처리 후 종료
       }
 
@@ -607,16 +596,15 @@ document.addEventListener('DOMContentLoaded', function(){
 
       const currentProgress = (scrollY - scrollStart) / totalScrollRange; // 현재 스크롤의 progress 비율 (0~1)
 
-      console.log('progress:', currentProgress);
       // progress가 timeline 범위를 벗어나면 처리하지 않음
       if (currentProgress < 0 || currentProgress > 1) return;
 
       const currentTime = currentProgress * mainTimeline.duration(); // progress를 기준으로 현재 timeline 시간 계산
 
       let activeIndex = 0; // 기본 활성 인덱스
-      for (let i = 0; i < scrollLabelList.length; i++) {
-          const currentLabelTime = mainTimeline.labels[scrollLabelList[i]];               // 현재 label의 시간
-          const nextLabelTime = mainTimeline.labels[scrollLabelList[i + 1]] ?? Infinity;  // 다음 label의 시간 (없으면 무한대)
+      for (let i = 0; i < labelList.length; i++) {
+          const currentLabelTime = mainTimeline.labels[labelList[i]];               // 현재 label의 시간
+          const nextLabelTime = mainTimeline.labels[labelList[i + 1]] ?? Infinity;  // 다음 label의 시간 (없으면 무한대)
 
           // 현재 시간(currentTime)이 해당 label 구간 내에 있으면 해당 인덱스를 활성화
           if (currentTime >= currentLabelTime && currentTime < nextLabelTime) {
@@ -625,7 +613,6 @@ document.addEventListener('DOMContentLoaded', function(){
           }
       }
 
-      console.log(activeIndex)
       setPaginationOn(activeIndex); // 해당 인덱스의 pagination li에 .on 클래스 추가
   }
 
@@ -747,30 +734,6 @@ document.addEventListener('DOMContentLoaded', function(){
   
     bar.style.width = `${percent}%`;
   }
-
-  // 스크롤 도중 유저 개입 대비 (페이지네이션 클릭시 1초동안 updatePaginationByLabel의 기능을 막음)
-  function scrollWithFallback(y, duration = 1) {
-    isUserNavigating = true;
-
-    // 기존 타이머 클리어
-    clearTimeout(scrollCancelTimer);
-
-    // fallback 타이머 설정 (스크롤 도중 강제 해제)
-    scrollCancelTimer = setTimeout(() => {
-        isUserNavigating = false;
-        ScrollTrigger.update();
-    }, (duration) * 1000); 
-
-    lenis.scrollTo(y, {
-        duration: duration,
-        onComplete: () => {
-            // 정상적으로 완료되면 타이머 클리어
-            clearTimeout(scrollCancelTimer);
-            isUserNavigating = false;
-            ScrollTrigger.update();
-        }
-    });
-}
   
 })
 

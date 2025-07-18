@@ -35,29 +35,8 @@
 body.black {
 	background: #000;
 }
-
-/* 삭제 요망 */
-body.black #header {
-	position: fixed;
-	top: 0;
-	left: 0;
-	width: 100%;
-  height: 97px;
-}
-body.black #header img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-/* 삭제 요망 */
-
-
-
-
-
-
-
 /* _header */
+
 body.black #header {
 	position: fixed;
 	top: 0;
@@ -228,12 +207,11 @@ body.black #header .submenu_in {
   width: fit-content;
 }
 .container_black .sub_title_wrap {
-  position: absolute;
-  top: 100%;
   margin-top: 40px;
   text-align: center;
   overflow: hidden;
   width: 100%;
+  position: relative;
 }
 .container_black .title_font {
   font-size: 40px;
@@ -684,7 +662,6 @@ body.black #header .submenu_in {
   position: relative;
   display: flex;
   align-items: center;
-  gap: 40px;
 }
 .container_black .content15 .sub_category li > a {
   font-size: 22px;
@@ -699,11 +676,17 @@ body.black #header .submenu_in {
 .container_black .content15 .category_head + .category_list {
   margin-top: 45px;
 }
-.container_black .content15 .swiper-slide > a {
-  display: block;
+.container_black .content15 .category_list .swiper-slide > a {
+  display: flex;
+  width: 100%;
+  aspect-ratio: 1/1;
+  position: relative;
+}
+
+.container_black .content15 .swiper-slide img {
   width: 100%;
   height: 100%;
-  position: relative;
+  object-fit: cover;
 }
 .container_black .content15 .sub_image {
   transition: opacity .3s;
@@ -745,8 +728,8 @@ body.black #header .submenu_in {
 .container_black .content15 .category_head .swiper {
   width: 100%;
 }
-.container_black .content15 .swiper-slide {
-  width: fit-content;
+.container_black .content15 .sub_category .swiper-slide {
+  width: auto;
 }
 
 .container_black .content {
@@ -846,9 +829,6 @@ body.black #header .submenu_in {
   }
   .container_black .content15 .category_head .category_title + .sub_category::after {
     left: -30px;
-  }
-  .container_black .content15 .sub_category {
-    gap: 32px;
   }
   .container_black .content15 .sub_category li > a {
     font-size: 18px;
@@ -1008,12 +988,12 @@ body.black #header .submenu_in {
   .container_black .fixed_bg,  
   .container_black .fixed_content {
     top: 61px;
-    height: calc(100vh - 61px);
+    height: calc(100vh - 61px - 72px);
   }
 	.container_black {
 	    position: relative;
 	    margin-top: 61px;
-	    min-height: calc(100vh - 61px);
+	    min-height: calc(100vh - 61px - 72px);
 	}
 
 
@@ -1044,7 +1024,7 @@ body.black #header .submenu_in {
   }
   .container_black .content3 .title_wrapper {
     left: 30px;
-    gap: 120px;
+    gap: 100px;
   }
   .container_black .content3 .title_set .title {
     font-size: 28px;
@@ -1054,7 +1034,7 @@ body.black #header .submenu_in {
     bottom: auto;
     top: 50%;
     left: calc(50% - 78.5px);
-    transform: translate(0%,-50%);
+    transform: translate(0%,-50%) translateY(-40px);
   }
   .container_black .content5 .item_wrap .inner {
     gap: 40px;
@@ -1116,7 +1096,7 @@ body.black #header .submenu_in {
 
   .container_black .content6 .title {
     width: 215px;
-    height: 36px;
+    height: auto;
   }
   .container_black .content6 .title_wrap .sub_title {
     font-size: 25px;
@@ -1287,11 +1267,12 @@ body.black #header .submenu_in {
     grid-template-columns: repeat(2, 1fr);
     gap: 35px 10px;
   }
-  .container_black .content15 .swiper-slide > a {
+  .container_black .content15 .category_list .swiper-slide > a{
     display: block;
     width: 100%;
     height: 100%;
     position: relative;
+    aspect-ratio: auto;
   }
   .container_black .content15 .sub_image {
     opacity: 1;
@@ -1318,7 +1299,7 @@ body.black #header .submenu_in {
     letter-spacing: -0.35px; 
   }
   .container_black .content15 .content_box + .content_box {
-    margin-top: 100px;
+    margin-top: 0;
   }
 
   .container_black .mo_sub_category {
