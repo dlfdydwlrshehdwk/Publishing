@@ -42,6 +42,7 @@ body.black #header {
 	top: 0;
 	left: 0;
 	width: 100%;
+  z-index: 99999;
 }
 body.black #header .h_banner {
 	display:none !important;
@@ -604,9 +605,13 @@ body.black #header .submenu_in {
   top: 50%;
 }
 
-.container_black .content15 {
+.container_black .content.content15 {
+  opacity: 0;
   height: auto;
   padding: 140px 0 300px;
+}
+.container_black .fake_padding {
+  height: calc(100vh - 97px);
 }
 .container_black .content15 .inner {
   position: relative;

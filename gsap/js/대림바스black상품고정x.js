@@ -38,18 +38,17 @@ document.addEventListener('DOMContentLoaded', function(){
           id: "product-trigger",
           trigger: ".content15",
           start: `top ${headerH}`,
-          end: ()=>calcWindowH(2),
+          end: ()=>calcWindowH(),
           scrub: .7,
-          pin: true,
+          // pin: true,
           // pinType: 'transform',
-          pinType: 'fixed',
-          pinSpacing: true,
+          // pinSpacing: true,
           // markers:true,
           animation: gsap.timeline()
               .addLabel("scroll_product")
               .addLabel("click_product")
-              .to({}, { duration: 1 })
-              .to(".content15", { opacity: 1, duration: 1 })
+              .to({}, { duration: .5 })
+              .to(".content15", { opacity: 1, duration: .5 })
       });
   }
 
@@ -254,7 +253,7 @@ document.addEventListener('DOMContentLoaded', function(){
     .to({}, { duration: 0.5 })
     .addLabel('click_tech')
     .to('.content3', {
-      duration: 4.5,
+      duration: 3,
       onUpdate: function () {
         const progress = this.progress();
         const activeIndex = progress < 0.33 ? 0 : progress < 0.66 ? 1 : 2;
@@ -512,15 +511,15 @@ document.addEventListener('DOMContentLoaded', function(){
     .to('.content14 .bg1', {opacity: 0, duration: 2, ease: "power2.out"})
     .to({}, { duration: 1 })
     .to('.content14 .bg_wrap2', {opacity: 1, duration: 2, ease: "power2.out"})
-    .to({}, { duration: 1 })
-    // if(windowW > 767) {
-    //   mainTimeline
-    //   .to('.content14 .bg_wrap2 img', {x:-100, duration: 1});
-    // } else {
-    //   mainTimeline
-    //   .to('.content14 .bg_wrap2 img', {x:-20, duration: 1});
-    // }
-    // mainTimeline
+    .to({}, { duration: 1 });
+    if(windowW > 767) {
+      mainTimeline
+      .to('.content14 .bg_wrap2 img', {x:-100, duration: 1});
+    } else {
+      mainTimeline
+      .to('.content14 .bg_wrap2 img', {x:-20, duration: 1});
+    }
+    mainTimeline
     .to({}, { duration: 1 })
     .to('.content14 .bg_wrap2', {opacity: 0, duration: 2, ease: "power2.out"})
     .to('.content14 .sub_title', {opacity: 0, yPercent: -100, duration: 2, ease: "power2.out"}, "<")
