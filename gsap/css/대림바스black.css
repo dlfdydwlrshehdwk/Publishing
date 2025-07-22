@@ -43,6 +43,7 @@ body.black #header {
 	left: 0;
 	width: 100%;
   z-index: 99999;
+  opacity: 0 !important;
 }
 body.black #header .h_banner {
 	display:none !important;

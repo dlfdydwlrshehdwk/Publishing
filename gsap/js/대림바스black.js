@@ -558,14 +558,6 @@ document.addEventListener('DOMContentLoaded', function(){
 
               const y = st.start + (st.end - st.start) * 1;
 
-              // lenis.scrollTo(y, {
-              //     duration: 1,
-              //     onComplete: () => {
-              //       ScrollTrigger.update();
-              //       isUserNavigating = false;
-              //     }
-              // });
-              // return;
               scrollWithFallback(y);
           } else {
             const labelTime = mainTimeline.labels[label];
@@ -574,14 +566,7 @@ document.addEventListener('DOMContentLoaded', function(){
   
             const progress = labelTime / totalDuration;
             const scrollToY = headerH + scrollContainerHeight * progress;
-  
-            // lenis.scrollTo(scrollToY, {
-            //     duration: 1,
-            //     onComplete: () => {
-            //       ScrollTrigger.update();
-            //       isUserNavigating = false;
-            //     }
-            // });
+
             scrollWithFallback(scrollToY);
           }
       });
