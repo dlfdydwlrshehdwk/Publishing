@@ -1,0 +1,88 @@
+.flex {
+    display: flex;
+}
+.flex.jcsb {
+    justify-content: space-between;
+}
+.ta_l {
+    text-align: left;
+}
+.ta_r {
+    text-align: right;
+}
+.max_w {
+    max-width: 1920px;
+}
+.max_w_v1 {
+    margin: 0 auto;
+    max-width: calc(100% - 250px);
+}
+.pos_r {
+    position: relative;
+}
+.pos_center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.pc {
+
+}
+.mo {
+    display: none;
+}
+@media (max-width: 767px) {
+    .pc {
+        display: none;
+    }
+    .mo {
+        display: block;
+    }
+}
+
+header {
+    position: fixed;
+    left: 0;
+    width: 100%;
+    z-index: 9999;
+}
+header .shadow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+header .inner {
+    position: relative;
+    z-index: 1;
+    margin-top: 56px;
+    padding: 0 74px;
+}
+header .inner > div {
+    font-size: 14px;
+    color: #fff;
+    line-height: 1.45;
+}
+
+.section1 {
+    width: 100%;
+    height: 100vh;
+    background: url(../asset/spc/section01_bg.png) no-repeat center center / cover;
+}
+.section2 {
+    padding: 100px 0;
+}
+.section2 .right .flex {
+    gap: 37px;
+}
+.section2 .item .text_set .logo {
+    width: 36px;
+    height: 36px;
+}
+.section2 .item .text_set .title {
+    padding: 0 18px;
+    height: 36px;
+    border-radius: 50px;
+    border: 1px solid ;
+}

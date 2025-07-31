@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>배경일렁일렁</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            height: 100vh;
+            overflow: hidden;
+            background: radial-gradient(ellipse at center, #001122 0%, #000 70%);
+        }
+
+        #canvas-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+        }
+    </style>
+</head>
+<body>
+    <div id="canvas-container"></div>
+    
+    <script>
+        let scene, camera, renderer, waveGeometry, waveMaterial, waveMesh;
+        let time = 0;
+
+        function init() {
+            // Scene setup
+            scene = new THREE.Scene();
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setClearColor(0x000000, 0); // Transparent background
+            document.getElementById('canvas-container').appendChild(renderer.domElement);
+
+            // Create wider, more natural light element geometry
+            const width = 25;
+            const height = 8;
+            const widthSegments = 150;
+            const heightSegments = 40;
+            
+            waveGeometry = new THREE.PlaneGeometry(width, height, widthSegments, heightSegments);
+            
+            // Create gradient material
+            const vertexShader = `
+                uniform float time;
+                varying vec2 vUv;
+                varying float vWave;
+                
+                void main() {
+                    vUv = uv;
+                    
+                    vec3 pos = position;
+                    
+                    // Create S-curve wave for the light element
+                    float waveFreq = 0.3;
+                    float timeSpeed = 1.5;
+                    
+                    float leftWave = sin(pos.x * waveFreq + time * timeSpeed);
+                    float rightWave = sin(pos.x * waveFreq + time * timeSpeed + 3.14159);
+                    
+                    // Blend between left and right wave
+                    float blendFactor = (pos.x + 12.5) / 25.0;
+                    float wave = mix(leftWave, rightWave, blendFactor);
+                    
+                    // Apply wave to y position for vertical movement
+                    pos.y += wave * 1.2;
+                    vWave = wave;
+                    
+                    gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
+                }
+            `;
+            
+            const fragmentShader = `
+                varying vec2 vUv;
+                varying float vWave;
+                
+                void main() {
+                    // More subtle blue colors like in the images
+                    vec3 darkBlue = vec3(0.1, 0.3, 0.6);
+                    vec3 lightBlue = vec3(0.3, 0.6, 0.9);
+                    
+                    // Much softer, wider light shape - more natural
+                    float distFromCenter = abs(vUv.y - 0.5) * 2.0;
+                    float lightShape = 1.0 - smoothstep(0.0, 1.2, distFromCenter);
+                    lightShape = pow(lightShape, 0.2); // Much softer falloff
+                    
+                    // Very subtle wave intensity
+                    float intensity = 0.4 + abs(vWave) * 0.2;
+                    
+                    // Gentle vertical motion trail
+                    float waveVelocity = vWave;
+                    float trailOffset = vUv.y - 0.5;
+                    
+                    float upwardTrail = max(0.0, -trailOffset) * max(0.0, waveVelocity) * 1.5;
+                    float downwardTrail = max(0.0, trailOffset) * max(0.0, -waveVelocity) * 1.5;
+                    float verticalTrail = upwardTrail + downwardTrail;
+                    
+                    // Blend colors based on position for natural gradient
+                    vec3 baseColor = mix(darkBlue, lightBlue, vUv.x * 0.7 + vUv.y * 0.3);
+                    
+                    // Very subtle light effect
+                    vec3 color = baseColor * intensity * lightShape * (1.0 + verticalTrail * 0.2);
+                    
+                    // Much softer edges that fade naturally
+                    float distFromCenterX = abs(vUv.x - 0.5) * 2.0;
+                    float horizontalFade = 1.0 - smoothstep(0.5, 1.2, distFromCenterX);
+                    
+                    // Very subtle alpha for natural blending
+                    float alpha = lightShape * horizontalFade * (0.3 + verticalTrail * 0.1);
+                    
+                    gl_FragColor = vec4(color, alpha);
+                }
+            `;
+            
+            waveMaterial = new THREE.ShaderMaterial({
+                vertexShader: vertexShader,
+                fragmentShader: fragmentShader,
+                uniforms: {
+                    time: { value: 0 }
+                },
+                transparent: true,
+                blending: THREE.NormalBlending // More natural blending like the images
+            });
+            
+            waveMesh = new THREE.Mesh(waveGeometry, waveMaterial);
+            scene.add(waveMesh);
+            
+            // Position camera
+            camera.position.z = 8;
+            camera.position.y = 0;
+            camera.lookAt(0, 0, 0);
+            
+            // Handle window resize
+            window.addEventListener('resize', onWindowResize, false);
+        }
+        
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+        
+        function animate() {
+            requestAnimationFrame(animate);
+            
+            time += 0.015;
+            waveMaterial.uniforms.time.value = time;
+            
+            renderer.render(scene, camera);
+        }
+        
+        init();
+        animate();
+    </script>
+</body>
+</html>

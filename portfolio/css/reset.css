@@ -1,0 +1,246 @@
+  /* *************************************************
+  *                     RESET CSS                    *
+  ****************************************************/
+  :root {
+    /* --mainFontColor: #000;
+  
+    --mainColor: #FF6633;
+      --subColor: #E0F84E;
+      --dark: #888888;
+      --thumb: #F2F2F2;
+      --gray: #DDDDDD;
+      --black: #000;
+      --white: #fff;
+      --gray1: #f8f8f8;
+      --gray2: #f1f1f1;
+      --gray3: #323232;
+      --gray4: #232323;
+      --black90: rgba(0,0,0,.9);
+      --black80: rgba(0,0,0,.8);
+      --black70: rgba(0,0,0,.7);
+      --black60: rgba(0,0,0,.6);
+      --black50: rgba(0,0,0,.5);
+      --black40: rgba(0,0,0,.4);
+      --black30: rgba(0,0,0,.3);
+      --black20: rgba(0,0,0,.2);
+      --black10: rgba(0,0,0,.1);
+      --white90: rgba(255,255,255,.9);
+      --white80: rgba(255,255,255,.8);
+      --white70: rgba(255,255,255,.7);
+      --white60: rgba(255,255,255,.6);
+      --white50: rgba(255,255,255,.5);
+      --white40: rgba(255,255,255,.4);
+      --white30: rgba(255,255,255,.3);
+      --white20: rgba(255,255,255,.2);
+      --white10: rgba(255,255,255,.1); */
+  }
+  
+  * {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    letter-spacing: normal;
+    word-break: keep-all;
+    font-weight: normal;
+    font-style: normal;
+    font-size: 1.6rem;
+    line-height: 1;
+  }
+  
+  html,
+  body {
+    width: 100%;
+    font-size: 62.5%;
+    /* font-size: 31.25%; */
+    overflow-x: hidden;
+    /* scroll-behavior: smooth; */
+  }
+  
+  header,
+  footer,
+  section,
+  article,
+  aside,
+  main,
+  nav,
+  hgroup,
+  details,
+  menu,
+  figure,
+  figcaption {
+    display: block;
+  }
+  
+  ol,
+  ul,
+  li {
+    margin: 0;
+    list-style: none;
+  }
+  
+  img {
+    max-width: 100%;
+    height: auto;
+    vertical-align: baseline;
+  }
+  
+  span,
+  strong,
+  b,
+  em,
+  font {
+    color: inherit;
+    font-size: 100%;
+    font-weight: inherit;
+    line-height: inherit;
+    letter-spacing: inherit;
+  }
+  
+  strong,
+  b {
+    font-weight: 700;
+  }
+  
+  a,
+  a:hover,
+  a:focus,
+  button {
+    text-decoration: none;
+  }
+  
+  button,
+  textarea,
+  input,
+  select,
+  a {
+    outline: none;
+    border: none;
+    border-radius: 0;
+    appearance: none;
+    background: transparent;
+    -webkit-tap-highlight-color: transparent; /* 터치 했을 때 영역 배경 색상 변경 리셋 속성 */
+  }
+  
+  button,
+  select {
+    touch-action: manipulation; /* 터치를 사용한 스크롤, 핀치 줌만 허용하고 그 외 비표준 동작 (더블 탭으로 확대 등) 불허용 */
+    user-select: none; /* 텍스트 선택 방지 */
+    cursor: pointer;
+  }
+  
+  select:focus {
+    outline: none;
+  }
+  
+  select::-ms-expand,
+  input::-ms-clear,
+  input::-ms-reveal,
+  input::-webkit-search-decoration,
+  input::-webkit-search-cancel-button,
+  input::-webkit-search-results-button,
+  input::-webkit-search-results-decoration {
+    display: none;
+    opacity: 0;
+  }
+  
+  /* 인풋 자동완성 시 안쪽 배경 색 방지*/
+  input:-webkit-autofill {
+    box-shadow: 0 0 0 100px #fff inset;
+    border: none;
+  }
+  
+  ::selection {
+    color: #fff;
+    background: rgba(0, 0, 0, 0.99);
+  }
+  
+  *:focus,
+  a:hover,
+  button:hover,
+  input:hover {
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  /* legend, fieldset: 폼태그 안에 사용되는 태그 */
+  legend {
+    display: none;
+  }
+  
+  fieldset {
+    border: none;
+    margin: 0;
+    padding: 0;
+    min-width: 0;
+  }
+  
+  table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+  }
+  
+  iframe {
+    border: none;
+    width: 100%;
+    height: 100%;
+  }
+  
+  /* *************************************************
+  *                       반응형                       *
+  ****************************************************/
+  @media (max-width: 1800px) {
+    html,
+    body {
+      font-size: 58%;
+    }
+  }
+  
+  @media (max-width: 1680px) {
+    html,
+    body {
+      font-size: 56%;
+    }
+  }
+  
+  @media (max-width: 1440px) {
+    html,
+    body {
+      font-size: 54%;
+    }
+  }
+  
+  @media (max-width: 1024px) {
+    html,
+    body {
+      font-size: 51%;
+    }
+  }
+  
+  @media (max-width: 989px) {
+    html,
+    body {
+      font-size: 50%;
+    }
+  }
+  
+  @media (max-width: 767px) {
+    html,
+    body {
+      font-size: 65%;
+    }
+  }
+  
+  @media (max-width: 425px) {
+    html,
+    body {
+      font-size: 62.5%;
+    }
+  }
+  
+  @media (max-width: 359px) {
+    html,
+    body {
+      font-size: 58%;
+    }
+  }

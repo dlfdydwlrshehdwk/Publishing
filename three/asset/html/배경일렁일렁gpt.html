@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Soft Blue Wave Background</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background: #000;
+    }
+    canvas {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+<script type="module">
+import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.158.0/build/three.module.js';
+
+let scene, camera, renderer, mesh, clock;
+
+init();
+animate();
+
+function init() {
+  scene = new THREE.Scene();
+
+  // 정사영 카메라로 평면 보기
+  camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0.1, 10);
+  camera.position.z = 1;
+
+  // 충분히 촘촘한 Plane, y 세그먼트 최소
+  const geometry = new THREE.PlaneGeometry(2, 2, 400, 1);
+
+  const uniforms = {
+    u_time: { value: 0.0 },
+    u_amplitude: { value: 0.05 },
+    u_waveWidth: { value: 1.5 },   // 하나의 파동이 화면 전체를 차지
+    u_speed: { value: 0.3 }
+  };
+
+  const material = new THREE.ShaderMaterial({
+    uniforms: uniforms,
+    vertexShader: `
+      uniform float u_time;
+      uniform float u_amplitude;
+      uniform float u_waveWidth;
+      uniform float u_speed;
+      varying float vZ;
+
+      void main() {
+        vec3 pos = position;
+
+        // 하나의 느린 wave (좌우 대칭 아님, 단일)
+        float wave = sin((pos.x * 3.1415 * u_waveWidth) + (u_time * u_speed));
+        pos.z += wave * u_amplitude;
+
+        vZ = pos.z;
+        gl_Position = vec4(pos, 1.0);
+      }
+    `,
+    fragmentShader: `
+      precision mediump float;
+      varying float vZ;
+
+      void main() {
+        // 부드러운 파랑색 그라데이션 + 밝기 반영
+        float brightness = smoothstep(-0.05, 0.05, vZ);
+        vec3 baseColor = vec3(0.07, 0.17, 0.35); // 진한 블루 계열
+        vec3 color = baseColor + brightness * 0.05; // z값에 따라 살짝 밝기 변화
+
+        gl_FragColor = vec4(color, 1.0);
+      }
+    `,
+    transparent: false,
+    wireframe: false
+  });
+
+  mesh = new THREE.Mesh(geometry, material);
+  scene.add(mesh);
+
+  renderer = new THREE.WebGLRenderer({ antialias: true });
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  document.body.appendChild(renderer.domElement);
+
+  clock = new THREE.Clock();
+
+  window.addEventListener('resize', () => {
+    renderer.setSize(window.innerWidth, window.innerHeight);
+  });
+}
+
+function animate() {
+  requestAnimationFrame(animate);
+  mesh.material.uniforms.u_time.value = clock.getElapsedTime();
+  renderer.render(scene, camera);
+}
+</script>
+</body>
+</html>
