@@ -15,7 +15,7 @@
         body, html {
             height: 100vh;
             overflow: hidden;
-            background: radial-gradient(ellipse at center, #001122 0%, #000 70%);
+            background: #222;
         }
 
         #canvas-container {
@@ -38,14 +38,19 @@
             // Scene setup
             scene = new THREE.Scene();
             camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            renderer = new THREE.WebGLRenderer({ 
+                antialias: true, 
+                alpha: true,
+                premultipliedAlpha: false,
+                preserveDrawingBuffer: false
+            });
             renderer.setSize(window.innerWidth, window.innerHeight);
             renderer.setClearColor(0x000000, 0); // Transparent background
             document.getElementById('canvas-container').appendChild(renderer.domElement);
 
-            // Create wider, more natural light element geometry
-            const width = 25;
-            const height = 8;
+            // Create smaller, more defined light element geometry
+            const width = 15;
+            const height = 4;
             const widthSegments = 150;
             const heightSegments = 40;
             
@@ -70,7 +75,7 @@
                     float rightWave = sin(pos.x * waveFreq + time * timeSpeed + 3.14159);
                     
                     // Blend between left and right wave
-                    float blendFactor = (pos.x + 12.5) / 25.0;
+                    float blendFactor = (pos.x + 7.5) / 15.0;
                     float wave = mix(leftWave, rightWave, blendFactor);
                     
                     // Apply wave to y position for vertical movement
@@ -86,38 +91,34 @@
                 varying float vWave;
                 
                 void main() {
-                    // More subtle blue colors like in the images
-                    vec3 darkBlue = vec3(0.1, 0.3, 0.6);
-                    vec3 lightBlue = vec3(0.3, 0.6, 0.9);
+                    // Single light blue color
+                    vec3 lightBlue = vec3(0.4, 0.7, 1.0);
                     
-                    // Much softer, wider light shape - more natural
+                    // More defined light shape with clearer boundaries
                     float distFromCenter = abs(vUv.y - 0.5) * 2.0;
-                    float lightShape = 1.0 - smoothstep(0.0, 1.2, distFromCenter);
-                    lightShape = pow(lightShape, 0.2); // Much softer falloff
+                    float lightShape = 1.0 - smoothstep(0.0, 0.8, distFromCenter);
+                    lightShape = pow(lightShape, 0.6); // More defined edges
                     
-                    // Very subtle wave intensity
-                    float intensity = 0.4 + abs(vWave) * 0.2;
+                    // Higher wave intensity - more visible
+                    float intensity = 1.0 + abs(vWave) * 0.8;
                     
-                    // Gentle vertical motion trail
+                    // Stronger vertical motion trail
                     float waveVelocity = vWave;
                     float trailOffset = vUv.y - 0.5;
                     
-                    float upwardTrail = max(0.0, -trailOffset) * max(0.0, waveVelocity) * 1.5;
-                    float downwardTrail = max(0.0, trailOffset) * max(0.0, -waveVelocity) * 1.5;
+                    float upwardTrail = max(0.0, -trailOffset) * max(0.0, waveVelocity) * 2.5;
+                    float downwardTrail = max(0.0, trailOffset) * max(0.0, -waveVelocity) * 2.5;
                     float verticalTrail = upwardTrail + downwardTrail;
                     
-                    // Blend colors based on position for natural gradient
-                    vec3 baseColor = mix(darkBlue, lightBlue, vUv.x * 0.7 + vUv.y * 0.3);
+                    // Single color with bright intensity
+                    vec3 color = lightBlue * intensity * lightShape * (1.0 + verticalTrail * 0.4);
                     
-                    // Very subtle light effect
-                    vec3 color = baseColor * intensity * lightShape * (1.0 + verticalTrail * 0.2);
-                    
-                    // Much softer edges that fade naturally
+                    // Clearer horizontal edges
                     float distFromCenterX = abs(vUv.x - 0.5) * 2.0;
-                    float horizontalFade = 1.0 - smoothstep(0.5, 1.2, distFromCenterX);
+                    float horizontalFade = 1.0 - smoothstep(0.8, 1.0, distFromCenterX);
                     
-                    // Very subtle alpha for natural blending
-                    float alpha = lightShape * horizontalFade * (0.3 + verticalTrail * 0.1);
+                    // Higher alpha for more visibility
+                    float alpha = lightShape * horizontalFade * (0.8 + verticalTrail * 0.3);
                     
                     gl_FragColor = vec4(color, alpha);
                 }
@@ -130,7 +131,9 @@
                     time: { value: 0 }
                 },
                 transparent: true,
-                blending: THREE.NormalBlending // More natural blending like the images
+                blending: THREE.AdditiveBlending,
+                depthWrite: false,
+                depthTest: false
             });
             
             waveMesh = new THREE.Mesh(waveGeometry, waveMaterial);
