@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>오로라 유체 배경 효과</title>
+    <style>
+        html, body {
+            margin: 0;
+            overflow: hidden;
+            background: #000;
+            height: 100%;
+        }
+        canvas {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+<script type="module">
+    import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.158.0/build/three.module.js';
+
+    let scene, camera, renderer, uniforms;
+
+    init();
+    animate();
+
+    function init() {
+        scene = new THREE.Scene();
+        camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+
+        renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        uniforms = {
+            u_time: { value: 0.0 },
+            u_resolution: { value: new THREE.Vector2(window.innerWidth, window.innerHeight) },
+            u_color_light: { value: new THREE.Vector3(0.68, 0.85, 0.9) }, // 연한 파란색 (RGB 173, 216, 230)
+            u_color_dark: { value: new THREE.Vector3(0.25, 0.41, 0.88) },  // 파란색 (RGB 64, 105, 224)
+            u_horizontal_color_left: { value: new THREE.Vector3(0.56, 0.93, 0.56) }, // 연한 초록색 (RGB 144, 238, 144)
+            u_horizontal_color_right: { value: new THREE.Vector3(0.68, 0.85, 0.9) } // 연한 파란색 (RGB 173, 216, 230)
+        };
+
+        const material = new THREE.ShaderMaterial({
+            uniforms: uniforms,
+            vertexShader: `
+                varying vec2 vUv;
+                void main() {
+                    vUv = uv;
+                    gl_Position = vec4(position, 1.0);
+                }
+            `,
+            fragmentShader: `
+                precision highp float;
+
+                uniform float u_time;
+                uniform vec2 u_resolution;
+                uniform vec3 u_color_light;
+                uniform vec3 u_color_dark;
+                uniform vec3 u_horizontal_color_left;
+                uniform vec3 u_horizontal_color_right;
+                varying vec2 vUv;
+
+                void main() {
+                    vec2 uv = gl_FragCoord.xy / u_resolution.xy;
+
+                    float aspect = u_resolution.x / u_resolution.y;
+                    uv.x *= aspect;
+
+                    // ★★★ 명확한 수평 웨이브 형태 생성 ★★★
+                    // Y축 중앙을 기준으로 물결의 Y 위치를 계산합니다.
+                    // waveAmplitude: 물결의 높이 (굴곡의 깊이)
+                    // waveFrequency: 물결의 촘촘함 (파형의 개수)
+                    // waveSpeed: 물결의 이동 속도
+                    float waveAmplitude = 0.2; // 물결의 진폭 (크게 설정하여 명확하게 보이도록)
+                    float waveFrequency = 2.0; // 물결의 주파수 (파형의 촘촘함)
+                    float waveSpeed = 0.5;     // 물결의 이동 속도
+
+                    float waveY = 0.5 + waveAmplitude * sin(uv.x * waveFrequency + u_time * waveSpeed);
+
+                    // ★★★ 물결 중심선으로부터의 거리 계산 ★★★
+                    float dist = abs(uv.y - waveY);
+
+                    // ★★★ 오로라 같은 블러/확산 효과 (극도로 부드럽게, 넓게 퍼지는 글로우) ★★★
+                    // smoothstep의 범위를 매우 넓게 설정하여 빛이 넓게 퍼지도록 합니다.
+                    // 첫 번째 인자(edge0)를 0으로, 두 번째 인자(edge1)를 크게 설정하여 부드러운 감쇠를 만듭니다.
+                    float glow = 1.0 - smoothstep(0.0, 0.6, dist); // 0.6은 글로우의 퍼지는 정도 (매우 넓게)
+                    glow = pow(glow, 3.0); // 지수를 높여 중앙 집중 및 부드러운 확산 (얇고 진한 중심)
+
+                    // ★★★ 색상 혼합 (세로 글로우와 가로 그라데이션 결합) ★★★
+                    // glow 값에 따라 어두운 파란색에서 연한 파란색으로 혼합
+                    vec3 verticalColor = mix(u_color_dark, u_color_light, glow);
+
+                    // 가로 그라데이션 색상 계산
+                    vec3 horizontalColor = mix(u_horizontal_color_left, u_horizontal_color_right, uv.x);
+
+                    // 최종 색상: 세로 색상과 가로 색상을 곱하여 결합 (오로라 느낌)
+                    vec3 finalColor = verticalColor * horizontalColor;
+
+                    // ★★★ 최종 출력 (알파 값은 글로우 강도에 따라 조절하여 퍼지는 느낌 강화) ★★★
+                    gl_FragColor = vec4(finalColor, glow);
+                }
+            `,
+            transparent: true,
+            blending: THREE.AdditiveBlending,
+            depthWrite: false,
+            depthTest: false
+        });
+
+        const geometry = new THREE.PlaneGeometry(2, 2);
+        const mesh = new THREE.Mesh(geometry, material);
+        scene.add(mesh);
+
+        window.addEventListener('resize', () => {
+            uniforms.u_resolution.value.set(window.innerWidth, window.innerHeight);
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+    }
+
+    function animate(time) {
+        uniforms.u_time.value = time * 0.001;
+        renderer.render(scene, camera);
+        requestAnimationFrame(animate);
+    }
+</script>
+</body>
+</html>
