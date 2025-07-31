@@ -1,167 +1,124 @@
 <!DOCTYPE html>
-<html lang="ko"> <!-- 문서의 언어를 한국어로 설정 -->
+<html lang="ko">
 <head>
-    <meta charset="UTF-8"> <!-- 문서의 문자 인코딩을 UTF-8로 설정 (한글 포함 다양한 문자 지원) -->
-    <title>커스텀 글로우 웨이브 (~ 형태)</title> <!-- 웹 브라우저 탭에 표시될 문서의 제목 -->
+    <meta charset="UTF-8">
+    <title>가로형 물결 배경 효과</title>
     <style>
-        /* CSS 스타일 정의 시작 */
         html, body {
-            margin: 0; /* 페이지의 모든 여백을 제거 */
-            overflow: hidden; /* 페이지 내용이 넘칠 경우 스크롤바를 숨김 */
-            background: #000; /* 페이지의 배경색을 검은색으로 설정 */
-            height: 100%; /* html과 body 요소의 높이를 뷰포트의 100%로 설정하여 전체 화면을 채움 */
+            margin: 0;
+            overflow: hidden;
+            background: #000;
+            height: 100%;
         }
         canvas {
-            display: block; /* 캔버스 요소를 블록 레벨 요소로 설정하여 하단에 생기는 불필요한 여백을 제거 */
+            display: block;
         }
-        /* CSS 스타일 정의 끝 */
     </style>
 </head>
 <body>
 <script type="module">
-    // Three.js 라이브러리를 ES 모듈 방식으로 임포트합니다.
-    // CDN(Content Delivery Network)을 통해 Three.js r158 버전을 불러옵니다.
     import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.158.0/build/three.module.js';
 
-    // Three.js 씬을 구성하는 주요 변수들을 선언합니다.
     let scene, camera, renderer, uniforms;
 
-    // 애플리케이션 초기화 함수를 호출합니다.
     init();
-    // 애니메이션 루프를 시작합니다.
     animate();
 
-    /**
-     * Three.js 씬을 초기화하고 모든 설정을 담당하는 함수.
-     */
     function init() {
-        // 씬(Scene) 생성: 3D 객체들이 배치될 가상의 공간입니다.
         scene = new THREE.Scene();
-
-        // 카메라(Camera) 생성: 씬을 바라보는 시점을 정의합니다.
-        // OrthographicCamera(left, right, top, bottom, near, far)
-        // 직교 카메라는 원근 왜곡 없이 2D 평면을 렌더링할 때 주로 사용됩니다.
-        // 여기서는 화면 전체를 덮는 2x2 평면을 렌더링하기 위해 -1에서 1까지의 범위를 사용합니다.
         camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
 
-        // 렌더러(Renderer) 생성: 씬을 화면에 그리는 역할을 합니다.
-        // WebGLRenderer는 WebGL API를 사용하여 고성능 3D 그래픽을 렌더링합니다.
-        // antialias: true는 렌더링된 이미지의 가장자리를 부드럽게 처리하여 계단 현상을 줄입니다.
         renderer = new THREE.WebGLRenderer({ antialias: true });
-        // 렌더러의 크기를 현재 윈도우의 너비와 높이에 맞게 설정합니다.
         renderer.setSize(window.innerWidth, window.innerHeight);
-        // 렌더러가 생성한 캔버스(DOM 요소)를 HTML 문서의 body에 추가하여 화면에 표시합니다.
         document.body.appendChild(renderer.domElement);
 
-        // 유니폼(Uniforms) 객체 생성: 셰이더(Shader)로 전달될 변수들을 정의합니다.
-        // 셰이더는 이 유니폼 값들을 사용하여 픽셀의 색상을 계산합니다.
         uniforms = {
-            u_time: { value: 0.0 }, // 시간 값 (애니메이션 진행에 사용)
-            // 화면 해상도 (너비, 높이) 값 (셰이더 내에서 픽셀 좌표를 정규화하는 데 사용)
-            u_resolution: { value: new THREE.Vector2(window.innerWidth, window.innerHeight) }
+            u_time: { value: 0.0 },
+            u_resolution: { value: new THREE.Vector2(window.innerWidth, window.innerHeight) },
+            u_color_light: { value: new THREE.Vector3(0.68, 0.85, 0.9) }, // 연한 파란색 (RGB 173, 216, 230)
+            u_color_dark: { value: new THREE.Vector3(0.25, 0.41, 0.88) },  // 파란색 (RGB 64, 105, 224)
+            u_horizontal_color_left: { value: new THREE.Vector3(0.56, 0.93, 0.56) }, // 연한 초록색 (RGB 144, 238, 144)
+            u_horizontal_color_right: { value: new THREE.Vector3(0.68, 0.85, 0.9) } // 연한 파란색 (RGB 173, 216, 230)
         };
 
-        // 셰이더 재질(ShaderMaterial) 생성: 커스텀 셰이더 코드를 적용할 재질입니다.
         const material = new THREE.ShaderMaterial({
-            uniforms: uniforms, // 위에서 정의한 유니폼 객체를 셰이더에 전달
-            // 버텍스 셰이더(Vertex Shader) 코드: 각 정점의 위치를 계산합니다.
+            uniforms: uniforms,
             vertexShader: `
+                varying vec2 vUv;
                 void main() {
-                    // gl_Position은 최종적으로 화면에 그려질 정점의 위치를 나타냅니다.
-                    // position은 지오메트리의 각 정점의 기본 위치입니다.
-                    // 여기서는 정점의 위치를 그대로 사용하여 2D 평면을 그립니다.
+                    vUv = uv;
                     gl_Position = vec4(position, 1.0);
                 }
             `,
-            // 프래그먼트 셰이더(Fragment Shader) 코드: 각 픽셀의 색상을 계산합니다.
             fragmentShader: `
-                // 셰이더의 부동 소수점 변수 정밀도를 highp(높음)로 설정합니다.
                 precision highp float;
 
-                // JavaScript에서 전달받을 유니폼 변수들입니다.
-                uniform float u_time; // 시간 값
-                uniform vec2 u_resolution; // 화면 해상도 (너비, 높이)
+                uniform float u_time;
+                uniform vec2 u_resolution;
+                uniform vec3 u_color_light;
+                uniform vec3 u_color_dark;
+                uniform vec3 u_horizontal_color_left; // 가로 그라데이션 왼쪽 색상
+                uniform vec3 u_horizontal_color_right; // 가로 그라데이션 오른쪽 색상
+                varying vec2 vUv;
 
                 void main() {
-                    // gl_FragCoord.xy는 현재 픽셀의 화면 좌표입니다.
-                    // u_resolution.xy로 나누어 0.0에서 1.0 사이의 정규화된 UV 좌표를 얻습니다.
                     vec2 uv = gl_FragCoord.xy / u_resolution.xy;
 
-                    // 화면 비율(aspect ratio) 보정: 와이드 화면에서 패턴이 늘어나지 않도록 합니다.
-                    // uv.x에 화면 비율을 곱하여 X축 스케일을 조정합니다.
                     float aspect = u_resolution.x / u_resolution.y;
                     uv.x *= aspect;
 
-                    // ★★★ 웨이브 패턴 전체의 상하 움직임 (진폭 감소) ★★★
-                    // uv.y에 시간에 따라 변하는 값을 더하여 패턴 전체를 위아래로 이동시킵니다.
-                    // 0.15는 움직임의 진폭(높이), 0.8은 움직임의 속도입니다.
-                    uv.y += .6 * sin(u_time * 0.1);
+                    // 단일 주된 물결 형태 계산
+                    // Y축 중앙을 기준으로 물결의 Y 위치를 계산합니다.
+                    // waveAmplitude: 물결의 높이 (크게 설정하여 명확하게 보이도록)
+                    // waveFrequency: 물결의 촘촘함 (조절하여 원하는 파형)
+                    // waveSpeed: 물결의 이동 속도
+                    float waveAmplitude = 0.1; // 물결의 진폭 (크게)
+                    float waveFrequency = 1.5; // 물결의 주파수 (덜 촘촘하게)
+                    float waveSpeed = 0.3;     // 물결의 이동 속도
 
-                    // 웨이브 형태 반전을 위한 계수 (시간에 따라 -1에서 1 사이를 오가며 부호를 바꿉니다)
-                    float inversionFactor = sin(u_time * .5); // 0.5는 반전 속도 조절
+                    float waveY = 0.5 + waveAmplitude * sin(uv.x * waveFrequency + u_time * waveSpeed);
 
-                    // 움직이는 중심 곡선 (~ 형태) 계산:
-                    // 기준점을 0.45로 낮춰 웨이브가 화면 중앙보다 약간 아래에서 시작하도록 합니다.
-                    // 주요 웨이브의 진폭 증가
-                    float curveY = 0.45 + 
-                                   (0.3 + 0.05 * sin(u_time * 0.7)) * sin(uv.x * 4.0 + u_time * 0.4) * inversionFactor + // 진폭을 시간에 따라 변화 및 형태 반전
-                                   0.1 * sin(uv.x * 8.0 + u_time * 0.8); // 추가적인 작은 웨이브
+                    // 물결 중심선으로부터의 거리 계산
+                    float dist = abs(uv.y - waveY);
 
-                    // 현재 픽셀의 Y 좌표(uv.y)와 중심 곡선(curveY) 사이의 절대 거리(d)를 계산합니다.
-                    float d = abs(uv.y - curveY);
+                    // ★★★ 그라데이션 및 블러 효과 (매우 부드럽게, 넓게 퍼지는 글로우) ★★★
+                    // smoothstep의 범위를 넓게 설정하여 빛이 넓게 퍼지도록 합니다.
+                    // 첫 번째 인자(edge0)를 0으로, 두 번째 인자(edge1)를 크게 설정하여 부드러운 감쇠를 만듭니다.
+                    float glow = 1.0 - smoothstep(0.0, 0.6, dist); // 0.5 -> 0.7로 범위 확장 (더 넓게 퍼짐)
+                    glow = pow(glow, 3.0); // 1.2 -> 2.0으로 지수 증가 (중앙이 더 얇고 진하게)
 
-                    // 글로우(Glow) 퍼짐 효과 계산 (범위 확장 및 강도 감소)
-                    float glow = smoothstep(0.4, 0.0, d) * .5; // 글로우 강도 3.0 -> 2.0으로 감소
+                    // 가로 그라데이션 색상 계산
+                    vec3 horizontalColor = mix(u_horizontal_color_left, u_horizontal_color_right, uv.x);
 
-                    // 글로우의 색상 정의 (청록색 계열)
-                    vec3 glowColor = vec3(0.0, 1.0, 0.8);
+                    // 최종 색상 혼합 (세로 글로우와 가로 그라데이션 결합)
+                    // 기존 세로 글로우 색상에 가로 그라데이션을 곱하여 적용합니다.
+                    // 이렇게 하면 가로 그라데이션이 물결의 밝기 변화에 영향을 줍니다.
+                    vec3 finalColor = mix(u_color_dark, u_color_light, glow) * horizontalColor;
 
-                    // 최종 픽셀 색상 계산:
-                    // 글로우 색상에 glow 값을 곱하여 밝기를 조절합니다.
-                    // glow 값이 0이면 검은색, 1이면 glowColor가 됩니다.
-                    vec3 color = glowColor * glow;
-
-                    // gl_FragColor는 최종적으로 화면에 그려질 픽셀의 색상과 투명도(RGBA)를 나타냅니다.
-                    // 여기서는 계산된 color와 1.0(완전히 불투명)의 알파 값을 사용합니다.
-                    gl_FragColor = vec4(color, 1);
+                    // 최종 출력 (알파 값은 글로우 강도에 따라 조절하여 퍼지는 느낌 강화)
+                    // glow 값을 직접 알파로 사용하여 배경과 자연스럽게 섞이도록 합니다.
+                    gl_FragColor = vec4(finalColor, glow);
                 }
             `,
-            depthWrite: false, // 깊이 버퍼에 쓰지 않음 (투명 객체 렌더링 시 유용)
-            depthTest: false,  // 깊이 테스트를 수행하지 않음
-            transparent: true, // ★★★ 재질이 투명하다고 선언 (블렌딩을 위해 필수)
-            blending: THREE.AdditiveBlending // ★★★ 빛이 겹치는 효과 (배경과 자연스럽게 섞임)
+            transparent: true,
+            blending: THREE.AdditiveBlending,
+            depthWrite: false,
+            depthTest: false
         });
 
-        // 지오메트리(Geometry) 생성: 셰이더 효과가 적용될 2D 평면입니다.
-        // PlaneGeometry(width, height)는 평면을 생성합니다. 여기서는 -1에서 1까지의 범위에 맞춰 2x2 크기를 사용합니다.
         const geometry = new THREE.PlaneGeometry(2, 2);
-        // 메시(Mesh) 생성: 지오메트리와 재질을 결합하여 씬에 추가할 수 있는 객체를 만듭니다.
         const mesh = new THREE.Mesh(geometry, material);
-        // 생성된 메시를 씬에 추가합니다.
         scene.add(mesh);
 
-        // 윈도우 크기 변경 이벤트 리스너:
-        // 윈도우 크기가 변경될 때마다 렌더러와 셰이더의 해상도 유니폼을 업데이트합니다.
         window.addEventListener('resize', () => {
-            // 셰이더의 u_resolution 유니폼 값을 현재 윈도우 크기로 업데이트합니다.
             uniforms.u_resolution.value.set(window.innerWidth, window.innerHeight);
-            // 렌더러의 크기를 현재 윈도우 크기에 맞게 재설정합니다.
             renderer.setSize(window.innerWidth, window.innerHeight);
         });
     }
 
-    /**
-     * 애니메이션 루프 함수: 매 프레임마다 씬을 렌더링하고 애니메이션을 업데이트합니다.
-     * @param {DOMHighResTimeStamp} time - requestAnimationFrame이 제공하는 현재 시간 (밀리초)
-     */
     function animate(time) {
-        // u_time 유니폼 값을 업데이트합니다.
-        // time은 밀리초 단위이므로, 0.001을 곱하여 초 단위로 변환합니다.
-        // 이 값은 셰이더 내에서 애니메이션의 진행을 제어합니다.
         uniforms.u_time.value = time * 0.001;
-        // 씬과 카메라를 사용하여 렌더러를 통해 화면에 그립니다.
         renderer.render(scene, camera);
-        // 다음 프레임에 animate 함수를 다시 호출하도록 브라우저에 요청합니다.
         requestAnimationFrame(animate);
     }
 </script>
