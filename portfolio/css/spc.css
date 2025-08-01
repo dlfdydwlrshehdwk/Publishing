@@ -1,3 +1,60 @@
+@font-face {
+    font-family: 'Pretendard';
+    src: url('../../font/Pretendard-Black.woff2') format('woff2');
+    font-weight: 900;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Pretendard';
+    src: url('../../font/Pretendard-Bold.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Pretendard';
+    src: url('../../font/Pretendard-ExtraBold.woff2') format('woff2');
+    font-weight: 800;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Pretendard';
+    src: url('../../font/Pretendard-ExtraLight.woff2') format('woff2');
+    font-weight: 100;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Pretendard';
+    src: url('../../font/Pretendard-Light.woff2') format('woff2');
+    font-weight: 200;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Pretendard';
+    src: url('../../font/Pretendard-Medium.woff2') format('woff2');
+    font-weight: 500;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Pretendard';
+    src: url('../../font/Pretendard-Regular.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Pretendard';
+    src: url('../../font/Pretendard-SemiBold.woff2') format('woff2');
+    font-weight: 600;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Pretendard';
+    src: url('../../font/Pretendard-Thin.woff2') format('woff2');
+    font-weight: 300;
+    font-style: normal;
+}
+* {
+    font-family: 'Pretendard', 'sans-serif';
+}
 .flex {
     display: flex;
 }
@@ -313,13 +370,98 @@ header .inner > div {
     max-width: 100%;
     padding: 16.5rem 12.2rem 14.6rem 11.4rem;
 }
+.section7 .item1 {
+    position: absolute;
+    top: 16.5rem;
+    left: 12.4rem;
+    z-index: 1;
+}
+.section7 .item2 {
+    position: absolute;
+    top: 30.8rem;
+    left: 59.8rem;
+    z-index: 1;
+}
+.section7 .item_wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    position: relative;
+    z-index: 1;
+}
+.section7 .item3 {
+    margin-top: 4.6rem;
+    margin-right: 17.7rem;
+}
+.section7 .item3 .title {
+    font-weight: 700;
+    font-size: 3.4rem;
+}
+.section7 .item3 .desc {
+    margin-top: 4.5rem;
+    font-size: 1.5rem;
+    line-height: 1.4;
+}
+.section7 .item5 {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    padding: 0 12.2rem 19.6rem 11.4rem;
+    width: 100%;
+}
+.section7 .item5 {
+    font-weight: 600;
+    font-size: 21rem;
+    line-height: 0.96;
+    color: rgba(60, 180, 229, 1);
+    opacity: .12;
+    letter-spacing: -.84rem;
+}
 
 
 
 
+.section8 .inner {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding-top: 12rem;
+}
 
+.section8 .text_set1 {
+    margin-bottom: 12rem;
+}
+.section8 .text_set1 .title {
+    color: #fff;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 1.8;
+    text-align: center;
+}
 
+.section8 .img_wrap {
+    display: flex;
+    gap: 9.2rem;
+}
+.section8 .img_wrap1 {
+    
+}
+.section8 .img_wrap2 {
+    justify-content: flex-end;
+}
 
+.section8 .text_set2 .title {
+    font-weight: 600;
+    font-size: 11rem;
+    line-height: 1.14;
+    color: rgba(255, 255, 255, 1);
+    opacity: .2;
+    text-transform: uppercase;
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 11.7rem;
+}
 
 
 
