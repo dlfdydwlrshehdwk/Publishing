@@ -44,12 +44,14 @@ gsap.set([
     '.section8 .img_wrap',
     '.section8 .text_set2'
 ], {opacity: 0, y: 50})
+
+// section2
 gsap.to(".section2 .left", {
     scrollTrigger: {
-        trigger: ".section2",   // 기준 요소
-        start: "top center",   // 애니메이션 시작 위치
-        end: "bottom center",     // 애니메이션 끝 위치
-        pin: false,            // 고정할지 여부 (true면 고정)
+        trigger: ".section2",
+        start: "top center",
+        end: "bottom center",
+        pin: false,
     },
     opacity: 1,
     y:0,
@@ -78,6 +80,7 @@ gsap.to(".section2 .right .text_set", {
     duration: 1
 });
 
+// section3
 gsap.to(".section3 .logo", {
     scrollTrigger: {
         trigger: ".section3",
@@ -112,6 +115,7 @@ gsap.to(".section3 .desc", {
     duration: 1
 });
 
+// section4
 gsap.to(".section4 .item", {
     scrollTrigger: {
         trigger: ".section4",
