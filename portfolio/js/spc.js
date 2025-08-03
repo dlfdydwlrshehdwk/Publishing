@@ -1,5 +1,24 @@
 gsap.registerPlugin(ScrollTrigger);
 
+//모바일 브라우저 감지
+function isMobileBrowser() {
+// User Agent 체크 (가장 확실한 방법)
+const userAgent = navigator.userAgent.toLowerCase();
+const mobileKeywords = ['android', 'iphone', 'ipad', 'ipod', 'blackberry', 'windows phone', 'mobile'];
+const isMobileUA = mobileKeywords.some(keyword => userAgent.includes(keyword));
+
+// 터치 지원 여부
+const hasTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
+// 화면 크기
+const isSmallScreen = window.innerWidth <= 768;
+
+// 모바일 기기인지 확인
+const isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
+return isMobileUA || isMobileDevice || (hasTouch && isSmallScreen);
+}
+
 const section03Swiper = new Swiper(".section3 .swiper", {
     slidesPerView: 'auto',
     spaceBetween: 20,
