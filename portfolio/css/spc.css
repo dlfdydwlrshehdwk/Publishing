@@ -52,6 +52,43 @@
     font-weight: 300;
     font-style: normal;
 }
+
+@font-face {
+    font-family: 'albert';
+    src: url('../../font/AlbertSans-Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'albert';
+    src: url('../../font/AlbertSans-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'albert';
+    src: url('../../font/AlbertSans-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'albert';
+    src: url('../../font/AlbertSans-SemiBold.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'albert';
+    src: url('../../font/AlbertSans-Thin.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+}
+
+
+
+
+
+
 * {
     font-family: 'Pretendard', 'sans-serif';
 }
@@ -506,6 +543,7 @@ section {
     left: 0;
     width: 100%;
     padding-top: 12rem;
+    height: 100%;
 }
 .section8 .bg img {
     display: block;
@@ -544,8 +582,55 @@ section {
     margin-right: 11.7rem;
 }
 
+.section8 .svg_wrap .svg_box {
+    position: relative;
+}
+.section8 .svg_wrap {
+    display: flex;
+    max-width: calc(100% - 35rem);
+    margin: 0 auto;
+    position: absolute;
+    bottom: 15rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+}
+.section8 .svg_box {
+    flex: 1;
+}
+.section8 .svg_txt {
+    position: absolute;
+    top: 50%;
+    left: 52%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+.section8 .svg_txt span {
+    font-weight: 500;
+    font-size: 1.5rem;
+    line-height: 1.73;
+    color: #fff;
+    display: block;
+    font-family: 'albert', 'sans-serif';
+}
 
+.section8 .svg_wrap svg path {
+    font-size: 294.05px;
+    stroke-dasharray: 1360px;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    animation: draw-stroke 8s linear infinite;
+    opacity: 1;
+}
 
+@keyframes draw-stroke{
+    0%{
+        stroke-dashoffset:1360;
+    }
+    100%{
+        stroke-dashoffset:0;
+    }
+}
 
 
 

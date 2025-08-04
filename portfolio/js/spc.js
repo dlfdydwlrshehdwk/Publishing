@@ -27,7 +27,7 @@ const section03Swiper = new Swiper(".section3 .swiper", {
         delay: 0,
         disableOnInteraction: false,
     },
-    speed: 5000, 
+    speed: 7000, 
     768: {
     },
     1024: {

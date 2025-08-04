@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<link rel="icon" type="image/png" href="/img/icon/favicon.png" sizes="16x16">
+<link rel="stylesheet" href="/css/musign.css">
+<link rel="stylesheet" href="/css/animation.css">
+<link rel="stylesheet" href="/css/portfolio/mu_layout.css">
+<!-- <link rel="stylesheet" href="/css/portfolio/va.css"> -->
+<link rel="stylesheet" href="/css/front/lecoq.min.css">
+<link rel="stylesheet" href="../css/lecoq 2024-07-10-12-12.min.css">
+<script src="/js/jquery.js"></script>
+<script type="text/javascript" src="/js/portfolio/modernizr.custom.min.js"></script>
+<script type="text/javascript" src="/js/swiper.min.js"></script>
+<script type="text/javascript" src="/js/slick.js"></script>
+<!-- 스크롤 매직 -->
+<script type="text/javascript" src="/js/TweenMax.min.js"></script>
+<script type="text/javascript" src="/js/ScrollMagic.min.js"></script>
+<script type="text/javascript" src="/js/debug.addIndicators.min.js"></script>
+<script type="text/javascript" src="/js/animation.gsap.min.js"></script>
+
+<script type="text/javascript" src="/js/portfolio/animation.js"></script>
+<script type="text/javascript" src="/js/portfolio/va.js"></script>
+</head>
+<body>
+	
+	<div class="va_portfolio">
+	 <!-- 뮤자인 홈 버튼 -->
+	 <div class="btn_home">
+		<a href="/">
+			<img src="/img/icon/home.png" alt="">
+		</a>
+			
+		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+			<defs>
+				<linearGradient id="fillLine">
+					<stop offset="0%" stop-color="#b1b5f8"></stop>
+					<stop offset="33%" stop-color="#e5ecff"></stop>
+					<stop offset="66%" stop-color="#56adff"></stop>
+					<stop offset="100%" stop-color="#5170d6"></stop>
+				</linearGradient>
+			</defs>
+			<path fill-opacity="0" stroke="#b8b8b8" stroke-width="3" 
+				  d="M 50 50 m 0 -48.5 a 48.5 48.5 0 1 1 0 97 a 48.5 48.5 0 1 1 0 -97"></path>
+			<path class="fill_line" stroke-dasharray="304.521,304.521" stroke-dashoffset="304.844" 
+				  fill-opacity="0" stroke="url('#fillLine')" stroke-width="3" 
+				  d="M 50 50 m 0 -48.5 a 48.5 48.5 0 1 1 0 97 a 48.5 48.5 0 1 1 0 -97">
+				<animate attributeName="stroke-dashoffset" from="304.844" to="0" dur="2s" fill="freeze"/>
+			</path>
+		</svg>
+	</div>
+	<!-- // 뮤자인 홈 버튼 -->
+
+		<!-- <div class="section01">
+			<div class="main_iframe test">
+				<iframe src="/img/portfolio/lecoq/main.png" width="1920" height="1080" frameborder="0" allow="fullscreen; picture-in-picture" allowfullscreen="" title="LECOQ SPORTIF 메인이미지"></iframe>
+				<div class="pagew">
+					<div class="sec01_wrap">
+						<div class="sec01_logo"><img src="/img/portfolio/lecoq/main_font.png"></div>
+					</div>
+				</div>
+			</div>
+		</div>	 -->
+		<!-- end of .section01 -->
+		 
+		<div class="section01">
+			<div class="section01_wrap">
+				<div class="sec01_logo_dt"><img src="/img/portfolio/lecoq/main_font.png"></div>
+				<div class="sec01_logo_mo">
+					<div class="tit">LE COQ SPORTIF </div>
+					<div class="txt-wrap">
+						<div class="txt-set">
+							<div class="txt">LIFESTYLE SOLUTION</div>
+							<div class="txt">WEBSITE REDESIGN</div>
+						</div>
+						<div class="txt-set">
+							<div class="txt">LECOQSPORTIF</div>
+							<div class="txt">DESKTOP/MOBILE</div>
+						</div>
+					</div>
+				</div>
+			</div> 
+		</div>	<!-- end of .section01 -->
+
+		<div class="sec02_scroll">
+			<div class="section02">
+				<div class="sec02_wrap">
+					<div class="sec02_top">
+						<span class="sec02_txt">DESIGN PLANNING</span>
+						<span class="sec02_txt">WEBSITE</span>
+						<span class="sec02_txt">2024</span>
+					</div>
+					<div class="sec02_cont">
+						<div class="tit">OVERVIEW</div>
+						<div class="sec02_cont_wrap">
+							<div class="txt-set">
+								<div class="tit">OUR’S<br/>HERITAGE</div>
+								<div class="txt">le coq sportif는 그동안 축적된 르꼬끄 고유의 정체성을  보여줄 수 있어야 합니다.
+									르꼬끄다움을 담을 수 있는 이미지를 정의하기 위해서 어떤 강점을 가지고 있는 
+									브랜드인지 파악하였습니다. 르꼬끄는 고객들에게 프리미엄 브랜드로 인지되며 
+									소재, 기술력, 퀄리티를 포함한 르꼬끄의 뛰어난 상품력에 의해 구축되었습니다.  
+									즉 르꼬끄는 상품 자체가 강점인 브랜드이며, 이것이 곧 정체성입니다. 
+									브랜드의 정체성을 확립시키고 스포티지 트렌드를 리딩하는 동시에,
+									르꼬끄만의 헤리티지 정신을 담아 이커머스 몰을 제작했습니다.
+								</div>
+							</div>
+							<div class="img-set">
+								<div class="flex">
+									<div class="item item1"><img src="/img/portfolio/lecoq/section02_img1.png"></div>
+									<div class="item item2"><img src="/img/portfolio/lecoq/section02_img2.png"></div>
+								</div>
+								<div class="item item3"><img src="/img/portfolio/lecoq/section02_img3.png"></div>
+							</div>
+						</div>
+
+					</div>
+				</div>	<!-- end of .sec02_wrap -->
+			</div>	<!-- end of .section02 -->
+			
+			<div class="section03">
+				<div class="sec03_wrap">
+					<div class="sec03_img">
+						<img src="/img/portfolio/lecoq/section03_img.png">
+					</div>
+				</div>
+			</div>	<!-- end of .section03 -->
+			
+			<div class="section04">	
+				<div class="sec04_wrap">
+					<div class="sec04_top">
+						<div class="tit">DESIGN ESSENCE</div>
+						<div class="txt">
+							le coq sportif 는 스포티지 브랜드 시장에서 어떻게 다르게 보여질 것이지 시각 언어로 표현하기 위해<br/>
+							정제된 디자인으로 상품을 집중시키고, 시각 콘텐츠의 적극적으로 활용하여 브랜드 에센스를 만들고<br/>
+							브랜드 메시지를 전달하기 위한 커뮤니케이션을 활용하는 것에 목적을 두었습니다.
+						</div>
+					</div>
+					<div class="sec04_cont">
+						<div class="item item1">
+							<div class="tit">Refined<br/>design.</div>
+							<div class="txt-set">
+								<div class="tit">Essence 01</div>
+								<div class="txt">상품력 자체가 강점인 만큼 상징적인 그래픽 요소나 효과를 배제하고 군더더기 없이<br/>디자인하여, 상품 자체에 집중될 수 있도록 합니다.</div>
+							</div>
+						</div>
+						<div class="item item2">
+							<div class="tit">Product<br/>visual conent.</div>
+							<div class="txt-set">
+								<div class="tit">Essence 02</div>
+								<div class="txt">이미지와 영상을 포함한 상품 콘텐츠를 직관적으로 노출하고 적극적으로 활용하여,<br/>르꼬끄의 기술력과 상품의 사용감을 간접적으로 체험할 수 있도록 합니다.</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>	<!-- end of .section04 -->
+			
+			<div class="section05">	
+				<div class="section05_wrap">
+					<div class="cont">
+						<div class="txt-set">
+							<div class="tit">TYPOGRAPHY</div>
+							<div class="txt">le coq sportif의 Lato 영문 서체를  활용하여 정직하고 일관된 브랜드 아이덴티티를 표현합니다. 국문 서체 Noto sans cjk KR는 높은 가독성과 판독성이 뛰어나 매체 구분 없이 모두 쓰기에 최적화된 서체로 헤드라인과 본문 등 정보 전달을 위해 용이한 목적으로 사용됩니다.</div>
+						</div>
+						<div class="img-set">
+							<img src="/img/portfolio/lecoq/section05_img1.png">
+							<div class="option">
+								<div class="item item1">
+									<div>Lato</div>
+									<div>Noto Sans Cjk</div>
+								</div>
+								<div class="item item2">
+									<div>Regular</div>
+									<div>Regular · Semobold · Bold</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="cont">
+						<div class="txt-set">
+							<div class="tit">COLOR SYSTEM</div>
+							<div class="txt">le coq sportif의 강인함을 표현하는 Black 컬러와 활기를 표현하는 포인트컬러 White를 활용하여 일관된 아이덴티티를 유지하며, 부분적으로 Rising Orange를 포인트 요소로 적용하여 지루하지 않도록 사용합니다.</div>
+						</div>
+						<div class="img-set">
+							<img src="/img/portfolio/lecoq/section05_img2.png">
+						</div>
+					</div>
+				</div>
+			</div>	<!-- end of .section05 -->
+			
+			<div class="section06">
+				<div class="section06_wrap">
+					<div class="section06_top">
+						<div class="tit">MAIN PAGE</div>
+						<div class="txt">
+							안정적인 구조의 와이드한 레이아웃과<br/>
+							텍스트보다는 이미지 중심의 UI구성으로<br/>
+							제품의 특징을 직관적으로 전달하고자 합니다.
+						</div>
+					</div>
+					<div class="section06_cont">
+						<div class="img-set">
+							<img src="/img/portfolio/lecoq/section06_img.png">
+						</div>
+					</div>
+				</div>
+			</div> <!-- end of .section06 -->
+
+			<div class="section07">
+				<div class="section07_wrap">
+					<div class="section07_tit">SUB PRODUCT PAGE</div>
+					<div class="section07_cont">
+						<div class="item item1"><img src="/img/portfolio/lecoq/section07_img1.png"></div>
+						<div class="item item2">
+							<div class="flex_box">
+								<div><img src="/img/portfolio/lecoq/section07_img2.png" alt=""></div>
+								<div><img src="/img/portfolio/lecoq/section07_img3.png" alt=""></div>
+							</div>
+							<div class="other"><img src="/img/portfolio/lecoq/section07_img4.png" alt=""></div>
+						</div>
+						<div class="item item3">
+							<img src="/img/portfolio/lecoq/section07_img5.png" alt="">
+						</div>
+					</div>
+					<div class="item item4"><img src="/img/portfolio/lecoq/section07_img6.png"></div>
+				</div>
+			</div> <!-- end of .section07 -->
+
+			<div class="section08">
+				<div class="section08_wrap">
+					<div class="txt-set">
+						<div class="tit">FOR THE LOVE OF SPORT</div>
+						<div class="txt">le coq sportif는 고유의 스포츠 아카이브를 근간으로 IN & OUT 모든 액티비티를 누구나 즐길 수 있도록 트렌디한 디자인과 동시 검증된 기능성을 가진 다양한 콘텐츠 카테고리를 선보이고 있습니다.</div>
+					</div>
+					<div class="img-set">
+						<img src="/img/portfolio/lecoq/section08_img.png">
+					</div>
+				</div>
+			</div> <!-- end of .section08 -->
+
+			<div class="section09">
+				<div class="section09_wrap">
+					<img src="/img/portfolio/lecoq/section09_img.png">
+				</div>
+			</div> <!-- end of .section09 -->
+
+			<div class="scroll_wrap" style="display: block; margin-top: 0;">
+				<!-- <div class="section06" style="display: none;">	
+					<div class="pagew">
+						<div class="sec07_tit va_txt img-ani bottom-top">Typography</div>
+						<div class="sec07_tit2 va_txt2 img-ani bottom-top"> V&A의 무드와 어울리는 서체를 지정해 일관된 브랜드 아이덴티티를 <br class="dis-no2 vis-580">나타냅니다.<br class="line2">
+						영문 서체는 V&A 로고와 유사한 세리프체를 사용하여, <br class="dis-no2 vis-580">V&A가 지향하는 아름다움을 은유적으로 표현합니다.<br class="line2"><br class="dis-no2 vis-580">
+						한글 서체는 가독성과 판독성이 뛰어난 고딕체를 사용하여, <br class="dis-no2 vis-580">헤드라인과 본문 모두에 용이하게 쓰입니다.</div>
+						
+						<div class="lang_box img-ani bottom-top">
+							<div class="lang_en">
+								<div class="lang_txt va_txt">Trirong</div>
+								<span class="en_width"><img src="/img/portfolio/va/eng.png" class="sec07_or"></span>
+								<span><img src="/img/portfolio/va/eng2.png" class="sec07_eng"></span>
+								<div class="lang_txtBox">
+									<div class="lang_tit va_txt">Awaken Your Artistic Beauty</div>
+									<div class="lang_txt2 va_txt">
+										ABCDEFGHIJKLMNOPQRSTUVWXTZ<br>
+										abcdefghijklmnopqrstuvwxyz 1234567890
+									</div>
+								</div>
+							</div>
+							<div class="lang_kor">
+								<div class="lang_txt va_txt">Noto Sans CJK KR</div>
+								<span class="kor_width"><img src="/img/portfolio/va/kor.png" class="sec07_or"></span>
+								<span><img src="/img/portfolio/va/kor2.png" class="sec07_eng"></span>
+								<div class="lang_txtBox">
+									<div class="lang_tit va_txt2">피부가 예술이 되는 순간</div>
+									<div class="lang_txt2 va_txt2">
+										가나다라마바사아자차카타파하 1234567890
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>	 -->
+				<!-- end of .section06 -->
+				
+				<!-- <div class="section08" style="display: none;">	
+				<div class="pagew">
+					<div class="sec07_tit va_txt img-ani bottom-top">Color System</div>
+				</div>
+					<div class="sec08_cont img-ani bottom-top">
+						<div class="sec08_box">
+							<div class="color_box">
+								<div class="color_tit va_txt">Black</div>
+								<div class="color_txt va_txt">R40 G40 B40 #282828</div>
+							</div>
+						</div>
+						<div class="sec08_box2">
+							<div class="color_box">
+								<div class="color_tit va_txt">Warm Gray</div>
+								<div class="color_txt va_txt">R93 G88 B82 #5d5852</div>
+							</div>
+						</div>
+						<div class="sec08_box2 box3">
+							<div class="color_box">
+								<div class="color_tit va_txt">Coral Pink</div>
+								<div class="color_txt va_txt">R228 G166 B244 #e4a690</div>
+							</div>
+						</div>
+					</div>
+				</div>	 -->
+				<!-- end of .section08 -->
+				
+				<!-- <div class="section09">	
+					<div class="pagew">
+						<div class="sec07_tit va_txt img-ani bottom-top">Icon Style</div>
+						<div class="sec09_cont img-ani bottom-top">
+							<div class="sec09_r">
+								<img src="/img/portfolio/va/icon_sct.png">
+							</div>
+							<div class="sec09_l img-ani bottom-top">
+								
+								<div class="icon_top">
+									<div class="icon_txt va_txt">Detail Page Icon</div>
+									<div class="icon_imgBox icon pc">
+										<div class="detail_icon">
+											<span><img src="/img/portfolio/va/detail_icon01.png"></span>
+											<span><img src="/img/portfolio/va/detail_icon02.png"></span>
+											<span class="icon_img"><img src="/img/portfolio/va/detail_icon03.png"></span>
+										</div>
+										<div class="detail_icon">
+											<span><img src="/img/portfolio/va/detail_icon04.png"></span>
+											<span><img src="/img/portfolio/va/detail_icon05.png" ></span>
+											<span><img src="/img/portfolio/va/detail_icon06.png" ></span>
+										</div>
+									</div>
+									<div class="icon_imgBox icon mo">
+										<div class="detail_icon">
+											<span><img src="/img/portfolio/va/icon01_mo.png"></span>
+											<span><img src="/img/portfolio/va/icon02_mo.png"></span>
+											<span class="icon_img"><img src="/img/portfolio/va/icon03_mo.png"></span>
+										</div>
+										<div class="detail_icon">
+											<span><img src="/img/portfolio/va/icon04_mo.png"></span>
+											<span><img src="/img/portfolio/va/icon05_mo.png" ></span>
+											<span><img src="/img/portfolio/va/icon06_mo.png" ></span>
+										</div>
+									</div>
+								</div>
+								<div class="icon_btm">
+									<div class="icon_txt icon_txt2 va_txt">UI Icon</div>
+									<div class="icon_imgBox imgBox2 pc">
+										<div class="ui_wrap">
+											<span><img src="/img/portfolio/va/ui-icon-1.png"></span>
+											<span><img src="/img/portfolio/va/ui-icon-2.png"></span>
+											<span><img src="/img/portfolio/va/ui-icon-3.png"></span>
+											<span><img src="/img/portfolio/va/ui-icon-4.png"></span>
+											<span><img src="/img/portfolio/va/ui-icon-5.png"></span>
+											<span><img src="/img/portfolio/va/ui-icon-6.png"></span>
+										</div>
+									</div>
+									<div class="icon_imgBox imgBox2 mo">
+										<div class="ui_wrap">
+											<span><img src="/img/portfolio/va/ui01_mo.png"></span>
+											<span><img src="/img/portfolio/va/ui02_mo.png"></span>
+											<span><img src="/img/portfolio/va/ui03_mo.png"></span>
+											<span><img src="/img/portfolio/va/ui04_mo.png"></span>
+											<span><img src="/img/portfolio/va/ui05_mo.png"></span>
+											<span><img src="/img/portfolio/va/ui06_mo.png"></span>
+										</div>
+									</div>
+								</div>
+								
+							</div>
+							
+						</div>
+					</div>
+				</div>	 -->
+				<!-- end of .section09 -->
+				
+				<div class="section10">	
+					<div class="dev_cont">
+						<div class="star"><img src="/img/portfolio/va/section11_star.png"></div>
+					
+							<div class="svg_wrap">
+								<div class="svg_box">
+									<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+										viewBox="0 0 600 212" style="enable-background:new 0 0 600 212;" xml:space="preserve">
+									<g fill="none" fill-rule="evenodd" stroke="rgba(255,255,255,0.15)" stroke-width="1">
+										<path d="M310.17,206.81V211h-81.16v-4.49c7.38-2.79,15.47-4.69,24.26-5.69l-15.57-44.03h-87.45l-15.87,44.33
+											c8.58,1,16.87,3,24.86,5.99V211H92.44v-4.79c3.59-1.2,7.64-2.4,12.13-3.59c4.49-1.2,8.24-1.99,11.23-2.4L189.48,0.15h23.66
+											l73.68,200.67C294.6,202.01,302.39,204.01,310.17,206.81z M233.5,144.81L194.27,34.29l-39.53,110.52H233.5z"/>
+										<path d="M487.18,164.58L482.39,211H323.35v-4.49c9.58-3.19,17.97-5.19,25.16-5.99V11.53c-6.99-1-15.38-3-25.16-5.99V1.35h159.33
+											v46.72h-7.79c-1.8-2.99-3.7-8.39-5.69-16.17c-2-7.79-3.2-13.88-3.59-18.27h-82.96v89.55h59c0.4-3.39,1.1-7.53,2.1-12.43
+											c1-4.89,2.19-9.13,3.59-12.73h5.69v62.6h-5.69c-1.4-3.59-2.6-7.83-3.59-12.73c-1-4.89-1.7-9.03-2.1-12.43h-59v83.56h84.16
+											c0.4-4.59,2.04-10.68,4.94-18.27c2.89-7.59,5.44-12.98,7.64-16.17H487.18z"/>
+									</g>
+									</svg>
+									<div class="svg_txt img-ani bottom-top">
+										<span>JI-EON LEE</span>
+										<span>KI-BBEUM OH</span>
+									</div>
+								</div>
+								<div class="svg_box">
+									<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+										viewBox="0 0 600 212" style="enable-background:new 0 0 600 212;" xml:space="preserve">
+									<g fill="none" fill-rule="evenodd" stroke="rgba(255,255,255,0.15)" stroke-width="1">
+										<path d="M310.17,206.81V211h-81.16v-4.49c7.38-2.79,15.47-4.69,24.26-5.69l-15.57-44.03h-87.45l-15.87,44.33
+											c8.58,1,16.87,3,24.86,5.99V211H92.44v-4.79c3.59-1.2,7.64-2.4,12.13-3.59c4.49-1.2,8.24-1.99,11.23-2.4L189.48,0.15h23.66
+											l73.68,200.67C294.6,202.01,302.39,204.01,310.17,206.81z M233.5,144.81L194.27,34.29l-39.53,110.52H233.5z"/>
+										<path d="M323.35,206.51c9.18-3,17.07-4.89,23.66-5.69V11.53c-7.39-1.39-15.27-3.39-23.66-5.99V1.35h92.85
+											c31.34,0,54.21,8.89,68.58,26.66c14.38,17.77,21.56,43.83,21.56,78.17c0,34.34-7.24,60.4-21.71,78.17
+											C470.15,202.12,447.24,211,415.9,211h-92.55V206.51z M415.3,199.02c20.37,0,34.84-8.04,43.43-24.11
+											c8.58-16.07,12.88-38.98,12.88-68.74c0-29.75-4.3-52.61-12.88-68.59c-8.59-15.97-22.86-23.96-42.83-23.96h-35.04v185.39H415.3z"/>
+									</g>
+									</svg>
+									<div class="svg_txt img-ani bottom-top">
+										<span>MYUNG-JOO KIM</span>
+										<span>JA-YOUNG HONG</span>
+									</div>
+								</div>
+							
+								<div class="svg_box">
+									<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+										viewBox="0 0 600 212" style="enable-background:new 0 0 600 212;" xml:space="preserve">
+									<g fill="none" fill-rule="evenodd" stroke="rgba(255,255,255,0.15)" stroke-width="1">
+										<path d="M-0.15,205.51c9.18-3,17.07-4.89,23.66-5.69V10.53C16.12,9.14,8.23,7.14-0.15,4.54V0.35h92.85
+											c31.34,0,54.21,8.89,68.58,26.66c14.38,17.77,21.56,43.83,21.56,78.17c0,34.34-7.24,60.4-21.71,78.17
+											C146.65,201.12,123.74,210,92.39,210H-0.15V205.51z M91.79,198.02c20.37,0,34.84-8.04,43.43-24.11
+											c8.58-16.07,12.88-38.98,12.88-68.74c0-29.75-4.3-52.61-12.88-68.59c-8.59-15.97-22.86-23.96-42.83-23.96H57.35v185.39H91.79z"/>
+										<path d="M368.83,163.58L364.04,210H205v-4.49c9.58-3.19,17.97-5.19,25.16-5.99V10.53c-6.99-1-15.38-3-25.16-5.99V0.35h159.33v46.72
+											h-7.79c-1.8-2.99-3.7-8.39-5.69-16.17c-2-7.79-3.2-13.88-3.59-18.27h-82.96v89.55h59c0.4-3.39,1.1-7.53,2.1-12.43
+											c1-4.89,2.19-9.13,3.59-12.73h5.69v62.6H329c-1.4-3.59-2.6-7.83-3.59-12.73c-1-4.89-1.7-9.03-2.1-12.43h-59v83.56h84.16
+											c0.4-4.59,2.04-10.68,4.94-18.27c2.89-7.59,5.44-12.98,7.64-16.17H368.83z"/>
+										<path d="M410.16,10.83c-7.79-1.2-15.38-3.29-22.76-6.29V0.35h80.57v4.79c-8.39,3-16.58,4.9-24.56,5.69l57.5,172.51l57.8-172.81
+											c-9.19-1.39-17.47-3.49-24.86-6.29V0.35h66.79v4.79c-4,1.4-8.29,2.7-12.88,3.89c-4.6,1.2-7.99,2-10.18,2.4L507.2,212.1h-26.36
+											L410.16,10.83z"/>
+									</g>
+									</svg>
+									<div class="svg_txt svg_txt2 img-ani bottom-top">
+										<span>JI-YOON BYEON</span>
+										<span>EUN-YOUNG KANG</span>
+										<span>SO-JEONG LEE</span>
+									</div>
+								</div>
+							</div>
+					</div>
+				</div>	
+				<!-- end of .section11 -->
+			</div>
+			
+		</div>	<!-- end of .va_portfolio -->
+	</div>
+	
+</body>
+
+</html>

@@ -1,0 +1,480 @@
+@import '../../abstracts/responsive';
+// 태일
+body {
+
+}
+// va 식
+// .section01 {
+//     .main_iframe {
+//         position: relative;
+//         width: 100%;
+//         height: 100vh;
+//         .pagew {
+//             height: 100vh;
+//             display: flex;
+//             align-items: center;
+//             justify-content: center;
+//             position: absolute;
+//             top: 50%;
+//             left: 50%;
+//             transform: translate(-50%, -50%);
+//             padding: 0 6.47rem 0 5.13rem;
+//             width: 100%;
+//             // 삭제 요망
+//             // max-width: none;
+//             .sec01_wrap {
+//                 .sec01_logo {
+//                     padding: 0;
+//                 }
+//             }
+//         }
+//     }
+// }
+
+.section01 {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    width: 100%;
+    background: url(/img/portfolio/lecoq/main.png) no-repeat center center / cover;
+    @include mo {
+        background: url(/img/portfolio/lecoq/mo/main.png) no-repeat center center / cover;
+    }
+    .section01_wrap {
+        @include mo {
+            padding: 0 50px;
+        }
+        .sec01_logo_dt {
+            width: 100%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 0 6.47rem 0 5.13rem;
+            @include mo {
+                display: none;
+            }
+        }
+        .sec01_logo_mo {
+            display: none;
+            margin-top: 46px;
+            .tit {
+                font-family: Lato;
+                font-size: 89px;
+                color: #000;
+                font-weight: 500;
+                letter-spacing: -4.92px;
+                text-align: center;
+            }
+            .txt-wrap {
+                margin-top: 24px;
+                padding-top: 24px;
+                border-top: 1px solid #000;
+                .txt-set {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    > div {
+                        font-family: Lato;
+                        font-size: 20px;
+                        font-weight: 500;
+                        color: #000;
+                    }
+                }
+            }
+            @include mo {
+                display: block;
+            }
+        }
+    }
+}
+.section02 {
+    * {
+        color: #000;
+    }
+    position: relative;
+    background: url(/img/portfolio/lecoq/section02_bg.png) no-repeat center center / cover;
+    // 삭제 요망
+    // height: auto;
+    // width: auto;
+    .sec02_wrap {
+        padding: 161px 0 215px;
+        .sec02_top {
+            max-width: 1440px;
+            margin: 0 auto;
+            position: relative;
+            width: 100%;
+            border-bottom: 1px solid #000;
+            display: flex;
+            justify-content: space-between;
+            height: 46.5px;
+            // 삭제 요망
+            // padding: 0;
+            // padding-top: 0;
+            .sec02_txt {
+                &:nth-child(2){
+                    position: absolute;
+                    left: 50%;
+                    transform: translateX(-50%);
+                }
+                // 삭제 요망
+                // color: #000;
+            }
+        }
+        .sec02_cont {
+            // 삭제 요망
+            // display: block;
+            > .tit {
+                max-width: 1440px;
+                margin: 0 auto;
+                font-family: Lato;
+                font-size: 24px;
+                font-weight: 500;
+                margin-top: 80px;
+            }
+            .sec02_cont_wrap {
+                position: relative;
+                margin-top: 140px;
+                .txt-set {
+                    position: absolute;
+                    width: 500px;
+                    top: 0;
+                    left: 50%;
+                    transform: translate(-50%, 0);
+                    > .tit {
+                        font-family: Lato;
+                        font-size: 100px;
+                        font-weight: 500;
+                    }
+                    > .txt {
+                        font-family: NotoSansCJKKR;
+                        margin-top: 26px;
+                        font-size: 16px;
+                        font-weight: 500;
+                        color: #333;
+                    }
+                }
+                .img-set {
+                    max-width: 1700px;
+                    margin: 0 auto;
+                    > .flex {
+                        display: flex;
+                        justify-content: space-between;
+                        width: 100%;
+                    }
+                    .item2 {
+                        position: relative;
+                        top: 300px;
+                    }
+                    .item3 {
+                        margin-top: 230px;
+                    }
+                }
+            }
+        }
+    }
+}
+.section03 {
+    background: url(/img/portfolio/lecoq/section03_bg.png) no-repeat center center / cover;
+    // 삭제 요망
+    // margin-top: 0;
+    .sec03_wrap {
+        padding: 183px 0 183px;
+        .sec03_img {
+            width: fit-content;
+            margin: 0 auto;
+        }
+    }
+}
+.section04 {
+    .sec04_wrap {
+        .sec04_top {
+            padding: 157px 0 122px;
+            .tit {
+                text-align: center;
+                color: #000;
+                font-size: 24px;
+            }
+            .txt {
+                text-align: center;
+                color: #333;
+                font-size: 16px;
+                margin-top: 37px;
+            }
+        }
+        .sec04_cont {
+            display: flex;
+            .item {
+                * {
+                    color: #fff;
+                }
+                width: 100%;
+                aspect-ratio: 960/791;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                padding: 54px 70px 70px;
+                > .tit {
+                    font-size: 110px;
+                }
+                .txt-set {
+                    font-size: 20px;
+                    > .tit {
+
+                    }
+                    .txt {
+                        margin-top: 14px;
+                    }
+                }
+                &.item1 {
+                    background: url(/img/portfolio/lecoq/section04_img1.png) no-repeat center center / cover;
+                }
+                &.item2 {
+                    background: url(/img/portfolio/lecoq/section04_img2.png) no-repeat center center / cover;
+
+                }
+            }
+        }
+    }
+}
+.section05 {
+    // 삭제 요망
+    // background: none;
+    // height: auto;
+    .section05_wrap {
+        max-width: 1440px;
+        margin: 0 auto;
+        .cont {
+            padding-top: 160px;
+            padding-bottom: 220px;
+            .txt-set {
+                display: flex;
+                justify-content: space-between;
+                .tit {
+                    font-size: 24px;
+                    font-weight: 500;
+                    color: #000;
+                }
+                .txt {
+                    width: 450px;
+                    font-size: 16px;
+                    font-weight: 500;
+                    color: #333;
+                }
+            }
+            .img-set {
+                position: relative;
+                width: fit-content;
+                margin: 120px auto 0;
+                .option {
+                    display: flex;
+                    position: absolute;
+                    bottom: 11%;
+                    width: 100%;
+                    .item {
+                        &.item1 {
+                            position: absolute;
+                            left: 2.3%;
+                        }
+                        &.item2 {
+                            position: absolute;
+                            left: 41.4%;
+                        }
+                        > div:nth-child(1) {
+                            font-family: AlbertSans;
+                            font-size: 22px;
+                            font-weight: 500;
+                            color: #111;
+                        }
+                        > div:nth-child(2) {
+                            font-family: AlbertSans;
+                            margin-top: 6px;
+                            color: #333;
+                            font-size: 16px;
+                        }
+                    }
+                }
+            }
+        }
+        .cont1 {
+            .img-set {
+            }
+        }
+    }
+}
+.section06 {
+    border-top: 1px solid #000;
+    background: url(/img/portfolio/lecoq/section06_bg.png) no-repeat center center / cover;
+    .section06_wrap {
+        max-width: 1440px;
+        margin: 0 auto;
+        padding: 200px 0  215px;
+        .section06_top {
+            text-align: center;
+            .tit {
+                font-family: Lato;
+                font-size: 50px;
+                font-weight: 500;
+                color: #000;
+            }
+            .txt {
+                font-size: 16px;
+                font-family: NotoSansCJKKR;
+                color: #333;
+                margin-top: 40px;
+            }
+        }
+        .section06_cont {
+            margin-top: 110px;
+        }
+    }
+}
+.section07 {
+    position: relative;
+    border-top: 1px solid #000;
+    // 삭제 요망
+    // margin-top: 0;
+    // height: auto;
+    .section07_wrap {
+        padding-top: 210px;
+        padding-bottom: 210px;
+        .section07_tit {
+            font-family: Lato;
+            font-size: 24px;
+            font-weight: 500;
+            color: #000;
+            text-align: center;
+        }
+        .section07_cont {
+            position: relative;
+            margin-top: 110px;
+            .item1 {
+                text-align: end;
+            }
+            .item2 {
+                width: 100%;
+                padding: 0 78px;
+                display: flex;
+                justify-content: space-between;
+                margin-top: 270px;
+                .flex_box {
+                    display: flex;
+                    gap: 55px;
+                }
+                .other {
+                    margin-top: 379px;
+                }
+            }
+            .item3 {
+                max-width: 1440px;
+                margin: 680px auto 0 ;
+            }
+        }
+        .item4 {
+            position: absolute;
+            bottom: 0;
+            z-index: -1;
+            left: 0;
+        }
+    }
+}
+.section08 {
+    border-top: 1px solid #000;
+    .section08_wrap {
+        .txt-set {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            padding: 150px 0 110px;
+            .tit {
+                font-family: Lato;
+                font-size: 24px;
+                font-weight: bold;
+                color: #000;
+            }
+            .txt {
+                max-width: 462px;
+                font-family: NotoSansCJKKR;
+                font-size: 16px;
+                color: #333;
+                font-weight: 500;
+            }
+        }
+        .img-set {
+            .section09_wrap{
+                aspect-ratio: 1920/1015;
+            }
+        }
+    }
+}
+.section09 {
+    // 삭제 요망
+    // background-color: #fff;
+    // height: auto;
+    .section09_wrap {
+        max-width: 1440px;
+        margin: 0 auto;
+        padding: 200px 0 80px;
+    }
+}
+.section10 {
+    background-color: #0c0c0d ;
+    .dev_cont {
+        text-align: center;
+        padding-top: 306px;
+        padding: 306px 0 345px;
+        .star {
+            padding-bottom: 120px;
+        }
+        .svg_wrap {
+            display: flex;
+            max-width: 1550px;
+            margin: 0 auto;
+            .svg_box {
+                position: relative;
+                width: 33.33%;
+                .svg_txt {
+                    position: absolute;
+                    top: 50%;
+                    left: 52%;
+                    transform: translate(-50%, -50%);
+                    font-family: 'Roboto', sans-serif;
+                    letter-spacing: 0;
+                    > span {
+                        display: block;
+                        color: #fff;
+                        font-size: 15px;
+                        font-weight: 500;
+                    }
+                }
+                svg path {
+                    font-size: 299.5px;
+                    stroke-dasharray: 1360px;
+                    stroke-linecap: round;
+                    stroke-linejoin: round;
+                    animation: draw-stroke 8s linear infinite;
+                    opacity: 1;
+                }
+                @keyframes draw-stroke{
+                    0%{
+                        stroke-dashoffset:1360;
+                    }
+                    100%{
+                        stroke-dashoffset:0;
+                    }
+                }
+            }
+        }
+    }
+}
+.sec02_scroll {
+    background-color: #fff;
+    position: relative;
+    .scroll_wrap {
+        position: relative;
+        z-index: 100;
+        // 삭제 요망
+        // margin-top: 0;
+    }
+}
