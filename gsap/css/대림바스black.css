@@ -103,7 +103,8 @@ body.black #header .submenu_in {
 .container_black .pagination {
   position: fixed;
   left: 72px;
-  top: calc((100vh - 97px) / 2 + 97px);
+  /* top: calc((100vh - 97px) / 2 + 97px); */
+  top: 50%;
   transform: translateY(-50%);
   z-index: 9999;
   transition: opacity .5s;
@@ -127,6 +128,7 @@ body.black #header .submenu_in {
 }
 .container_black .pagination li.on a {
   color: #fff;
+  font-weight: bold;
 }
 .container_black .pagination li a:before {
   content: '';
@@ -742,6 +744,11 @@ body.black #header .submenu_in {
   position: relative;
   opacity: 0;
 }
+
+.container_black .toast {
+  display: none;
+}
+
 .container_black .content1 {z-index: 100;}
 .container_black .content2 {z-index: 99;}
 .container_black .content3 {z-index: 98;}
@@ -943,6 +950,7 @@ body.black #header .submenu_in {
   /* toast */
   .container_black .toast {
     /* opacity: 0; */
+    display: block;
     position: fixed;
     bottom: 100px;
     width: calc(100% - 35px);

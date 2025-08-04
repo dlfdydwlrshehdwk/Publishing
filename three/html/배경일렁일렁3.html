@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8" />
-    <title>Wave Shader</title>
+    <meta charset="UTF-8">
+    <title>Wave with Fog Blur</title>
     <style>
         html, body {
             margin: 0;
@@ -20,14 +20,14 @@
 <body>
 <canvas id="webgl-canvas"></canvas>
 
-<script type="x-shader/x-vertex" id="vertex-shader">
+<script id="vertex-shader" type="x-shader/x-vertex">
     attribute vec4 a_position;
     void main() {
         gl_Position = a_position;
     }
 </script>
 
-<script type="x-shader/x-fragment" id="fragment-shader">
+<script id="fragment-shader" type="x-shader/x-fragment">
     precision mediump float;
 
     uniform vec2 u_resolution;
@@ -37,27 +37,32 @@
 
     void main() {
         vec2 uv = gl_FragCoord.xy / u_resolution.xy;
-        float ratio = u_resolution.x / u_resolution.y;
-
         vec2 tuv = uv - 0.5;
-        tuv.y *= 1.0 / ratio;
+        tuv.x *= u_resolution.x / u_resolution.y;
 
-        float frequency = 5.0;
-        float amplitude = 0.03;
-        float speed = u_time * 2.0;
+        // wave shape with horizontal undulation
+        float wave = sin(tuv.x * 4.0 + u_time * 1.5) * 0.06;
+        tuv.y += wave;
 
-        // ✨ X축 기준으로 물결(좌우 흐름)
-        tuv.y += sin(tuv.x * frequency + speed) * amplitude;
+        // hourglass shape - less sharp in center, more expansion on sides
+        float pinch = 0.06 + 0.2 * pow(abs(tuv.x), 1.3); // center slightly wider
+        float hourglass = 1.0 - S(0.0, pinch, abs(tuv.y));
+        hourglass *= S(1.5, 0.4, abs(tuv.x)); // sides fade further out
 
-        // 색상 그라데이션은 여전히 x축 기준
-        vec3 color1 = vec3(0.95, 0.7, 0.2); // 밝은 오렌지
-        vec3 color2 = vec3(0.2, 0.4, 0.95); // 파란색
+        // soft blur-style glow around wave
+        float softGlow = S(0.55, 0.0, length(tuv * vec2(1.2, 0.9)));
+        float glow = softGlow * 0.3 + hourglass * 0.85; // reduced center intensity
 
-        vec3 col = mix(color1, color2, S(-0.3, 0.3, tuv.x));
-        gl_FragColor = vec4(col, 1.0);
+        // gradient color
+        vec3 leftColor = vec3(0.2, 0.4, 1.0); // blue
+        vec3 rightColor = vec3(0.1, 1.0, 0.9); // teal
+        vec3 waveColor = mix(leftColor, rightColor, uv.x);
+
+        vec3 finalColor = waveColor * glow;
+
+        gl_FragColor = vec4(finalColor, 1.0);
     }
 </script>
-
 
 <script>
     const canvas = document.getElementById("webgl-canvas");
