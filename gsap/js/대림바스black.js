@@ -33,23 +33,29 @@ document.addEventListener('DOMContentLoaded', function(){
           productTrigger.kill();
       }
 
+      const tl = gsap.timeline()
+              .addLabel("scroll_product")
+              .addLabel("click_product");
+      if(isMobileBrowser()){
+        tl.to({},{duration: 1});
+      }  else {
+        tl.to({},{duration: .5});
+      }
+      tl.to(".content15", { opacity: 1, duration: 1 });
+
       // 다시 생성
       productTrigger = ScrollTrigger.create({
           id: "product-trigger",
           trigger: ".content15",
           start: `top ${headerH}`,
-          end: ()=>calcWindowH(2),
+          end: ()=>calcWindowH(isMobileBrowser() ? 2 : 1.5),
           scrub: .7,
           pin: true,
           // pinType: 'transform',
           pinType: 'fixed',
           pinSpacing: true,
           // markers:true,
-          animation: gsap.timeline()
-              .addLabel("scroll_product")
-              .addLabel("click_product")
-              .to({}, { duration: 1 })
-              .to(".content15", { opacity: 1, duration: 1 })
+          animation: tl
       });
   }
 
@@ -159,7 +165,7 @@ document.addEventListener('DOMContentLoaded', function(){
       // Lenis 스크롤이 일어날 때마다 pagination 업데이트 실행
       updatePaginationByLabel();
       // Lenis 스크롤이 일어날 때마다 프로그레스바 업데이트 실행(mo전용)
-      updateScrollProgressBar();
+      // updateScrollProgressBar();
   });
 
   // 3. requestAnimationFrame 루프
@@ -443,7 +449,7 @@ document.addEventListener('DOMContentLoaded', function(){
         const video = document.querySelector('.content11 video');
         if (video) {
           video.currentTime = 0; // 영상 초기화
-          video.playbackRate = 0.5; // 재생속도 설정
+          video.playbackRate = 1; // 재생속도 설정 0~1
           video.play(); // 영상 실행
         }
       }
