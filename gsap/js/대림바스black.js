@@ -580,7 +580,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
   // 스크롤 위치에 따른 페이지네이션 
   function updatePaginationByLabel() {
-    console.log(isUserNavigating)
+    // console.log(isUserNavigating)
       if(isUserNavigating) return;
       const scrollY = window.scrollY || window.pageYOffset; // 현재 스크롤 위치 (픽셀)
 
@@ -602,7 +602,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
       const currentProgress = (scrollY - scrollStart) / totalScrollRange; // 현재 스크롤의 progress 비율 (0~1)
 
-      console.log('progress:', currentProgress);
+      // console.log('progress:', currentProgress);
       // progress가 timeline 범위를 벗어나면 처리하지 않음
       if (currentProgress < 0 || currentProgress > 1) return;
 
@@ -620,7 +620,7 @@ document.addEventListener('DOMContentLoaded', function(){
           }
       }
 
-      console.log(activeIndex)
+      // console.log(activeIndex)
       setPaginationOn(activeIndex); // 해당 인덱스의 pagination li에 .on 클래스 추가
   }
 
@@ -638,12 +638,18 @@ document.addEventListener('DOMContentLoaded', function(){
   const content15ContentBox = document.querySelectorAll('.content15 .content_box');
   content15ContentBox.forEach(ele => {
     const subCategory = ele.querySelectorAll('.sub_category a');
-    subCategory.forEach(aEle => {
+
+    subCategory.forEach((aEle, index) => {
+      const categoryList = aEle.closest('.category_wrap').querySelectorAll('.category_list');
       aEle.addEventListener('click', function(e){
         e.preventDefault();
+        categoryList.forEach(list => {
+          list.classList.remove('show');
+        })
         subCategory.forEach(aEle2 => {
           aEle2.closest('li').classList.remove('active');
         })
+        categoryList[index].classList.add('show');
         aEle.closest('li').classList.add('active')
       })
     })
@@ -765,7 +771,9 @@ document.addEventListener('DOMContentLoaded', function(){
             ScrollTrigger.update();
         }
     });
-}
+  }
+
+
   
 })
 

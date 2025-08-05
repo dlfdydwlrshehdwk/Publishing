@@ -681,8 +681,14 @@ body.black #header .submenu_in {
   font-weight: 700;
   color: rgba(255,255,255,1);
 }
-.container_black .content15 .category_head + .category_list {
+.container_black .content15 .category_head + .tab_content {
   margin-top: 45px;
+}
+.container_black .content15 .tab_content .category_list {
+  display: none;
+}
+.container_black .content15 .tab_content .category_list.show {
+  display: block;
 }
 .container_black .content15 .category_list .swiper-slide > a {
   display: flex;
