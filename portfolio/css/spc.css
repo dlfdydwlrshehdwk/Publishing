@@ -885,6 +885,9 @@ section {
         flex-direction: column;
         gap: 2.5rem;
     }
+    .section5 .top .left .text_set {
+        margin: 0;
+    }
     .section5 .top .left .text_set .title {
         font-size: 2rem;
     }

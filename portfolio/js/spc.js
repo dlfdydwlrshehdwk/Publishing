@@ -49,7 +49,12 @@ function setupAnimations() {
         '.section7 .pc .item4',
         '.section7 .pc .item5',
         '.section8 .img_wrap .img_set',
-        '.section8 .text_set2 .title'
+        '.section8 .text_set2 .title',
+        '.section2 .mo .text_set',
+        ".section2 .mo .item1",
+        ".section2 .mo .item2",
+        ".section2 .mo .item3",
+        ".section4 .mo .cont_header"
     ], {
         opacity: 0,
         y: 50
@@ -136,7 +141,42 @@ function setupAnimations() {
 
         // --- Mobile (가로 767px 이하) ---
         "(max-width: 767px)": function() {
+            gsap.set([
+                '.section5 .top .bottom',
+                '.section5 .top .right'
+            ],{y: 0, opacity: 1})
+            gsap.set([
+                '.section5 .top .img_set .mo',
+                '.section5 .top .right img' 
+            ],{y: 50, opacity: 0})
             // 여기에 모바일 전용 애니메이션 코드를 추가하세요.
+            // section2
+            gsap.to(".section2 .mo .text_set", { scrollTrigger: { trigger: ".section2 .mo .text_set", start: "top 100%" }, opacity: 1, y: 0, duration: 1 });
+            gsap.to(".section2 .mo .item1", { scrollTrigger: { trigger: ".section2 .mo .item1", start: "top 100%" }, opacity: 1, y: 0, duration: 1 });
+            gsap.to(".section2 .mo .item2", { scrollTrigger: { trigger: ".section2 .mo .item2", start: "top 100%" }, opacity: 1, y: 0, duration: 1 });
+            gsap.to(".section2 .mo .item3", { scrollTrigger: { trigger: ".section2 .mo .item3", start: "top 100%" }, opacity: 1, y: 0, duration: 1 });
+            // section3
+            gsap.to(".section3 .top .logo", { scrollTrigger: { trigger: ".section3 .top .logo", start: "top 100%" }, opacity: 1, y: 0, duration: 1 });
+            gsap.to(".section3 .top .title.mo", { scrollTrigger: { trigger: ".section3 .top .logo", start: "top 100%" }, opacity: 1, y: 0, duration: 1 });
+            gsap.to(".section3 .top .desc", { scrollTrigger: { trigger: ".section3 .top .desc", start: "top 100%" }, opacity: 1, y: 0, duration: 1 });
+            gsap.to(".section3 .swiper", { scrollTrigger: { trigger: ".section3 .swiper", start: "top 100%" }, opacity: 1, y: 0, duration: 1 });
+            // section4
+            gsap.to(".section4 .mo .cont_header", { scrollTrigger: { trigger: ".section4 .mo .cont_header", start: "top 100%" }, opacity: 1, y: 0, duration: 1 });
+            // gsap.to(".section4 .mo .cont_main", { 
+            //     scrollTrigger: { 
+            //         trigger: ".section4", 
+            //         start: "top top",
+            //         end: ()=>5000,
+            //         pin: true,
+            //     }, opacity: 1, y: 0, duration: 1 
+            // });
+            // section5
+            gsap.to(".section5 .top .text_set .title", { scrollTrigger: { trigger: ".section5 .top .text_set", start: "top 100%" }, opacity: 1, y: 0, duration: 1 });
+            gsap.to(".section5 .top .text_set .desc", { scrollTrigger: { trigger: ".section5 .top .text_set", start: "top 100%" }, opacity: 1, y: 0, duration: 1 });
+            gsap.to(".section5 .top .img_set1 .mo", { scrollTrigger: { trigger: ".section5 .top .img_set1", start: "top 100%" }, opacity: 1, y: 0, duration: 1 });
+            gsap.to(".section5 .top .img_set2 .mo", { scrollTrigger: { trigger: ".section5 .top .img_set2", start: "top 100%" }, opacity: 1, y: 0, duration: 1 });
+            gsap.to(".section5 .top .right img", { scrollTrigger: { trigger: ".section5 .top .right", start: "top 100%" }, opacity: 1, y: 0, duration: 1 });
+                    
         },
 
         // --- All Breakpoints ---
@@ -198,3 +238,23 @@ const debouncedResize = debounce(() => {
 
 // 5. 리사이즈 이벤트에 핸들러를 연결합니다.
 window.addEventListener("resize", debouncedResize);
+
+
+//모바일 브라우저 감지
+function isMobileBrowser() {
+// User Agent 체크 (가장 확실한 방법)
+const userAgent = navigator.userAgent.toLowerCase();
+const mobileKeywords = ['android', 'iphone', 'ipad', 'ipod', 'blackberry', 'windows phone', 'mobile'];
+const isMobileUA = mobileKeywords.some(keyword => userAgent.includes(keyword));
+
+// 터치 지원 여부
+const hasTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
+// 화면 크기
+const isSmallScreen = window.innerWidth <= 768;
+
+// 모바일 기기인지 확인
+const isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
+return isMobileUA || isMobileDevice || (hasTouch && isSmallScreen);
+}
