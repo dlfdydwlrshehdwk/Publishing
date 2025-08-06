@@ -33,6 +33,7 @@
         let currentGlowStrengths = []; // 각 점의 현재 glow 강도 (서서히 변화용)
         let maxGlowStrengths = []; // 각 점이 받은 최대 glow 강도 (잔상용)
         let dynamicDirectionalLight; // 마우스 따라다니는 디렉셔널 라이트
+        let animatedPins = [];
 
         function init() {
             scene = new THREE.Scene();
@@ -139,8 +140,25 @@
                 scene.add(globe);
                 console.log(globe)
 
+                // 지구본의 실제 크기 확인
+                const box = new THREE.Box3().setFromObject(globe);
+                const size = box.getSize(new THREE.Vector3());
+                console.log('Globe bounding box size:', size);
+                console.log('Globe actual radius estimate:', Math.max(size.x, size.y, size.z) / 2);
+
                 const koreaPin = globe.getObjectByName('korea');
-                // console.log(koreaPin)
+                console.log('Korea pin from GLB:', koreaPin);
+                if (koreaPin) {
+                    console.log('Korea pin position:', koreaPin.position);
+                }
+                
+                // GLB 로딩 완료 후 핀 추가
+                // addPinAtLatLon(위도, 경도, "라벨")
+                // 위도: 남북 방향 (-90~90도, 북쪽이 +)
+                // 경도: 동서 방향 (-180~180도, 동쪽이 +)
+                addPinAtLatLon(37.57, 127.98, "Seoul");
+                addPinAtLatLon(39.8283, -98.5795, "USA"); // 미국 중부
+                addPinAtLatLon(-25.2744, 133.7751, "Australia"); // 오스트레일리아 중부
             }, undefined, function (err) {
                 console.error('GLB load error:', err);
             });
@@ -259,11 +277,80 @@
         function animate() {
             requestAnimationFrame(animate);
 
-            if (globe) globe.rotation.y += 0.001;
-            if (targetPointsMesh) updateGlowEffect(targetPointsMesh, mouse3D);
+            const time = performance.now() * 0.002;
+
+            // if (globe) globe.rotation.y += 0.001;
+            // if (targetPointsMesh) updateGlowEffect(targetPointsMesh, mouse3D);
+
+            // 🔥 animatedPins 애니메이션 추가
+            // if (window.animatedPins) {
+            //     animatedPins.forEach(pin => {
+            //         const scale = 1 + 0.3 * Math.sin(time + pin.userData.glowPhase);
+            //         pin.scale.set(scale, scale, scale);
+            //     });
+            // }
 
             controls.update();
             renderer.render(scene, camera);
+        }
+
+        // 핀찍기 테스트
+        function addPinAtLatLon(lat, lon, label = "pin") {
+            const radius = 0.51; // 실제 지구본 반지름에 맞춤
+
+            const phi = (91 - (lat + 2)) * (Math.PI / 180); // 위쪽 오프셋 줄임
+            // 경도를 회전시켜서 위치 조정 (더 왼쪽으로)
+            const theta = (lon + 106) * (Math.PI / 180);
+
+            const x = radius * Math.sin(phi) * Math.cos(theta);
+            const y = radius * Math.cos(phi);
+            const z = radius * Math.sin(phi) * Math.sin(theta);
+
+            // 📍핀 본체 (빨간 점)
+            const pinGeometry = new THREE.SphereGeometry(0.005, 16, 16);
+            const pinMaterial = new THREE.MeshLambertMaterial({ 
+                color: 0xff0000,
+                emissive: 0x330000 // 자체 발광으로 더 밝게
+            });
+            const pinMesh = new THREE.Mesh(pinGeometry, pinMaterial);
+            
+            // 핀을 지구 표면에 배치
+            pinMesh.position.set(x, y, z);
+
+            // 📍텍스트 라벨 - 크기와 위치 조정
+            const canvas = document.createElement('canvas');
+            canvas.width = 400; // 캔버스 너비 (클수록 고해상도, 작게하면 흐려짐)
+            canvas.height = 240; // 캔버스 높이 (클수록 고해상도, 작게하면 흐려짐)
+            const ctx = canvas.getContext('2d');
+            ctx.fillStyle = 'white';
+            ctx.font = 'bold 32px sans-serif'; // 폰트 크기 (작게하면 글자 작아짐)
+            ctx.textAlign = 'center';
+            ctx.strokeStyle = 'black';
+            ctx.lineWidth = 2; // 테두리 두께 (작게하면 테두리 얇아짐)
+            ctx.strokeText(label, canvas.width / 2, canvas.height / 2 + 10);
+            ctx.fillText(label, canvas.width / 2, canvas.height / 2 + 10);
+
+            const texture = new THREE.CanvasTexture(canvas);
+            const textMaterial = new THREE.SpriteMaterial({ map: texture });
+            const textSprite = new THREE.Sprite(textMaterial);
+            // 텍스트 실제 화면 크기 조정 (첫번째 값: 가로, 두번째 값: 세로)
+            // 작게하면 화면에서 텍스트가 작게 보임
+            textSprite.scale.set(0.4, 0.1, 1); 
+            textSprite.position.set(x, y + 0.05, z); // 점 위에 텍스트 배치
+
+            // Globe에 추가
+            if (globe) {
+                globe.add(pinMesh);
+                globe.add(textSprite);
+                console.log(`Pin added at: ${label} (${lat}, ${lon})`);
+                console.log(`Position: (${x.toFixed(2)}, ${y.toFixed(2)}, ${z.toFixed(2)})`);
+            } else {
+                console.error('Globe not loaded yet!');
+            }
+
+            // 애니메이션용 설정
+            pinMesh.userData.glowPhase = Math.random();
+            animatedPins.push(pinMesh);
         }
 
         init();

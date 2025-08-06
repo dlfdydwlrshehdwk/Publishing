@@ -2,6 +2,17 @@ document.addEventListener('DOMContentLoaded', function(){
   document.body.classList.add('black')
   gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
+
+  // section1 마스크 애니메이션 처음시점 빠르게
+  const section1Mask = document.querySelector('.container_black .content1 .mask');
+
+  section1Mask.addEventListener('animationend', function handler() {
+      section1Mask.removeEventListener('animationend', handler);
+
+      // 무한 반복 애니메이션 시작
+      section1Mask.style.animation = 'section1_animation 6s ease-in-out infinite';
+  });
+
   let productTrigger;
   let mainTimeline;
   let swiperInstances = [];
@@ -34,14 +45,15 @@ document.addEventListener('DOMContentLoaded', function(){
       }
 
       const tl = gsap.timeline()
-              .addLabel("scroll_product")
-              .addLabel("click_product");
+
       if(isMobileBrowser()){
         tl.to({},{duration: 1});
       }  else {
         tl.to({},{duration: .5});
       }
-      tl.to(".content15", { opacity: 1, duration: 1 });
+      tl.to(".content15", { opacity: 1, duration: 1 })
+      .addLabel("scroll_product")
+      .addLabel("click_product");
 
       // 다시 생성
       productTrigger = ScrollTrigger.create({
@@ -268,7 +280,7 @@ document.addEventListener('DOMContentLoaded', function(){
           el.classList.toggle('on', i === activeIndex);
         });
         // yPercent 애니메이션
-        const maxY = -10;
+        const maxY = -16;
         const yValue = progress * maxY;
         gsap.set('.content3 .bg img', { yPercent: yValue });
       }
@@ -580,7 +592,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
   // 스크롤 위치에 따른 페이지네이션 
   function updatePaginationByLabel() {
-    console.log(isUserNavigating)
+    // console.log(isUserNavigating)
       if(isUserNavigating) return;
       const scrollY = window.scrollY || window.pageYOffset; // 현재 스크롤 위치 (픽셀)
 
@@ -602,7 +614,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
       const currentProgress = (scrollY - scrollStart) / totalScrollRange; // 현재 스크롤의 progress 비율 (0~1)
 
-      console.log('progress:', currentProgress);
+      // console.log('progress:', currentProgress);
       // progress가 timeline 범위를 벗어나면 처리하지 않음
       if (currentProgress < 0 || currentProgress > 1) return;
 
@@ -620,7 +632,7 @@ document.addEventListener('DOMContentLoaded', function(){
           }
       }
 
-      console.log(activeIndex)
+      // console.log(activeIndex)
       setPaginationOn(activeIndex); // 해당 인덱스의 pagination li에 .on 클래스 추가
   }
 
@@ -638,12 +650,18 @@ document.addEventListener('DOMContentLoaded', function(){
   const content15ContentBox = document.querySelectorAll('.content15 .content_box');
   content15ContentBox.forEach(ele => {
     const subCategory = ele.querySelectorAll('.sub_category a');
-    subCategory.forEach(aEle => {
+
+    subCategory.forEach((aEle, index) => {
+      const categoryList = aEle.closest('.category_wrap').querySelectorAll('.category_list');
       aEle.addEventListener('click', function(e){
         e.preventDefault();
+        categoryList.forEach(list => {
+          list.classList.remove('show');
+        })
         subCategory.forEach(aEle2 => {
           aEle2.closest('li').classList.remove('active');
         })
+        categoryList[index].classList.add('show');
         aEle.closest('li').classList.add('active')
       })
     })
@@ -765,7 +783,9 @@ document.addEventListener('DOMContentLoaded', function(){
             ScrollTrigger.update();
         }
     });
-}
+  }
+
+
   
 })
 
