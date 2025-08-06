@@ -21,7 +21,7 @@ return isMobileUA || isMobileDevice || (hasTouch && isSmallScreen);
 
 const section03Swiper = new Swiper(".section3 .swiper", {
     slidesPerView: 'auto',
-    spaceBetween: 20,
+    spaceBetween: 11.5,
     loop: true,
     autoplay: {
         delay: 0,
@@ -29,12 +29,13 @@ const section03Swiper = new Swiper(".section3 .swiper", {
     },
     speed: 7000, 
     768: {
+            spaceBetween: 20,
     },
     1024: {
     },
 })
 section03Swiper.autoplay.start();
-
+return
 gsap.set([
     ".section2 .left",
     ".section2 .right > .flex",
