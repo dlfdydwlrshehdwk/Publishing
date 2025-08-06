@@ -111,10 +111,6 @@ img {
 .max_w {
     max-width: 1920px;
 }
-.max_w_v1 {
-    margin: 0 auto;
-    max-width: calc(100% - 250px);
-}
 .pos_r {
     position: relative;
 }
@@ -128,7 +124,7 @@ img {
 
 }
 .mo {
-    display: none;
+    display: none !important;
 }
 @media (max-width: 767px) {
     .pc {
@@ -160,11 +156,11 @@ header .shadow {
 header .inner {
     position: relative;
     z-index: 1;
-    margin-top: 56px;
-    padding: 0 74px;
+    margin-top: 5.6rem;
+    padding: 0 7.4rem;
 }
 header .inner > div {
-    font-size: 14px;
+    font-size: 1.4rem;
     color: #fff;
     line-height: 1.45;
 }
@@ -184,7 +180,10 @@ section {
 }
 .section2 {
     margin-top: 100vh;
-    padding: 100px 0;
+    padding: 10rem 0;
+}
+.section2 .inner.pc {
+    gap: 10rem;
 }
 .section2 .right {
     display: flex;
@@ -193,7 +192,7 @@ section {
     justify-content: space-between;
 }
 .section2 .right > .flex {
-    gap: 37px;
+    gap: 3.7rem;
 }
 .section2 .brand_badge {
     margin-top: 1.5rem;
@@ -203,13 +202,13 @@ section {
     font-weight: bold;
 }
 .section2 .text_set .desc {
-    margin-top: 45px;
+    margin-top: 4.5rem;
     font-size: 1.5rem;
     line-height: 1.4;
     letter-spacing: -0.075rem;
     font-weight: 600;
 }
-.section2 .pc .logo {
+.section2 .pc .txt_logo {
     position: absolute;
     right: 0;
     top: 50%;
@@ -229,7 +228,7 @@ section {
     margin-top: 2rem;
     font-weight: 700;
     font-size: 13.2rem;
-    letter-spacing: -2.64px;
+    letter-spacing: -.264rem;
     color: #fff;
 }
 .section3 .top .desc {
@@ -238,7 +237,7 @@ section {
     line-height: 1.4;
     opacity: .8;
     color: #fff;
-    letter-spacing: -0.75px;
+    letter-spacing: -0.075rem;
 }
 .section3 .bottom {
     margin-top: 15rem;
@@ -256,9 +255,7 @@ section {
 .section4 {
     background: url(../asset/spc/section03_bg.png) no-repeat center/cover;
 }
-.section4 .inner {
-    max-width: calc(100% - 25rem);
-    margin: 0 auto;
+.section4 .inner.pc {
     padding: 8.5rem 0;
     display: flex;
     gap: 2rem;
@@ -268,7 +265,7 @@ section {
     grid-template-columns: repeat(2, 1fr);
     gap: 2rem;
 }
-.section4 .left .item {
+.section4 .item_wrap .item {
     padding: 3.5rem 3rem 3rem;
     background: rgba(255, 255, 255, 0.4);
     border-radius: 2rem;
@@ -278,12 +275,12 @@ section {
     flex-direction: column;
     justify-content: space-between;
 }
-.section4 .left .item .item_header {
+.section4 .item_wrap .item_header {
     display: flex;
     align-items: center;
     gap: 0.8rem;
 }
-.section4 .left .item .item_header .step {
+.section4 .item_wrap .item_header .step {
     background-color: #22B2e9;
     width: 3rem;
     height: 3rem;
@@ -295,16 +292,16 @@ section {
     font-weight: bold;
     font-size: 1.4rem;
 }
-.section4 .left .item .item_header .title {
+.section4 .item_wrap .item_header .title {
     font-size: 3.2rem;   
     font-weight: bold;
 }
-.section4 .left .item .item_cont {
+.section4 .item_wrap .item_cont {
     font-size: 1.5rem;
     line-height: 1.4;
 }
 
-.section4 .left .item2 img {
+.section4 .item_wrap .item2 img {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -385,7 +382,7 @@ section {
     position: absolute;
     top: 0;
     left: 50%;
-    transform: translate(calc(-50% - 180px),0);
+    transform: translate(calc(-50% - 18rem),0);
     z-index: 4;
 }
 .section5 .card.sub {
@@ -393,7 +390,7 @@ section {
     position: absolute;
     top: 0;
     left: 50%;
-    transform: translate(calc(-50% - 90px), 0);
+    transform: translate(calc(-50% - 9rem), 0);
     z-index: 3;
 }
 .section5 .card.yellow {
@@ -407,7 +404,7 @@ section {
     background-color:#f5f5f5;
     position: absolute;
     left: 50%;
-    transform: translate(calc(-50% + 90px), 0);
+    transform: translate(calc(-50% + 9rem), 0);
     top: 0;
     z-index: 1;
 }
@@ -415,7 +412,7 @@ section {
     background-color: #000;
     position: absolute;
     left: 50%;
-    transform: translate(calc(-50% + 180px), 0);
+    transform: translate(calc(-50% + 18rem), 0);
     top: 0;
 }
 .section5 .title {
@@ -477,10 +474,10 @@ section {
 .section6 .img_set.top::after {
     content: '';
     position: absolute;
-    top: -9px;
-    left: -9px;
-    bottom: -9px;
-    right: -9px;
+    top: -.9rem;
+    left: -.9rem;
+    bottom: -.9rem;
+    right: -.9rem;
     background-color: #2a2a2a;
     border-radius: 1.5rem;
 }
@@ -538,8 +535,7 @@ section {
     font-weight: 600;
     font-size: 21rem;
     line-height: 0.96;
-    color: rgba(60, 180, 229, 1);
-    opacity: .12;
+    color: rgba(60, 180, 229, .12);
     letter-spacing: -.84rem;
 }
 
@@ -563,7 +559,7 @@ section {
 .section8 .text_set1 .title {
     color: #fff;
     font-weight: 500;
-    font-size: 15px;
+    font-size: 1.5rem;
     line-height: 1.8;
     text-align: center;
 }
@@ -591,6 +587,17 @@ section {
     margin-right: 11.7rem;
 }
 
+.section8 .dev_cont {
+    position: absolute;
+    bottom: 15rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+}
+.section8 .dev_cont .star {
+    width: fit-content;
+    margin: 0 auto 4.5rem;
+}
 .section8 .svg_wrap .svg_box {
     position: relative;
 }
@@ -598,11 +605,7 @@ section {
     display: flex;
     max-width: calc(100% - 35rem);
     margin: 0 auto;
-    position: absolute;
-    bottom: 15rem;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 100%;
+
 }
 .section8 .svg_box {
     flex: 1;
@@ -624,8 +627,8 @@ section {
 }
 
 .section8 .svg_wrap svg path {
-    font-size: 294.05px;
-    stroke-dasharray: 1360px;
+    font-size: 29.405rem;
+    stroke-dasharray: 136rem;
     stroke-linecap: round;
     stroke-linejoin: round;
     animation: draw-stroke 8s linear infinite;
@@ -657,14 +660,14 @@ section {
     height: 3.6rem;
 }
 .brand_badge .title {
-    padding: 0 18px;
-    height: 36px;
-    border-radius: 50px;
+    padding: 0 1.8rem;
+    height: 3.6rem;
+    border-radius: 5rem;
     border: 1px solid rgba(0, 0, 0, 0.1);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 15px;
+    font-size: 1.5rem;
     font-weight: 500;
 }
 .brand_badge.reverse .title {
@@ -779,6 +782,95 @@ section {
         letter-spacing: -0.065rem;
     }
 
+
+
+    .section4 {
+        background: none;
+    }
+    .section4 .bg {
+        width: 100%;
+        height: 100vh;
+    }
+    .section4 .bg img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    .section4 .inner.mo .cont {
+        position: absolute;
+        top: 0;
+        left: 0;
+        padding-top: 10rem;
+        width: 100%;
+        height: 100%;
+    }
+    .section4 .inner.mo .logo {
+        width: fit-content;
+        margin: 0 auto;
+    }
+    .section4 .inner.mo .cont_header .title {
+        font-weight: bold;   
+        font-size: 3.7rem;
+        line-height: 1.05;
+        text-align: center;
+        margin-top: 1.3rem;
+        color: #fff;
+    }
+    .section4 .inner.mo .cont_main {
+        margin-top: 6rem;
+    }
+    .section4 .item_wrap {
+        margin: 0 4.5rem;
+    }
+    .section4 .item_wrap .item {
+        aspect-ratio: 1/1;
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        padding: 2.25rem;
+        transform-origin: top center;
+    }
+    .section4 .item_wrap .item + .item {
+        position: absolute;
+        width: 100%;
+        top: 0;
+        left: 0;          
+    }
+    .section4 .item_wrap .item1 {
+        transform: scale(.8);
+    }
+    .section4 .item_wrap .item2 {
+        transform: scale(.9) translateY(2rem);
+    }
+    .section4 .item_wrap .item3 {
+        transform: translateY(4rem);
+    }
+    .section4 .item_wrap .item_header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+    .section4 .item_wrap .item_header .step {
+        width: 2.1rem;
+        height: 2.1rem;
+        font-size: 1rem;
+    }
+    .section4 .item_wrap .item_header .title {
+        font-size: 2.2rem;
+        line-height: 1.1;
+    }
+    .section4 .item_wrap .item_cont {
+        letter-spacing: -.075rem;
+        font-weight: 600;
+        color: rgba(12, 12, 12, 1);
+    }
+
+
+
+
+
+
+
+
     .section5 .inner {
         padding: 10rem 0;
     }
@@ -790,6 +882,14 @@ section {
     .section5 .inner > .top {
         flex-direction: column;
         gap: 2.5rem;
+    }
+    .section5 .top .left .text_set .title {
+        font-size: 2rem;
+    }
+    .section5 .top .left .text_set .desc {
+        margin-top: 2.5rem;
+        text-transform: uppercase;
+        font-size: 1.3rem;
     }
     .section5 .img_set img {
         width: 100%;
@@ -827,7 +927,6 @@ section {
     }
     .section6 .inner {
         padding: 10rem 0;
-
         margin: 0 auto;
     }
 
@@ -941,5 +1040,31 @@ section {
         font-size: 4.5rem;
         text-align: center;
         line-height: 1.14;
+    }
+    .section8 .dev_cont {
+        margin-top: 10rem;
+    }
+    .section8 .star {
+        /* width: 1.3rem; */
+        /* height: 1.3rem; */
+        width: fit-content;
+        margin: 0 auto 4rem;
+    }
+    .section8 .svg_wrap {
+        flex-direction: column;
+        gap: 2rem;
+        max-width: none;
+        position: relative;
+        transform: none;
+        left: auto;
+        bottom: auto;
+        margin-top: 1.85rem;
+    }
+    .section8 .svg_txt span {
+        font-size: 1rem;
+        line-height: 1.7;
+    }
+    .section8 .svg_box  {
+        padding: 0 4.25rem;
     }
 }
