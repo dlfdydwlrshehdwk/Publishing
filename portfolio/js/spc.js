@@ -1,5 +1,11 @@
 gsap.registerPlugin(ScrollTrigger);
 
+// --- vh 단위 보정 함수 ---
+// Safari에서 주소창 유무에 따라 vh값이 바뀌는 현상을 막고, 실제 뷰포트 높이를 기반으로 CSS 변수를 설정합니다.
+function setVh() {
+    document.documentElement.style.setProperty('--vh', `${window.innerHeight * 0.01}px`);
+}
+
 // --- Debounce Function ---
 // 짧은 시간 내에 이벤트가 반복해서 발생하는 것을 방지하여 성능을 최적화합니다.
 function debounce(func, wait) {
@@ -100,7 +106,6 @@ function setupAnimations() {
                     start: 'top 70%',
                     onEnter: () => section05Tl2.play(),
                     onLeaveBack: () => section05Tl2.reverse(),
-                    // onLeaveBack: () => section05Tl2.seek(0).pause(),
                 }
             });
             section05Tl2
@@ -164,14 +169,20 @@ const section03Swiper = new Swiper(".section3 .swiper", {
 });
 
 // --- Main Logic ---
-// 1. 초기 애니메이션 설정
+// 1. vh 단위 설정 함수를 즉시 실행합니다.
+setVh();
+
+// 2. 초기 애니메이션 설정
 setupAnimations();
 
-// 2. 마지막 창 너비를 저장할 변수
+// 3. 마지막 창 너비를 저장할 변수
 let lastWidth = window.innerWidth;
 
-// 3. 디바운싱 처리된 리사이즈 핸들러
+// 4. 디바운싱 처리된 리사이즈 핸들러
 const debouncedResize = debounce(() => {
+    // vh 단위 재설정
+    setVh(); 
+    
     const currentWidth = window.innerWidth;
     if (currentWidth !== lastWidth) {
         // 너비가 변경되면 모든 ScrollTrigger 인스턴스를 죽여서 충돌을 방지합니다.
@@ -185,5 +196,5 @@ const debouncedResize = debounce(() => {
     lastWidth = currentWidth;
 }, 200); // 200ms의 지연시간을 줍니다.
 
-// 4. 리사이즈 이벤트에 핸들러를 연결합니다.
+// 5. 리사이즈 이벤트에 핸들러를 연결합니다.
 window.addEventListener("resize", debouncedResize);
