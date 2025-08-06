@@ -2,6 +2,17 @@ document.addEventListener('DOMContentLoaded', function(){
   document.body.classList.add('black')
   gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
+
+  // section1 마스크 애니메이션 처음시점 빠르게
+  const section1Mask = document.querySelector('.container_black .content1 .mask');
+
+  section1Mask.addEventListener('animationend', function handler() {
+      section1Mask.removeEventListener('animationend', handler);
+
+      // 무한 반복 애니메이션 시작
+      section1Mask.style.animation = 'section1_animation 6s ease-in-out infinite';
+  });
+
   let productTrigger;
   let mainTimeline;
   let swiperInstances = [];
@@ -34,14 +45,15 @@ document.addEventListener('DOMContentLoaded', function(){
       }
 
       const tl = gsap.timeline()
-              .addLabel("scroll_product")
-              .addLabel("click_product");
+
       if(isMobileBrowser()){
         tl.to({},{duration: 1});
       }  else {
         tl.to({},{duration: .5});
       }
-      tl.to(".content15", { opacity: 1, duration: 1 });
+      tl.to(".content15", { opacity: 1, duration: 1 })
+      .addLabel("scroll_product")
+      .addLabel("click_product");
 
       // 다시 생성
       productTrigger = ScrollTrigger.create({
@@ -268,7 +280,7 @@ document.addEventListener('DOMContentLoaded', function(){
           el.classList.toggle('on', i === activeIndex);
         });
         // yPercent 애니메이션
-        const maxY = -10;
+        const maxY = -16;
         const yValue = progress * maxY;
         gsap.set('.content3 .bg img', { yPercent: yValue });
       }

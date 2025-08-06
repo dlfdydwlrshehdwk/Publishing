@@ -259,16 +259,22 @@ body.black #header .submenu_in {
   width: 300%;
   height: 300%;
   mix-blend-mode: multiply;
-  animation: section1_animation 6s ease-in-out infinite
+  animation: section1_animation_start 3.6s ease-in-out forwards
+}
+@keyframes section1_animation_start {
+  0% {
+    top: -59.6%;
+    left: -140%;
+  }
+  100% {
+    top: -299%;
+    left: 100%;
+  }
 }
 @keyframes section1_animation {
   0% {
     top: 100%;
     left: -300%;
-  }
-  100% {
-    top: -299%;
-    left: 100%;
   }
   100% {
     top: -299%;
@@ -626,9 +632,22 @@ body.black #header .submenu_in {
   justify-content: space-between;
   gap: 100px;
 }
+.container_black .content15 .content_head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 120px;
+}
 .container_black .content15 h2.title {
   width: 278px;
-  margin-bottom: 120px;
+}
+.container_black .content15 .view_more {
+  font-size: 18px;
+  font-weight: bold;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-thickness: 2px;
+  color: #fff;
 }
 .container_black .content15 .left {
   max-width: 534px;
@@ -683,12 +702,19 @@ body.black #header .submenu_in {
 }
 .container_black .content15 .category_head + .tab_content {
   margin-top: 45px;
+  position: relative;
+}
+.container_black .content15 .tab_content .category_list + .category_list {
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 .container_black .content15 .tab_content .category_list {
-  display: none;
+  opacity: 0;
 }
 .container_black .content15 .tab_content .category_list.show {
-  display: block;
+  opacity: 1;
+  z-index: 2;
 }
 .container_black .content15 .category_list .swiper-slide > a {
   display: flex;
@@ -836,9 +862,11 @@ body.black #header .submenu_in {
     width: 300px;
     height: auto;
   }
+  .container_black .content15 .content_head {
+    margin-bottom: 80px;
+  }
   .container_black .content15 h2.title {
     width: 220px;
-    margin-bottom: 80px;
   }
   .container_black .content15 .category_title {
     font-size: 24px;
@@ -1232,11 +1260,21 @@ body.black #header .submenu_in {
     flex-direction: column;
     gap: 0;
   }
+  .container_black .content15 .content_head {
+    margin: 0 0 50px;
+  }
   .container_black .content15 h2.title {
     width: 150px;
     height: 25px;
-    margin: 0 0 50px;
     padding: 0 17.5px;
+    display: flex;
+    align-items: center;
+  }
+  .container_black .content15 .view_more {
+    font-size: 16px;
+    text-underline-offset: 3px;
+    text-align: center;
+    margin-top: 60px;
   }
   .container_black .content15 .left {
     display: none; 
