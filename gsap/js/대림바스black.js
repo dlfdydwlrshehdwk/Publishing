@@ -431,18 +431,18 @@ document.addEventListener('DOMContentLoaded', function(){
         duration: 1
       }, "<");
 
-    } else {
+    } 
+    else {
       mainTimeline
-      .to('.content10  .item1', {
-        xPercent: -10,
-        yPercent: 6,
+      .to('.content10  .item_wrap', {
+        yPercent: -30,
         duration: 1
       })
-      .to('.content10  .item2', {
-        xPercent: 6,
-        yPercent: -4,
-        duration: 1
-      }, "<");
+      // .to('.content10  .item2', {
+      //   xPercent: 6,
+      //   yPercent: -4,
+      //   duration: 1
+      // }, "<");
     }
     mainTimeline
     .to('.content10 .sub_title1', {y: -20, opacity: 0, duration: 1},"<+.5")
