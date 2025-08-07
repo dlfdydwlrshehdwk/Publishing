@@ -415,11 +415,12 @@ document.addEventListener('DOMContentLoaded', function(){
     .to('.content10 .bg1', {opacity: 0, duration: 2, ease: "power1.out"})
     .to('.content10 .bg2', {opacity: 0, duration: 2, ease: "power1.out"},"<")
     .to({}, {duration: 2})
-    .to('.content10  .item_wrap', {opacity: 1, duration: 1})
-    .to('.content10 .sub_title1', {opacity: 1, y: 0, duration: 1})
-    .to({}, { duration: 2 });
     if(windowW > 767) {
+      gsap.set('.content10 .item_wrap',{yPercent: 0})
       mainTimeline
+      .to('.content10  .item_wrap', {opacity: 1, duration: 1})
+      .to('.content10 .sub_title1', {opacity: 1, y: 0, duration: 1})
+      .to({}, { duration: 2 })
       .to('.content10  .item1', {
         xPercent: -6,
         yPercent: 7,
@@ -429,24 +430,28 @@ document.addEventListener('DOMContentLoaded', function(){
         xPercent: 6,
         yPercent: -7,
         duration: 1
-      }, "<");
-
+      }, "<")
+      .to('.content10 .sub_title1', {y: -20, opacity: 0, duration: 1},"<+.5")
+      .to('.content10 .item_wrap', {opacity: 0, duration: 2},"<");
     } 
     else {
+      gsap.set('.content10 .item_wrap',{yPercent: 30})
       mainTimeline
-      .to('.content10  .item_wrap', {
-        yPercent: -30,
-        duration: 1
-      })
+      .to('.content10 .sub_title1', {opacity: 1, y: 0, duration: 1})
+      .to('.content10  .item_wrap', {opacity: 1, duration: 1},"<")
+      // .to({}, { duration: 2 })
+      .to('.content10  .item_wrap', {yPercent: -40, duration: 3},"<")
       // .to('.content10  .item2', {
       //   xPercent: 6,
       //   yPercent: -4,
       //   duration: 1
       // }, "<");
+      .to('.content10 .item_wrap', {opacity: 0, duration: 1},"<+2")
+      .to('.content10 .sub_title1', {y: -20, opacity: 0, duration: 1},"<")
     }
     mainTimeline
-    .to('.content10 .sub_title1', {y: -20, opacity: 0, duration: 1},"<+.5")
-    .to('.content10 .item_wrap', {opacity: 0, duration: 2},"<")
+    // .to('.content10 .sub_title1', {y: -20, opacity: 0, duration: 1},"<+.5")
+    // .to('.content10 .item_wrap', {opacity: 0, duration: 2},"<")
     .to({}, { duration: 1 })
     .to('.content10 .bg3', {opacity: 1,  duration: 1})
     .to('.content10 .sub_title2', {y: 0, opacity: 1, duration: 1})
@@ -506,9 +511,11 @@ document.addEventListener('DOMContentLoaded', function(){
     .to('.content13 .title', {opacity: 1, y: 0, duration: 1})
     .addLabel("click_valle")
     .to({}, { duration: 1.5 })
-    .to('.content13 .bg', {scale: 1.2, opacity: 0, duration: 1})
+    // .to('.content13 .bg', {scale: 1.2, opacity: 0, duration: 1})
+    .to('.content13 .bg', {opacity: 0, duration: 2})
+    .to('.content13 .bg', {yPercent: -100, duration: 2},"<+.2")
     .to('.content13', {opacity: 0, duration: 1}, "<+.5")
-        .to({}, { duration: 1 })
+    .to({}, { duration: 1 })
     // content13 -> content14
     .to('.content14', {opacity: 1, duration: 1})
     .to('.content14 .title', {opacity: 1, duration: 1}, '<')
@@ -667,13 +674,18 @@ document.addEventListener('DOMContentLoaded', function(){
     })
   })
 
-  // content15 메인카테고리 모바일 탭
+  // content15 메인카테고리 모바일 탭 20250807
   const moMainCategory = document.querySelectorAll('.content15 .mo_main_category li');
+  const moSubCategory = document.querySelector('.content15 .mo_sub_category');
+  const moSubCategoryList = document.querySelectorAll('.content15 .mo_sub_category li');
   moMainCategory.forEach((li,index) => {
     li.addEventListener('click', function(){
       moMainCategory.forEach(li => li.classList.remove('on'));
       li.classList.add('on');
-      console.log(index)
+
+      const moSubCategoryUl = moSubCategory.querySelectorAll('ul');
+      moSubCategoryUl.forEach(ul => ul.classList.remove('active'));
+      moSubCategoryUl[index].classList.add('active')
 
       const contentBox = document.querySelectorAll('.content15 .content_box');
       contentBox.forEach(box => {
@@ -690,21 +702,24 @@ document.addEventListener('DOMContentLoaded', function(){
       }
     })
   })
-  // content15 서브카테고리 모바일 탭
-  const moSubCategory = document.querySelectorAll('.content15 .mo_sub_category li');
-  moSubCategory.forEach(li => {
-    li.addEventListener('click', function(){
-      moSubCategory.forEach(li => li.classList.remove('on'));
-      li.classList.add('on');
+  // content15 서브카테고리 모바일 탭 20250807
+  moSubCategory.querySelectorAll('ul').forEach((ul,index) => {
+    const subCategory = ul.querySelectorAll('li');
+    subCategory.forEach((li,index2) => {
+      li.addEventListener('click', function(){
+        subCategory.forEach(li => li.classList.remove('on'));
+        li.classList.add('on');
+        content15ContentBox[index].querySelectorAll('.sub_category a')[index2].click();
 
-      const activeTab = document.querySelector('.content15 .mo_sub_category li.on');
-      if (activeTab) {
-        activeTab.scrollIntoView({
-          behavior: 'smooth', 
-          inline: 'start',
-          block: 'nearest'
-        });
-      }
+        const activeTab = document.querySelector('.content15 .mo_sub_category li.on');
+        if (activeTab) {
+          activeTab.scrollIntoView({
+            behavior: 'smooth', 
+            inline: 'start',
+            block: 'nearest'
+          });
+        }
+      })
     })
   })
 

@@ -1211,7 +1211,6 @@ body.black #header .submenu_in {
     right: -2%;
   }
   .container_black .content10 .item_wrap {
-    transform: translateY(30%);
   }
   .container_black .content10 .title {
     width: 209.5px;
@@ -1375,10 +1374,13 @@ body.black #header .submenu_in {
     border-bottom: 1px solid rgba(255, 255, 255, 0.2);
   }
   .container_black .mo_sub_category ul {
-    display: flex;
+    display: none;
     padding: 0 17.5px;
     overflow-x: auto;
   }
+    .container_black .mo_sub_category ul.active {
+      display: flex;
+    }
   .container_black .mo_sub_category li {
     font-size: 14px;
     font-weight: 500;
