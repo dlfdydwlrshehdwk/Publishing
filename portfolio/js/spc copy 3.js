@@ -1,7 +1,20 @@
 gsap.registerPlugin(ScrollTrigger);
 
+// --- vh 단위 보정 함수 ---
+// Safari에서 주소창 유무에 따라 vh값이 바뀌는 현상을 막고, 실제 뷰포트 높이를 기반으로 CSS 변수를 설정합니다.
+function setVh() {
+    const vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+    
+    // 모바일에서 추가 보정 (주소창 고려)
+    if (isMobileBrowser()) {
+        const actualVh = Math.min(window.innerHeight, window.screen.height) * 0.01;
+        document.documentElement.style.setProperty('--vh', `${actualVh}px`);
+    }
+}
+
 // --- Debounce Function ---
-// 짧은 시간 내에 이벤트가 반복해서 발생하는 것을 방지
+// 짧은 시간 내에 이벤트가 반복해서 발생하는 것을 방지하여 성능을 최적화합니다.
 function debounce(func, wait) {
     let timeout;
     return function(...args) {
@@ -12,7 +25,7 @@ function debounce(func, wait) {
 }
 
 // --- Animation Setup Function ---
-// 모든 GSAP 애니메이션과 ScrollTrigger 설정을 포함하는 함수
+// 모든 GSAP 애니메이션과 ScrollTrigger 설정을 포함하는 함수입니다.
 function setupAnimations() {
     
     // 모든 애니메이션의 초기 상태 설정
@@ -116,11 +129,11 @@ function setupAnimations() {
                 }
             });
             section05Tl2
-                .to('.section5 .card.primary', { left: 0, x: 0,  duration: .5, ease: "power1.inOut" })
-                .to('.section5 .card.sub', { left: 0, x: cardH + numCardWrapGap, xPercent: 0,  duration: .5, ease: "power1.inOut" }, '<')
-                .to('.section5 .card.yellow', { left: 0, x: (cardH * 2) + (numCardWrapGap * 2), xPercent: 0,  duration: .5, ease: "power1.inOut" }, '<')
-                .to('.section5 .card.light_gray', { left: 0, x: (cardH * 3) + (numCardWrapGap * 3), xPercent: 0,  duration: .5, ease: "power1.inOut" }, '<')
-                .to('.section5 .card.black', { left: 0, x: (cardH * 4) + (numCardWrapGap * 4), xPercent: 0,  duration: .5, ease: "power1.inOut" }, '<');
+                .to('.section5 .card.primary', { left: 0, x: 0, top: cardH * 2 + numCardWrap2Mt, duration: 1, ease: "power1.inOut" })
+                .to('.section5 .card.sub', { left: 0, x: cardH + numCardWrapGap, xPercent: 0, top: cardH * 2 + numCardWrap2Mt, duration: 1, ease: "power1.inOut" }, '<+.3')
+                .to('.section5 .card.yellow', { left: 0, x: (cardH * 2) + (numCardWrapGap * 2), xPercent: 0, top: cardH * 2 + numCardWrap2Mt, duration: 1, ease: "power1.inOut" }, '<+.3')
+                .to('.section5 .card.light_gray', { left: 0, x: (cardH * 3) + (numCardWrapGap * 3), xPercent: 0, top: cardH * 2 + numCardWrap2Mt, duration: 1, ease: "power1.inOut" }, '<+.3')
+                .to('.section5 .card.black', { left: 0, x: (cardH * 4) + (numCardWrapGap * 4), xPercent: 0, top: cardH * 2 + numCardWrap2Mt, duration: 1, ease: "power1.inOut" }, '<+.3');
             // section06
             gsap.to('.section6 .text_set .title', { scrollTrigger: { trigger: ".section6", start: "top 70%" }, opacity: 1, y: 0, duration: 1 });
             gsap.to('.section6 .text_set .desc', { scrollTrigger: { trigger: ".section6", start: "top 70%" }, opacity: 1, y: 0, duration: 1 });
@@ -163,7 +176,9 @@ function setupAnimations() {
                 '.section7 .inner.mo .item2',
                 '.section7 .inner.mo .item3',
                 '.section7 .inner.mo .item4',
+
             ],{y: 50, opacity: 0})
+            // 여기에 모바일 전용 애니메이션 코드를 추가하세요.
             // section2
             gsap.to(".section2 .mo .text_set", { scrollTrigger: { trigger: ".section2 .mo .text_set", start: "top 100%" }, opacity: 1, y: 0, duration: 1 });
             gsap.to(".section2 .mo .item1", { scrollTrigger: { trigger: ".section2 .mo .item1", start: "top 100%" }, opacity: 1, y: 0, duration: 1 });
@@ -180,13 +195,11 @@ function setupAnimations() {
             let section4Tl = gsap.timeline({
                 scrollTrigger: { 
                     trigger: ".section4", 
-                    start: "top top",  // 조금 더 일찍 시작
-                    end: "+=2500",
+                    start: "top top",
+                    end: ()=>5000,
                     pin: true,
-                    scrub: 1,  // 부드러운 스크럽
-                    anticipatePin: 1,  // 핀 예측으로 부드러운 전환
-                    invalidateOnRefresh: true,
-                }
+                    scrub: true,
+                }, opacity: 1, y: 0, duration: 1 
             })
             section4Tl
             .to('.section4 .inner.mo .item1', {y: 0, opacity: 1})
@@ -254,7 +267,7 @@ function setupAnimations() {
 
         // --- All Breakpoints ---
         "all": function() {
-            // 모든 뷰포트 크기에서 공통으로 실행될 애니메이션
+            // 모든 뷰포트 크기에서 공통으로 실행될 로직
             // section8
             gsap.to(".section8 .text_set1 .title", { scrollTrigger: { trigger: ".section8 .text_set1 .title", start: "top 80%" }, opacity: 1, y: 0, duration: 1 });
         }
@@ -266,7 +279,6 @@ const section03Swiper = new Swiper(".section3 .swiper", {
     slidesPerView: 'auto',
     spaceBetween: 11.5,
     loop: true,
-    allowTouchMove: false,
     autoplay: {
         delay: 0,
         disableOnInteraction: false,
@@ -285,56 +297,91 @@ const section03Swiper = new Swiper(".section3 .swiper", {
 });
 
 // --- Main Logic ---
-// 1. 초기 애니메이션 설정
+// 1. vh 단위 설정 함수를 즉시 실행합니다.
+setVh();
+
+// 2. 초기 애니메이션 설정
 setupAnimations();
 
-// 2. 변수셋팅
-let lastWidth = window.innerWidth; //마지막 창 너비를 저장할 변수
+// 3. 마지막 창 너비를 저장할 변수
+let lastWidth = window.innerWidth;
 
-// 4. 디바운싱 처리된 리사이즈 핸들러 (PC 전용)
+// 4. 디바운싱 처리된 리사이즈 핸들러
 const debouncedResize = debounce(() => {
-    const currentWidth = window.innerWidth;
-    if (currentWidth !== lastWidth) {
-        ScrollTrigger.getAll().forEach(t => t.kill());
-        setupAnimations();
-        ScrollTrigger.refresh();
+    // 모바일 브라우저에서는 주소창 변화로 인한 불필요한 리프레시를 방지
+    if (isMobileBrowser()) {
+        const currentWidth = window.innerWidth;
+        const currentHeight = window.innerHeight;
+        
+        // 너비 변화가 있을 때만 ScrollTrigger를 재설정 (모바일에서 세로 길이 변화는 무시)
+        if (currentWidth !== lastWidth) {
+            setVh();
+            ScrollTrigger.getAll().forEach(t => t.kill());
+            setupAnimations();
+            ScrollTrigger.refresh();
+            lastWidth = currentWidth;
+        }
+    } else {
+        // PC에서는 기존 로직 유지
+        setVh(); 
+        const currentWidth = window.innerWidth;
+        if (currentWidth !== lastWidth) {
+            ScrollTrigger.getAll().forEach(t => t.kill());
+            setupAnimations();
+            ScrollTrigger.refresh();
+        }
         lastWidth = currentWidth;
     }
-}, 300);
+}, 200); // 모바일에서는 더 긴 지연시간 적용
 
-// 5. 리사이즈 이벤트에 핸들러를 연결합니다. (모바일에서는 제외)
-if (!isMobileBrowser()) {
-    window.addEventListener("resize", debouncedResize);
-}
+// 5. 리사이즈 이벤트에 핸들러를 연결합니다.
+window.addEventListener("resize", debouncedResize);
 
 // 6. 모바일 브라우저 최적화
 if (isMobileBrowser()) {
-    // orientationchange 이벤트 처리 (화면 회전 시에만 리프레시)
+    // 모바일에서 스크롤 성능 개선을 위한 CSS 변수 추가
+    document.documentElement.style.setProperty('--scroll-behavior', 'smooth');
+    
+    // orientationchange 이벤트 처리 (회전 시에만 리프레시)
     window.addEventListener("orientationchange", debounce(() => {
         setTimeout(() => {
+            setVh();
             ScrollTrigger.getAll().forEach(t => t.kill());
             setupAnimations();
             ScrollTrigger.refresh();
             lastWidth = window.innerWidth;
         }, 500); // 회전 완료 후 충분한 시간 대기
     }, 100));
+    
+    // 모바일에서 스크롤 시 주소창 변화에 대응
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+        if (!ticking) {
+            requestAnimationFrame(() => {
+                setVh();
+                ticking = false;
+            });
+            ticking = true;
+        }
+    }, { passive: true });
 }
+
 
 //모바일 브라우저 감지
 function isMobileBrowser() {
-    // User Agent 체크 (가장 확실한 방법)
-    const userAgent = navigator.userAgent.toLowerCase();
-    const mobileKeywords = ['android', 'iphone', 'ipad', 'ipod', 'blackberry', 'windows phone', 'mobile'];
-    const isMobileUA = mobileKeywords.some(keyword => userAgent.includes(keyword));
+// User Agent 체크 (가장 확실한 방법)
+const userAgent = navigator.userAgent.toLowerCase();
+const mobileKeywords = ['android', 'iphone', 'ipad', 'ipod', 'blackberry', 'windows phone', 'mobile'];
+const isMobileUA = mobileKeywords.some(keyword => userAgent.includes(keyword));
 
-    // 터치 지원 여부
-    const hasTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+// 터치 지원 여부
+const hasTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 
-    // 화면 크기
-    const isSmallScreen = window.innerWidth <= 768;
+// 화면 크기
+const isSmallScreen = window.innerWidth <= 768;
 
-    // 모바일 기기인지 확인
-    const isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+// 모바일 기기인지 확인
+const isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 
-    return isMobileUA || isMobileDevice || (hasTouch && isSmallScreen);
+return isMobileUA || isMobileDevice || (hasTouch && isSmallScreen);
 }

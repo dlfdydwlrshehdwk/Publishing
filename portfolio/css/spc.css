@@ -92,6 +92,12 @@
 * {
     font-family: 'Pretendard', 'sans-serif';
 }
+
+/* iOS 오버스크롤 바운스 효과 방지 */
+html, body {
+    overscroll-behavior: none;
+    -webkit-overflow-scrolling: touch;
+}
 img {
     height: auto;
     vertical-align: middle;
@@ -138,8 +144,10 @@ img {
     }
 }
 .cont_wrap {
-    width: calc(100% - 25rem);
-    margin: 0 auto;
+    /* width: calc(100% - 25rem); */
+    max-width: 192rem;
+    margin-left: clamp(2rem, 6.5vw, 12.5rem);
+    margin-right: clamp(2rem, 6.5vw, 12.5rem);
 }
 header {
     position: fixed;
@@ -178,19 +186,24 @@ section {
     right: 0;
     overflow: hidden;
 }
+.section1 .logo {
+    width: clamp(20rem, 23.4375vw, 45rem);;
+}
 .section2 {
-    /* margin-top: 100vh; */
-    margin-top: calc(var(--vh, 1vh) * 100);
+    margin-top: 100vh;
+    margin-top: 100dvh;
     padding: 10rem 0;
 }
 .section2 .inner.pc {
-    gap: 10rem;
+    gap: clamp(5rem, 5.21vw, 10rem);
 }
 .section2 .right {
     display: flex;
     flex-direction: column;
     height: auto;
     justify-content: space-between;
+    position: relative;
+    z-index: 1;
 }
 .section2 .right > .flex {
     gap: 3.7rem;
@@ -199,12 +212,12 @@ section {
     margin-top: 1.5rem;
 }
 .section2 .text_set .title {
-    font-size: 3.4rem;
+    font-size: clamp(1.7rem, 1.77vw, 3.4rem);
     font-weight: bold;
 }
 .section2 .text_set .desc {
     margin-top: 4.5rem;
-    font-size: 1.5rem;
+    font-size: clamp(1.2rem, 0.78vw, 1.5rem);
     line-height: 1.4;
     letter-spacing: -0.075rem;
     font-weight: 600;
@@ -214,6 +227,11 @@ section {
     right: 0;
     top: 50%;
     transform: translateY(-50%);
+    width: clamp(34.35rem, 35.78vw, 68.7rem);
+    text-align: right;
+}
+.section2 .pc .left img {
+    width: 100%;
 }
 
 .section3 {
@@ -333,6 +351,8 @@ section {
     font-size: 1.5rem;
     line-height: 1.4;
     margin-top: 4.5rem;
+    text-transform: uppercase;
+    letter-spacing: -0.075rem;
 }
 .section5 .left .bottom {
     display: flex;
@@ -563,6 +583,7 @@ section {
     font-size: 1.5rem;
     line-height: 1.8;
     text-align: center;
+    text-transform: uppercase;
 }
 
 .section8 .img_wrap {
@@ -580,8 +601,7 @@ section {
     font-weight: 600;
     font-size: 11rem;
     line-height: 1.14;
-    color: rgba(255, 255, 255, 1);
-    opacity: .2;
+    color: rgba(255, 255, 255, .2);
     text-transform: uppercase;
     display: flex;
     justify-content: flex-end;
@@ -790,8 +810,8 @@ section {
     }
     .section4 .bg {
         width: 100%;
-        /* height: 100vh; */
-        height: calc(var(--vh, 1vh) * 100);
+        height: 100vh;
+        height: 100dvh; /* 지원되는 브라우저에서 동적 뷰포트 사용 */
     }
     .section4 .bg img {
         width: 100%;
@@ -834,17 +854,13 @@ section {
     .section4 .item_wrap .item + .item {
         position: absolute;
         width: 100%;
-        top: 0;
         left: 0;          
     }
-    .section4 .item_wrap .item1 {
-        transform: scale(.8);
-    }
     .section4 .item_wrap .item2 {
-        transform: scale(.9) translateY(2rem);
+        top: 2rem;
     }
     .section4 .item_wrap .item3 {
-        transform: translateY(4rem);
+        top: 4rem;
     }
     .section4 .item_wrap .item_header {
         flex-direction: column;
@@ -895,18 +911,33 @@ section {
         margin-top: 2.5rem;
         text-transform: uppercase;
         font-size: 1.3rem;
+        letter-spacing: -.065rem;
     }
     .section5 .img_set img {
         width: 100%;
     }
     .section5 .card {
         width: 100%;
-        transform: none !important;
         aspect-ratio: auto;
         border-radius: .75rem;
-        left: 0 !important;
-        position: relative !important;
+        position: static !important;
         padding: 1.1rem 1.3rem;
+    }
+    .section5 .card.primary {
+        z-index: 1;
+        transform: none;
+    }
+    .section5 .card.sub {
+        z-index: 2;
+    }
+    .section5 .card.yellow {
+        z-index: 3;
+    }
+    .section5 .card.light_gray {
+        z-index: 4;
+    }
+    .section5 .card.black {
+        z-index: 5;
     }
     .section5 .card_wrap1,
     .section5 .card_wrap3 {
@@ -1015,7 +1046,6 @@ section {
         padding-top: 10rem;
     }
     .section8 .text_set1 .title {
-        text-transform: uppercase;
         font-size: 1.4rem;
         line-height: 1.4;
     }
@@ -1048,6 +1078,8 @@ section {
     }
     .section8 .dev_cont {
         margin-top: 10rem;
+        position: static;
+        transform: none;
     }
     .section8 .star {
         /* width: 1.3rem; */
