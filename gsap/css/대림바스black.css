@@ -484,6 +484,18 @@ body.black #header .submenu_in {
   top: -5%;
   right: 25.052%;
   width: 16.093%;
+  z-index: 2;
+}
+.container_black .content8 .item.pc.item1,
+.container_black .content8 .item.pc.item2 {
+  transform: translateX(65vw);
+}
+.container_black .content8 .item.pc.item3,
+.container_black .content8 .item.pc.item4 {
+  transform: translateX(165vw);
+}
+.container_black .content8 .item.pc {
+  opacity: 0;
 }
 .container_black .content8 .sub_title1,
 .container_black .content8 .sub_title2 {
@@ -846,6 +858,9 @@ body.black #header .submenu_in {
   }
   .container_black .sub_title_wrap {
     margin-top: 32px;
+  }
+  .container_black .content .bg_wrap2.mo {
+    display: flex !important;
   }
   .container_black .sub_title_wrap .sub_title {
     font-size: 22px;

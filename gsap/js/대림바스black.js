@@ -373,8 +373,11 @@ document.addEventListener('DOMContentLoaded', function(){
     .to({}, { duration: 1 });
     if(windowW > 767) {
       mainTimeline
-      .to('.content8 .bg_wrap2', {xPercent: -100, duration: 8, ease: "power1.out"})
+      // .to('.content8 .bg_wrap2', {xPercent: -100, duration: 8, ease: "power1.out"})
+      .to(['.content8 .item1','.content8 .item2'], {x: '-135vw', duration: 8, ease: "power1.out"})
+      .to(['.content8 .item3','.content8 .item4'], {x: '-35vw', duration: 8, ease: "power1.out"},"<")
       .to('.content8 .bg2', {opacity:1, duration: 2},'<')
+      .to('.content8 .item.pc', {opacity:1, duration: 2},'<')
       .to('.content8 .sub_title2', {opacity:1, yPercent:0, duration:1},"<")
       .to('.content8 .fake_dim', {opacity: 1, duration: 1}, "<+2")
       .to('.content8 .sub_title2', {opacity: 0, yPercent: -100, duration: 1},'<+.5')
