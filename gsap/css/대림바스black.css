@@ -259,12 +259,16 @@ body.black #header .submenu_in {
   width: 300%;
   height: 300%;
   mix-blend-mode: multiply;
-  animation: section1_animation_start 3.6s ease-in-out forwards
+  animation: section1_animation_start 5.6s ease-in-out forwards
 }
 @keyframes section1_animation_start {
   0% {
     top: -59.6%;
     left: -140%;
+  }
+  64.3% { /* 3.6s / 5.6s ≈ 64.3% */
+    top: -299%;
+    left: 100%;
   }
   100% {
     top: -299%;
