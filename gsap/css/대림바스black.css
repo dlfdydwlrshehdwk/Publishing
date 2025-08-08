@@ -35,6 +35,14 @@
 body.black {
 	background: #000;
 }
+
+body.black #side_right,
+body.black #side_left {
+	display : none;
+}
+.container_black * {
+	font-family: 'Pretendard', sans-serif;	
+}
 /* _header */
 
 body.black #header {
@@ -112,7 +120,7 @@ body.black #header .submenu_in {
 .container_black .pagination ul {
   display: flex;
   flex-direction: column;
-  gap: 23px;
+  gap: 20px;
 }
 .container_black .pagination li {
   position: relative;
@@ -211,11 +219,11 @@ body.black #header .submenu_in {
   width: fit-content;
 }
 .container_black .sub_title_wrap {
+  position: relative;
   margin-top: 40px;
   text-align: center;
   overflow: hidden;
   width: 100%;
-  position: relative;
 }
 .container_black .title_font {
   font-size: 40px;
@@ -591,6 +599,11 @@ body.black #header .submenu_in {
 }
 .container_black .content14 .bg {
   opacity: 0;
+}
+.container_black .content14 .bg > video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 .container_black .content14 .mask {
     position: absolute;
@@ -971,11 +984,12 @@ body.black #header .submenu_in {
     letter-spacing: -0.14px;
     transition: .3s;
     padding-left: 12px;
-    padding: 25px 20px;
+    padding: 0px 20px;
     display: flex;
     gap: 7px;
     align-items: center;
     justify-content: center;
+    height: 70px;
   }
   .container_black .pagination li a:before {
     right: calc(100% + 7px);
@@ -990,6 +1004,7 @@ body.black #header .submenu_in {
     display: none;
     background-color: #fff;
     height: 100%;
+    width: 0%;
   }
 	body.black #header .gnb .all_menu img{
 		display: none;
@@ -1005,7 +1020,6 @@ body.black #header .submenu_in {
   /* toast */
   .container_black .toast {
     /* opacity: 0; */
-    display: block;
     position: fixed;
     bottom: 100px;
     width: calc(100% - 35px);
@@ -1014,6 +1028,7 @@ body.black #header .submenu_in {
     transform: translateX(-50%);
     background-color: rgba(26, 26, 26, 0.9);
     border-radius: 4px;
+    display: block;
   }
   .container_black .toast::after {
     content: '';

@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function(){
   let windowH = 0;
   const clickLabelList = ["click_black", "click_tech", "click_thor", "click_column", "click_lusso", "click_valle", "click_product"];
   const scrollLabelList =['scroll_black', 'scroll_tech', 'scroll_thor', 'scroll_column', 'scroll_lusso', 'scroll_valle', 'scroll_product'];
-  let timelineLength = isMobileBrowser() ? 90 : 60;
+  let timelineLength = isMobileBrowser() ? 100 : 60;
   let totalDuration = 0;
   let scrollContainerHeight = 0;
   let isUserNavigating = false; // 모바일 페이지네이션 상태변수
@@ -272,7 +272,7 @@ document.addEventListener('DOMContentLoaded', function(){
     .to({}, { duration: 0.5 })
     .addLabel('click_tech')
     .to('.content3', {
-      duration: 4.5,
+      duration: 7.5,
       onUpdate: function () {
         const progress = this.progress();
         const activeIndex = progress < 0.33 ? 0 : progress < 0.66 ? 1 : 2;
@@ -359,8 +359,8 @@ document.addEventListener('DOMContentLoaded', function(){
     .to('.content7 .title', {opacity: 1, y:0, duration: 1})
     .addLabel("click_thor")
     .to({}, { duration: 1 })
-    .to('.content7', {opacity: 0, duration: 1,})
-    .to('.content7 .bg', {scale: 1.2, duration: 1},"<")
+    .to('.content7', {opacity: 0, duration: isMobileBrowser() ? 2 : 3,})
+    .to('.content7 .bg', {scale: 1.2, duration: isMobileBrowser() ? 2 : 3},"<")
     // content7 -> content8
     .to('.content8', {opacity: 1, duration: 1})
     .to('.content8 .title', {opacity: 1, duration: 1})
@@ -403,9 +403,9 @@ document.addEventListener('DOMContentLoaded', function(){
     .to('.content9 .title', {opacity: 1, y: 0, duration: 1})
     .addLabel("click_column")
     .to({}, { duration: 1 })
-    .to('.content9 .bg', {scale: 1.2, duration: 1})
+    .to('.content9 .bg', {scale: 1.2, duration: isMobileBrowser() ? 2 : 3})
     // content9 -> content10
-    .to(".content9", {opacity: 0, duration: 1}, "<")
+    .to(".content9", {opacity: 0, duration: isMobileBrowser() ? 2 : 3}, "<")
         .to({}, { duration: 1 })
     .to('.content10', {opacity: 1, duration: 1})
     .to({}, { duration: 1 })
@@ -438,7 +438,7 @@ document.addEventListener('DOMContentLoaded', function(){
       .to('.content10 .item_wrap', {opacity: 0, duration: 2},"<");
     } 
     else {
-      gsap.set('.content10 .item_wrap',{yPercent: 30})
+      gsap.set('.content10 .item_wrap',{yPercent: 50})
       mainTimeline
       .to('.content10 .sub_title1', {opacity: 1, y: 0, duration: 1})
       .to('.content10  .item_wrap', {opacity: 1, duration: 1},"<")
@@ -478,8 +478,8 @@ document.addEventListener('DOMContentLoaded', function(){
     .to('.content11 .title', {opacity: 1, y: 0, duration: 1})
     .addLabel("click_lusso")
     .to({}, { duration: 1.5 })
-    .to('.content11 .bg', {scale: 1.2, opacity: 1, duration: 1})
-    .to('.content11', {opacity: 0, duration: 1}, "<.5")
+    .to('.content11 .bg', {scale: 1.2, opacity: 1, duration: 2})
+    .to('.content11', {opacity: 0, duration: 2}, "<.5")
     .to({}, { duration: 1 })
     // content11 -> content12
     .to('.content12', {opacity: 1, duration: 1})
@@ -680,7 +680,6 @@ document.addEventListener('DOMContentLoaded', function(){
   // content15 메인카테고리 모바일 탭 20250807
   const moMainCategory = document.querySelectorAll('.content15 .mo_main_category li');
   const moSubCategory = document.querySelector('.content15 .mo_sub_category');
-  const moSubCategoryList = document.querySelectorAll('.content15 .mo_sub_category li');
   moMainCategory.forEach((li,index) => {
     li.addEventListener('click', function(){
       moMainCategory.forEach(li => li.classList.remove('on'));
