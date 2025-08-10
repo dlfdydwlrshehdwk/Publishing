@@ -162,6 +162,25 @@ document.addEventListener('DOMContentLoaded', function(){
     ScrollTrigger.refresh();
   },200));
 
+  // 수정20250810 S
+  if (isMobileBrowser()) {
+      // orientationchange 이벤트 처리 (화면 회전 시에만 리프레시)
+      window.addEventListener("orientationchange", _.throttle(() => {
+          setTimeout(() => {
+              recalcLayoutValues();
+              createMainTimeline();
+              initSwiperIfNeeded();
+              initPaginationSwiper();
+              initScrollTriggerForContent15();
+              updateTotalDuration(); // duration 값 갱신
+              mobileToast();
+              initPaginationTrigger();
+              ScrollTrigger.refresh();
+          }, 500); // 회전 완료 후 충분한 시간 대기
+      }, 100));
+  }
+    // 수정20250810 E
+
   // 1. Lenis 인스턴스 생성
   const lenis = new Lenis({
       smooth: !isMobileBrowser(),
