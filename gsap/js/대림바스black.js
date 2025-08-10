@@ -384,9 +384,24 @@ document.addEventListener('DOMContentLoaded', function(){
       .to('.content8', {opacity: 0, duration: 2},"<+3")
       .to({}, { duration: 1 });
     } else {
+      gsap.set('.content8 .bg_wrap2.mo .item1', {y: '30vh', duration:8})
+      gsap.set('.content8 .bg_wrap2.mo .item2', {y: '30vh', duration:8})
+      gsap.set('.content8 .bg_wrap2.mo .item3', {y: '30vh', duration:8})
+      gsap.set('.content8 .bg_wrap2.mo .item4', {y: '30vh', duration:8})
       mainTimeline
       // bg등장
-      .to('.content8 .bg_wrap2', {yPercent: -70, duration: 8})
+      // 20250810수정 S
+      // .to('.content8 .bg_wrap2', {yPercent: -70, duration: 8})
+      .to('.content8 .bg_wrap2.mo .item1', {y: '-30vh', duration:8},"<")
+      .to('.content8 .bg_wrap2.mo .item2', {y: '-10vh', duration:8},"<")
+      .to('.content8 .bg_wrap2.mo .item3', {y: '-60vh', duration:8},"<")
+      .to('.content8 .bg_wrap2.mo .item4', {y: '-50vh', duration:8},"<")
+      
+      // 20250810수정 E
+
+
+
+
       .to('.content8 .bg2', {opacity:1, duration: 2},'<')
       .to('.content8 .sub_title2', {opacity:1, yPercent:0, duration:1},"<+.5")
       .to('.content8 .sub_title2', {opacity: 0, yPercent: -100, duration: 1},'<+2')
@@ -438,24 +453,28 @@ document.addEventListener('DOMContentLoaded', function(){
       .to('.content10 .item_wrap', {opacity: 0, duration: 2},"<");
     } 
     else {
-      gsap.set('.content10 .item_wrap',{yPercent: 50})
+      // 수정20250810 S
+      gsap.set('.content10 .item_wrap.item_wrap1',{yPercent: 70})
+      gsap.set('.content10 .item_wrap.item_wrap2',{yPercent: 40})
       mainTimeline
       .to('.content10 .sub_title1', {opacity: 1, y: 0, duration: 1})
-      .to('.content10  .item_wrap', {opacity: 1, duration: 1},"<")
+      .to('.content10  .item_wrap.item_wrap1', {yPercent: -60, duration: 7},"<")
+      .to('.content10  .item_wrap.item_wrap2', {yPercent: -30, duration: 7},"<")
+      .to('.content10  .item_wrap', {opacity: 1, duration: 2},"<+1")
       // .to({}, { duration: 2 })
-      .to('.content10  .item_wrap', {yPercent: -40, duration: 3},"<")
       // .to('.content10  .item2', {
-      //   xPercent: 6,
-      //   yPercent: -4,
-      //   duration: 1
-      // }, "<");
-      .to('.content10 .item_wrap', {opacity: 0, duration: 1},"<+2")
-      .to('.content10 .sub_title1', {y: -20, opacity: 0, duration: 1},"<")
+        //   xPercent: 6,
+        //   yPercent: -4,
+        //   duration: 1
+        // }, "<");
+        .to('.content10 .item_wrap', {opacity: 0, duration: 1},"<+4")
+        .to('.content10 .sub_title1', {y: -20, opacity: 0, duration: 1},"<")
+        // 수정20250810 E
     }
     mainTimeline
     // .to('.content10 .sub_title1', {y: -20, opacity: 0, duration: 1},"<+.5")
     // .to('.content10 .item_wrap', {opacity: 0, duration: 2},"<")
-    .to({}, { duration: 1 })
+    // .to({}, { duration: 1 })
     .to('.content10 .bg3', {opacity: 1,  duration: 1})
     .to('.content10 .sub_title2', {y: 0, opacity: 1, duration: 1})
     .to({}, { duration: 1.5 })

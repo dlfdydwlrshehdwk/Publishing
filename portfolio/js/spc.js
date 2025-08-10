@@ -183,8 +183,9 @@ function setupAnimations() {
                     start: "top top",  // 조금 더 일찍 시작
                     end: "+=2500",
                     pin: true,
+                    pinType: 'fixed',
                     scrub: 1,  // 부드러운 스크럽
-                    anticipatePin: 1,  // 핀 예측으로 부드러운 전환
+                    // anticipatePin: 1,  // 핀 예측으로 부드러운 전환
                     invalidateOnRefresh: true,
                 }
             })
