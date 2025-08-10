@@ -146,32 +146,11 @@ img {
 .cont_wrap {
     /* width: calc(100% - 25rem); */
     max-width: 192rem;
-    margin-left: clamp(2rem, 6.5vw, 12.5rem);
-    margin-right: clamp(2rem, 6.5vw, 12.5rem);
+    padding-left: clamp(2rem, 6.5vw, 12.5rem);
+    padding-right: clamp(2rem, 6.5vw, 12.5rem);
+    margin: 0 auto;
 }
-header {
-    position: fixed;
-    left: 0;
-    width: 100%;
-    z-index: 9999;
-}
-header .shadow {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-}
-header .inner {
-    position: relative;
-    z-index: 1;
-    margin-top: 5.6rem;
-    padding: 0 7.4rem;
-}
-header .inner > div {
-    font-size: 1.4rem;
-    color: #fff;
-    line-height: 1.45;
-}
+
 section {
     position: relative;
     background-color: #fff;
@@ -185,6 +164,23 @@ section {
     bottom: 0;
     right: 0;
     overflow: hidden;
+}
+.section1 .section_head .shadow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+.section1 .section_head .inner {
+    position: relative;
+    z-index: 1;
+    margin-top: 5.6rem;
+    padding: 0 7.4rem;
+}
+.section1 .section_head .inner > div {
+    font-size: 1.4rem;
+    color: #fff;
+    line-height: 1.45;
 }
 .section1 .logo {
     width: clamp(20rem, 23.4375vw, 45rem);;
@@ -206,7 +202,7 @@ section {
     z-index: 1;
 }
 .section2 .right > .flex {
-    gap: 3.7rem;
+    gap: clamp(1.85rem, 1.927vw, 3.7rem);
 }
 .section2 .brand_badge {
     margin-top: 1.5rem;
@@ -243,16 +239,20 @@ section {
 .section3 .top {
     text-align: center;
 }
+.section3 .top .logo {
+    width: clamp(5.15rem, 5.364vw, 10.3rem);
+    margin: 0 auto;
+}
 .section3 .top .title {
     margin-top: 2rem;
     font-weight: 700;
-    font-size: 13.2rem;
+    font-size: clamp(6.6rem, 6.875vw, 13.2rem);
     letter-spacing: -.264rem;
     color: #fff;
 }
 .section3 .top .desc {
     margin-top: 2.5rem;
-    font-size: 1.5rem;
+    font-size: clamp(1.2rem, 0.781vw, 1.5rem);
     line-height: 1.4;
     opacity: .8;
     color: #fff;
@@ -275,17 +275,23 @@ section {
     background: url(../asset/spc/section03_bg.png) no-repeat center/cover;
 }
 .section4 .inner.pc {
-    padding: 8.5rem 0;
+    padding-top: 8.5rem;
+    padding-bottom: 8.5rem;
     display: flex;
+    justify-content: center;
     gap: 2rem;
 }
 .section4 .left {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 2rem;
+    gap: clamp(1rem, 1.042vw, 2rem);
+    width: 50%;
+}
+.section4 .right {
+    width: 50%;
 }
 .section4 .item_wrap .item {
-    padding: 3.5rem 3rem 3rem;
+    padding: clamp(1.75rem, 1.823vw, 3.5rem) clamp(1.5rem, 1.563vw, 3rem) clamp(1.5rem, 1.563vw, 3rem);
     background: rgba(255, 255, 255, 0.4);
     border-radius: 2rem;
     border: 1px solid rgba(255, 255, 255, 0.2);
@@ -312,11 +318,11 @@ section {
     font-size: 1.4rem;
 }
 .section4 .item_wrap .item_header .title {
-    font-size: 3.2rem;   
+    font-size: clamp(1.6rem, 1.667vw, 3.2rem);   
     font-weight: bold;
 }
 .section4 .item_wrap .item_cont {
-    font-size: 1.5rem;
+    font-size: clamp(1.2rem, 0.781vw, 1.5rem);
     line-height: 1.4;
 }
 
@@ -329,11 +335,12 @@ section {
 }
 
 .section5 .inner {
-    padding: 14rem 0 20rem;
+    padding-top: 14rem;
+    padding-bottom: 20rem;
 }
 .section5 .inner > .top {
     display: flex;
-    gap: 4rem;
+    gap: clamp(2rem, 2.083vw, 4rem);
 }
 .section5 .top .left {
     display: flex;
@@ -345,10 +352,10 @@ section {
 }
 .section5 .top .left .text_set .title {
     font-weight: bold;
-    font-size: 3.4rem;
+    font-size: clamp(1.7rem, 1.771vw, 3.4rem);
 }
 .section5 .top .left .text_set .desc {
-    font-size: 1.5rem;
+    font-size: clamp(1.2rem, 0.781vw, 1.5rem);
     line-height: 1.4;
     margin-top: 4.5rem;
     text-transform: uppercase;
@@ -356,11 +363,11 @@ section {
 }
 .section5 .left .bottom {
     display: flex;
-    gap: 3rem;
+    gap: clamp(1.5rem, 1.563vw, 3rem);
 }
 .section5 .card_wrap1 {
     display: flex;
-    gap: 2rem;
+    gap: clamp(1rem, 1.042vw, 2rem);
     margin-top: 20rem;
     width: calc(100% - 8rem);
     justify-content: center;
@@ -370,18 +377,21 @@ section {
 }
 .section5 .card_wrap2 {
     display: flex;
-    gap: 2rem;
+    gap: clamp(1rem, 1.042vw, 2rem);
     pointer-events: none;
 }
 .section5 .card_wrap2 .card {
     width: 20%;
     background-color: transparent;
     pointer-events: none;
+    
 }
 .section5 .card_wrap3 {
     display: flex;
     margin-top: 18rem;
     gap: 2rem;
+
+    display: none;
 }
 .section5 .card {
     background: aqua;
@@ -438,13 +448,13 @@ section {
 }
 .section5 .title {
     color: inherit;
-    font-size: 1.8rem;
+    font-size: clamp(1.6rem, 0.938vw, 1.8rem);
     font-weight: 500;
 }
 .section5 .hex,
 .section5 .rgb {
-    font-size: 1.4rem;
-    line-height: 1.8rem;
+    font-size: clamp(1.2rem, 0.729vw, 1.4rem);
+    line-height: 1.2857;
 }
 .section5 .detail {
     display: flex;
@@ -464,7 +474,7 @@ section {
     text-align: center;
 }
 .section6 .text_set .title {
-    font-size: 3.4rem;
+    font-size: clamp(1.7rem, 1.771vw, 3.4rem);
     font-weight: bold;
     color: #fff;
 }
@@ -473,14 +483,14 @@ section {
     color: #fff;
     line-height: 1.4;
     font-weight: 500;
-    font-size: 1.5rem;
+    font-size: clamp(1.2rem, 0.781vw, 1.5rem);
 }
 .section6 .img_cont {
     display: flex;
     flex-direction: column;
     align-items: center;
     width: fit-content;
-    margin: 8.4rem auto 0;
+    margin: 8.4rem clamp(18rem, 18.75vw, 36rem) 0;
 }
 .section6 .img_set.top {
     position: absolute;
@@ -504,26 +514,28 @@ section {
 }
 .section6 .img_set.side {
     position: absolute;
-    left: calc(100% - 13.9rem);
-    bottom: 40.3rem;
-    width: max-content;
+    left: calc(100% - clamp(6.95rem, 7.24vw, 13.9rem));
+    bottom: clamp(20.15rem, 20.99vw, 40.3rem);
+    width: clamp(20.7rem, 21.563vw, 41.4rem);
 }
 
 .section7 .inner.pc {
     max-width: 100%;
-    padding: 16.5rem 12.2rem 14.6rem 11.4rem;
+    padding: clamp(8.25rem, 8.594vw, 16.5rem) clamp(6.1rem, 6.354vw, 12.2rem) clamp(7.3rem, 7.604vw, 14.6rem) clamp(5.7rem, 5.938vw, 11.4rem);
 }
 .section7 .pc .item1 {
     position: absolute;
-    top: 16.5rem;
-    left: 12.4rem;
+    top: clamp(8.25rem, 8.594vw, 16.5rem);
+    left: clamp(6.2rem, 6.458vw, 12.4rem);
     z-index: 1;
+    width: clamp(27rem, 28.125vw, 54rem);
 }
 .section7 .pc .item2 {
     position: absolute;
-    top: 30.8rem;
-    left: 59.8rem;
+    top: clamp(15.4rem, 16.042vw, 30.8rem);
+    left: clamp(29.9rem, 31.146vw, 59.8rem);
     z-index: 1;
+    width: clamp(26.45rem, 27.552vw, 52.9rem);
 }
 .section7 .pc .item_wrap {
     display: flex;
@@ -533,28 +545,31 @@ section {
     z-index: 1;
 }
 .section7 .pc .item3 {
-    margin-top: 4.6rem;
-    margin-right: 17.7rem;
+    margin-top: clamp(2.3rem, 2.396vw, 4.6rem);
+    margin-right: clamp(8.85rem, 9.219vw, 17.7rem);
 }
 .section7 .pc .item3 .title {
     font-weight: 700;
-    font-size: 3.4rem;
+    font-size: clamp(1.7rem, 1.771vw, 3.4rem);
 }
 .section7 .pc .item3 .desc {
-    margin-top: 4.5rem;
-    font-size: 1.5rem;
+    margin-top: clamp(2.25rem, 2.344vw, 4.5rem);
+    font-size: clamp(1.2rem, 0.781vw, 1.5rem);
     line-height: 1.4;
+}
+.section7 .pc .item4 {
+    width: clamp(39.05rem, 40.677vw, 78.1rem);
 }
 .section7 .pc .item5 {
     position: absolute;
     bottom: 0;
     left: 0;
-    padding: 0 12.2rem 19.6rem 11.4rem;
+    padding: 0 clamp(6.1rem, 6.354vw, 12.2rem) clamp(9.8rem, 10.208vw, 19.6rem) clamp(5.7rem, 5.938vw, 11.4rem);
     width: 100%;
 }
 .section7 .pc .item5 {
     font-weight: 600;
-    font-size: 21rem;
+    font-size: clamp(10.5rem, 10.938vw, 21rem);
     line-height: 0.96;
     color: rgba(60, 180, 229, .12);
     letter-spacing: -.84rem;
@@ -573,6 +588,7 @@ section {
 }
 .section8 .bg img {
     display: block;
+    width: 100%;
 }
 .section8 .text_set1 {
     margin-bottom: 12rem;
@@ -580,7 +596,7 @@ section {
 .section8 .text_set1 .title {
     color: #fff;
     font-weight: 500;
-    font-size: 1.5rem;
+    font-size: clamp(1.2rem, 0.781vw, 1.5rem);
     line-height: 1.8;
     text-align: center;
     text-transform: uppercase;
@@ -590,22 +606,24 @@ section {
     display: flex;
     gap: 9.2rem;
 }
-.section8 .img_wrap1 {
-    
+.section8 .img_wrap1 .img_set {
+    width: clamp(84.5rem, 88.021vw, 169rem);
 }
 .section8 .img_wrap2 {
     justify-content: flex-end;
 }
-
+.section8 .img_wrap2 .img_set {
+    width: clamp(85.95rem, 89.427vw, 171.9rem);
+}
 .section8 .text_set2 .title {
     font-weight: 600;
-    font-size: 11rem;
+    font-size: clamp(5.5rem, 5.729vw, 11rem);
     line-height: 1.14;
     color: rgba(255, 255, 255, .2);
     text-transform: uppercase;
     display: flex;
     justify-content: flex-end;
-    margin-right: 11.7rem;
+    margin-right: clamp(5.85rem, 6.094vw, 11.7rem);
 }
 
 .section8 .dev_cont {
@@ -616,15 +634,16 @@ section {
     width: 100%;
 }
 .section8 .dev_cont .star {
-    width: fit-content;
-    margin: 0 auto 4.5rem;
+    width: clamp(1.3rem, 1.354vw, 2.6rem);
+    height: clamp(1.3rem, 1.354vw, 2.6rem);
+    margin: 0 auto clamp(2.25rem, 2.344vw, 4.5rem);
 }
 .section8 .svg_wrap .svg_box {
     position: relative;
 }
 .section8 .svg_wrap {
     display: flex;
-    max-width: calc(100% - 35rem);
+    max-width: calc(100% - clamp(17.5rem, 18.229vw, 35rem));
     margin: 0 auto;
 
 }
@@ -640,7 +659,7 @@ section {
 }
 .section8 .svg_txt span {
     font-weight: 500;
-    font-size: 1.5rem;
+    font-size: clamp(1.2rem, 0.781vw, 1.5rem);
     line-height: 1.73;
     color: #fff;
     display: block;
@@ -699,11 +718,11 @@ section {
 
 /* 반응형 */
 @media (max-width: 767px) {
-    header .inner {
+    .section1 .section_head .inner {
         margin-top: 2.5rem;
         padding: 0 2.5rem;
     }
-    header .inner > div {
+    .section1 .section_head .inner > div {
         font-size: 1.0rem;
     }
     .cont_wrap,
@@ -983,6 +1002,25 @@ section {
         width: fit-content;
         margin: 4.25rem auto;
     }
+    .section6 .img_set.side img {
+        box-shadow: 3.2rem 3.2rem 5rem 0px rgba(0, 0, 0, 0.12);
+    }
+    .section6 .img_set.main > .main_top {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+    }
+    .section6 .img_set.main .top_image {
+        border: .461rem solid rgba(42, 42, 42, 1);
+        border-radius: 0.717rem;
+        box-shadow: 1.435rem 1.845rem 4.1rem 0px rgba(0, 0, 0, 0.06);
+        position: absolute;
+        top: -.461rem;
+        left: -.461rem;
+        width: 100%;
+        box-sizing: content-box;
+    }
 
     .section7 .inner {
         padding: 10rem 0 12rem;
@@ -1081,21 +1119,23 @@ section {
         position: static;
         transform: none;
     }
-    .section8 .star {
-        /* width: 1.3rem; */
-        /* height: 1.3rem; */
-        width: fit-content;
-        margin: 0 auto 4rem;
+    .section8 .dev_cont .star {
+        width: 1.3rem;
+        height: 1.3rem;
+        margin: 0 auto 5rem;
+    }
+    .section8 .dev_cont .star img {
+        width: 100%;
+        height: 100%;
     }
     .section8 .svg_wrap {
         flex-direction: column;
-        gap: 2rem;
+        gap: 4rem;
         max-width: none;
         position: relative;
         transform: none;
         left: auto;
         bottom: auto;
-        margin-top: 1.85rem;
     }
     .section8 .svg_txt span {
         font-size: 1rem;

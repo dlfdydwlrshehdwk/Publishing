@@ -36,10 +36,10 @@ function setupAnimations() {
         '.section6 .text_set .title',
         '.section6 .text_set .desc',
         '.section6 .img_cont .img_set.side',
-        '.section7 .pc .item1',
-        '.section7 .pc .item2',
+        '.section7 .pc .item1 img',
+        '.section7 .pc .item2 img',
         '.section7 .pc .item3',
-        '.section7 .pc .item4',
+        '.section7 .pc .item4 img',
         '.section7 .pc .item5',
         '.section8 .img_wrap .img_set',
         '.section8 .text_set2 .title',
@@ -93,7 +93,7 @@ function setupAnimations() {
             gsap.to(".section4 .pc .item2", { scrollTrigger: { trigger: ".section4", start: "top 70%" }, opacity: 1, y: 0, duration: 1 });
             gsap.to(".section4 .pc .right", { scrollTrigger: { trigger: ".section4", start: "top 50%" }, opacity: 1, y: 0, duration: 1 });
             gsap.to(".section4 .pc .item3", { scrollTrigger: { trigger: ".section4", start: "top 30%" }, opacity: 1, y: 0, duration: 1 });
-            gsap.to(".section4 .pc .item4", { scrollTrigger: { trigger: ".section4", start: "top 10%" }, opacity: 1, y: 0, duration: 1 });
+            gsap.to(".section4 .pc .item4", { scrollTrigger: { trigger: ".section4", start: "top 30%" }, opacity: 1, y: 0, duration: 1 });
 
             // section05
             const card = document.querySelector('.section5 .card');
@@ -128,10 +128,10 @@ function setupAnimations() {
             gsap.to('.section6 .img_cont .img_set.side', { scrollTrigger: { trigger: ".section6 .img_cont .img_set.side", start: "top 70%" }, opacity: 1, y: 0, duration: 1 });
 
             // section07
-            gsap.to('.section7 .pc .item1', { scrollTrigger: { trigger: ".section7", start: "top 70%" }, opacity: 1, y: 0, duration: 1 });
-            gsap.to('.section7 .pc .item2', { scrollTrigger: { trigger: ".section7", start: "top 70%" }, opacity: 1, y: 0, duration: 1 });
+            gsap.to('.section7 .pc .item1 img', { scrollTrigger: { trigger: ".section7 .pc .item1", start: "top 70%" }, opacity: 1, y: 0, duration: 1 });
+            gsap.to('.section7 .pc .item2 img', { scrollTrigger: { trigger: ".section7 .pc .item2", start: "top 70%" }, opacity: 1, y: 0, duration: 1 });
             gsap.to('.section7 .pc .item3', { scrollTrigger: { trigger: ".section7", start: "top 70%" }, opacity: 1, y: 0, duration: 1 });
-            gsap.to('.section7 .pc .item4', { scrollTrigger: { trigger: ".section7", start: "top center" }, opacity: 1, y: 0, duration: 1 });
+            gsap.to('.section7 .pc .item4 img', { scrollTrigger: { trigger: ".section7 .pc .item4", start: "top 40%" }, opacity: 1, y: 0, duration: 1 });
             gsap.to('.section7 .pc .item5', { scrollTrigger: { trigger: ".section7", start: "top top" }, opacity: 1, y: 0, duration: 1 });
 
             // section08
