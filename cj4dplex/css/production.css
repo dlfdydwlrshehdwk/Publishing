@@ -1,0 +1,116 @@
+/* --- 기본 및 3D 공간 설정 --- */
+html, body, .stage {
+  width: 100%;
+  height: 100%;
+  overflow: hidden; /* 화면을 벗어나는 3D 개체 숨김 */
+  background: #000;
+}
+
+.container {
+  width: 100%;
+  height: 100vh;
+  position: relative;
+  /* 3D 공간의 원근감(시점 거리)을 설정합니다. */
+  perspective: 5000px;
+  width: 40%;
+  margin: 0 30%;
+  position: relative;
+}
+
+.ring {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  transform-style: preserve-3d;
+  animation: spin-ring 60s linear infinite;
+}
+
+/* --- 회전 애니메이션 정의 --- */
+@keyframes spin-ring {
+  from {
+    transform:  rotateY(0deg);
+  }
+  to {
+    transform:  rotateY(-360deg);
+  }
+}
+
+.stage .slide {
+  position: absolute;
+  left: 50%;
+  margin-left: -25rem;
+  width: 50rem;
+  aspect-ratio: 1/1;
+  border-radius: 20px;
+  border: 1px solid #3F3E3E;
+  overflow: hidden;
+  /* 3D 변형 시 뒷면은 보이지 않게 처리 */
+  backface-visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 4rem 2rem 6rem;
+}
+
+.slide-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
+}
+
+.stage .slide .top {
+  border-radius: 8px;
+  padding: 6px 10px;
+  color: #fff;
+  font-size: 18px;
+  text-align: center;
+  margin: 0 auto;
+  background-color: rgba(255, 255, 255, 0.15);
+  width: fit-content;
+}
+
+.stage .slide .title {
+  text-align: center;
+}
+
+.stage .slide .title span {
+  color: #fff;
+  font-size: 44px;
+  font-weight: 600;
+}
+
+.stage .slide .desc {
+  font-size: 16px;
+  opacity: .6;
+  color: #fff;
+  line-height: 1.4;
+  text-align: center;
+}
+
+/* --- Text Gradient Effect --- */
+.text_gradient_wrap {
+  background: radial-gradient(circle, rgba(251, 35, 57, .8) 0%, oklch(76.483% 0.14421 39.495 / 0.6) 100%);
+  text-align: center;
+  padding: 8rem 0;
+  font-size: 2.2rem;
+  font-weight: bold;
+  line-height: 1.6;
+  color: #fff; /* 효과가 적용되지 않을 경우를 위한 기본 색상 */
+
+  /* JS에서 --mouse-x, --mouse-y 변수를 받아 그래디언트 위치를 조절합니다. */
+  background: radial-gradient(
+    circle 155px at var(--mouse-x, -999px) var(--mouse-y, -999px),
+    /* #FB253C 0%, */
+    #FF906A,
+    #fff
+  ),
+  white; /* 광원이 없는 부분의 기본 텍스트 색상 */
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transition: background 0.3s ease-out; /* 부드러운 전환 효과 */
+}

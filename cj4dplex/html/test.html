@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>텍스트 클립 + 근접 그라디언트 (지름 155px, 퍼짐 포함)</title>
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            background: #0f0f12; /* 박스 배경은 흰색 아님 */
+            display: grid;
+            place-items: center;
+            font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+        }
+
+        /* 당신이 쓰는 셀렉터 그대로 */
+        .UIHeadingGradient--text.UIHeadingGradient--enabled[data-v-5e1e8586]{
+            /* 커스텀 좌표/근접도 기본값 */
+            --2fbf780c: -9999; /* x(px) */
+            --2fbf780a: -9999; /* y(px) */
+            --k: 0;            /* 근접도 0..1 (JS에서 갱신) */
+
+            /* 텍스트 기본색(= currentColor)을 흰색으로 */
+            color: #fff;
+
+            /* 텍스트 모양으로 배경을 마스킹 */
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+
+            /* 레이어 순서: [그라디언트] 위에 [currentColor]를 깔아
+               그라디언트가 없는 곳은 흰색 글자로 보이게 함 */
+            background:
+                radial-gradient(
+                    /* 1) 퍼짐(페더)까지 포함해 총 지름 155px → 실제 반경 77.5px */
+                    circle 77.5px at calc(var(--2fbf780c) * 1px) calc(var(--2fbf780a) * 1px),
+                    /* 0~85%: FB253C→FF906A (알파 = 0.6 * 근접도),
+                       85~100%: 투명 페더 → 전체 발자국이 딱 지름 155px */
+                    rgba(251, 37, 60,  calc(0.6 * var(--k))) 0%,
+                    rgba(255, 144, 106, calc(0.6 * var(--k))) 85%,
+                    rgba(255, 144, 106, 0) 100%
+                ),
+                currentColor;
+
+            background-repeat: no-repeat;
+
+            /* 데모용 타이포 */
+            font-size: clamp(36px, 9vw, 120px);
+            font-weight: 900;
+            line-height: 1.05;
+            text-align: center;
+
+            margin: -.2em 0;
+            padding: .2em 0;
+
+            /* 원본 속성 보존 */
+            transform-style: preserve-3d;
+            perspective: 500px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1 class="UIHeadingGradient--text UIHeadingGradient--enabled" data-v-5e1e8586>
+        Gradient Text
+    </h1>
+
+    <script>
+        (function () {
+            var el = document.querySelector('.UIHeadingGradient--text.UIHeadingGradient--enabled[data-v-5e1e8586]');
+            if (!el) return;
+
+            var DIAMETER = 155;   /* 근접 반응 범위(요소 밖에서도 서서히 나타나도록) */
+            var R = DIAMETER;     /* 근접도 계산 반경: 155px */
+            var HIDE = -9999;
+
+            function clamp01(v) {
+                if (v < 0) return 0;
+                if (v > 1) return 1;
+                return v;
+            }
+
+            /* 문서 전역에서 포인터 추적 → 요소 밖에서도 근접도 반영 */
+            document.addEventListener('mousemove', function (e) {
+                var rect = el.getBoundingClientRect();
+
+                /* 그라디언트 중심(요소 좌표계). 요소 밖이면 음수/초과도 허용 */
+                var x = e.clientX - rect.left;
+                var y = e.clientY - rect.top;
+
+                /* 커서→요소 박스 최단거리(박스 내부면 0) */
+                var cx = Math.max(rect.left, Math.min(e.clientX, rect.right));
+                var cy = Math.max(rect.top,  Math.min(e.clientY, rect.bottom));
+                var dx = e.clientX - cx;
+                var dy = e.clientY - cy;
+                var dist = Math.sqrt(dx * dx + dy * dy);
+
+                /* 근접도 k: 0..1 (R=155px 이내에서 선형 증가) */
+                var k = clamp01(1 - (dist / R));
+
+                el.style.setProperty('--2fbf780c', x);
+                el.style.setProperty('--2fbf780a', y);
+                el.style.setProperty('--k', k);
+            });
+
+            /* 문서 벗어나면 감춤 */
+            document.addEventListener('mouseleave', function () {
+                el.style.setProperty('--k', 0);
+                el.style.setProperty('--2fbf780c', HIDE);
+                el.style.setProperty('--2fbf780a', HIDE);
+            });
+
+            /* 리사이즈 시 초기화(선택) */
+            window.addEventListener('resize', function () {
+                el.style.setProperty('--k', 0);
+                el.style.setProperty('--2fbf780c', HIDE);
+                el.style.setProperty('--2fbf780a', HIDE);
+            });
+        })();
+    </script>
+
+</body>
+</html>
