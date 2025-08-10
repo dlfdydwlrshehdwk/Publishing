@@ -212,7 +212,7 @@ section {
     font-weight: bold;
 }
 .section2 .text_set .desc {
-    margin-top: 4.5rem;
+    margin-top: clamp(2.25rem, 2.344vw, 4.5rem);
     font-size: clamp(1.2rem, 0.78vw, 1.5rem);
     line-height: 1.4;
     letter-spacing: -0.075rem;
