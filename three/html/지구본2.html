@@ -26,13 +26,6 @@
 
     <script>
         let scene, camera, renderer, globe, controls;
-        let raycaster, mouse, mouse3D;
-        let targetPointsMesh = null;
-        let globeRayTarget = null; // ← 마우스 교차용 가짜 구체
-        let originalColors = []; // 원래 랜덤 색상 저장
-        let currentGlowStrengths = []; // 각 점의 현재 glow 강도 (서서히 변화용)
-        let maxGlowStrengths = []; // 각 점이 받은 최대 glow 강도 (잔상용)
-        let dynamicDirectionalLight; // 마우스 따라다니는 디렉셔널 라이트
         let animatedPins = [];
 
         function init() {
@@ -59,36 +52,9 @@
             rimLight.position.set(-10, -10, -5);
             scene.add(rimLight);
             
-            // 마우스 위치에 따라 움직이는 디렉셔널 라이트 (처음엔 꺼져있음)
-            dynamicDirectionalLight = new THREE.DirectionalLight(0xffffff, 0);
-            dynamicDirectionalLight.position.set(0, 10, 0);
-            scene.add(dynamicDirectionalLight);
+            
 
-            // Ray
-            raycaster = new THREE.Raycaster();
-            mouse = new THREE.Vector2();
-            mouse3D = new THREE.Vector3();
-
-            // 마우스 위치 → 3D 위치로
-            window.addEventListener('mousemove', function (event) {
-                mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-                mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
-
-                raycaster.setFromCamera(mouse, camera);
-                if (globeRayTarget) {
-                    const intersects = raycaster.intersectObject(globeRayTarget);
-                    if (intersects.length > 0) {
-                        mouse3D.copy(intersects[0].point);
-                    }
-                }
-            });
-
-            // Raycast 전용 invisible globe (교차 정확히 하기 위해)
-            globeRayTarget = new THREE.Mesh(
-                new THREE.SphereGeometry(2.5, 32, 32),
-                new THREE.MeshBasicMaterial({ visible: false })
-            );
-            scene.add(globeRayTarget);
+            
 
             // Load GLB
             const loader = new THREE.GLTFLoader();
@@ -100,8 +66,6 @@
 
                 globe.traverse(function (child) {
                     if (child.type === 'Points') {
-                        targetPointsMesh = child;
-
                         if (child.material) {
                             child.material.transparent = true;
                             child.material.size = 0.03;
@@ -127,9 +91,6 @@
                                 const b = 0.67 * brightness;
                                 
                                 colors.push(r, g, b);
-                                originalColors.push(r, g, b); // 원래 색상 저장
-                                currentGlowStrengths.push(0); // 초기 glow 강도는 0
-                                maxGlowStrengths.push(0); // 초기 최대 glow 강도는 0
                             }
 
                             geometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
@@ -167,106 +128,7 @@
             animate();
         }
 
-        function updateGlowEffect(pointsMesh, mousePosition) {
-            const geometry = pointsMesh.geometry;
-            const posAttr = geometry.attributes.position;
-            const colorAttr = geometry.attributes.color;
-
-            const glowColor = new THREE.Color(1, 1, 1); // 흰색 glow
-            const tempVec = new THREE.Vector3();
-            const transitionSpeed = 0.08; // glow 변화 속도 (작을수록 서서히)
-            const afterglowDecay = 0.01; // 잔상 사라지는 속도 (작을수록 오래 남음)
-
-            const mouseY = mousePosition.y;
-            const isUpperHemisphere = mouseY > 1.5; // 지구본 윗부분 판단
-
-            for (let i = 0; i < posAttr.count; i++) {
-                tempVec.fromBufferAttribute(posAttr, i);
-                pointsMesh.localToWorld(tempVec);
-
-                let instantGlowStrength = 0;
-
-                if (isUpperHemisphere) {
-                    // 윗부분: 북극점에서 마우스 방향으로 퍼져나가는 빛
-                    const topPoint = new THREE.Vector3(0, 2.51, 0); // 북극점 (지구본 스케일 5에 맞춤)
-                    
-                    // 북극점 → 마우스 방향 벡터 (빛이 퍼져나갈 방향)
-                    const lightDirection = new THREE.Vector3().subVectors(mousePosition, topPoint).normalize();
-                    
-                    // 북극점에서 현재 점까지의 벡터
-                    const toPoint = new THREE.Vector3().subVectors(tempVec, topPoint);
-                    
-                    // 빛 방향으로의 투영 거리 (북극점에서 얼마나 멀리 뻗어나갔는가)
-                    const projectionDistance = toPoint.dot(lightDirection);
-                    
-                    // 빛이 뻗어나가는 조건 (북극점에서 정확히 시작)
-                    if (projectionDistance >= 0) { // 북극점에서 마우스 방향으로만
-                        
-                        // 빛 축에서 얼마나 벗어났는지 (수직 거리)
-                        const projectedPoint = new THREE.Vector3().copy(lightDirection).multiplyScalar(projectionDistance);
-                        const sideDistance = toPoint.clone().sub(projectedPoint).length();
-                        
-                        // 북극점에서만 시작하는 매우 좁은 원뿔
-                        const coneRadius = projectionDistance * 0.05; // 더 좁은 원뿔
-                        
-                        if (sideDistance < coneRadius) {
-                            // 원뿔 안에 있는 점들만 빛남
-                            const centerDistance = Math.sqrt(projectionDistance * projectionDistance + sideDistance * sideDistance);
-                            
-                            // 북극점에서 멀어질수록 어두워짐 (더 부드럽게)
-                            const distanceFactor = Math.exp(-centerDistance * 1.2);
-                            
-                            // 빛축 중심에 가까울수록 밝아짐  
-                            const sideFactor = Math.exp(-sideDistance * 8);
-                            
-                            // 투영 거리에 따른 감쇠 - 북극점은 매우 어둡게
-                            const projectionFactor = projectionDistance > 0.3 ? 
-                                Math.exp(-Math.abs(projectionDistance - 2.0) * 0.6) : // 2.0 지점이 가장 밝음
-                                Math.exp(-projectionDistance * 5.0); // 북극점 근처는 매우 어둡게
-                            
-                            instantGlowStrength = distanceFactor * sideFactor * projectionFactor * 3.0;
-                        }
-                    }
-                    
-                } else {
-                    // 아래쪽: 기존 방식 (원형으로 퍼지는 glow)
-                    const dist = tempVec.distanceTo(mousePosition);
-                    instantGlowStrength = Math.exp(-dist * 3);
-                }
-
-                // 최대 glow 강도 업데이트 (잔상 효과)
-                if (instantGlowStrength > maxGlowStrengths[i]) {
-                    maxGlowStrengths[i] = instantGlowStrength;
-                } else {
-                    // 잔상이 서서히 사라짐
-                    maxGlowStrengths[i] *= (1 - afterglowDecay);
-                }
-
-                // 현재 glow와 잔상 중 더 큰 값을 목표로 설정
-                const targetGlowStrength = Math.max(instantGlowStrength, maxGlowStrengths[i]);
-
-                // 현재 glow 강도를 목표값으로 서서히 변화
-                const currentStrength = currentGlowStrengths[i];
-                const newStrength = currentStrength + (targetGlowStrength - currentStrength) * transitionSpeed;
-                currentGlowStrengths[i] = newStrength;
-
-                // 원래 랜덤 색상 사용
-                const baseR = originalColors[i * 3];
-                const baseG = originalColors[i * 3 + 1];
-                const baseB = originalColors[i * 3 + 2];
-
-                const r = baseR + (glowColor.r - baseR) * newStrength;
-                const g = baseG + (glowColor.g - baseG) * newStrength;
-                const b = baseB + (glowColor.b - baseB) * newStrength;
-
-                colorAttr.setXYZ(i, r, g, b);
-            }
-
-            // 디렉셔널 라이트는 끔 (Points에 효과 없으므로)
-            dynamicDirectionalLight.intensity = 0;
-
-            colorAttr.needsUpdate = true;
-        }
+        
 
         function onResize() {
             camera.aspect = window.innerWidth / window.innerHeight;
@@ -306,7 +168,7 @@
             const y = radius * Math.cos(phi);
             const z = radius * Math.sin(phi) * Math.sin(theta);
 
-            // 📍핀 본체 (빨간 점)
+            // 핀 본체 (빨간 점)
             const pinGeometry = new THREE.SphereGeometry(0.005, 16, 16);
             const pinMaterial = new THREE.MeshLambertMaterial({ 
                 color: 0xff0000,
@@ -317,7 +179,7 @@
             // 핀을 지구 표면에 배치
             pinMesh.position.set(x, y, z);
 
-            // 📍텍스트 라벨 - 크기와 위치 조정
+            // 텍스트 라벨 - 크기와 위치 조정
             const canvas = document.createElement('canvas');
             canvas.width = 400; // 캔버스 너비 (클수록 고해상도, 작게하면 흐려짐)
             canvas.height = 240; // 캔버스 높이 (클수록 고해상도, 작게하면 흐려짐)
@@ -330,20 +192,20 @@
             ctx.strokeText(label, canvas.width / 2, canvas.height / 2 + 10);
             ctx.fillText(label, canvas.width / 2, canvas.height / 2 + 10);
 
-            const texture = new THREE.CanvasTexture(canvas);
-            const textMaterial = new THREE.SpriteMaterial({ map: texture });
-            const textSprite = new THREE.Sprite(textMaterial);
-            // 텍스트 실제 화면 크기 조정 (첫번째 값: 가로, 두번째 값: 세로)
-            // 작게하면 화면에서 텍스트가 작게 보임
-            textSprite.scale.set(0.4, 0.1, 1); 
-            textSprite.position.set(x, y + 0.05, z); // 점 위에 텍스트 배치
+            // const texture = new THREE.CanvasTexture(canvas);
+            // const textMaterial = new THREE.SpriteMaterial({ map: texture });
+            // const textSprite = new THREE.Sprite(textMaterial);
+            // // 텍스트 실제 화면 크기 조정 (첫번째 값: 가로, 두번째 값: 세로)
+            // // 작게하면 화면에서 텍스트가 작게 보임
+            // textSprite.scale.set(0.4, 0.1, 1); 
+            // textSprite.position.set(x, y + 0.05, z); // 점 위에 텍스트 배치
 
             // Globe에 추가
             if (globe) {
                 globe.add(pinMesh);
-                globe.add(textSprite);
-                console.log(`Pin added at: ${label} (${lat}, ${lon})`);
-                console.log(`Position: (${x.toFixed(2)}, ${y.toFixed(2)}, ${z.toFixed(2)})`);
+                // globe.add(textSprite);
+                // console.log(`Pin added at: ${label} (${lat}, ${lon})`);
+                // console.log(`Position: (${x.toFixed(2)}, ${y.toFixed(2)}, ${z.toFixed(2)})`);
             } else {
                 console.error('Globe not loaded yet!');
             }
@@ -355,5 +217,8 @@
 
         init();
     </script>
+</body>
+</html>
+</script>
 </body>
 </html>
