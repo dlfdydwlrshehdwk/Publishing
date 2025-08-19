@@ -1,0 +1,103 @@
+1) 어디서 GLB를 쓰는지 (assets)
+
+에셋 매니페스트에 models.globe가 등록되어 있고 경로가 /models/globe.glb (모바일은 /models/globe-mobile.glb). 이후 코드에서 q.core.assetsManager.get("globe")로 불러 씁니다. 
+
+2) 리액트 쪽에서 글로브 DOM 만들기 (points 제공)
+
+페이지 섹션에서 <G points={R} scale={.7} className={...}/>를 렌더합니다. 이 <G>가 내부적으로 data-point, data-latitude, data-longitude를 갖는 DIV들을 만들어줘요. (당신이 채팅에 올린 G 컴포넌트 전문과 일치)
+
+3) VE: 글로브를 실제로 구성/구동하는 씬 오브젝트
+
+DOM → 점 좌표 수집: this.pointsEl = [...element.querySelectorAll("[data-point]")]를 읽고, 각 dataset.latitude/longitude를 구면 좌표로 변환해 pointsPositions 배열을 만듭니다. (변환은 클래스 프라이빗 메서드 Cm로 처리) 
+
+공통 유니폼: uColor(테마 Ad.materials.Globe.color가 없으면 10450170), uFadeY(파라미터 fadeY). 
+
+구성:
+
+구면 셰이더 메쉬 globeSphere = new Qh(commonUniforms)
+
+호버 텍스처 시스템 globeHover = new IE(globeSphere) (터치가 아니면 활성)
+
+로드된 GLB의 첫 자식 포인트 지오메트리를 복제해서 포인트 메쉬 globePoints = new Jh(geometry, pointsPositions, commonUniforms, globeHover?.texture) 생성
+
+둘을 this.group에 넣고 스케일/회전 제어. 
+
+인터랙션 및 애니메이션: 드래그로 X/Y 회전 누적, 스크롤 트리거 타임라인(this.tl), 매 프레임 tick에서 시간 회전(0.03rad/s), 드래그 감쇠 보간, 포인트 크기를 컨테이너 크기에 맞춰 uPointSize로 업데이트. 시작 회전은 -0.55π. 
+
+4) Qh(=Ho): 지구본 “구체” 셰이더
+
+지오메트리: SphereGeometry(.51, 32, 16) 고정. 렌더순서 -Infinity(가장 뒤)로 설정. 
+
+머티리얼(HE) 셰이더:
+
+vertex kE: uFadeY로 Y축 기반 페이드 값을 계산해 vFade에 전달. (로컬 y → smoothstep(-.1+uFadeY, 2.+uFadeY, localRotatedPos.y)) 
+
+fragment OE: uColor를 쓰고, 노멀의 XY 길이로 중심에서의 거리 distFromCenter를 구해 알파를 만들고 vFade로 곱함. 디더링/투명 사용. (내부 “어두워지는/사라지는” 느낌의 베이스) 
+
+정리: 이 백페이스/알파 페이드 구체가 **“안쪽이 어두워지고, 아래쪽(혹은 특정 Y)에서 더 사라지는 느낌”**의 베이스를 만듭니다. (색은 uColor, 가시성은 vFade가 좌우) 
+
+5) Jh(=Ms): 포인트 레이어(글로우/원근/POI/호버 결합)
+
+지오메트리 후처리: GLB 포인트 버퍼에서 lat/lon에 가장 가까운 버텍스 인덱스들을 찾아 aPOI 속성(0 or 1)으로 마킹합니다. (최근접 탐색 Rm, 버퍼 재배치 wm) 
+
+머티리얼 FE(=points 셰이더) 설정: uDPR, uPointSize, tHover(IE가 만든 텍스처)를 유니폼으로 사용. 깊이 테스트/라이트는 끄고(투명, 디더링 켜짐) 포인트를 발광 느낌으로 합성. 
+ 
+
+vertex UE 핵심:
+
+attribute float aPOI;
+
+uniform float uDPR, uPointSize, uFadeY; uniform sampler2D tHover;
+
+위치→(위도/경도) UV 맵핑 positionToUV로 호버 텍스처 tHover를 샘플해 vHover에 담음. (호버가 포인트 색/강도에 반영되는 경로) 
+
+fragment LE 핵심:
+
+멀리 있는 포인트는 작고 희미하게(vModelPosition.z / uPointSize로 거리 감쇠)
+
+글로우 애니메이션: sin(uTime*2. + vPosition.z*50.)로 에너지 변화
+
+POI 강조: 사각 글로우 마스크(두 개 rectangle() 조합)로 카드형 하이라이트 → vPOI로 알파/색상 증폭
+
+호버 영향: mix(uColor + vHover*.5, vec3(1.), vPOI) — 호버 텍스처 값이 컬러에 더해지고(POI일 땐 더 흰쪽으로) 최종 알파도 *(1.+vPOI)로 부스트. 
+
+결론적으로 “포인트 글로우/깊이 감쇠/POI 강조/호버 반응”은 전부 **포인트 셰이더(UE/LE)**에서 처리됩니다. (여기 uCameraPos 같은 유니폼은 안 씁니다 — 질문 주신 대로 파일에 없습니다) 
+
+6) IE: “호버 글로우”를 만드는 오프스크린 텍스처
+
+핵심 아이디어: 마우스 레이로 globeSphere와 교차점을 찍어 **UV 좌표(u,v)**를 얻고, 그 위치를 중심으로 원형 잔광/트레일 텍스처를 **핑퐁 렌더타겟(2장)**에 그립니다. 이 텍스처를 위의 포인트 셰이더에서 tHover로 샘플. 
+
+셰이더(PE/RE): uRayUv(마우스가 찍힌 UV), tLast(이전 프레임), uSpeed를 받아 부드러운 원형/잔광을 만들고 감쇠(smoothstep)와 샘플 오프셋들로 흔적을 남깁니다. 
+
+수명주기: attach()에서 엔진의 POINTER_MOVE/TICK에 바인딩, detach()에서 해제. texture getter로 현재 핑퐁 결과를 노출 → Jh 생성 시 전달됩니다. 
+ 
+
+7) 회전/크기/배치: “꼭대기에서 내려오는 느낌”의 근거
+
+회전: 시간 기반 + 드래그 보간 합성 → 지구가 천천히 돌면서 드래그에 반응. 시작각 -0.55π 기준이라 화면 기준 “위쪽에서” 빛/페이드가 내려오는 듯한 인상이 섞입니다. 
+
+내부 페이드: 구체(Qh)의 vFade(=Y축 기반)와 포인트의 거리 감쇠/알파 컷 조합이 아랫부분이 더 어두워 보이는 효과를 만듭니다. 
+ 
+
+포인트 크기: 컨테이너 사이즈에 비례하여 uPointSize 매 프레임 갱신 → 화면 크기/리사이즈에 맞춰 일관된 시각. 
+
+8) 정리 체크리스트 (요구하신 항목별)
+
+지구본 생성되는 거: GLB 로딩 → 복제 지오메트리 → globeSphere(Qh) + globePoints(Jh)를 group에 추가. 
+
+셰이더 몇 개?
+
+구체용: vertex kE + fragment OE (머티리얼 HE) 
+
+포인트용: vertex UE + fragment LE (머티리얼 FE) 
+
+호버 RT용: vertex wE + fragment RE (머티리얼 PE) 
+
+호버시 글로우 효과: IE가 만든 tHover를 포인트 셰이더가 샘플하여 컬러/알파 증폭. (호버 없을 땐 영향 거의 0) 
+
+안쪽으로 어두워지는 효과: 구체(Qh)의 uFadeY/vFade와 알파 처리로 구현. 
+
+지구본 아래 부분이 어두운 효과: 위의 Y축 기반 페이드 + 포인트 거리 감쇠의 합. 
+ 
+
+포인트 효과(깊이/글로우/POI/랜덤/디더링): 전부 포인트 셰이더(LE/UE) 안. (uTime, vRand, rectangle 마스크, dithering 등)
