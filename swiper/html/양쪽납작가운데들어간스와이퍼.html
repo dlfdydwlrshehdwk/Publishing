@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>파노라마 캐러셀 (루프 + 가운데 평면)</title>
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css"
+  />
+  <style>
+    body {
+      background: rgba(0,0,0,0.1);
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .swiper {
+        width: 90%;
+        height: 300px;
+        perspective: 1500px; /* 원근 깊이 증가 */
+        perspective-origin: center center;
+    }
+    .swiper-wrapper {
+        transform-style: preserve-3d; /* 자식 슬라이드들이 3D 입체 유지 */
+    }
+    .swiper-slide {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: #fff;
+      font-size: 32px;
+      font-weight: bold;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 15px;
+      transition: transform 0.5s ease-out;
+      backface-visibility: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      border: 2px solid rgba(255,255,255,0.1);
+    }
+  </style>
+</head>
+<body>
+  <div class="swiper">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide">1</div>
+      <div class="swiper-slide">2</div>
+      <div class="swiper-slide">3</div>
+      <div class="swiper-slide">4</div>
+      <div class="swiper-slide">5</div>
+      <div class="swiper-slide">6</div>
+      <div class="swiper-slide">7</div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+  <script>
+    const swiper = new Swiper(".swiper", {
+      slidesPerView: 7,
+      centeredSlides: true,
+      loop: true,
+      on: {
+        setTranslate(swiper) {
+          const radius = 400;      // 원통의 반지름
+          const spacing = 120;     // 슬라이드 기본 간격  
+          const flatZone = 2.5;    // 양옆 평면 구간
+
+          swiper.slides.forEach((slide) => {
+            const progress = slide.progress;
+            const absProgress = Math.abs(progress);
+            
+            if (absProgress >= flatZone) {
+              // 양옆 끝: 완전히 평면에 배치
+              const x = progress * spacing;
+              slide.style.transform = `translateX(${x}px) translateZ(0px) rotateY(0deg)`;
+            } else {
+              // 가운데 구간: 진짜 3D 원통 배치
+              const angle = (progress / flatZone) * 50; // 최대 ±50도 회전각
+              const angleRad = (angle * Math.PI) / 180; // 라디안 변환
+              
+              // 원통 내벽을 따라 배치하는 3D 좌표 계산
+              const x = Math.sin(angleRad) * radius; // X 위치
+              const z = -radius + Math.cos(angleRad) * radius; // Z 깊이 (음수 = 안쪽)
+              
+              slide.style.transform = `
+                translate3d(${x}px, 0px, ${z}px) 
+                rotateY(${angle}deg)
+              `;
+            }
+          });
+        },
+        setTransition(swiper, duration) {
+          swiper.slides.forEach(slide => {
+            slide.style.transition = `transform ${duration}ms ease-out`;
+          });
+        }
+      }
+    });
+  </script>
+</body>
+</html>

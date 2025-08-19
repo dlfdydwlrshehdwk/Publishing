@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css" />
+<div class="swiper mySwiper">
+  <div class="swiper-wrapper">
+    <div class="swiper-slide">1</div>
+    <div class="swiper-slide">2</div>
+    <div class="swiper-slide">3</div>
+    <div class="swiper-slide">4</div>
+    <div class="swiper-slide">5</div>
+    <div class="swiper-slide">6</div>
+    <div class="swiper-slide">7</div>
+    <div class="swiper-slide">8</div>
+    <div class="swiper-slide">9</div>
+    <div class="swiper-slide">10</div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+<script>
+var swiper = new Swiper(".mySwiper", {
+  slidesPerView: "auto",    // 가운데모드에 맞추려면 auto + centeredSlides
+  centeredSlides: true,
+  loop: true,
+  speed: 5000,
+  autoplay: {
+        delay: 0,
+        disableOnInteraction: false,
+    },
+});
+</script>
+
+<style>
+body,html {
+    overflow: hidden;
+}
+.swiper {
+  width: 100%;
+  overflow: hidden;
+  width: 1800px;
+  margin: 0 auto;
+  perspective: 1000px;
+  perspective-origin: center center;
+}
+.swiper-wrapper {
+    transition-timing-function: linear !important;
+    transform-style: preserve-3d;
+}
+.swiper-slide {
+  width: 400px;       
+  height: 600px;
+  text-align: center;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  margin: 0 10px;
+  transition: all 0.4s ease;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48px;
+  font-weight: bold;
+  color: white;
+  transform: scale(1.0);
+}
+
+/* 가운데 (가장 안쪽으로) */
+.swiper-slide.swiper-slide-active {
+    transform: scale(0.8) translateY(30px) translateZ(-100px);
+}
+
+/* 왼쪽 슬라이드 - 오른쪽이 안쪽으로 회전하면서 흡입 */
+.swiper-slide.swiper-slide-prev {
+    transform: scale(0.8) translateY(30px) translateX(70px) translateZ(-5px) rotateY(35deg);
+}
+
+/* 오른쪽 슬라이드 - 왼쪽이 안쪽으로 회전하면서 흡입 */
+.swiper-slide.swiper-slide-next {
+    transform: scale(0.8) translateY(30px) translateX(-70px) translateZ(-5px) rotateY(-35deg);
+}
+</style>
+
+</body>
+</html>

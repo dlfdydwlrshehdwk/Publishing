@@ -27,6 +27,10 @@
     <script>
         let scene, camera, renderer, globe, controls;
         let animatedPins = [];
+        let globeObject; // VE 클래스와 유사한 구조
+        let globeHover; // 호버 시스템
+        let raycaster, mouse;
+        let hoverPosition = new THREE.Vector3(999, 999, 999); // 호버 위치 (원본과 유사)
 
         function init() {
             scene = new THREE.Scene();
@@ -37,11 +41,16 @@
             renderer = new THREE.WebGLRenderer({ antialias: true });
             renderer.setSize(window.innerWidth, window.innerHeight);
             renderer.setClearColor(0x000000);
+            // 안개 제거 - 지구본 모든 부분이 균등하게 보이게
             document.getElementById('container').appendChild(renderer.domElement);
 
             controls = new THREE.OrbitControls(camera, renderer.domElement);
             controls.enableDamping = true;
             controls.dampingFactor = 0.05;
+
+            // 마우스 호버를 위한 레이캐스터 초기화
+            raycaster = new THREE.Raycaster();
+            mouse = new THREE.Vector2();
 
             // Light
             scene.add(new THREE.AmbientLight(0x8e24aa, 0.6));
@@ -52,83 +61,314 @@
             rimLight.position.set(-10, -10, -5);
             scene.add(rimLight);
             
+            // 윗부분 조명 추가
+            const topLight = new THREE.DirectionalLight(0x8e24aa, 0.4);
+            topLight.position.set(0, 10, 0);
+            scene.add(topLight);
             
-
-            
-
-            // Load GLB
-            const loader = new THREE.GLTFLoader();
-            loader.load('../asset/glb/globe.glb', function (gltf) {
-                console.log('gltf',gltf)
-                globe = gltf.scene;
-                globe.scale.set(5, 5, 5);
-                globe.position.set(0, 0, 0);
-
-                globe.traverse(function (child) {
-                    if (child.type === 'Points') {
-                        if (child.material) {
-                            child.material.transparent = true;
-                            child.material.size = 0.03;
-                            child.material.sizeAttenuation = true;
-                            child.material.vertexColors = true;
-
-                            const geometry = child.geometry;
-                            const posAttr = geometry.getAttribute('position');
-                            const colors = [];
-
-                            for (let i = 0; i < posAttr.count; i++) {
-                                // 2:1 비율로 밝은색이 더 많게 (랜덤값이 0.33 이상이면 밝게)
-                                let brightness;
-                                if (Math.random() > 0.33) {
-                                    // 밝은 점들 (흰색 계열) - 66% 확률
-                                    brightness = 0.7 + Math.random() * 0.3; // 0.7~1.0
-                                } else {
-                                    // 어두운 점들 (검정 계열) - 33% 확률
-                                    brightness = 0.1 + Math.random() * 0.3; // 0.1~0.4
-                                }
-                                const r = 0.55 * brightness;
-                                const g = 0.14 * brightness;
-                                const b = 0.67 * brightness;
-                                
-                                colors.push(r, g, b);
-                            }
-
-                            geometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
-                        }
-                    }
-                });
-
-                scene.add(globe);
-                console.log(globe)
-
-                // 지구본의 실제 크기 확인
-                const box = new THREE.Box3().setFromObject(globe);
-                const size = box.getSize(new THREE.Vector3());
-                console.log('Globe bounding box size:', size);
-                console.log('Globe actual radius estimate:', Math.max(size.x, size.y, size.z) / 2);
-
-                const koreaPin = globe.getObjectByName('korea');
-                console.log('Korea pin from GLB:', koreaPin);
-                if (koreaPin) {
-                    console.log('Korea pin position:', koreaPin.position);
-                }
-                
-                // GLB 로딩 완료 후 핀 추가
-                // addPinAtLatLon(위도, 경도, "라벨")
-                // 위도: 남북 방향 (-90~90도, 북쪽이 +)
-                // 경도: 동서 방향 (-180~180도, 동쪽이 +)
-                addPinAtLatLon(37.57, 127.98, "Seoul");
-                addPinAtLatLon(39.8283, -98.5795, "USA"); // 미국 중부
-                addPinAtLatLon(-25.2744, 133.7751, "Australia"); // 오스트레일리아 중부
-            }, undefined, function (err) {
-                console.error('GLB load error:', err);
-            });
+            // VE 클래스와 유사한 구조로 지구본 생성
+            createGlobeObject();
 
             window.addEventListener('resize', onResize);
+            window.addEventListener('mousemove', onMouseMove);
             animate();
         }
 
-        
+        // VE 클래스와 유사한 구조로 지구본 생성
+        function createGlobeObject() {
+            // 공통 유니폼 정의 (VE 클래스의 commonUniforms와 동일)
+            const commonUniforms = {
+                uColor: { value: new THREE.Color(0x8e24aa) }, // 지구본 기본 색상
+                uFadeY: { value: 0.0 } // Y축 페이드 강도
+            };
+
+            // GLB 모델 로드
+            const loader = new THREE.GLTFLoader();
+            loader.load('../asset/glb/globe.glb', function (gltf) {
+                console.log('gltf loaded:', gltf);
+                
+                // 원본 모델 복사 (VE의 clone()과 동일)
+                const globeModel = gltf.scene.children[0].clone();
+                
+                // globeSphere 생성 (VE의 new Qh(this.commonUniforms)와 동일)
+                const globeSphereRadius = 2.0;
+                const globeSphereGeometry = new THREE.SphereGeometry(globeSphereRadius, 32, 32);
+                const globeSphereMaterial = new THREE.ShaderMaterial({
+                    uniforms: commonUniforms,
+                    vertexShader: `
+                        varying vec3 vNormal;
+                        void main() {
+                            vNormal = normalize(normalMatrix * normal);
+                            gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+                        }
+                    `,
+                    fragmentShader: `
+                        uniform vec3 uColor;
+                        uniform float uFadeY;
+                        varying vec3 vNormal;
+                        
+                        void main() {
+                            // Y축 기반 어두운 그라데이션
+                            float fade = smoothstep(-1.0, 1.0, -vNormal.y);
+                            vec3 finalColor = uColor * (1.0 - uFadeY * fade) * 0.8;
+                            
+                            gl_FragColor = vec4(finalColor, 1.0);
+                        }
+                    `,
+                    side: THREE.BackSide
+                });
+                const globeSphere = new THREE.Mesh(globeSphereGeometry, globeSphereMaterial);
+
+
+                // globePoints 설정 (포인트 레이어)
+                const globePoints = globeModel;
+                globePoints.scale.set(5, 5, 5);
+                
+                // 포인트 머티리얼에 새로운 GLSL 셰이더 적용
+                globePoints.traverse(function (child) {
+                    if (child.type === 'Points' && child.material) {
+                        const geometry = child.geometry;
+                        const posAttr = geometry.getAttribute('position');
+                        
+                        // 포인트별 데이터 생성 (알파값 + POI 마킹)
+                        const alphas = [];
+                        const pois = []; // Point of Interest 마킹
+                        
+                        for (let i = 0; i < posAttr.count; i++) {
+                            // 지구본.html과 동일한 밝기 생성 방식
+                            let brightness = Math.random() > 0.33 ? 
+                                (0.7 + Math.random() * 0.3) : 
+                                (0.1 + Math.random() * 0.3);
+                            alphas.push(brightness);
+                            
+                            // 일부 포인트를 POI로 마킹 (약 5%)
+                            let isPOI = Math.random() < 0.05 ? 1.0 : 0.0;
+                            pois.push(isPOI);
+                        }
+
+                        geometry.setAttribute('alpha', new THREE.Float32BufferAttribute(alphas, 1));
+                        geometry.setAttribute('aPOI', new THREE.Float32BufferAttribute(pois, 1));
+
+                        // 원본 셰이더와 동일한 구조로 업데이트
+                        child.material = new THREE.ShaderMaterial({
+                            uniforms: {
+                                ...commonUniforms,
+                                uTime: { value: 0.05 },
+                                uPointSize: { value: 5 }, // 포인트 크기
+                                uDPR: { value: window.devicePixelRatio || 1.0 },
+                                tHover: { value: createHoverTexture() },
+                                uHoverStrength: { value: 2.0 }
+                            },
+                            vertexShader: `
+                                precision highp float;
+                                #define PI 3.1415926535897932384626433832795
+                                
+                                attribute float alpha;
+                                attribute float aPOI;
+                                uniform float uTime;
+                                uniform float uDPR;
+                                uniform float uPointSize;
+                                uniform float uFadeY;
+                                uniform sampler2D tHover;
+                                
+                                varying float vAlpha;
+                                varying float vPOI;
+                                varying vec3 vPosition, vModelPosition;
+                                varying float vHover;
+                                
+                                vec2 positionToUV(vec3 position) {
+                                    float lat = asin(position.y);
+                                    float lng = atan(position.x, position.z) + (PI * 0.5);
+                                    float u = (lat / (PI * 0.5)) + 0.5;
+                                    float v = (lng / PI) * 0.5;
+                                    return vec2(v, u);
+                                }
+                                
+                                float rand(float seed) {
+                                    return fract(abs(sin(seed)) * 43758.5453123);
+                                }
+                                
+                                mat3 getRotationMatrix(mat4 modelMatrix) {
+                                    return mat3(modelMatrix);
+                                }
+                                
+                                void main() {
+                                    vec3 pos = position;
+                                    vec2 uv = positionToUV(pos);
+                                    
+                                    // 원본과 동일한 호버 텍스처 샘플링
+                                    vHover = texture2D(tHover, uv).r;
+                                    
+                                    vec4 modelPosition = modelMatrix * vec4(pos, 1.0);
+                                    vec4 mvPosition = viewMatrix * modelPosition;
+                                    
+                                    // 모든 포인트 동일한 크기
+                                    gl_PointSize = uPointSize * uDPR;
+                                    gl_Position = projectionMatrix * mvPosition;
+                                    
+                                    vPosition = pos;
+                                    vModelPosition = modelPosition.xyz;
+                                    vPOI = aPOI;
+                                    
+                                    vec3 localRotatedPos = getRotationMatrix(modelMatrix) * pos;
+                                    float randFade = min(1.0, rand(float(gl_VertexID)) + 0.3);
+                                    
+                                    // 모든 감쇠 제거, 랜덤 밝기만 적용
+                                    vAlpha = randFade;
+                                }
+                            `,
+                            fragmentShader: `
+                                precision highp float;
+                                uniform float uTime;
+                                uniform float uPointSize;
+                                uniform vec3 uColor;
+                                uniform sampler2D tHover;
+                                uniform float uHoverStrength;
+                                
+                                varying vec3 vPosition, vModelPosition;
+                                varying float vAlpha;
+                                varying float vPOI;
+                                varying float vHover;
+                                
+                                // 원본 rectangle 함수
+                                float rectangle(vec2 uv, float padding, float fade) {
+                                    float alpha = 1.0;
+                                    alpha *= smoothstep(padding, padding + fade, uv.x);
+                                    alpha *= 1.0 - smoothstep(1.0 - padding - fade, 1.0 - padding, uv.x);
+                                    alpha *= smoothstep(padding, padding + fade, uv.y);
+                                    alpha *= 1.0 - smoothstep(1.0 - padding - fade, 1.0 - padding, uv.y);
+                                    return alpha;
+                                }
+
+                                void main() {
+                                    float distAttenuation = vModelPosition.z / uPointSize;
+                                    float distanceFromFar = smoothstep(-0.7, 1.0, distAttenuation);
+                                    float distFromCenter = length(gl_PointCoord.xy - 0.5);
+
+                                    float fade = smoothstep(0.5, distanceFromFar * 0.49, distFromCenter);
+
+                                    float alpha = vAlpha;
+                                    alpha *= smoothstep(0.5, 0.0, distFromCenter); // 포인트 모양만 유지
+
+                                    if(alpha <= 0.01) discard;
+
+                                    // 안정적인 포인트 렌더링 (번쩍임 없음)
+                                    // POI는 약간 더 밝게만
+
+                                    // 지구본.html처럼 보라색 계열 포인트 색상 + 호버 글로우
+                                    vec3 baseColor = vec3(0.55, 0.14, 0.67) * alpha; // 보라색 계열
+                                    vec3 glowColor = vec3(1.0, 1.0, 1.0); // 흰색 글로우
+                                    vec3 finalColor = baseColor + glowColor * vHover; // 호버 시 흰색 글로우 추가
+                                    
+                                    gl_FragColor = vec4(finalColor, alpha);
+                                }
+                            `,
+                            transparent: true,
+                            blending: THREE.NormalBlending
+                        });
+                    }
+                });
+
+                // group 생성하고 오브젝트들 추가 (VE의 group과 동일)
+                const group = new THREE.Group();
+                group.add(globePoints, globeSphere);
+                
+                // 스케일 적용 (VE의 group.scale.setScalar()과 동일)
+                group.scale.setScalar(1.0);
+                
+                // 씬에 추가
+                scene.add(group);
+                globe = group; // 전역 변수에 할당
+
+                console.log('Globe object created with VE-like structure');
+
+                // 핀 추가
+                addPinAtLatLon(37.57, 127.98, "Seoul");
+                addPinAtLatLon(39.8283, -98.5795, "USA");
+                addPinAtLatLon(-25.2744, 133.7751, "Australia");
+                
+            }, undefined, function (err) {
+                console.error('GLB load error:', err);
+            });
+        }
+
+        // 호버 텍스처 생성
+        function createHoverTexture() {
+            const canvas = document.createElement('canvas');
+            canvas.width = 512;
+            canvas.height = 512;
+            const ctx = canvas.getContext('2d');
+            
+            // 초기에는 빈 텍스처
+            ctx.fillStyle = 'black';
+            ctx.fillRect(0, 0, 512, 512);
+            
+            const texture = new THREE.CanvasTexture(canvas);
+            texture.canvas = canvas;
+            texture.ctx = ctx;
+            return texture;
+        }
+
+        // 호버 텍스처 업데이트
+        function updateHoverTexture(texture, uv) {
+            if (!texture || !texture.ctx) return;
+            
+            const ctx = texture.ctx;
+            const canvas = texture.canvas;
+            
+            // 캔버스 초기화
+            ctx.fillStyle = 'black';
+            ctx.fillRect(0, 0, 512, 512);
+            
+            if (uv) {
+                // 호버 글로우 그리기
+                const x = uv.x * 512;
+                const y = (1.0 - uv.y) * 512; // Y 좌표 뒤집기
+                
+                const gradient = ctx.createRadialGradient(x, y, 0, x, y, 80);
+                gradient.addColorStop(0, 'rgba(255, 255, 255, 1.0)');
+                gradient.addColorStop(1, 'rgba(255, 255, 255, 0.0)');
+                
+                ctx.fillStyle = gradient;
+                ctx.fillRect(0, 0, 512, 512);
+            }
+            
+            texture.needsUpdate = true;
+        }
+
+        function onMouseMove(event) {
+            // 마우스 위치를 정규화된 좌표로 변환
+            mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+            mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+            // 레이캐스터로 지구본과의 교차점 감지
+            if (globe && raycaster) {
+                raycaster.setFromCamera(mouse, camera);
+                const intersects = raycaster.intersectObjects(globe.children, true);
+                
+                if (intersects.length > 0) {
+                    const intersect = intersects[0];
+                    
+                    // 모든 포인트 머티리얼의 호버 텍스처 업데이트
+                    globe.traverse(function (child) {
+                        if (child.type === 'Points' && child.material && child.material.uniforms) {
+                            if (child.material.uniforms.tHover && intersect.uv) {
+                                updateHoverTexture(child.material.uniforms.tHover.value, intersect.uv);
+                            }
+                        }
+                    });
+                } else {
+                    // 호버가 없을 때 텍스처 초기화
+                    globe.traverse(function (child) {
+                        if (child.type === 'Points' && child.material && child.material.uniforms) {
+                            if (child.material.uniforms.tHover) {
+                                updateHoverTexture(child.material.uniforms.tHover.value, null);
+                            }
+                        }
+                    });
+                }
+            }
+        }
 
         function onResize() {
             camera.aspect = window.innerWidth / window.innerHeight;
@@ -141,16 +381,14 @@
 
             const time = performance.now() * 0.002;
 
-            // if (globe) globe.rotation.y += 0.001;
-            // if (targetPointsMesh) updateGlowEffect(targetPointsMesh, mouse3D);
-
-            // 🔥 animatedPins 애니메이션 추가
-            // if (window.animatedPins) {
-            //     animatedPins.forEach(pin => {
-            //         const scale = 1 + 0.3 * Math.sin(time + pin.userData.glowPhase);
-            //         pin.scale.set(scale, scale, scale);
-            //     });
-            // }
+            // uTime 유니폼 업데이트 (글로우 애니메이션)
+            if (globe) {
+                globe.traverse(function (child) {
+                    if (child.type === 'Points' && child.material && child.material.uniforms && child.material.uniforms.uTime) {
+                        child.material.uniforms.uTime.value = time;
+                    }
+                });
+            }
 
             controls.update();
             renderer.render(scene, camera);
@@ -179,33 +417,9 @@
             // 핀을 지구 표면에 배치
             pinMesh.position.set(x, y, z);
 
-            // 텍스트 라벨 - 크기와 위치 조정
-            const canvas = document.createElement('canvas');
-            canvas.width = 400; // 캔버스 너비 (클수록 고해상도, 작게하면 흐려짐)
-            canvas.height = 240; // 캔버스 높이 (클수록 고해상도, 작게하면 흐려짐)
-            const ctx = canvas.getContext('2d');
-            ctx.fillStyle = 'white';
-            ctx.font = 'bold 32px sans-serif'; // 폰트 크기 (작게하면 글자 작아짐)
-            ctx.textAlign = 'center';
-            ctx.strokeStyle = 'black';
-            ctx.lineWidth = 2; // 테두리 두께 (작게하면 테두리 얇아짐)
-            ctx.strokeText(label, canvas.width / 2, canvas.height / 2 + 10);
-            ctx.fillText(label, canvas.width / 2, canvas.height / 2 + 10);
-
-            // const texture = new THREE.CanvasTexture(canvas);
-            // const textMaterial = new THREE.SpriteMaterial({ map: texture });
-            // const textSprite = new THREE.Sprite(textMaterial);
-            // // 텍스트 실제 화면 크기 조정 (첫번째 값: 가로, 두번째 값: 세로)
-            // // 작게하면 화면에서 텍스트가 작게 보임
-            // textSprite.scale.set(0.4, 0.1, 1); 
-            // textSprite.position.set(x, y + 0.05, z); // 점 위에 텍스트 배치
-
             // Globe에 추가
             if (globe) {
                 globe.add(pinMesh);
-                // globe.add(textSprite);
-                // console.log(`Pin added at: ${label} (${lat}, ${lon})`);
-                // console.log(`Position: (${x.toFixed(2)}, ${y.toFixed(2)}, ${z.toFixed(2)})`);
             } else {
                 console.error('Globe not loaded yet!');
             }
@@ -217,8 +431,5 @@
 
         init();
     </script>
-</body>
-</html>
-</script>
 </body>
 </html>

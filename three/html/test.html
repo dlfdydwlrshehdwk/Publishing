@@ -1,0 +1,397 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<title>Globe – Hover Glow + Inner/Bottom Dark + Points (All-in-One)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<style>
+  html, body {height:100%; margin:0; background:#000; overflow:hidden; font-family:system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans KR", Arial, sans-serif;}
+  #app {width:100%; height:100%;}
+  .hint {position:fixed; left:12px; bottom:12px; color:#aaa; font-size:12px; line-height:1.4; user-select:none; pointer-events:none;}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<div class="hint">마우스 드래그: 회전 · 휠: 줌 · 포인트 위 호버 시 글로우</div>
+
+<!-- Three.js r128 (GLTFLoader/OrbitControls 동일 버전) -->
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+
+<script>
+// ====== 설정값 ======
+var USE_GLB_PATH = 'globe.glb';      // 같은 폴더에 globe.glb 파일이 있으면 자동 사용 (없으면 구체로 대체)
+var GLOBE_RADIUS  = 1.0;             // 글로브 반지름(기하학 기준)
+var POINT_SIZE    = 10.0;            // 포인트 화면 픽셀 크기
+var POINT_BASE_ALPHA = 0.85;         // 포인트 기본 알파
+var POINT_HOVER_GAIN = 1.75;         // 호버 강화 배율
+var INNER_DARK_STRENGTH = 0.55;      // 화면 중앙부(안쪽) 어둡게(0~1)
+var INNER_DARK_RADIUS   = 0.35;      // 화면 중앙 어둡게 반경(0~1, 작을수록 중앙이 더 어둡게)
+var BOTTOM_DARK_STRENGTH= 0.7;       // 아래쪽 어두워지는 강도(0~1)
+var HOVER_GLOW_SIZE     = 14.0;      // 호버 글로우 각도(도수, 값이 클수록 넓게)
+var HOVER_GLOW_SOFTNESS = 0.65;      // 호버 글로우 소프트 가장자리(0~1)
+var COLOR_GLOBE         = new THREE.Color(0xff33ff);  // 글로브 기본 색
+var COLOR_POINTS        = new THREE.Color(0xffffff);  // 포인트 색
+
+// ====== 기본 three 세팅 ======
+var container = document.getElementById('app');
+var scene = new THREE.Scene();
+scene.background = new THREE.Color(0x000000);
+
+var camera = new THREE.PerspectiveCamera(55, container.clientWidth / container.clientHeight, 0.1, 100);
+camera.position.set(0, 0, 3.2);
+
+var renderer = new THREE.WebGLRenderer({antialias:true, alpha:false, powerPreference:'high-performance'});
+renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+renderer.setSize(container.clientWidth, container.clientHeight);
+renderer.outputEncoding = THREE.sRGBEncoding;
+container.appendChild(renderer.domElement);
+
+var controls = new THREE.OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;
+controls.dampingFactor = 0.08;
+controls.rotateSpeed = 0.5;
+controls.zoomSpeed = 0.6;
+controls.minDistance = 1.8;
+controls.maxDistance = 8.0;
+
+// 라이트
+var light = new THREE.DirectionalLight(0xffffff, 1.0);
+light.position.set(3, 2, 2);
+scene.add(light);
+scene.add(new THREE.AmbientLight(0xffffff, 0.22));
+
+// ====== 유틸: 위경도 -> 구면 좌표 ======
+function latLonToVector3(latDeg, lonDeg, radius) {
+  var lat = THREE.MathUtils.degToRad(latDeg);
+  var lon = THREE.MathUtils.degToRad(lonDeg);
+  var x = radius * Math.cos(lat) * Math.cos(lon);
+  var y = radius * Math.sin(lat);
+  var z = radius * Math.cos(lat) * Math.sin(lon);
+  return new THREE.Vector3(x, y, z);
+}
+
+// ====== 셰이더(글로브) ======
+var globeUniforms = {
+  uTime:            {value: 0},
+  uColor:           {value: new THREE.Color(COLOR_GLOBE.getHex())},
+  uInnerDarkStr:    {value: INNER_DARK_STRENGTH}, // 화면 중앙 어둡게 강도
+  uInnerDarkRadius: {value: INNER_DARK_RADIUS},   // 중앙 어둡게 반경
+  uBottomDarkStr:   {value: BOTTOM_DARK_STRENGTH},// 아래쪽 어둡게 강도
+  uHoverOn:         {value: 0},                   // 0/1
+  uHoverDir:        {value: new THREE.Vector3(0,0,1)}, // 월드 방향(정규화)
+  uGlowSize:        {value: THREE.MathUtils.degToRad(HOVER_GLOW_SIZE)}, // 라디안
+  uGlowSoft:        {value: HOVER_GLOW_SOFTNESS}, // 0~1
+  uCameraPos:       {value: new THREE.Vector3()},  // 카메라 월드 좌표
+  uTopDir:      {value: new THREE.Vector3(0, 1, 0)}, // 꼭대기(월드 +Y) 방향
+  uTopGlowStr:  {value: 0.65},                       // 위에서 내려오는 글로우 강도(0~1)
+};
+
+var globeVS = `
+varying vec3 vWorldPos;
+varying vec3 vWorldNormal;
+varying vec2 vNDC;
+
+void main(){
+  // 월드 좌표/노멀
+  vec4 worldPos = modelMatrix * vec4(position, 1.0);
+  vWorldPos = worldPos.xyz;
+  vWorldNormal = normalize(mat3(modelMatrix) * normal);
+
+  // NDC(스크린) 좌표
+  vec4 clipPos = projectionMatrix * viewMatrix * worldPos;
+  vNDC = clipPos.xy / clipPos.w * 0.5 + 0.5;
+
+  gl_Position = clipPos;
+}
+`;
+
+var globeFS = `
+precision highp float;
+
+uniform float uTime;
+uniform vec3  uColor;
+uniform float uInnerDarkStr;
+uniform float uInnerDarkRadius;
+uniform float uBottomDarkStr;
+uniform int   uHoverOn;
+uniform vec3  uHoverDir;
+uniform float uGlowSize;
+uniform float uGlowSoft;
+uniform vec3  uCameraPos;
+uniform vec3  uTopDir;
+uniform float uTopGlowStr;
+
+varying vec3 vWorldPos;
+varying vec3 vWorldNormal;
+varying vec2 vNDC;
+
+void main(){
+  // 기본 색
+  vec3 base = uColor;
+
+  // 1) 지구본 아래쪽 어둡게 (월드 up 기준)
+  float upY = normalize(vWorldNormal).y;             // -1(아래) ~ +1(위)
+  float bottomMask = smoothstep(0.0, 1.0, clamp(-upY, 0.0, 1.0)); // 아래일수록 1
+  float bottomAtten = mix(1.0, 1.0 - uBottomDarkStr, bottomMask);
+
+  // 2) 화면 중앙(안쪽) 어둡게 (screen-space radial)
+  vec2  center = vec2(0.5, 0.5);
+  float r = distance(vNDC, center);                  // 0(center) ~ sqrt(0.5^2+0.5^2)
+  float innerMask = 1.0 - smoothstep(0.0, uInnerDarkRadius, r); // 중심 1, 바깥 0
+  float innerAtten = mix(1.0 - uInnerDarkStr, 1.0, 1.0 - innerMask); // 중심 어둡
+
+  // 3) 호버 글로우(표면 각도 기반)
+  float glow = 0.0;
+  if(uHoverOn == 1){
+    vec3 pDir = normalize(vWorldPos);               // 월드 원점에서 표면포인트 방향
+    float cosAng = dot(pDir, normalize(uHoverDir)); // 1:정중앙, 0:수평, -1:반대
+    // cos(theta) 기반 소프트 링
+    float inner = cos(uGlowSize * (1.0 - uGlowSoft));
+    float outer = cos(uGlowSize);
+    float ring = smoothstep(outer, inner, cosAng);  // hoverDir 근처에서 1
+    // 맥동(살짝)
+    float pulse = 0.65 + 0.35 * sin(uTime * 3.2);
+    glow = ring * pulse;
+  }
+
+  vec3 color = base;
+  color *= bottomAtten;
+  color *= innerAtten;
+  color += vec3(1.0) * topGlow * uTopGlowStr;
+  // 꼭대기(월드 +Y)에서 내려오는 글로우
+    float topCos = dot(normalize(vWorldNormal), normalize(uTopDir));
+    float topGlow = smoothstep(0.0, 1.0, topCos);
+    topGlow = pow(topGlow, 3.0); // 위쪽만 강조
+
+  // 글로우는 가산 느낌으로 추가(너무 과하면 과해지므로 조절)
+  color += vec3(1.0, 1.0, 1.0) * glow * 0.25;
+
+  gl_FragColor = vec4(color, 1.0);
+}
+`;
+
+var globeMaterial = new THREE.ShaderMaterial({
+  uniforms: globeUniforms,
+  vertexShader: globeVS,
+  fragmentShader: globeFS,
+  lights: false,
+  transparent: false,
+  depthWrite: true,
+  uTopDir:     { value: new THREE.Vector3(0, 1, 0) }, // 꼭대기(월드 +Y)
+    uTopGlowStr: { value: 0.65 },                       // 강도
+});
+
+var globeMesh = null;
+
+// ====== 포인트용 셰이더 ======
+var pointsUniforms = {
+  uTime:        {value: 0},
+  uColor:       {value: new THREE.Color(COLOR_POINTS.getHex())},
+  uHoverOn:     {value: 0},
+  uHoverDir:    {value: new THREE.Vector3(0,0,1)},
+  uPointSize:   {value: POINT_SIZE},
+  uBaseAlpha:   {value: POINT_BASE_ALPHA},
+  uHoverGain:   {value: POINT_HOVER_GAIN}
+};
+
+var pointsVS = `
+uniform float uPointSize;
+varying vec3 vWorldPos;
+varying vec3 vDir;
+
+void main(){
+  vec4 worldPos = modelMatrix * vec4(position, 1.0);
+  vWorldPos = worldPos.xyz;
+  vDir = normalize(vWorldPos);
+
+  vec4 mvPos = modelViewMatrix * vec4(position, 1.0);
+  float size = uPointSize; // 필요시 거리에 따른 크기 보정 추가 가능
+  gl_PointSize = size;
+  gl_Position = projectionMatrix * mvPos;
+}
+`;
+
+var pointsFS = `
+precision highp float;
+
+uniform float uTime;
+uniform vec3  uColor;
+uniform int   uHoverOn;
+uniform vec3  uHoverDir;
+uniform float uBaseAlpha;
+uniform float uHoverGain;
+
+varying vec3 vWorldPos;
+varying vec3 vDir;
+
+void main(){
+  // 원형 포인트 마스크
+  vec2 uv = gl_PointCoord.xy;
+  float d = distance(uv, vec2(0.5));
+  if(d > 0.5) discard;
+
+  float alpha = uBaseAlpha;
+
+  // 기본 은은한 가장자리 페이드
+  float edge = smoothstep(0.5, 0.3, d);
+  alpha *= edge;
+
+  // 호버 강화: 표면 방향과 hover 방향 각도 기반
+  if(uHoverOn == 1){
+    float cosAng = dot(normalize(vDir), normalize(uHoverDir));
+    float hoverMask = smoothstep(0.85, 0.98, cosAng); // 0.98 ~ 1 근처만 강하게
+    float pulse = 0.75 + 0.25 * sin(uTime * 4.2);
+    alpha *= (1.0 + hoverMask * (uHoverGain - 1.0) * pulse);
+  }
+
+  gl_FragColor = vec4(uColor, alpha);
+}
+`;
+
+var pointsMaterial = new THREE.ShaderMaterial({
+  uniforms: pointsUniforms,
+  vertexShader: pointsVS,
+  fragmentShader: pointsFS,
+  transparent: true,
+  depthWrite: false,
+  blending: THREE.NormalBlending // 과한 번쩍임 방지
+});
+
+var pointsMesh = null;
+
+// ====== 포인트 데이터(예시) ======
+var pointData = [
+  {lat: 37.5665, lon: 126.9780, name: 'Seoul'},
+  {lat: 35.6895, lon: 139.6917, name: 'Tokyo'},
+  {lat: 40.7128, lon: -74.0060, name: 'NYC'},
+  {lat: 48.8566, lon: 2.3522,  name: 'Paris'},
+  {lat: 51.5074, lon: -0.1278, name: 'London'},
+  {lat: 34.0522, lon: -118.2437,name: 'LA'}
+];
+
+function buildPoints(radius) {
+  var positions = [];
+  for (var i=0; i<pointData.length; i++){
+    var v = latLonToVector3(pointData[i].lat, pointData[i].lon, radius * 1.0025);
+    positions.push(v.x, v.y, v.z);
+  }
+  var g = new THREE.BufferGeometry();
+  g.setAttribute('position', new THREE.Float32BufferAttribute(new Float32Array(positions), 3));
+  pointsMesh = new THREE.Points(g, pointsMaterial);
+  scene.add(pointsMesh);
+}
+
+// ====== GLB 로딩 (실패 시 구체 대체) ======
+function createGlobeFromGeometry(geometry) {
+  // geometry가 너무 크면 스케일 정규화
+  geometry.computeVertexNormals();
+  globeMesh = new THREE.Mesh(geometry, globeMaterial);
+
+  // 반지름 정규화(대략) – BoundingSphere 사용
+  geometry.computeBoundingSphere();
+  if (geometry.boundingSphere && geometry.boundingSphere.radius) {
+    var s = GLOBE_RADIUS / geometry.boundingSphere.radius;
+    globeMesh.scale.setScalar(s);
+  }
+
+  scene.add(globeMesh);
+  buildPoints(GLOBE_RADIUS);
+}
+
+function loadGLBThenFallback() {
+  var loader = new THREE.GLTFLoader();
+  var loaded = false;
+
+  loader.load(USE_GLB_PATH, function(gltf){
+    loaded = true;
+    // 첫번째 Mesh geometry 사용
+    var node = null;
+    gltf.scene.traverse(function(o){
+      if(o.isMesh && !node){ node = o; }
+    });
+    if(!node || !node.geometry){
+      // geometry 못 찾으면 대체
+      var geo = new THREE.SphereBufferGeometry(GLOBE_RADIUS, 128, 128);
+      createGlobeFromGeometry(geo);
+      return;
+    }
+    // 복제해서 사용
+    var geoClone = node.geometry.clone();
+    createGlobeFromGeometry(geoClone);
+  }, undefined, function(){
+    // onError -> 대체
+    if(!loaded){
+      var geo = new THREE.SphereBufferGeometry(GLOBE_RADIUS, 128, 128);
+      createGlobeFromGeometry(geo);
+    }
+  });
+}
+loadGLBThenFallback();
+
+// ====== 호버 Raycaster ======
+var raycaster = new THREE.Raycaster();
+var mouseNDC = new THREE.Vector2();
+var hoverHit = false;
+var hoverDir = new THREE.Vector3(0,0,1);
+
+function onPointerMove(e){
+  var rect = renderer.domElement.getBoundingClientRect();
+  var x = ( (e.clientX - rect.left) / rect.width ) * 2 - 1;
+  var y = - ( (e.clientY - rect.top) / rect.height ) * 2 + 1;
+  mouseNDC.set(x, y);
+}
+window.addEventListener('pointermove', onPointerMove, {passive:true});
+
+// ====== 리사이즈 ======
+function onResize(){
+  var w = container.clientWidth;
+  var h = container.clientHeight;
+  camera.aspect = w / h;
+  camera.updateProjectionMatrix();
+  renderer.setSize(w, h);
+}
+window.addEventListener('resize', onResize);
+
+// ====== 루프 ======
+var clock = new THREE.Clock();
+
+function animate(){
+  var dt = clock.getDelta();
+  var t  = clock.elapsedTime;
+
+  // 컨트롤 업데이트
+  controls.update();
+
+  // 유니폼 갱신
+  globeUniforms.uTime.value   = t;
+  pointsUniforms.uTime.value  = t;
+  globeUniforms.uCameraPos.value.copy(camera.position);
+
+  // 호버 체크 (globeMesh가 준비된 뒤부터)
+  if(globeMesh){
+    raycaster.setFromCamera(mouseNDC, camera);
+    var intersects = raycaster.intersectObject(globeMesh, true);
+    if(intersects && intersects.length){
+      hoverHit = true;
+      var p = intersects[0].point.clone().normalize(); // 월드 원점 기준 방향
+      hoverDir.copy(p);
+      globeUniforms.uHoverDir.value.copy(hoverDir);
+      pointsUniforms.uHoverDir.value.copy(hoverDir);
+      globeUniforms.uHoverOn.value = 1;
+      pointsUniforms.uHoverOn.value = 1;
+    } else {
+      hoverHit = false;
+      globeUniforms.uHoverOn.value = 0;
+      pointsUniforms.uHoverOn.value = 0;
+    }
+  }
+
+  renderer.render(scene, camera);
+  requestAnimationFrame(animate);
+}
+animate();
+</script>
+</body>
+</html>

@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3D 파노라마 캐러셀 (바닐라 JS)</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      background: radial-gradient(circle, #1a1a2e, #16213e, #0f0f23);
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-family: 'Arial', sans-serif;
+      overflow: hidden;
+    }
+    
+    .carousel-container {
+      width: 100vw;
+      height: 400px;
+      perspective: 1200px;
+      perspective-origin: center center;
+      position: relative;
+    }
+    
+    .carousel-wrapper {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transform-style: preserve-3d;
+      cursor: grab;
+      user-select: none;
+    }
+    
+    .carousel-wrapper:active {
+      cursor: grabbing;
+    }
+    
+    .slide {
+      position: absolute;
+      width: 200px;
+      height: 280px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border-radius: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 48px;
+      font-weight: bold;
+      color: white;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+      border: 3px solid rgba(255,255,255,0.1);
+      transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+      backface-visibility: hidden;
+      left: 50%;
+      top: 50%;
+      margin-left: -100px;
+      margin-top: -140px;
+    }
+    
+    .controls {
+      position: absolute;
+      bottom: 50px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 20px;
+      z-index: 100;
+    }
+    
+    .btn {
+      padding: 12px 24px;
+      background: rgba(255,255,255,0.1);
+      border: 2px solid rgba(255,255,255,0.3);
+      border-radius: 25px;
+      color: white;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+    }
+    
+    .btn:hover {
+      background: rgba(255,255,255,0.2);
+      border-color: rgba(255,255,255,0.5);
+    }
+    
+    .info {
+      position: absolute;
+      top: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: white;
+      text-align: center;
+      opacity: 0.8;
+    }
+  </style>
+</head>
+<body>
+  <div class="info">
+    <h2>3D 파노라마 캐러셀</h2>
+    <p>마우스 드래그 또는 버튼으로 회전하세요</p>
+  </div>
+  
+  <div class="carousel-container">
+    <div class="carousel-wrapper" id="carouselWrapper">
+      <div class="slide" data-index="0">1</div>
+      <div class="slide" data-index="1">2</div>
+      <div class="slide" data-index="2">3</div>
+      <div class="slide" data-index="3">4</div>
+      <div class="slide" data-index="4">5</div>
+      <div class="slide" data-index="5">6</div>
+      <div class="slide" data-index="6">7</div>
+      <div class="slide" data-index="7">8</div>
+    </div>
+  </div>
+  
+  <div class="controls">
+    <button class="btn" onclick="carousel.prev()">◀ 이전</button>
+    <button class="btn" onclick="carousel.next()">다음 ▶</button>
+  </div>
+
+  <script>
+    class Carousel3D {
+      constructor(wrapper) {
+        this.wrapper = wrapper;
+        this.slides = wrapper.querySelectorAll('.slide');
+        this.currentIndex = 0;
+        this.totalSlides = this.slides.length;
+        this.radius = 400; // 원통 반지름
+        this.flatZone = 2.5; // 양옆 평면 구간
+        
+        this.isDragging = false;
+        this.startX = 0;
+        this.currentRotation = 0;
+        this.isTransitioning = false; // 전환 중 플래그
+        
+        this.init();
+      }
+      
+      init() {
+        this.updateSlides();
+        this.bindEvents();
+      }
+      
+      updateSlides() {
+        this.slides.forEach((slide, index) => {
+          // 현재 슬라이드를 기준으로 상대적 위치 계산
+          let relativeIndex = index - this.currentIndex;
+          
+          // 무한 루프를 위한 최단 거리 계산
+          if (relativeIndex > this.totalSlides / 2) {
+            relativeIndex -= this.totalSlides;
+          } else if (relativeIndex < -this.totalSlides / 2) {
+            relativeIndex += this.totalSlides;
+          }
+          
+          const progress = relativeIndex;
+          const absProgress = Math.abs(progress);
+          
+          if (absProgress >= this.flatZone) {
+            // 양쪽 끝 (1번같은 원거리): 평면이지만 작게 + 어둡게
+            const x = progress * 100;
+            const scale = 0.7; // 원거리 효과
+            slide.style.transform = `translateX(${x}px) translateZ(-50px) rotateY(0deg) scale(${scale})`;
+            slide.style.opacity = '0.3';
+          } else {
+            // 가운데 구간: 터널/동굴 같은 오목한 3D 배치
+            const normalizedProgress = Math.abs(progress) / this.flatZone;
+            
+            if (progress === 0) {
+              // 정중앙: 가장 멀리(깊숙이) + 작게
+              slide.style.transform = `translateX(0px) translateZ(-400px) rotateY(0deg) scale(0.6)`;
+              slide.style.opacity = '0.8';
+            } else {
+              // 양옆으로 갈수록: 앞으로 나오면서 + 안쪽 바라보기
+              const side = progress > 0 ? 1 : -1;
+              
+              // 각도: 안쪽(중앙)을 바라보도록
+              const angle = side * normalizedProgress * -45;
+              const angleRad = (Math.abs(angle) * Math.PI) / 180;
+              
+              // X 위치: 좌우로 벌어지면서
+              const x = side * Math.sin(angleRad) * this.radius * 0.9;
+              
+              // Z 위치: 중앙이 가장 멀고(-400px), 양옆으로 갈수록 앞으로 나옴
+              const z = -400 + (normalizedProgress * 350); // -400px에서 -50px까지
+              
+              // 크기: 멀수록 작게
+              const scale = 0.6 + (normalizedProgress * 0.4); // 0.6에서 1.0까지
+              
+              slide.style.transform = `
+                translate3d(${x}px, 0px, ${z}px) 
+                rotateY(${angle}deg) 
+                scale(${scale})
+              `;
+              
+              const opacity = 0.8 + (normalizedProgress * 0.2);
+              slide.style.opacity = opacity;
+            }
+          }
+        });
+      }
+      
+      next() {
+        // 전환 중 중복 클릭 방지
+        if (this.isTransitioning) return;
+        this.isTransitioning = true;
+        
+        this.currentIndex = (this.currentIndex + 1) % this.totalSlides;
+        this.updateSlides();
+        
+        // 애니메이션 완료 후 플래그 해제
+        setTimeout(() => {
+          this.isTransitioning = false;
+        }, 800);
+      }
+      
+      prev() {
+        if (this.isTransitioning) return;
+        this.isTransitioning = true;
+        
+        this.currentIndex = (this.currentIndex - 1 + this.totalSlides) % this.totalSlides;
+        this.updateSlides();
+        
+        setTimeout(() => {
+          this.isTransitioning = false;
+        }, 800);
+      }
+      
+      bindEvents() {
+        // 마우스 드래그 이벤트
+        this.wrapper.addEventListener('mousedown', (e) => {
+          this.isDragging = true;
+          this.startX = e.clientX;
+          this.wrapper.style.cursor = 'grabbing';
+        });
+        
+        document.addEventListener('mousemove', (e) => {
+          if (!this.isDragging) return;
+          
+          const deltaX = e.clientX - this.startX;
+          if (Math.abs(deltaX) > 80) { // 80px로 감도 낮춰서 덜 민감하게
+            if (deltaX > 0) {
+              this.prev();
+            } else {
+              this.next();
+            }
+            this.startX = e.clientX;
+          }
+        });
+        
+        document.addEventListener('mouseup', () => {
+          this.isDragging = false;
+          this.wrapper.style.cursor = 'grab';
+        });
+        
+        // 키보드 이벤트
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'ArrowLeft') {
+            this.prev();
+          } else if (e.key === 'ArrowRight') {
+            this.next();
+          }
+        });
+        
+        // 터치 이벤트 (모바일)
+        let touchStartX = 0;
+        this.wrapper.addEventListener('touchstart', (e) => {
+          touchStartX = e.touches[0].clientX;
+        });
+        
+        this.wrapper.addEventListener('touchend', (e) => {
+          const touchEndX = e.changedTouches[0].clientX;
+          const deltaX = touchEndX - touchStartX;
+          
+          if (Math.abs(deltaX) > 80) { // 터치도 80px로 통일
+            if (deltaX > 0) {
+              this.prev();
+            } else {
+              this.next();
+            }
+          }
+        });
+      }
+    }
+    
+    // 캐러셀 초기화
+    const carousel = new Carousel3D(document.getElementById('carouselWrapper'));
+    
+    // 자동 슬라이드 (선택사항)
+    // setInterval(() => {
+    //   carousel.next();
+    // }, 3000);
+  </script>
+</body>
+</html>
