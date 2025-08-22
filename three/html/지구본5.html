@@ -281,7 +281,7 @@ console.log('Shader Material created early. UUID:', shaderMaterial.uuid);
 const loader = new GLTFLoader();
 loader.load(
     
-    '/glb/globe.glb',
+    '../asset/glb/globe.glb',
     function (gltf) {
         globe = gltf.scene; // 전역 globe 변수에 할당
 
@@ -435,15 +435,9 @@ function animate() {
         // 1. 카메라 및 레이캐스터 업데이트
         shaderMaterial.uniforms.uCameraPosition.value.copy(camera.position);
         
-        // 그라디언트 껍질 카메라 위치 업데이트 및 강제 고정
+        // 그라디언트 껍질 카메라 위치 업데이트 (이미 완전 고정됨)
         if (gradientShellGlobal && gradientShellGlobal.material.uniforms) {
             gradientShellGlobal.material.uniforms.uCameraPosition.value.copy(camera.position);
-            
-            // 매 프레임마다 강제로 원점에 고정
-            gradientShellGlobal.position.set(0, 0, 0);
-            gradientShellGlobal.rotation.set(0, 0, 0);
-            gradientShellGlobal.scale.set(1, 1, 1);
-            gradientShellGlobal.updateMatrix();
         }
         raycaster.setFromCamera(mouse, camera);
 
