@@ -41,7 +41,6 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
 let objectHeight;
 let globe; // 지구본 객체를 전역으로 선언
-let gradientShellGlobal = null; // 그라디언트 껍질을 전역으로 관리
 
 // 1. Scene, Camera, Renderer 설정
 const container = document.getElementById('globe_cont');
@@ -56,9 +55,6 @@ camera.lookAt(0, 0, 0); // 원점을 바라보게
 const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(container.clientWidth, container.clientHeight);
 container.appendChild(renderer.domElement);
-
-// 카메라를 scene에 추가 (자식 객체들이 렌더링되도록)
-scene.add(camera);
 
 // 2. OrbitControls 설정
 const controls = new OrbitControls(camera, renderer.domElement);
@@ -352,9 +348,6 @@ loader.load(
         globe.position.y += (globe.position.y - center.y);
         globe.position.z += (globe.position.z - center.z);
 
-        // 그라디언트 테두리 껍질을 독립적으로 생성 (globe와 무관)
-        gradientShellGlobal = createGradientShell(safeRadius, globe);
-        
         // 파란색 투명 껍질을 지구본에 자식으로 추가 (위치 자동 동기화)
         createBlueShell(safeRadius, globe);
         
@@ -434,17 +427,6 @@ function animate() {
     if (globePoints && shaderMaterial) {
         // 1. 카메라 및 레이캐스터 업데이트
         shaderMaterial.uniforms.uCameraPosition.value.copy(camera.position);
-        
-        // 그라디언트 껍질 카메라 위치 업데이트 및 강제 고정
-        if (gradientShellGlobal && gradientShellGlobal.material.uniforms) {
-            gradientShellGlobal.material.uniforms.uCameraPosition.value.copy(camera.position);
-            
-            // 매 프레임마다 강제로 원점에 고정
-            gradientShellGlobal.position.set(0, 0, 0);
-            gradientShellGlobal.rotation.set(0, 0, 0);
-            gradientShellGlobal.scale.set(1, 1, 1);
-            gradientShellGlobal.updateMatrix();
-        }
         raycaster.setFromCamera(mouse, camera);
 
         const intersects = hoverTargetSphere ? raycaster.intersectObject(hoverTargetSphere) : [];
@@ -571,106 +553,6 @@ function normalizePointsToSphere(pointsObject, targetRadius) {
     geometry.computeBoundingSphere();
     
     console.log('Points normalized to sphere surface');
-}
-
-// 그라디언트 테두리 껍질 생성 함수
-function createGradientShell(radius, globeObject) {
-    console.log('Creating gradient edge shell with radius:', radius * 1.02);
-    
-    // 기존 껍질보다 약간 큰 구 geometry 생성
-    const gradientGeometry = new THREE.SphereGeometry(radius * 1.02, 64, 32);
-    
-    // 그라디언트 셰이더 재질
-    const gradientVertexShader = `
-        varying vec3 vWorldPosition;
-        varying vec3 vNormal;
-        
-        void main() {
-            vec4 worldPosition = modelMatrix * vec4(position, 1.0);
-            vWorldPosition = worldPosition.xyz;
-            vNormal = normalize(normalMatrix * normal);
-            
-            gl_Position = projectionMatrix * viewMatrix * worldPosition;
-        }
-    `;
-    
-    const gradientFragmentShader = `
-        varying vec3 vWorldPosition;
-        varying vec3 vNormal;
-        uniform float uRadius;
-        uniform vec3 uCameraPosition;
-        
-        void main() {
-            // 구 중심에서의 거리 계산
-            float distanceFromCenter = length(vWorldPosition);
-            
-            // 바깥쪽 10%에서만 그라디언트 적용
-            float outerEdge = uRadius * 1.02;
-            float innerEdge = uRadius * 0.92;
-            float edgeGradient = smoothstep(innerEdge, outerEdge, distanceFromCenter);
-            
-            // 카메라 방향 기반 투명도 (가장자리 효과)
-            vec3 viewDirection = normalize(uCameraPosition - vWorldPosition);
-            float fresnel = 1.0 - abs(dot(vNormal, viewDirection));
-            fresnel = pow(fresnel, 2.0);
-            
-            // 붉은 그라디언트 색상
-            vec3 gradientColor = mix(
-                vec3(0.8, 0.2, 0.3),  // 안쪽 진한 빨강
-                vec3(1.0, 0.4, 0.5),  // 바깥쪽 밝은 빨강
-                edgeGradient
-            );
-            
-            float alpha = edgeGradient * fresnel * 0.6;
-            
-            gl_FragColor = vec4(gradientColor, alpha);
-        }
-    `;
-    
-    const gradientMaterial = new THREE.ShaderMaterial({
-        vertexShader: gradientVertexShader,
-        fragmentShader: gradientFragmentShader,
-        uniforms: {
-            uRadius: { value: radius },
-            uCameraPosition: { value: new THREE.Vector3() }
-        },
-        transparent: true,
-        side: THREE.DoubleSide,
-        blending: THREE.NormalBlending,
-        depthWrite: false
-    });
-    
-    const gradientShell = new THREE.Mesh(gradientGeometry, gradientMaterial);
-    gradientShell.position.set(0, 0, 0);
-    gradientShell.renderOrder = -2;  // 가장 먼저 렌더링
-    
-    // 완전히 고정: 모든 변환 함수를 무력화
-    gradientShell.matrixAutoUpdate = false; // 자동 행렬 업데이트 비활성화
-    gradientShell.matrix.identity(); // 단위 행렬로 고정
-    
-    // 위치/회전/스케일 변경 함수들을 무력화 (완전 고정)
-    const originalPosition = gradientShell.position.clone();
-    const originalRotation = gradientShell.rotation.clone();
-    const originalScale = gradientShell.scale.clone();
-    
-    Object.defineProperty(gradientShell, 'position', {
-        get: () => originalPosition,
-        set: () => {} // 변경 무시
-    });
-    Object.defineProperty(gradientShell, 'rotation', {
-        get: () => originalRotation,
-        set: () => {} // 변경 무시
-    });
-    Object.defineProperty(gradientShell, 'scale', {
-        get: () => originalScale,
-        set: () => {} // 변경 무시
-    });
-    
-    // scene에 고정 위치로 추가 (완전히 독립적)
-    scene.add(gradientShell);
-    
-    console.log('Gradient edge shell created and added');
-    return gradientShell;
 }
 
 // 껍질 생성 함수 (지구본의 자식으로 추가)

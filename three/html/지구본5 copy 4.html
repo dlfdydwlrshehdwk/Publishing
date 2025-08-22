@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Three.js Globe</title>
+    <style>
+        body { margin: 0; }
+        #globe-container {
+            width: 100vw;
+            height: 100vh;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div id="globe-container"></div>
+
+    <!-- Import Map for Three.js modules -->
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.168.0/build/three.module.js",
+                "three/addons/": "https://unpkg.com/three@0.168.0/examples/jsm/"
+            }
+        }
+    </script>
+
+    <script type="module">
+        import * as THREE from 'three';
+        import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+        // 1. Scene, Camera, Renderer 설정
+        const container = document.getElementById('globe-container');
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x111111);
+
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        container.appendChild(renderer.domElement);
+
+        // 2. OrbitControls 설정
+        const controls = new OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+        controls.dampingFactor = 0.05;
+
+        // 3. GLTFLoader 및 커스텀 셰이더 설정
+        let globePoints = null;
+        let shaderMaterial = null;  // 상시 적용될 셰이더 재질 (Y축 밝기 + 호버 글로우)
+        let isHovering = false;     // 호버 상태 추적 (나중에 글로우 강도 조절에 사용)
+        let frameCount = 0;         // 프레임 카운터
+
+        // 호버 글로우를 위한 Canvas 설정
+        const hoverCanvas = document.createElement('canvas');
+        hoverCanvas.width = 64; // 작은 해상도로 시작
+        hoverCanvas.height = 64;
+        const hoverContext = hoverCanvas.getContext('2d');
+        const hoverTexture = new THREE.CanvasTexture(hoverCanvas);
+        hoverTexture.needsUpdate = true; // 초기 업데이트
+
+        // "상단부에서 빛이 나오는" 효과를 위한 셰이더
+        const vertexShader = `
+            varying vec3 vWorldPosition;
+            varying float vLocalY; // 로컬 Y축 위치를 Fragment Shader로 전달
+            varying float vColorVariant; // 색상 변형을 위한 랜덤 값
+
+            // 호버 글로우를 위한 추가 uniform
+            uniform vec3 uHoverPosition; // 호버된 3D 위치
+            uniform float uHoverRadius;  // 호버 글로우 반경
+            uniform float uHoverIntensity; // 호버 글로우 강도
+            uniform float uMaxPointSize; // 포인트 최대 크기
+
+            // 의사 랜덤 함수 (position 기반)
+            float random(vec3 pos) {
+                return fract(sin(dot(pos, vec3(12.9898, 78.233, 45.164))) * 43758.5453);
+            }
+
+            void main() {
+                vec4 worldPosition = modelMatrix * vec4(position, 1.0);
+                vWorldPosition = worldPosition.xyz;
+                vLocalY = position.y; // 모델의 로컬 Y축 위치
+                
+                // 각 점마다 고유한 랜덤 값 생성 (0.0~1.0)
+                vColorVariant = random(position);
+
+                vec4 mvPosition = viewMatrix * worldPosition;
+                gl_Position = projectionMatrix * mvPosition;
+                gl_PointSize = 0.008 * ( 300.0 / -mvPosition.z ); // 점 크기 설정
+            }
+        `;
+
+        const fragmentShader = `
+            varying vec3 vWorldPosition;
+            varying float vLocalY; // Vertex Shader에서 전달받은 로컬 Y축 위치
+            varying float vColorVariant; // 색상 변형을 위한 랜덤 값
+
+            uniform vec3 uTopColor;
+            uniform vec3 uBottomColor;
+            uniform float uSphereRadius; // 구의 반지름 (Y축 밝기 계산에 사용)
+
+            // 호버 글로우를 위한 추가 uniform
+            uniform vec3 uHoverPosition;
+            uniform float uHoverRadius;
+            uniform float uHoverIntensity;
+            uniform float uDistortionFactor; // 꼭대기 상호작용 왜곡 강도
+
+            void main() {
+                // 사각형 점 모양 만들기 - gl_PointCoord는 0.0~1.0 범위
+                vec2 coord = gl_PointCoord * 2.0 - 1.0; // -1.0~1.0 범위로 변환
+                
+                // 완벽한 사각형 만들기
+                float square = max(abs(coord.x), abs(coord.y));
+                if (square > 0.8) discard; // 사각형 밖의 픽셀 제거
+                
+                // Y축 밝기 그라데이션 (로컬 Y축 기준)
+                float normalizedLocalY = (vLocalY / uSphereRadius + 1.0) / 2.0;
+                float smoothMix = smoothstep(0.2, 0.8, normalizedLocalY);
+                vec3 baseColor = mix(uBottomColor, uTopColor, smoothMix);
+                
+                // 색상 변형: 70%는 기본 색상, 30%는 어두운 색상
+                vec3 finalColor;
+                if (vColorVariant < 0.7) {
+                    // 70% - 기본 색상
+                    finalColor = baseColor;
+                } else {
+                    // 30% - 어두운 색상 (기본 색상의 60% 밝기)
+                    finalColor = baseColor * 0.6;
+                }
+
+                // 호버 글로우 계산
+                vec3 distVector = vWorldPosition - uHoverPosition;
+                distVector.y /= (1.0 + uDistortionFactor * 2.0);
+                float distToHover = length(distVector);
+
+                float hoverAlpha = smoothstep(uHoverRadius, uHoverRadius * 0.5, distToHover);
+                vec3 hoverGlowColor = vec3(1.0, 1.0, 1.0) * uHoverIntensity * hoverAlpha;
+
+                gl_FragColor = vec4(max(finalColor, hoverGlowColor), 1.0);
+            }
+        `;
+
+        // shaderMaterial을 여기서 초기화하여 항상 사용 가능하도록 변경
+        shaderMaterial = new THREE.ShaderMaterial({
+            uniforms: {
+                uTopColor: { value: new THREE.Color(0xFB233B) }, // 위쪽 색상 (흰색)
+                uBottomColor: { value: new THREE.Color(0x000) }, // 아래쪽 색상 (흰색)
+                uSphereRadius: { value: 0 }, // 초기값, 로드 후 업데이트
+                uHoverPosition: { value: new THREE.Vector3(0, 0, 0) }, // 호버 위치 초기값
+                uHoverRadius: { value: 0.1 }, // 호버 글로우 반경 초기값
+                uHoverIntensity: { value: 0.0 }, // 호버 글로우 강도 초기값 (0이면 안 보임)
+                uDistortionFactor: { value: 0.0 } // 꼭대기 상호작용 왜곡 강도 초기값
+            },
+            vertexShader: vertexShader,
+            fragmentShader: fragmentShader,
+            transparent: true,
+            blending: THREE.AdditiveBlending
+        });
+        console.log('Shader Material created early. UUID:', shaderMaterial.uuid);
+
+
+        const loader = new GLTFLoader();
+        loader.load(
+            'globe.glb',
+            function (gltf) {
+                const globe = gltf.scene;
+
+                globe.traverse(function (child) {
+                    if (child.isPoints) {
+                        globePoints = child;
+                    }
+                });
+
+                if (!globePoints) {
+                    console.error('No Points object found in the GLB file.');
+                    return;
+                }
+
+                // globePoints에 shaderMaterial을 직접 할당
+                globePoints.material = shaderMaterial;
+                console.log('Initial Material assigned to globePoints. UUID:', shaderMaterial.uuid);
+
+                const box = new THREE.Box3().setFromObject(globe);
+                const size = box.getSize(new THREE.Vector3());
+                const center = box.getCenter(new THREE.Vector3());
+                const radius = size.y / 2; // 구의 반지름 계산
+                // radius가 0이 되는 것을 방지하여 셰이더 오류를 막음
+                const safeRadius = Math.max(radius, 0.001); // 최소값 설정
+
+                // shaderMaterial의 uSphereRadius 유니폼 업데이트
+                shaderMaterial.uniforms.uSphereRadius.value = safeRadius;
+                console.log('Shader Material uSphereRadius updated to:', radius);
+
+                globe.position.x += (globe.position.x - center.x);
+                globe.position.y += (globe.position.y - center.y);
+                globe.position.z += (globe.position.z - center.z);
+
+                const objectHeight = size.y;
+                const desiredPixelHeight = 700; // 500에서 700으로 증가 (지구가 더 크게 보임)
+                const fov = camera.fov * (Math.PI / 180);
+                const distance = (objectHeight / (2 * Math.tan(fov / 2))) * (window.innerHeight / desiredPixelHeight);
+                camera.position.z = distance;
+
+                controls.target.copy(center);
+                controls.update();
+
+                scene.add(globe);
+                console.log('DEBUG: Globe model loaded successfully.');
+
+                // 모델 로드 및 재질 설정 완료 후 애니메이션 시작
+                animate();
+            },
+            (xhr) => console.log((xhr.loaded / xhr.total * 100) + '% loaded'),
+            (error) => console.error('An error happened', error)
+        );
+
+        // 마우스 움직임 이벤트 리스너
+        const mouse = new THREE.Vector2();
+        const raycaster = new THREE.Raycaster();
+                raycaster.params.Points.threshold = 0.1; // Points 객체에 대한 감지 임계값 설정
+
+        function onMouseMove(event) {
+            const rect = renderer.domElement.getBoundingClientRect();
+            mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+            mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+        }
+        window.addEventListener('mousemove', onMouseMove, false);
+
+        const hoverFadeInSpeed = 0.05; // 호버 시 글로우 페이드인 속도
+        const hoverFadeOutSpeed = 0.001; // 호버 해제 시 글로우 페이드아웃 속도 (잔상 효과)
+
+        // 꼭대기 상호작용을 위한 변수
+        let currentDistortionFactor = 0.0; // 현재 왜곡 강도
+        const maxDistortionFactor = 0.5; // 최대 왜곡 강도
+        const distortionThresholdY = 0.8; // Y축 왜곡 시작 임계값 (구 반지름 대비)
+
+        // 호버 글로우 강도 조절을 위한 변수
+        let currentHoverIntensity = 0.0;
+        const targetHoverIntensity = 2.0; // 호버 시 목표 강도 (더 밝게)
+        const uHoverRadius = 0.5; // 호버 글로우 반경 (더 크게)
+
+        // shaderMaterial의 uHoverRadius 유니폼 업데이트
+        // 이 부분은 shaderMaterial 초기화 시점에 한 번만 설정되므로, 여기에 직접 값을 할당합니다.
+        // shaderMaterial.uniforms.uHoverRadius.value = uHoverRadius; // 이 줄은 필요 없음, 초기화 시 설정됨
+
+        function animate() {
+            requestAnimationFrame(animate);
+            frameCount++;
+
+            if (globePoints) {
+                raycaster.setFromCamera(mouse, camera);
+                const intersects = raycaster.intersectObject(globePoints);
+
+                if (intersects.length > 0) {
+                    // 호버된 지점의 3D 위치를 유니폼에 전달
+                    shaderMaterial.uniforms.uHoverPosition.value.copy(intersects[0].point);
+                    // 호버 중이므로 강도를 목표치로 증가
+                    currentHoverIntensity = Math.min(currentHoverIntensity + hoverFadeInSpeed, targetHoverIntensity);
+
+                    // Y축 위치에 따른 왜곡 강도 계산
+                    const normalizedY = intersects[0].point.y / shaderMaterial.uniforms.uSphereRadius.value;
+                    if (normalizedY > distortionThresholdY) {
+                        // 꼭대기 근처일수록 왜곡 강도 증가
+                        const distortionProgress = (normalizedY - distortionThresholdY) / (1.0 - distortionThresholdY);
+                        currentDistortionFactor = Math.min(distortionProgress * maxDistortionFactor, maxDistortionFactor);
+                    } else {
+                        currentDistortionFactor = 0.0;
+                    }
+                } else {
+                    // 호버 해제 시 강도를 0으로 감소 (잔상 효과)
+                    currentHoverIntensity = Math.max(currentHoverIntensity - hoverFadeOutSpeed, 0.0);
+                    currentDistortionFactor = 0.0; // 호버 해제 시 왜곡도 초기화
+                }
+                // 현재 강도를 셰이더 유니폼에 적용
+                shaderMaterial.uniforms.uHoverIntensity.value = currentHoverIntensity;
+                shaderMaterial.uniforms.uDistortionFactor.value = currentDistortionFactor;
+            }
+
+            controls.update();
+            renderer.render(scene, camera);
+        }
+
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+        window.addEventListener('resize', onWindowResize, false);
+    </script>
+</body>
+</html>

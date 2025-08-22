@@ -12,6 +12,133 @@
   <script src="../../js/swiper-bundle.min.js"></script>
   <script src="../js/production.js"></script>
 </head>
+<style>
+  /* --- 기본 및 3D 공간 설정 --- */
+html, body, .stage {
+  width: 100%;
+  height: 100%;
+  overflow: hidden; /* 화면을 벗어나는 3D 개체 숨김 */
+  background: #000;
+}
+
+body { user-select: none; }
+
+.container {
+  width: 100%;
+  height: 100vh;
+  position: relative;
+  /* 3D 공간의 원근감(시점 거리)을 설정합니다. */
+  perspective: 5000px;
+  width: 40%;
+  margin: 0 30%;
+  position: relative;
+}
+
+.ring{
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  animation: none !important;
+  transform-style: preserve-3d;
+  /* animation: spin-ring 60s linear infinite; */
+  transform: rotateY(var(--ry, 0deg)) !important;
+  touch-action: none;
+  cursor: grab;
+  will-change: transform;
+}
+
+.stage, .ring{ touch-action: none; }
+
+/* --- 회전 애니메이션 정의 --- */
+@keyframes spin-ring {
+  from {
+    transform:  rotateY(0deg);
+  }
+  to {
+    transform:  rotateY(-360deg);
+  }
+}
+
+.stage .slide {
+  position: absolute;
+  left: 50%;
+  margin-left: -25rem;
+  width: 50rem;
+  aspect-ratio: 1/1;
+  border-radius: 20px;
+  border: 1px solid #3F3E3E;
+  overflow: hidden;
+  /* 3D 변형 시 뒷면은 보이지 않게 처리 */
+  backface-visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 4rem 2rem 6rem;
+}
+
+.slide-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
+}
+
+.stage .slide .top {
+  border-radius: 8px;
+  padding: 6px 10px;
+  color: #fff;
+  font-size: 18px;
+  text-align: center;
+  margin: 0 auto;
+  background-color: rgba(255, 255, 255, 0.15);
+  width: fit-content;
+}
+
+.stage .slide .title {
+  text-align: center;
+}
+
+.stage .slide .title span {
+  color: #fff;
+  font-size: 44px;
+  font-weight: 600;
+}
+
+.stage .slide .desc {
+  font-size: 16px;
+  opacity: .6;
+  color: #fff;
+  line-height: 1.4;
+  text-align: center;
+}
+
+/* --- Text Gradient Effect --- */
+.text_gradient_wrap {
+  background: radial-gradient(circle, rgba(251, 35, 57, .8) 0%, oklch(76.483% 0.14421 39.495 / 0.6) 100%);
+  text-align: center;
+  padding: 8rem 0;
+  font-size: 2.2rem;
+  font-weight: bold;
+  line-height: 1.6;
+  color: #fff; /* 효과가 적용되지 않을 경우를 위한 기본 색상 */
+
+  /* JS에서 --mouse-x, --mouse-y 변수를 받아 그래디언트 위치를 조절합니다. */
+  background: radial-gradient(
+    circle 155px at var(--mouse-x, -999px) var(--mouse-y, -999px),
+    /* #FB253C 0%, */
+    #FF906A,
+    #fff
+  ),
+  white; /* 광원이 없는 부분의 기본 텍스트 색상 */
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transition: background 0.3s ease-out; /* 부드러운 전환 효과 */
+}
+</style>
 <body>
   <div id="header">
     <img src="../assets/image/production_header.png" alt="">
@@ -28,18 +155,14 @@
       <div class="container">
         <div class="ring">
           <div class="slide screenx">
-            <img src="../assets/image/screenx_ bg.png" alt="SCREENX 슬라이드 배경 이미지" class="slide-image">
             <div class="top">SCREENX PRODUCTION</div>
-            <div class="title"><img src="../assets/image/logo_screenx.png" alt=""></div>
             <div class="desc">
               Conventional screens brought to life by <br>panoramic images that surround the audience <br>beyond just the story
             </div>
           </div>
 
           <div class="slide 4dx">
-            <img src="../assets/image/4dx_bg.png" alt="4DX 슬라이드 배경 이미지" class="slide-image">
             <div class="top">4DX PRODUCTION</div>
-            <div class="title"><img src="../assets/image/logo_4dx.png" alt=""></div>
             <div class="desc">
               Meticulously balanced motion effects <br>
               that seamlessly blend <br>
@@ -48,7 +171,6 @@
           </div>
 
           <div class="slide original">
-            <img src="../assets/image/original_bg.png" alt="ORIGINAL CONTENT 슬라이드 배경 이미지" class="slide-image">
             <div class="top">ORIGINAL CONTENT</div>
             <div class="title"><span>ORIGINAL PRODUCTION</span></div>
             <div class="desc">
@@ -59,7 +181,6 @@
           </div>
 
           <div class="slide vfx">
-            <img src="../assets/image/vfx_bg.png" alt="VFX PRODUCTION 슬라이드 배경 이미지" class="slide-image">
             <div class="top">VFX PRODUCTION</div>
             <div class="title"><span>CG / VFX STUDIO</span></div>
             <div class="desc">
@@ -69,18 +190,14 @@
           </div>
 
           <div class="slide screenx">
-            <img src="../assets/image/screenx_ bg.png" alt="SCREENX 슬라이드 배경 이미지" class="slide-image">
             <div class="top">SCREENX PRODUCTION</div>
-            <div class="title"><img src="../assets/image/logo_screenx.png" alt=""></div>
             <div class="desc">
               Conventional screens brought to life by <br>panoramic images that surround the audience <br>beyond just the story
             </div>
           </div>
 
           <div class="slide 4dx">
-            <img src="../assets/image/4dx_bg.png" alt="4DX 슬라이드 배경 이미지" class="slide-image">
             <div class="top">4DX PRODUCTION</div>
-            <div class="title"><img src="../assets/image/logo_4dx.png" alt=""></div>
             <div class="desc">
               Meticulously balanced motion effects <br>
               that seamlessly blend <br>
@@ -89,7 +206,6 @@
           </div>
 
           <div class="slide original">
-            <img src="../assets/image/original_bg.png" alt="ORIGINAL CONTENT 슬라이드 배경 이미지" class="slide-image">
             <div class="top">ORIGINAL CONTENT</div>
             <div class="title"><span>ORIGINAL PRODUCTION</span></div>
             <div class="desc">
@@ -100,7 +216,6 @@
           </div>
 
           <div class="slide vfx">
-            <img src="../assets/image/vfx_bg.png" alt="VFX PRODUCTION 슬라이드 배경 이미지" class="slide-image">
             <div class="top">VFX PRODUCTION</div>
             <div class="title"><span>CG / VFX STUDIO</span></div>
             <div class="desc">
@@ -110,18 +225,14 @@
           </div>
 
           <div class="slide screenx">
-            <img src="../assets/image/screenx_ bg.png" alt="SCREENX 슬라이드 배경 이미지" class="slide-image">
             <div class="top">SCREENX PRODUCTION</div>
-            <div class="title"><img src="../assets/image/logo_screenx.png" alt=""></div>
             <div class="desc">
               Conventional screens brought to life by <br>panoramic images that surround the audience <br>beyond just the story
             </div>
           </div>
 
           <div class="slide 4dx">
-            <img src="../assets/image/4dx_bg.png" alt="4DX 슬라이드 배경 이미지" class="slide-image">
             <div class="top">4DX PRODUCTION</div>
-            <div class="title"><img src="../assets/image/logo_4dx.png" alt=""></div>
             <div class="desc">
               Meticulously balanced motion effects <br>
               that seamlessly blend <br>
@@ -130,7 +241,6 @@
           </div>
 
           <div class="slide original">
-            <img src="../assets/image/original_bg.png" alt="ORIGINAL CONTENT 슬라이드 배경 이미지" class="slide-image">
             <div class="top">ORIGINAL CONTENT</div>
             <div class="title"><span>ORIGINAL PRODUCTION</span></div>
             <div class="desc">
@@ -141,7 +251,6 @@
           </div>
 
           <div class="slide vfx">
-            <img src="../assets/image/vfx_bg.png" alt="VFX PRODUCTION 슬라이드 배경 이미지" class="slide-image">
             <div class="top">VFX PRODUCTION</div>
             <div class="title"><span>CG / VFX STUDIO</span></div>
             <div class="desc">
@@ -154,5 +263,202 @@
       </div>
     </div>
   </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+
+      // ========= 캐러셀 기능 =========
+      function setupCarousel() {
+        const slides = document.querySelectorAll('.stage .slide');
+        if (!slides.length) return;
+
+        const slideCount = slides.length;
+        const slideWidth = slides[0].offsetWidth;
+        const desiredGap = 20; // px
+        const angle = 360 / slideCount;
+        const radius = ((slideWidth + desiredGap) / 2) / Math.tan(Math.PI / slideCount);
+
+        slides.forEach((slide, i) => {
+          const slideAngle = i * angle;
+          slide.style.transform = `rotateY(${slideAngle + 180}deg) translateZ(${-radius}px)`;
+        });
+      }
+
+      let resizeTimer; 
+      window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(setupCarousel, 100);
+      });
+
+      setupCarousel();
+
+      // ========= 텍스트 광원 효과 기능 =========
+      const textWrap = document.querySelector('.text_gradient_wrap');
+      // const container = document.getElementById('container')
+      if (textWrap) {
+        // 마우스 위치를 추적하고 그라데이션 가시성을 제어합니다.
+        document.body.addEventListener('mousemove', (e) => {
+          const rect = textWrap.getBoundingClientRect();
+          const mouseX = e.clientX;
+          const mouseY = e.clientY;
+
+          // 요소의 중심 좌표
+          const centerX = rect.left + rect.width / 2;
+          const centerY = rect.top + rect.height / 2;
+
+          // 마우스와 요소 중심 간의 거리
+          const distanceX = mouseX - centerX;
+          const distanceY = mouseY - centerY;
+          const distance = Math.sqrt(distanceX * distanceX + distanceY * distanceY);
+
+          // 요소 내부에서의 마우스 상대 좌표 (그라데이션 위치용)
+          const x = mouseX - rect.left;
+          const y = mouseY - rect.top;
+
+          // 거리에 따른 그라데이션 가시성 (0에서 1 사이)
+          // 이 값은 조절이 필요할 수 있습니다. (예: 200px 거리에서 0, 0px 거리에서 1)
+          const maxDistance = 300; // 그라데이션이 완전히 사라지는 최대 거리 (px)
+          const minDistance = 0; // 그라데이션이 완전히 보이는 최소 거리 (px)
+          let visibilityAlpha = 1 - (distance - minDistance) / (maxDistance - minDistance);
+          visibilityAlpha = Math.max(0, Math.min(1, visibilityAlpha)); // 0과 1 사이로 클램프
+
+          // CSS 변수 업데이트
+          textWrap.style.setProperty('--mouse-x', `${x}px`);
+          textWrap.style.setProperty('--mouse-y', `${y}px`);
+          textWrap.style.setProperty('--gradient-visibility-alpha', visibilityAlpha);
+        });
+
+        // 마우스가 요소를 벗어났을 때, 광원을 화면 밖으로 치워 보이지 않게 합니다.
+        // 이제 document.body에 mousemove 리스너가 있으므로,
+        // mouseleave는 그라데이션 가시성을 0으로 설정하는 역할만 합니다.
+        textWrap.addEventListener('mouseleave', () => {
+          // 마우스가 요소 밖으로 나갔을 때, 그라데이션 가시성을 0으로 설정하여 숨깁니다.
+          textWrap.style.setProperty('--gradient-visibility-alpha', '0');
+          // 마우스 위치는 여전히 화면 밖으로 설정하여 혹시 모를 잔상을 방지합니다.
+          textWrap.style.setProperty('--mouse-x', '-9999px');
+          textWrap.style.setProperty('--mouse-y', '-9999px');
+        });
+
+        // 초기 상태 설정: 페이지 로드 시 그라데이션 숨기기
+        textWrap.style.setProperty('--gradient-visibility-alpha', '0');
+        textWrap.style.setProperty('--mouse-x', '-9999px');
+        textWrap.style.setProperty('--mouse-y', '-9999px');
+      }
+
+
+      // ===== 3D 캐러셀: 자동회전 + 드래그 일시정지 + 재개 =====
+      const ring = document.querySelector('.ring');
+      if (ring) {
+        // ▶ 설정
+        const DIR = -1;                 // 드래그 방향(기존=1, 반대=-1)
+        const SENS = 0.25;             // 드래그 감도(px → deg)
+        const FRICTION = 0.95;         // 관성 감속
+        const AUTO_DEG_PER_SEC = -5;  // 기본 자동 회전 속도(음수=시계방향)
+        const RESUME_DELAY = 500;        // 관성 끝난 뒤 자동 재개 지연(ms), 0이면 즉시
+
+        // ▼ 추가: '툭' 방지 파라미터
+        const MIN_DRAG_PX   = 6;     // 이보다 짧게 움직이면 관성 없음
+        const MIN_DRAG_MS   = 120;   // 이보다 짧은 시간 드래그면 관성 없음
+        const MAX_RELEASE_V = 0.4;   // 방출 즉시 속도 상한(deg/ms)
+        const V_SMOOTH      = 0.25;  // 속도 EMA 계수(0~1, 작을수록 부드러움)
+
+        let ry = 0, dragging = false;
+        let startX = 0, startRy = 0, dragStartT = 0;
+        let vx = 0, vAvg = 0;          // vAvg = 속도 EMA
+        let lastMoveT = 0, lastMoveX = 0;
+        let autoActive = true;         // 기본: 자동회전 ON
+        let resumeTimer = 0;
+        let lastT = performance.now();   // ★ 이 줄 추가
+
+        const apply = () => ring.style.setProperty('--ry', ry + 'deg');
+
+        function raf() {
+          const now = performance.now();
+          const dt = now - lastT;      // ms
+          lastT = now;
+
+          if (!dragging) {
+            // 관성 우선
+            if (Math.abs(vx) >= 0.001) {
+              vx *= FRICTION;
+              ry += vx * dt;
+              apply();
+            } else {
+              // 관성 종료
+              vx = 0;
+              // 자동 회전
+              if (autoActive) {
+                ry += (AUTO_DEG_PER_SEC / 1000) * dt;
+                apply();
+              }
+            }
+          }
+          requestAnimationFrame(raf);
+        }
+        requestAnimationFrame(raf);
+
+        // 포인터 핸들러
+        const onDown = (e) => {
+          dragging = true;
+          ring.setPointerCapture?.(e.pointerId);
+          startX = lastMoveX = e.clientX;
+          startRy = ry;
+          dragStartT = lastMoveT = performance.now();
+          vx = 0; vAvg = 0;
+          autoActive = false;
+          if (resumeTimer) { clearTimeout(resumeTimer); resumeTimer = 0; }
+          e.preventDefault();
+        };
+
+        const onMove = (e) => {
+          if (!dragging) return;
+          const now = performance.now();
+          const dt  = now - lastMoveT;        // ms
+          const dx  = e.clientX - lastMoveX;  // px
+
+          // 각도 업데이트
+          const deltaX = e.clientX - startX;
+          ry = startRy + deltaX * SENS * DIR;
+          apply();
+
+          // 속도(EMA) 업데이트: dt가 너무 작으면 스킵
+          if (dt > 0) {
+            const instV = (dx * SENS * DIR) / dt;     // deg/ms
+            vAvg = vAvg * (1 - V_SMOOTH) + instV * V_SMOOTH;  // 지터 제거
+          }
+          lastMoveT = now;
+          lastMoveX = e.clientX;
+          e.preventDefault();
+        };
+
+        const onUp = (e) => {
+          if (!dragging) return;
+          dragging = false;
+          ring.releasePointerCapture?.(e.pointerId);
+
+          const dragDur = performance.now() - dragStartT;
+          const dragDist = Math.abs(lastMoveX - startX);
+
+          // ▼ '툭' 방지: 짧고 빠른 드래그는 관성 제거
+          if (dragDist < MIN_DRAG_PX || dragDur < MIN_DRAG_MS) {
+            vx = 0; vAvg = 0;              // 즉시 정지
+          } else {
+            // 방출 속도 = 스무딩된 속도, 상한 적용
+            vx = Math.max(-MAX_RELEASE_V, Math.min(MAX_RELEASE_V, vAvg));
+          }
+
+          // 관성 후 자동재개(네 코드의 로직에 맞춰 유지)
+          resumeTimer = setTimeout(() => { if (!dragging) autoActive = true; }, RESUME_DELAY);
+          e.preventDefault();
+        };
+
+        ring.addEventListener('pointerdown', onDown, { passive:false });
+        window.addEventListener('pointermove', onMove, { passive:false });
+        window.addEventListener('pointerup', onUp, { passive:false });
+        window.addEventListener('pointercancel', onUp, { passive:false });
+      }
+});
+
+  </script>
+    
 </body>
 </html>
