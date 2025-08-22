@@ -3,435 +3,268 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>3D 지구본 Glow</title>
+    <title>Three.js Globe</title>
     <style>
-        body {
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-            background: #000;
-        }
-        #container {
+        body { margin: 0; }
+        #globe-container {
             width: 100vw;
             height: 100vh;
+            display: block;
         }
     </style>
 </head>
 <body>
-    <div id="container"></div>
+    <div id="globe-container"></div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
-
-<script>
-  // =========================
-  // Config — 테어드롭(빨려드는) 형상 & 연속성 강화
-  // =========================
-  const CONFIG = {
-    // 반경 상한(대권거리 기준): 반구(πR)의 40%
-    capArcRatio: 0.40,
-
-    // 테어드롭 비등방성 (탠젠트 평면)
-    anisotropy: {
-      a_forward: 0.45,  // 위쪽(북극 방향) 더 빠른 감쇠 → 좁음
-      a_backward: 0.85, // 아래쪽(반대 방향) 느린 감쇠 → 넓음
-      b_perp: 0.70      // 좌우 폭
-    },
-
-    // 기본 감쇠 게인
-    baseFalloffGain: 1.0,
-
-    // 가장자리 부스트(끝이 살짝 퍼지는 느낌)
-    edgeBoost: {
-      enable: true,
-      startRatio: 0.60, // capArc의 60%부터
-      endRatio: 0.95,   // 95%에서 최대
-      strength: 0.35
-    },
-
-    // 북극 연결 추가광(가늘게 이어짐)
-    cone: {
-      enable: true,
-      allowStart: 0.65, // 마우스 y/R 65%부터
-      allowEnd:   0.85, // 85%면 완전 허용
-      base: 0.05,
-      slope: 0.10,
-      falloff: 1.6
-    },
-
-    // 전면/남반구 감쇠(형상은 유지, 광량만 억제)
-    frontFadeStart: -0.10,
-    frontFadeEnd:    0.15,
-    southFadeStart: -0.15,
-    southFadeEnd:    0.10,
-
-    // 바닥광(최소 밝기): 영향권 내부에서만
-    floorInside: 0.020,
-    floorPoleExtra: 0.030,
-
-    // Afterglow (연속성↑)
-    afterglowDecay: 0.012,
-    riseClamp: 0.92,
-    influenceThresh: 0.008,
-
-    // 호버 이징: 첫 진입만 150ms 페이드인(이후 1 유지)
-    hoverEaseMs: 150,
-
-    // 시간적 스무딩
-    pointLerp: 0.18,   // 포인트 강도 수렴
-    mouseLerp: 0.20,   // 마우스 3D 위치 EMA
-
-    // 초기 안전장치
-    requireFirstHit: true
-  };
-
-  // =========================
-  // 상태
-  // =========================
-  let scene, camera, renderer, globe, controls;
-  let raycaster, mouse, mouse3D, smoothedMouse3D, hasMouseHit = false;
-  let targetPointsMesh = null;
-  let globeRayTarget = null;
-  let originalColors = [];
-  let currentGlowStrengths = [];
-  let maxGlowStrengths = [];
-  let globeRadiusWorld = 2.5;
-  let dynamicDirectionalLight;
-
-  // 호버 이징: 첫 교차 때만 페이드인, 이후 1 유지
-  let hoverMix = 0;
-  let firstHitTime = 0;
-
-  // =========================
-  // Utils
-  // =========================
-  function smoothstep(edge0, edge1, x) {
-    const t = Math.min(1, Math.max(0, (x - edge0) / (edge1 - edge0)));
-    return t * t * (3 - 2 * t);
-  }
-  const safe01 = v => (Number.isFinite(v) ? Math.min(1, Math.max(0, v)) : 0);
-
-  // =========================
-  // Init
-  // =========================
-  function init() {
-    scene = new THREE.Scene();
-
-    camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    camera.position.set(0, 0, 5);
-
-    renderer = new THREE.WebGLRenderer({ antialias: true });
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setClearColor(0x000000);
-    document.getElementById('container').appendChild(renderer.domElement);
-
-    controls = new THREE.OrbitControls(camera, renderer.domElement);
-    controls.enableDamping = true;
-    controls.dampingFactor = 0.05;
-
-    // Lights
-    scene.add(new THREE.AmbientLight(0x8e24aa, 0.6));
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
-    directionalLight.position.set(10, 10, 5);
-    scene.add(directionalLight);
-    const rimLight = new THREE.DirectionalLight(0x9c27b0, 0.8);
-    rimLight.position.set(-10, -10, -5);
-    scene.add(rimLight);
-
-    dynamicDirectionalLight = new THREE.DirectionalLight(0xffffff, 0);
-    dynamicDirectionalLight.position.set(0, 10, 0);
-    scene.add(dynamicDirectionalLight);
-
-    // Ray
-    raycaster = new THREE.Raycaster();
-    mouse = new THREE.Vector2();
-    mouse3D = new THREE.Vector3();
-    smoothedMouse3D = new THREE.Vector3();
-
-    window.addEventListener('mousemove', (event) => {
-      mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-      mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
-
-      raycaster.setFromCamera(mouse, camera);
-      if (globeRayTarget) {
-        const intersects = raycaster.intersectObject(globeRayTarget);
-        if (intersects.length > 0) {
-          mouse3D.copy(intersects[0].point);
-          if (!hasMouseHit) {
-            hasMouseHit = true;
-            firstHitTime = performance.now();
-            smoothedMouse3D.copy(mouse3D);
-          }
-        }
-      }
-    });
-
-    // Raycast 전용 invisible globe
-    globeRayTarget = new THREE.Mesh(
-      new THREE.SphereGeometry(globeRadiusWorld, 64, 64),
-      new THREE.MeshBasicMaterial({ visible: false })
-    );
-    scene.add(globeRayTarget);
-
-    // Load GLB
-    const loader = new THREE.GLTFLoader();
-    loader.load('../asset/glb/globe.glb', (gltf) => {
-      globe = gltf.scene;
-      globe.scale.set(5, 5, 5);
-      globe.position.set(0, 0, 0);
-
-      globe.traverse((child) => {
-        if (child.type === 'Points') {
-          targetPointsMesh = child;
-          if (child.material) {
-            child.material.transparent = true;
-            child.material.size = 0.03;
-            child.material.sizeAttenuation = true;
-            child.material.vertexColors = true;
-
-            const geometry = child.geometry;
-            const posAttr = geometry.getAttribute('position');
-            const colors = [];
-
-            originalColors = [];
-            currentGlowStrengths = [];
-            maxGlowStrengths = [];
-
-            for (let i = 0; i < posAttr.count; i++) {
-              let brightness;
-              if (Math.random() > 0.33) brightness = 0.7 + Math.random() * 0.3;
-              else brightness = 0.1 + Math.random() * 0.3;
-
-              const r = 0.55 * brightness;
-              const g = 0.14 * brightness;
-              const b = 0.67 * brightness;
-
-              colors.push(r, g, b);
-              originalColors.push(r, g, b);
-              currentGlowStrengths.push(0);
-              maxGlowStrengths.push(0);
+    <!-- Import Map for Three.js modules -->
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.168.0/build/three.module.js",
+                "three/addons/": "https://unpkg.com/three@0.168.0/examples/jsm/"
             }
-            geometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
-          }
         }
-      });
+    </script>
 
-      scene.add(globe);
-    }, undefined, (err) => {
-      console.error('GLB load error:', err);
-    });
+    <script type="module">
+        import * as THREE from 'three';
+        import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
-    window.addEventListener('resize', onResize);
-    animate();
-  }
+        // 1. Scene, Camera, Renderer 설정
+        const container = document.getElementById('globe-container');
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x111111);
 
-  // =========================
-  // Anisotropic Drop-off (테어드롭 핵심)
-  // =========================
-  // uMouse, uPoint, uPole: 모두 정규화된 표면 방향 벡터
-  function anisotropicDropoff(uMouse, uPoint, uPole, R, params) {
-    // 구면 각/호
-    const dotClamp = THREE.MathUtils.clamp(uMouse.dot(uPoint), -1, 1);
-    const angle = Math.acos(dotClamp);
-    const arc = R * angle;
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 
-    if (arc === 0) {
-      return { glow: 1.0, arc, arcParallel: 0, arcPerp: 0, cosPhi: 1 };
-    }
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        container.appendChild(renderer.domElement);
 
-    // mouse 기준 탠젠트 방향: point 쪽
-    const d = uPoint.clone().sub(uMouse.clone().multiplyScalar(uPoint.dot(uMouse)));
-    const dl2 = d.lengthSq();
-    if (dl2 === 0) {
-      // 등방성으로 처리 (안전)
-      const iso = Math.exp(-((arc / params.b_perp) ** 2)); // ★ 괄호 추가
-      return { glow: iso, arc, arcParallel: 0, arcPerp: arc, cosPhi: 0 };
-    }
-    d.multiplyScalar(1 / Math.sqrt(dl2));
+        // 2. OrbitControls 설정
+        const controls = new OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+        controls.dampingFactor = 0.05;
 
-    // mouse 기준 탠젠트 방향: pole(북극) 쪽
-    const p = uPole.clone().sub(uMouse.clone().multiplyScalar(uPole.dot(uMouse)));
-    const pl2 = p.lengthSq();
-    if (pl2 === 0) {
-      const iso = Math.exp(-((arc / params.b_perp) ** 2)); // ★ 괄호 추가
-      return { glow: iso, arc, arcParallel: 0, arcPerp: arc, cosPhi: 0 };
-    }
-    p.multiplyScalar(1 / Math.sqrt(pl2));
+        // 3. GLTFLoader 및 커스텀 셰이더 설정
+        let globePoints = null;
+        let shaderMaterial = null;  // 상시 적용될 셰이더 재질 (Y축 밝기 + 호버 글로우)
+        let isHovering = false;     // 호버 상태 추적 (나중에 글로우 강도 조절에 사용)
+        let frameCount = 0;         // 프레임 카운터
 
-    // cos(phi) = dot(d, p)  (p가 forward, -p가 backward)
-    const cosPhi = THREE.MathUtils.clamp(d.dot(p), -1, 1);
-    const arcParallel = arc * Math.abs(cosPhi);
-    const arcPerp = Math.sqrt(Math.max(0, arc * arc - arcParallel * arcParallel));
+        // 호버 글로우를 위한 Canvas 설정
+        const hoverCanvas = document.createElement('canvas');
+        hoverCanvas.width = 64; // 작은 해상도로 시작
+        hoverCanvas.height = 64;
+        const hoverContext = hoverCanvas.getContext('2d');
+        const hoverTexture = new THREE.CanvasTexture(hoverCanvas);
+        hoverTexture.needsUpdate = true; // 초기 업데이트
 
-    // forward/backward에 서로 다른 스케일
-    const a = (cosPhi >= 0) ? params.a_forward : params.a_backward;
-    const b = params.b_perp;
+        // "상단부에서 빛이 나오는" 효과를 위한 셰이더
+        const vertexShader = `
+            varying vec3 vWorldPosition;
+            varying float vLocalY; // 로컬 Y축 위치를 Fragment Shader로 전달
 
-    // 비등방 가우시안
-    const term = ((arcParallel / a) ** 2) + ((arcPerp / b) ** 2);
-    const glow = Math.exp(-(term)); // ★ -(...) 형태로 안전
+            // 호버 글로우를 위한 추가 uniform
+            uniform vec3 uHoverPosition; // 호버된 3D 위치
+            uniform float uHoverRadius;  // 호버 글로우 반경
+            uniform float uHoverIntensity; // 호버 글로우 강도
 
-    return { glow, arc, arcParallel, arcPerp, cosPhi };
-  }
+            void main() {
+                vec4 worldPosition = modelMatrix * vec4(position, 1.0);
+                vWorldPosition = worldPosition.xyz;
+                vLocalY = position.y; // 모델의 로컬 Y축 위치
 
-  // =========================
-  // Glow Update
-  // =========================
-  function updateGlowEffect(pointsMesh) {
-    if (CONFIG.requireFirstHit && !hasMouseHit) return;
+                vec4 mvPosition = viewMatrix * worldPosition;
+                gl_Position = projectionMatrix * mvPosition;
+                gl_PointSize = 0.005 * ( 300.0 / -mvPosition.z );
+            }
+        `;
 
-    const geometry  = pointsMesh.geometry;
-    const posAttr   = geometry.attributes.position;
-    const colorAttr = geometry.attributes.color;
-    const glowWhite = new THREE.Color(1, 1, 1);
+        const fragmentShader = `
+            varying vec3 vWorldPosition;
+            varying float vLocalY; // Vertex Shader에서 전달받은 로컬 Y축 위치
 
-    // (1) 호버 이징: 첫 진입만 0→1, 이후 유지
-    if (hoverMix < 1) {
-      const dt = performance.now() - firstHitTime;
-      hoverMix = Math.min(1, dt / CONFIG.hoverEaseMs);
-    }
+            uniform vec3 uTopColor;
+            uniform vec3 uBottomColor;
+            uniform float uSphereRadius; // 구의 반지름 (Y축 밝기 계산에 사용)
 
-    // (2) 마우스 위치 스무딩
-    smoothedMouse3D.lerp(mouse3D, CONFIG.mouseLerp);
+            // 호버 글로우를 위한 추가 uniform
+            uniform vec3 uHoverPosition;
+            uniform float uHoverRadius;
+            uniform float uHoverIntensity;
+            uniform float uDistortionFactor; // 꼭대기 상호작용 왜곡 강도
 
-    const R = globeRadiusWorld;
-    const capArc = Math.PI * R * CONFIG.capArcRatio;
+            void main() {
+                // Y축 밝기 그라데이션 (로컬 Y축 기준)
+                // vLocalY는 -radius에서 +radius 범위이므로, 0.0 ~ 1.0 범위로 정규화
+                float normalizedLocalY = (vLocalY / uSphereRadius + 1.0) / 2.0;
+                // smoothstep을 사용하여 밝기 변화를 부드럽게 조절
+                float smoothMix = smoothstep(0.2, 0.8, normalizedLocalY);
+                vec3 finalColor = mix(uBottomColor, uTopColor, smoothMix);
 
-    // 단위 벡터들
-    const uMouse = smoothedMouse3D.clone().normalize();
-    const uPole  = new THREE.Vector3(0, 1, 0); // 월드 북극
+                // 호버 글로우 계산
+                vec3 distVector = vWorldPosition - uHoverPosition;
+                // Y축 왜곡 적용: Y축 거리를 uDistortionFactor에 따라 줄임
+                distVector.y /= (1.0 + uDistortionFactor * 2.0); // Y축을 더 길게 늘림
+                float distToHover = length(distVector);
 
-    // 캐시
-    const tempWorld = new THREE.Vector3();
-    const uPoint    = new THREE.Vector3();
-    const toCamTmp  = new THREE.Vector3();
+                // 호버 반경 내에서만 글로우가 나타나도록 smoothstep 사용
+                // uHoverRadius에서 uHoverRadius * 0.5로 갈수록 1.0 -> 0.0으로 페이드 아웃
+                float hoverAlpha = smoothstep(uHoverRadius, uHoverRadius * 0.5, distToHover);
+                // uHoverIntensity를 곱하여 글로우 강도 조절
+                vec3 hoverGlowColor = vec3(1.0, 1.0, 1.0) * uHoverIntensity * hoverAlpha; // 흰색 글로우
 
-    // cone 연결 광을 위한 축
-    const topPoint = new THREE.Vector3(0, R + 0.01, 0);
-    const dirTopToMouse = smoothedMouse3D.clone().sub(topPoint);
-    const dirTopLen2 = dirTopToMouse.lengthSq();
-    let allowCone = 0;
-    if (CONFIG.cone.enable && dirTopLen2 > 0) {
-      dirTopToMouse.multiplyScalar(1 / Math.sqrt(dirTopLen2));
-      const mousePolar = THREE.MathUtils.clamp(smoothedMouse3D.y / R, -1, 1);
-      allowCone = smoothstep(CONFIG.cone.allowStart, CONFIG.cone.allowEnd, mousePolar);
-    }
+                // 최종 색상 혼합: 기본 색상에 호버 글로우 색상을 더함 (흰색 글로우가 더 잘 보이도록 max 사용)
+                gl_FragColor = vec4(max(finalColor, hoverGlowColor), 1.0);
+            }
+        `;
 
-    // 위도 가중(점 기준)
-    function latBlend(yWorld) {
-      return smoothstep(-0.20, 0.70, yWorld / R);
-    }
+        // shaderMaterial을 여기서 초기화하여 항상 사용 가능하도록 변경
+        shaderMaterial = new THREE.ShaderMaterial({
+            uniforms: {
+                uTopColor: { value: new THREE.Color(0xFB233B) }, // 위쪽 색상 (흰색)
+                uBottomColor: { value: new THREE.Color(0x000) }, // 아래쪽 색상 (흰색)
+                uSphereRadius: { value: 0 }, // 초기값, 로드 후 업데이트
+                uHoverPosition: { value: new THREE.Vector3(0, 0, 0) }, // 호버 위치 초기값
+                uHoverRadius: { value: 0.1 }, // 호버 글로우 반경 초기값
+                uHoverIntensity: { value: 0.0 }, // 호버 글로우 강도 초기값 (0이면 안 보임)
+                uDistortionFactor: { value: 0.0 } // 꼭대기 상호작용 왜곡 강도 초기값
+            },
+            vertexShader: vertexShader,
+            fragmentShader: fragmentShader,
+            transparent: true,
+            blending: THREE.AdditiveBlending
+        });
+        console.log('Shader Material created early. UUID:', shaderMaterial.uuid);
 
-    for (let i = 0; i < posAttr.count; i++) {
-      tempWorld.fromBufferAttribute(posAttr, i);
-      pointsMesh.localToWorld(tempWorld);
 
-      // 단위 표면 법선
-      uPoint.copy(tempWorld).normalize();
+        const loader = new GLTFLoader();
+        loader.load(
+            '../asset/glb/globe.glb',
+            function (gltf) {
+                const globe = gltf.scene;
 
-      // (A) 테어드롭 비등방성 원형 하이라이트 (형태 핵심)
-      const A = anisotropicDropoff(uMouse, uPoint, uPole, R, CONFIG.anisotropy);
-      let radialGlow = CONFIG.baseFalloffGain * A.glow;
+                globe.traverse(function (child) {
+                    if (child.isPoints) {
+                        globePoints = child;
+                    }
+                });
 
-      // 반경 상한(호 길이 cap)
-      const arcClampedRatio = Math.min(1, A.arc / capArc);
+                if (!globePoints) {
+                    console.error('No Points object found in the GLB file.');
+                    return;
+                }
 
-      // 가장자리 부스트(끝부분 퍼짐)
-      if (CONFIG.edgeBoost.enable) {
-        const t = smoothstep(CONFIG.edgeBoost.startRatio, CONFIG.edgeBoost.endRatio, arcClampedRatio);
-        const edgeGain = 1.0 + CONFIG.edgeBoost.strength * t;
-        radialGlow *= edgeGain;
-      }
+                // globePoints에 shaderMaterial을 직접 할당
+                globePoints.material = shaderMaterial;
+                console.log('Initial Material assigned to globePoints. UUID:', shaderMaterial.uuid);
 
-      // (B) 전면/남반구 감쇠(광량만 수정, 형태 유지)
-      toCamTmp.copy(camera.position).sub(tempWorld).normalize();
-      const frontRaw  = uPoint.dot(toCamTmp); // [-1,1]
-      const frontFade = smoothstep(CONFIG.frontFadeStart, CONFIG.frontFadeEnd, frontRaw);
-      const southRaw  = tempWorld.y / R;
-      const southFade = smoothstep(CONFIG.southFadeStart, CONFIG.southFadeEnd, southRaw);
-      radialGlow *= frontFade * southFade;
+                const box = new THREE.Box3().setFromObject(globe);
+                const size = box.getSize(new THREE.Vector3());
+                const center = box.getCenter(new THREE.Vector3());
+                const radius = size.y / 2; // 구의 반지름 계산
 
-      // (C) 북극 연결 추가광 (가늘게 이어짐)
-      let coneGlow = 0;
-      if (allowCone > 0) {
-        const toPoint = tempWorld.clone().sub(topPoint);
-        const projDist = toPoint.dot(dirTopToMouse);
-        if (projDist >= 0) {
-          const projected = dirTopToMouse.clone().multiplyScalar(projDist);
-          const sideDist  = toPoint.sub(projected).length();
-          const coneRadius = CONFIG.cone.base + CONFIG.cone.slope * projDist;
-          if (sideDist < coneRadius) {
-            const longTerm = (projDist / CONFIG.cone.falloff) ** 2;
-            const longFactor = Math.exp(-(longTerm)); // ★ -(...) 형태로 안전
-            const sideFactor = 1 - smoothstep(0.0, coneRadius, sideDist);
-            const poleW      = latBlend(tempWorld.y);
-            const coneSouth  = smoothstep(-0.05, 0.20, tempWorld.y / R);
-            coneGlow = longFactor * sideFactor * poleW * allowCone * coneSouth * frontFade;
-          }
+                // shaderMaterial의 uSphereRadius 유니폼 업데이트
+                shaderMaterial.uniforms.uSphereRadius.value = radius;
+                console.log('Shader Material uSphereRadius updated to:', radius);
+
+                globe.position.x += (globe.position.x - center.x);
+                globe.position.y += (globe.position.y - center.y);
+                globe.position.z += (globe.position.z - center.z);
+
+                const objectHeight = size.y;
+                const desiredPixelHeight = 500;
+                const fov = camera.fov * (Math.PI / 180);
+                const distance = (objectHeight / (2 * Math.tan(fov / 2))) * (window.innerHeight / desiredPixelHeight);
+                camera.position.z = distance;
+
+                controls.target.copy(center);
+                controls.update();
+
+                scene.add(globe);
+                console.log('DEBUG: Globe model loaded successfully.');
+
+                // 모델 로드 및 재질 설정 완료 후 애니메이션 시작
+                animate();
+            },
+            (xhr) => console.log((xhr.loaded / xhr.total * 100) + '% loaded'),
+            (error) => console.error('An error happened', error)
+        );
+
+        // 마우스 움직임 이벤트 리스너
+        const mouse = new THREE.Vector2();
+        const raycaster = new THREE.Raycaster();
+        raycaster.params.Points.threshold = 0.1; // Points 객체에 대한 감지 임계값 설정
+
+        function onMouseMove(event) {
+            const rect = renderer.domElement.getBoundingClientRect();
+            mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+            mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
         }
-      }
+        window.addEventListener('mousemove', onMouseMove, false);
 
-      // (D) 결합 — 형태는 (A), (C)는 추가 광량
-      let combinedGlow = radialGlow + coneGlow;
+        const hoverFadeInSpeed = 0.05; // 호버 시 글로우 페이드인 속도
+        const hoverFadeOutSpeed = 0.001; // 호버 해제 시 글로우 페이드아웃 속도 (잔상 효과)
 
-      // (E) 영향권 내부 바닥광 + 호버 이징
-      const inAreaFloor = (A.arc <= capArc) ? (CONFIG.floorInside + CONFIG.floorPoleExtra * latBlend(tempWorld.y)) : 0;
-      combinedGlow = Math.max(combinedGlow, inAreaFloor);
-      combinedGlow *= hoverMix;
+        // 꼭대기 상호작용을 위한 변수
+        let currentDistortionFactor = 0.0; // 현재 왜곡 강도
+        const maxDistortionFactor = 0.5; // 최대 왜곡 강도
+        const distortionThresholdY = 0.8; // Y축 왜곡 시작 임계값 (구 반지름 대비)
 
-      // (F) Afterglow — 연속성 강화 + 시간적 스무딩
-      const inInfluence = (combinedGlow >= CONFIG.influenceThresh) || (A.arc <= capArc * 1.05);
-      if (inInfluence) {
-        if (combinedGlow > maxGlowStrengths[i]) {
-          maxGlowStrengths[i] = Math.min(CONFIG.riseClamp, combinedGlow);
-        } else {
-          maxGlowStrengths[i] *= (1 - CONFIG.afterglowDecay);
+        // 호버 글로우 강도 조절을 위한 변수
+        let currentHoverIntensity = 0.0;
+        const targetHoverIntensity = 2.0; // 호버 시 목표 강도 (더 밝게)
+        const uHoverRadius = 0.5; // 호버 글로우 반경 (더 크게)
+
+        // shaderMaterial의 uHoverRadius 유니폼 업데이트
+        // 이 부분은 shaderMaterial 초기화 시점에 한 번만 설정되므로, 여기에 직접 값을 할당합니다.
+        // shaderMaterial.uniforms.uHoverRadius.value = uHoverRadius; // 이 줄은 필요 없음, 초기화 시 설정됨
+
+        function animate() {
+            requestAnimationFrame(animate);
+            frameCount++;
+
+            if (globePoints) {
+                raycaster.setFromCamera(mouse, camera);
+                const intersects = raycaster.intersectObject(globePoints);
+
+                if (intersects.length > 0) {
+                    // 호버된 지점의 3D 위치를 유니폼에 전달
+                    shaderMaterial.uniforms.uHoverPosition.value.copy(intersects[0].point);
+                    // 호버 중이므로 강도를 목표치로 증가
+                    currentHoverIntensity = Math.min(currentHoverIntensity + hoverFadeInSpeed, targetHoverIntensity);
+
+                    // Y축 위치에 따른 왜곡 강도 계산
+                    const normalizedY = intersects[0].point.y / shaderMaterial.uniforms.uSphereRadius.value;
+                    if (normalizedY > distortionThresholdY) {
+                        // 꼭대기 근처일수록 왜곡 강도 증가
+                        const distortionProgress = (normalizedY - distortionThresholdY) / (1.0 - distortionThresholdY);
+                        currentDistortionFactor = Math.min(distortionProgress * maxDistortionFactor, maxDistortionFactor);
+                    } else {
+                        currentDistortionFactor = 0.0;
+                    }
+                } else {
+                    // 호버 해제 시 강도를 0으로 감소 (잔상 효과)
+                    currentHoverIntensity = Math.max(currentHoverIntensity - hoverFadeOutSpeed, 0.0);
+                    currentDistortionFactor = 0.0; // 호버 해제 시 왜곡도 초기화
+                }
+                // 현재 강도를 셰이더 유니폼에 적용
+                shaderMaterial.uniforms.uHoverIntensity.value = currentHoverIntensity;
+                shaderMaterial.uniforms.uDistortionFactor.value = currentDistortionFactor;
+            }
+
+            controls.update();
+            renderer.render(scene, camera);
         }
-      } else {
-        maxGlowStrengths[i] *= (1 - CONFIG.afterglowDecay);
-      }
 
-      const target = Math.max(combinedGlow, maxGlowStrengths[i]);
-      currentGlowStrengths[i] = currentGlowStrengths[i] + (target - currentGlowStrengths[i]) * CONFIG.pointLerp;
-
-      // (G) 색상 반영
-      const baseR = originalColors[i * 3];
-      const baseG = originalColors[i * 3 + 1];
-      const baseB = originalColors[i * 3 + 2];
-
-      const r = baseR + (1 - baseR) * currentGlowStrengths[i];
-      const g = baseG + (1 - baseG) * currentGlowStrengths[i];
-      const b = baseB + (1 - baseB) * currentGlowStrengths[i];
-
-      colorAttr.setXYZ(i, safe01(r), safe01(g), safe01(b));
-    }
-
-    dynamicDirectionalLight.intensity = 0;
-    colorAttr.needsUpdate = true;
-  }
-
-  // =========================
-  // Renders
-  // =========================
-  function onResize() {
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-  }
-  function animate() {
-    requestAnimationFrame(animate);
-    if (globe) globe.rotation.y += 0.001;
-    if (targetPointsMesh) updateGlowEffect(targetPointsMesh);
-    controls.update();
-    renderer.render(scene, camera);
-  }
-
-  init();
-</script>
-
-
-
-
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+        window.addEventListener('resize', onWindowResize, false);
+    </script>
 </body>
 </html>
