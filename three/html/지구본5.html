@@ -20,12 +20,33 @@
             display: block;
             position: relative;
         }
+        /* #globe_cont::after {
+            content: '';
+            position: absolute;
+            width: 1200px;
+            bottom: 0;
+            left: 50%;
+            background: url(../../img/globe/globe_dim.png) no-repeat center / cover;
+            aspect-ratio: 1200 / 600;
+            transform: translateX(-50%);
+            pointer-events: none;
+        } */
+        .dv{
+            display: none;
+            position: fixed;
+            width: 975px;
+            height: 2px;
+            background-color: aqua;
+            top: 50%;
+            left: 50%;
+            transform: translateX(-50%);
+        }
     </style>
 </head>
 <body>
     <div id="globe_cont"></div>
-
-    <!-- Import Map for Three.js modules -->
+    <div class="dv" style="width: 975px; height: 2px; background-color: aqua;"></div>
+    <!-- Three.js 모듈을 위한 임포트 맵 -->
     <script type="importmap">
         {
             "imports": {
@@ -40,6 +61,9 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+let yellowSpotLight;
+let lightTarget;
 
 let objectHeight;
 let globe; // 지구본 객체를 전역으로 선언
@@ -63,13 +87,6 @@ const uiScene = new THREE.Scene();
 // 고정된 Perspective Camera (메인 카메라와 같은 FOV, 하지만 고정 위치)
 let uiCamera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
 // UI 카메라는 나중에 메인 카메라 위치로 설정됨
-
-// 독립적인 조명용 Scene과 고정 Camera
-const lightingScene = new THREE.Scene();
-const fixedLightingCamera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
-// 우측 안쪽 상단에서 중앙으로 쏘는 고정 위치 설정
-fixedLightingCamera.position.set(2, 2, 1); // 우측 안쪽 상단 위치
-fixedLightingCamera.lookAt(0, 0, 0); // 중앙을 바라봄
 
 const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(container.clientWidth, container.clientHeight);
@@ -100,14 +117,6 @@ let shaderMaterial = null;  // 상시 적용될 셰이더 재질 (Y축 밝기 + 
 let isHovering = false;     // 호버 상태 추적 (나중에 글로우 강도 조절에 사용)
 let frameCount = 0;         // 프레임 카운터
 let hasMouseMoved = false;  // 마우스가 한 번이라도 움직였는지 추적
-
-// 호버 글로우를 위한 Canvas 설정
-const hoverCanvas = document.createElement('canvas');
-hoverCanvas.width = 64; // 작은 해상도로 시작
-hoverCanvas.height = 64;
-const hoverContext = hoverCanvas.getContext('2d');
-const hoverTexture = new THREE.CanvasTexture(hoverCanvas);
-hoverTexture.needsUpdate = true; // 초기 업데이트
 
 // "상단부에서 빛이 나오는" 효과를 위한 셰이더
 const vertexShader = `
@@ -273,7 +282,7 @@ const fragmentShader = `
         float lightEffect = smoothstep(5.0, 0.0, distToLight) * uFixedLightIntensity;
         
         // 더 확실한 붉은 조명 효과 (기존 색상을 완전히 덮어씌움)
-        vec3 redLight = vec3(1.0, 0.2, 0.2); // 밝은 빨간색
+        vec3 redLight = vec3(0.8, 0.8, 0.8); // 밝은 빨간색
         blendedColor = mix(blendedColor, redLight, lightEffect * 0.8);
         
         // 최종 색상과 계산된 알파값을 출력
@@ -324,7 +333,7 @@ loader.load(
         });
 
         if (!globePoints) {
-            console.error('No Points object found in the GLB file.');
+            console.error('GLB 파일에서 Points 객체를 찾을 수 없습니다.');
             return;
         }
 
@@ -379,7 +388,7 @@ loader.load(
         
         
         // 파란색 투명 껍질을 지구본에 자식으로 추가 (위치 자동 동기화)
-        createBlueShell(safeRadius, globe);
+        createShell(safeRadius, globe);
         
         // 호버 감지용 invisible sphere 생성 (구와 동일한 크기)
         const hoverGeometry = new THREE.SphereGeometry(safeRadius, 32, 32);
@@ -401,9 +410,6 @@ loader.load(
         addCube(-25.0, 135.0, 0xffffff); // 오세아니아
         addCube(48.0, 10.0, 0xffffff); // 서유럽
 
-
-        // 불필요한 조명 Scene 생성 제거 (이제 셰이더에서 직접 처리)
-        
         // 지구본 로드 완료 후 카메라 위치 재조정
         onWindowResize();
         
@@ -569,6 +575,10 @@ function animate() {
     // 메인 Scene 렌더링 (지구본)
     renderer.render(scene, camera);
     
+    if (spotLightHelper) { // spotLightHelper가 정의되었는지 확인
+        spotLightHelper.update();
+    }
+    
     // UI Scene 렌더링 (고리를 맨 위에 오버레이)
     renderer.autoClear = false;
     renderer.render(uiScene, uiCamera);
@@ -721,14 +731,14 @@ function createGradientShell(radius, globeObject) {
 }
 
 // 껍질 생성 함수 (지구본의 자식으로 추가)
-function createBlueShell(radius, globeObject) {
+function createShell(radius, globeObject) {
     
     // Points와 정확히 동일한 크기의 구 geometry 생성
     const shellGeometry = new THREE.SphereGeometry(radius, 64, 32);
     
     // 껍질 재질 
     const shellMaterial = new THREE.MeshBasicMaterial({
-        color: 0xfb233b,        // 회색으로 변경
+        color: 0x4c4c4c,        // 회색으로 변경
         transparent: true,
         opacity: 0.05,          // 투명도 약간 증가
         side: THREE.DoubleSide, 
@@ -745,134 +755,6 @@ function createBlueShell(radius, globeObject) {
     globeObject.add(blueShell);
 }
 
-// 배경 조명 생성 함수 (우측 상단에서 중앙으로 쏘는 붉은 조명)
-function createBackgroundLighting(radius) {
-    // 테스트용 간단한 큰 구형 조명 생성
-    const testLightGeometry = new THREE.SphereGeometry(radius * 0.5, 16, 16);
-    const testLightMaterial = new THREE.MeshBasicMaterial({ 
-        color: 0xff0000, 
-        transparent: true, 
-        opacity: 0.8 
-    });
-    const testLight = new THREE.Mesh(testLightGeometry, testLightMaterial);
-    testLight.position.set(2, 2, 3); // 확실히 보이는 위치
-    lightingScene.add(testLight);
-    
-    // 조명 효과를 위한 원추형 광선 생성 (크기 대폭 확대)
-    const lightConeGeometry = new THREE.ConeGeometry(radius * 3, radius * 12, 32, 1, true);
-    
-    // 붉은 조명 셰이더 재질
-    const lightingVertexShader = `
-        varying vec3 vWorldPosition;
-        varying vec3 vNormal;
-        varying vec2 vUv;
-        
-        void main() {
-            vec4 worldPosition = modelMatrix * vec4(position, 1.0);
-            vWorldPosition = worldPosition.xyz;
-            vNormal = normalize(normalMatrix * normal);
-            vUv = uv;
-            
-            gl_Position = projectionMatrix * viewMatrix * worldPosition;
-        }
-    `;
-    
-    const lightingFragmentShader = `
-        varying vec3 vWorldPosition;
-        varying vec3 vNormal;
-        varying vec2 vUv;
-        uniform vec3 uLightColor;
-        uniform float uIntensity;
-        uniform vec3 uCameraPosition;
-        
-        void main() {
-            // 원추형 광선의 중심에서 가장자리로의 거리 기반 그라디언트
-            float distanceFromCenter = length(vUv - vec2(0.5, 0.5)) * 2.0;
-            
-            // 중심에서 밝고 가장자리로 갈수록 어두워지는 효과
-            float intensity = 1.0 - smoothstep(0.0, 1.0, distanceFromCenter);
-            intensity = pow(intensity, 2.0); // 더 부드러운 그라디언트
-            
-            // 길이에 따른 투명도 조절 (뒤쪽으로 갈수록 투명)
-            float lengthFade = 1.0 - smoothstep(0.0, 1.0, vUv.y);
-            
-            vec3 finalColor = uLightColor * uIntensity;
-            float alpha = intensity * lengthFade * 0.8; // 투명도 대폭 증가
-            
-            gl_FragColor = vec4(finalColor, alpha);
-        }
-    `;
-    
-    const lightingMaterial = new THREE.ShaderMaterial({
-        vertexShader: lightingVertexShader,
-        fragmentShader: lightingFragmentShader,
-        uniforms: {
-            uLightColor: { value: new THREE.Color(0xff0000) }, // 더 진한 붉은색
-            uIntensity: { value: 8.0 }, // 강도 대폭 증가
-            uCameraPosition: { value: new THREE.Vector3() }
-        },
-        transparent: true,
-        side: THREE.DoubleSide,
-        blending: THREE.AdditiveBlending,
-        depthWrite: false
-    });
-    
-    const lightCone = new THREE.Mesh(lightConeGeometry, lightingMaterial);
-    
-    // 우측 안쪽 상단에서 중앙으로 향하는 위치와 각도 설정 (지구본 앞쪽으로)
-    lightCone.position.set(2, 2, 3); // Z축을 양수로 변경해서 지구본 앞쪽에 배치
-    lightCone.lookAt(0, 0, 0); // 중앙을 향하도록 회전
-    lightCone.renderOrder = -10; // 가장 먼저 렌더링 (배경)
-    
-    // 조명 Scene에 추가
-    lightingScene.add(lightCone);
-    
-    // 지구본 뒤쪽에 위치할 확산 조명 효과 (크기 대폭 확대)
-    const ambientLightGeometry = new THREE.SphereGeometry(radius * 6, 16, 16);
-    const ambientLightMaterial = new THREE.ShaderMaterial({
-        vertexShader: `
-            varying vec3 vWorldPosition;
-            void main() {
-                vec4 worldPosition = modelMatrix * vec4(position, 1.0);
-                vWorldPosition = worldPosition.xyz;
-                gl_Position = projectionMatrix * viewMatrix * worldPosition;
-            }
-        `,
-        fragmentShader: `
-            varying vec3 vWorldPosition;
-            uniform vec3 uAmbientColor;
-            uniform float uRadius;
-            
-            void main() {
-                // 지구본 뒤쪽에서 더 밝게 표시되도록 조정
-                float distanceFromCenter = length(vWorldPosition) / (uRadius * 3.0);
-                float intensity = 1.0 - smoothstep(0.0, 1.0, distanceFromCenter);
-                intensity = pow(intensity, 2.0);
-                
-                // 뒤쪽 방향 강조 (Z축 양의 방향이 카메라 뒤쪽)
-                float backBoost = max(0.0, vWorldPosition.z) / (uRadius * 2.0);
-                intensity *= (1.0 + backBoost * 2.0);
-                
-                gl_FragColor = vec4(uAmbientColor, intensity * 0.6); // 투명도 대폭 증가
-            }
-        `,
-        uniforms: {
-            uAmbientColor: { value: new THREE.Color(0xff0000) }, // 더 진한 붉은색
-            uRadius: { value: radius }
-        },
-        transparent: true,
-        blending: THREE.AdditiveBlending,
-        depthWrite: false,
-        side: THREE.BackSide
-    });
-    
-    const ambientLight = new THREE.Mesh(ambientLightGeometry, ambientLightMaterial);
-    ambientLight.position.set(1, 1, 2); // 지구본 앞쪽으로 이동해서 보이도록 
-    ambientLight.renderOrder = -9; // 배경에서 렌더링
-    lightingScene.add(ambientLight);
-}
-
-
 function onWindowResize() {
     const width = container.clientWidth;
     const height = container.clientHeight;
@@ -884,30 +766,25 @@ function onWindowResize() {
     uiCamera.aspect = width / height;
     uiCamera.updateProjectionMatrix();
     
-    // 고정 조명 카메라 aspect ratio 업데이트 (항상 고정 위치 유지)
-    fixedLightingCamera.aspect = width / height;
-    fixedLightingCamera.updateProjectionMatrix();
-    // 조명 카메라는 위치나 방향을 변경하지 않음 (완전히 고정)
-
-    // Update camera position based on new container width
-    if (objectHeight) { // Ensure globe is loaded and objectHeight is set
-        const desiredPixelWidth = 500; // Reference width for the globe's appearance
+    // 새 컨테이너 너비에 따라 카메라 위치 업데이트
+    if (objectHeight) { // 지구본이 로드되고 objectHeight가 설정되었는지 확인
+        const desiredPixelWidth = 500; // 지구본의 보이는 크기를 위한 기준 너비
         const fov = camera.fov * (Math.PI / 180);
 
-        // Calculate base distance for the object to fit vertically
+        // 객체가 수직으로 맞도록 기본 거리 계산
         const baseVerticalFitDistance = objectHeight / (2 * Math.tan(fov / 2));
 
-        // Now, adjust this distance based on width.
-        // If current width is smaller than desiredPixelWidth, distance should increase (move further away).
-        // If current width is larger than desiredPixelWidth, distance should decrease (move closer).
-        const widthScaleFactor = desiredPixelWidth / width; // Inverted relationship
+        // 이제 너비에 따라 이 거리를 조정합니다.
+        // 현재 너비가 desiredPixelWidth보다 작으면, 거리는 증가해야 합니다 (더 멀리 이동).
+        // 현재 너비가 desiredPixelWidth보다 크면, 거리는 감소해야 합니다 (더 가까이 이동).
+        const widthScaleFactor = desiredPixelWidth / width; // 역관계
         let distance = baseVerticalFitDistance * widthScaleFactor;
 
-        // Add a minimum distance to prevent camera from going inside the globe
+        // 카메라가 지구본 안으로 들어가는 것을 방지하기 위한 최소 거리 추가
         // objectHeight는 지구본의 반지름입니다.
         // objectHeight * 1.5는 지구본 표면에서 0.5 * objectHeight 만큼 떨어진 거리입니다.
         const minCameraDistance = objectHeight * 1.0;
-        distance = Math.max(distance, minCameraDistance); // Ensure it doesn't go too close
+        distance = Math.max(distance, minCameraDistance); // 너무 가까이 가지 않도록 보장
 
         const initialAzimuthalAngle = 1.4;
         const initialPolarAngle = Math.PI / 5.6 + 0.3;
@@ -916,7 +793,7 @@ function onWindowResize() {
         controls.object.position.y = distance * Math.cos(initialPolarAngle);
         controls.object.position.z = distance * Math.sin(initialPolarAngle) * Math.cos(initialAzimuthalAngle);
 
-        controls.update(); // Update controls after changing camera position
+        controls.update(); // 카메라 위치 변경 후 컨트롤 업데이트
     }
 } 
 onWindowResize();
