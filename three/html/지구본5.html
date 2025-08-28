@@ -20,7 +20,11 @@
             display: block;
             position: relative;
         }
-        /* #globe_cont::after {
+        #globe_cont canvas {
+            /* filter: brightness(0.8); */
+            filter: blur(1px);
+        }
+        #globe_cont::after {
             content: '';
             position: absolute;
             width: 1200px;
@@ -30,8 +34,8 @@
             aspect-ratio: 1200 / 600;
             transform: translateX(-50%);
             pointer-events: none;
-        } */
-        .dv{
+        }
+        .dv {
             display: none;
             position: fixed;
             width: 975px;
@@ -109,7 +113,8 @@ controls.minPolarAngle = Math.PI / 2 - verticalRotationLimit; // 위쪽 한계
 controls.maxPolarAngle = Math.PI / 2 + verticalRotationLimit; // 아래쪽 한계
 
 // 3. Depth fog 설정 (거리에 따른 안개 효과)
-scene.fog = new THREE.Fog(0x000000, 2, 20);
+scene.fog = new THREE.Fog(0x0000ff, 0, 5);
+// scene.fog = null;
 
 // 3. GLTFLoader 및 커스텀 셰이더 설정
 let globePoints = null;
@@ -176,6 +181,14 @@ const fragmentShader = `
     // 고정 조명 효과용 uniform (간단 버전)
     uniform vec3 uFixedLightPosition; // 고정 조명 위치
     uniform float uFixedLightIntensity; // 고정 조명 강도
+    
+    // Fog uniforms 추가
+    uniform vec3 uFogColor; // 안개 색상
+    uniform float uFogNear; // 안개 시작 거리
+    uniform float uFogFar;  // 안개 끝 거리
+    
+    // 전역 어둡기 uniform 추가
+    uniform float uGlobalDarkness; // 전역 어둡기 (0.0~1.0)
 
     void main() {
         // 사각형 점 모양 만들기 - gl_PointCoord는 0.0~1.0 범위
@@ -285,8 +298,19 @@ const fragmentShader = `
         vec3 redLight = vec3(0.8, 0.8, 0.8); // 밝은 빨간색
         blendedColor = mix(blendedColor, redLight, lightEffect * 0.8);
         
+        // 전역 어둡기 적용 (안개 계산 전에)
+        blendedColor *= uGlobalDarkness;
+        
+        // ===== Fog 계산 추가 =====
+        // 카메라로부터의 거리를 직접 계산
+        float depth = distance(vWorldPosition, uCameraPosition);
+        float fogFactor = smoothstep(uFogNear, uFogFar, depth); // fog 강도 계산
+        
+        // fog 색상과 최종 색상 혼합
+        vec3 finalColorWithFog = mix(blendedColor, uFogColor, fogFactor);
+        
         // 최종 색상과 계산된 알파값을 출력
-        gl_FragColor = vec4(blendedColor, alpha);
+        gl_FragColor = vec4(finalColorWithFog, alpha);
     }
 `;
 
@@ -309,7 +333,13 @@ shaderMaterial = new THREE.ShaderMaterial({
         uHoverColorEnd: { value: new THREE.Color(0xfb253c) }, // 호버 그라디언트 끝 색상 (fb253C)
         // 고정 조명 효과 추가
         uFixedLightPosition: { value: new THREE.Vector3(3, 2, -2) }, // 우측 뒤쪽에서 조명
-        uFixedLightIntensity: { value: 2.0 } // 강한 조명
+        uFixedLightIntensity: { value: 2.0 }, // 강한 조명
+        // Fog uniforms 추가
+        uFogColor: { value: new THREE.Color(0xfb233b) }, // 안개 색상 (파란색)
+        uFogNear: { value: 0.4 }, // 안개 시작 거리
+        uFogFar: { value: 2.0 },   // 안개 끝 거리
+        // 전역 어둡기 uniform 추가
+        uGlobalDarkness: { value: 0.7 } // 70% 밝기 (0.0 = 완전 어두움, 1.0 = 원래 밝기)
     },
     vertexShader: vertexShader,
     fragmentShader: fragmentShader,
@@ -422,6 +452,7 @@ loader.load(
         // Y축 보정을 적용하지 않으므로, 객체는 정중앙에 배치됩니다.
         gradientShellGlobal.position.set(-0.01, -0.033, -0.01);
         
+
         // 모델 로드 및 재질 설정 완료 후 애니메이션 시작
         animate();
     },
@@ -575,9 +606,7 @@ function animate() {
     // 메인 Scene 렌더링 (지구본)
     renderer.render(scene, camera);
     
-    if (spotLightHelper) { // spotLightHelper가 정의되었는지 확인
-        spotLightHelper.update();
-    }
+    // spotLightHelper 제거됨 - 더 이상 사용하지 않음
     
     // UI Scene 렌더링 (고리를 맨 위에 오버레이)
     renderer.autoClear = false;

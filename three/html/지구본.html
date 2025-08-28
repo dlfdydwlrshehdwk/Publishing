@@ -5,25 +5,52 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Three.js Globe</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html, body {
+            margin: 0;
+            padding: 0;
+        }
         #globe_cont {
             width: 100vw;
             height: 100vh;
             display: block;
             position: relative;
         }
+        #globe_cont canvas {
+            /* filter: brightness(0.8); */
+            filter: blur(1px);
+        }
         #globe_cont::after {
+            content: '';
             position: absolute;
-            width: 100%;
-            left: 0;
+            width: 1200px;
             bottom: 0;
-            background: url(./Rectangle\ 15626.png) no-repeat center/cover;
+            left: 50%;
+            background: url(../../img/globe/globe_dim.png) no-repeat center / cover;
+            aspect-ratio: 1200 / 600;
+            transform: translateX(-50%);
+            pointer-events: none;
+        }
+        .dv {
+            display: none;
+            position: fixed;
+            width: 975px;
+            height: 2px;
+            background-color: aqua;
+            top: 50%;
+            left: 50%;
+            transform: translateX(-50%);
         }
     </style>
 </head>
 <body>
     <div id="globe_cont"></div>
-
-    <!-- Import Map for Three.js modules -->
+    <div class="dv" style="width: 975px; height: 2px; background-color: aqua;"></div>
+    <!-- Three.js 모듈을 위한 임포트 맵 -->
     <script type="importmap">
         {
             "imports": {
@@ -39,22 +66,38 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
+let yellowSpotLight;
+let lightTarget;
+
 let objectHeight;
 let globe; // 지구본 객체를 전역으로 선언
+let gradientShellGlobal = null; // 그라디언트 껍질을 전역으로 관리
+const markers = []; // 도시 마커(큐브)를 저장할 배열
+
+
 
 // 1. Scene, Camera, Renderer 설정
 const container = document.getElementById('globe_cont');
 const scene = new THREE.Scene();
-// scene.background = new THREE.Color(0xffff00);
 
 const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
 // 초기 카메라 위치 설정 (지구본이 로드되기 전에)
 camera.position.set(2, 1, 3); // 적당한 초기 위치
 camera.lookAt(0, 0, 0); // 원점을 바라보게
 
+// 고정된 UI용 별도 Scene과 Camera
+const uiScene = new THREE.Scene();
+
+// 고정된 Perspective Camera (메인 카메라와 같은 FOV, 하지만 고정 위치)
+let uiCamera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+// UI 카메라는 나중에 메인 카메라 위치로 설정됨
+
 const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(container.clientWidth, container.clientHeight);
 container.appendChild(renderer.domElement);
+
+// 카메라를 scene에 추가 (자식 객체들이 렌더링되도록)
+scene.add(camera);
 
 // 2. OrbitControls 설정
 const controls = new OrbitControls(camera, renderer.domElement);
@@ -70,7 +113,8 @@ controls.minPolarAngle = Math.PI / 2 - verticalRotationLimit; // 위쪽 한계
 controls.maxPolarAngle = Math.PI / 2 + verticalRotationLimit; // 아래쪽 한계
 
 // 3. Depth fog 설정 (거리에 따른 안개 효과)
-scene.fog = new THREE.Fog(0x000000, 2, 20);
+scene.fog = new THREE.Fog(0x0000ff, 0, 5);
+// scene.fog = null;
 
 // 3. GLTFLoader 및 커스텀 셰이더 설정
 let globePoints = null;
@@ -78,14 +122,6 @@ let shaderMaterial = null;  // 상시 적용될 셰이더 재질 (Y축 밝기 + 
 let isHovering = false;     // 호버 상태 추적 (나중에 글로우 강도 조절에 사용)
 let frameCount = 0;         // 프레임 카운터
 let hasMouseMoved = false;  // 마우스가 한 번이라도 움직였는지 추적
-
-// 호버 글로우를 위한 Canvas 설정
-const hoverCanvas = document.createElement('canvas');
-hoverCanvas.width = 64; // 작은 해상도로 시작
-hoverCanvas.height = 64;
-const hoverContext = hoverCanvas.getContext('2d');
-const hoverTexture = new THREE.CanvasTexture(hoverCanvas);
-hoverTexture.needsUpdate = true; // 초기 업데이트
 
 // "상단부에서 빛이 나오는" 효과를 위한 셰이더
 const vertexShader = `
@@ -141,6 +177,18 @@ const fragmentShader = `
     uniform vec3 uHoverColorStart; // 호버 그라디언트 시작 색상
     uniform vec3 uHoverColorEnd;   // 호버 그라디언트 끝 색상
     uniform float uHoverOverallAlpha; // 호버 글로우 전체 투명도
+    
+    // 고정 조명 효과용 uniform (간단 버전)
+    uniform vec3 uFixedLightPosition; // 고정 조명 위치
+    uniform float uFixedLightIntensity; // 고정 조명 강도
+    
+    // Fog uniforms 추가
+    uniform vec3 uFogColor; // 안개 색상
+    uniform float uFogNear; // 안개 시작 거리
+    uniform float uFogFar;  // 안개 끝 거리
+    
+    // 전역 어둡기 uniform 추가
+    uniform float uGlobalDarkness; // 전역 어둡기 (0.0~1.0)
 
     void main() {
         // 사각형 점 모양 만들기 - gl_PointCoord는 0.0~1.0 범위
@@ -242,8 +290,27 @@ const fragmentShader = `
         float glowStrength = length(totalGlow) * 0.15;
         vec3 blendedColor = mix(finalColor, finalColor + totalGlow, glowStrength);
         
+        // 강한 고정 조명 효과 (집중된 범위)
+        float distToLight = distance(vWorldPosition, uFixedLightPosition);
+        float lightEffect = smoothstep(5.0, 0.0, distToLight) * uFixedLightIntensity;
+        
+        // 더 확실한 붉은 조명 효과 (기존 색상을 완전히 덮어씌움)
+        vec3 redLight = vec3(0.8, 0.8, 0.8); // 밝은 빨간색
+        blendedColor = mix(blendedColor, redLight, lightEffect * 0.8);
+        
+        // 전역 어둡기 적용 (안개 계산 전에)
+        blendedColor *= uGlobalDarkness;
+        
+        // ===== Fog 계산 추가 =====
+        // 카메라로부터의 거리를 직접 계산
+        float depth = distance(vWorldPosition, uCameraPosition);
+        float fogFactor = smoothstep(uFogNear, uFogFar, depth); // fog 강도 계산
+        
+        // fog 색상과 최종 색상 혼합
+        vec3 finalColorWithFog = mix(blendedColor, uFogColor, fogFactor);
+        
         // 최종 색상과 계산된 알파값을 출력
-        gl_FragColor = vec4(blendedColor, alpha);
+        gl_FragColor = vec4(finalColorWithFog, alpha);
     }
 `;
 
@@ -263,7 +330,16 @@ shaderMaterial = new THREE.ShaderMaterial({
         uAfterglowIntensity: { value: 0.0 }, // 잔상 강도
         uDynamicLightPosition: { value: new THREE.Vector3() }, // 카메라 기준 조명 위치
         uHoverColorStart: { value: new THREE.Color(0xff906a) }, // 호버 그라디언트 시작 색상 (ff906a)
-        uHoverColorEnd: { value: new THREE.Color(0xfb253c) } // 호버 그라디언트 끝 색상 (fb253C)
+        uHoverColorEnd: { value: new THREE.Color(0xfb253c) }, // 호버 그라디언트 끝 색상 (fb253C)
+        // 고정 조명 효과 추가
+        uFixedLightPosition: { value: new THREE.Vector3(3, 2, -2) }, // 우측 뒤쪽에서 조명
+        uFixedLightIntensity: { value: 2.0 }, // 강한 조명
+        // Fog uniforms 추가
+        uFogColor: { value: new THREE.Color(0xfb233b) }, // 안개 색상 (파란색)
+        uFogNear: { value: 0.4 }, // 안개 시작 거리
+        uFogFar: { value: 2.0 },   // 안개 끝 거리
+        // 전역 어둡기 uniform 추가
+        uGlobalDarkness: { value: 0.7 } // 70% 밝기 (0.0 = 완전 어두움, 1.0 = 원래 밝기)
     },
     vertexShader: vertexShader,
     fragmentShader: fragmentShader,
@@ -271,7 +347,6 @@ shaderMaterial = new THREE.ShaderMaterial({
     blending: THREE.NormalBlending, // AdditiveBlending에서 NormalBlending으로 변경
     depthWrite: true // 깊이 버퍼에 쓰도록 하여 점들이 서로를 가리도록 함
 });
-console.log('Shader Material created early. UUID:', shaderMaterial.uuid);
 
 
 const loader = new GLTFLoader();
@@ -282,32 +357,13 @@ loader.load(
         globe = gltf.scene; // 전역 globe 변수에 할당
 
         globe.traverse(function (child) {
-            console.log('Found child:', child.type, child.name);
-            
             if (child.isPoints) {
                 globePoints = child;
-                
-                // Points의 실제 크기 확인
-                const pointsBox = new THREE.Box3().setFromObject(child);
-                const pointsSize = pointsBox.getSize(new THREE.Vector3());
-                const pointsRadius = pointsSize.y / 2;
-                console.log('Points radius:', pointsRadius);
-                console.log('Points size:', pointsSize);
-            }
-            
-            if (child.isMesh) {
-                // Mesh의 실제 크기 확인
-                const meshBox = new THREE.Box3().setFromObject(child);
-                const meshSize = meshBox.getSize(new THREE.Vector3());
-                const meshRadius = meshSize.y / 2;
-                console.log('Mesh radius:', meshRadius);
-                console.log('Mesh size:', meshSize);
-                console.log('Mesh name:', child.name);
             }
         });
 
         if (!globePoints) {
-            console.error('No Points object found in the GLB file.');
+            console.error('GLB 파일에서 Points 객체를 찾을 수 없습니다.');
             return;
         }
 
@@ -321,35 +377,48 @@ loader.load(
         // Points를 구 표면에 달라붙게 조정
         normalizePointsToSphere(globePoints, safeRadius);
         
-        // 정규화 후 Points의 실제 크기 재확인
-        const pointsBoxAfter = new THREE.Box3().setFromObject(globePoints);
-        const pointsSizeAfter = pointsBoxAfter.getSize(new THREE.Vector3());
-        const pointsRadiusAfter = pointsSizeAfter.y / 2;
-        console.log('Points radius AFTER normalization:', pointsRadiusAfter);
         
         // globePoints에 shaderMaterial을 직접 할당
         globePoints.material = shaderMaterial;
-        console.log('Initial Material assigned to globePoints. UUID:', shaderMaterial.uuid);
         
         // 초기 로딩 시 글로우 효과가 나타나지 않도록 강도 초기화
         shaderMaterial.uniforms.uHoverIntensity.value = 0.0;
         shaderMaterial.uniforms.uAfterglowIntensity.value = 0.0;
 
-        console.log('=== GLOBE SIZE COMPARISON ===');
-        console.log('Overall globe radius (used for shader):', safeRadius);
-        console.log('Overall globe size:', size);
-        console.log('Globe center:', center);
 
         // shaderMaterial의 uSphereRadius 유니폼 업데이트
         shaderMaterial.uniforms.uSphereRadius.value = safeRadius;
-        console.log('Shader Material uSphereRadius updated to:', safeRadius);
 
         globe.position.x += (globe.position.x - center.x);
         globe.position.y += (globe.position.y - center.y);
         globe.position.z += (globe.position.z - center.z);
 
+        // uiCamera는 이미 Perspective로 설정되어 있으므로 aspect만 업데이트
+        uiCamera.aspect = container.clientWidth / container.clientHeight;
+        uiCamera.updateProjectionMatrix();
+        
+        
+        // 그라디언트 테두리 껍질을 독립적으로 생성 (globe와 무관)
+        gradientShellGlobal = createGradientShell(safeRadius, globe);
+        
+        // Gradient Shell을 지구본과 같은 위치로 이동
+        gradientShellGlobal.position.copy(globe.position);
+        
+        // UI 카메라를 메인 카메라와 정확히 같은 거리로 설정
+        const mainCameraToGlobeDistance = camera.position.distanceTo(globe.position); // 메인 카메라와 지구본 사이 거리
+        
+        // UI 카메라를 지구본에서 Z축 방향으로 정확히 같은 거리에 배치
+        uiCamera.position.set(
+            globe.position.x,
+            globe.position.y,
+            globe.position.z + mainCameraToGlobeDistance
+        );
+        uiCamera.lookAt(globe.position);
+        
+        
+        
         // 파란색 투명 껍질을 지구본에 자식으로 추가 (위치 자동 동기화)
-        createBlueShell(safeRadius, globe);
+        createShell(safeRadius, globe);
         
         // 호버 감지용 invisible sphere 생성 (구와 동일한 크기)
         const hoverGeometry = new THREE.SphereGeometry(safeRadius, 32, 32);
@@ -361,15 +430,31 @@ loader.load(
         objectHeight = size.y;
 
         scene.add(globe);
-        console.log('DEBUG: Globe model loaded successfully.');
 
-        // 서울 위치에 정육면체 마커 추가 (정확한 서울 좌표)
-        addSeoulCube(37.5665, 126.9780);
+        addCube(37.5665, 126.9780, 0xff0000); // 서울
+        addCube(30.0444, 31.2357, 0xffffff); // 아프리카(카이로)
+        addCube(52.2297, 21.0122, 0xffffff); // 동유럽(바르샤바)
+        addCube(-15.0, -60.0, 0xffffff); // 라틴 아메리카
+        addCube(25.0, 45.0, 0xffffff); // 중동
+        addCube(40.0, -100.0, 0xffffff); // 북아메리카
+        addCube(-25.0, 135.0, 0xffffff); // 오세아니아
+        addCube(48.0, 10.0, 0xffffff); // 서유럽
+
+        // 지구본 로드 완료 후 카메라 위치 재조정
+        onWindowResize();
+        
+        // UI 카메라를 지구본 기준으로 메인 카메라와 같은 상대적 위치에 배치
+        const cameraToGlobeVector = new THREE.Vector3().subVectors(camera.position, globe.position);
+        const distance = cameraToGlobeVector.length();
+        // uiCamera.position.copy(cameraToGlobeVector); // 원점 기준으로 같은 상대 위치
+        uiCamera.lookAt(0, 0, 0); // 원점(그라디언트 껍질 중심)을 바라봄
+        
+        // Y축 보정을 적용하지 않으므로, 객체는 정중앙에 배치됩니다.
+        gradientShellGlobal.position.set(-0.01, -0.033, -0.01);
+        
 
         // 모델 로드 및 재질 설정 완료 후 애니메이션 시작
         animate();
-        // 지구본 로드 완료 후 카메라 위치 재조정
-        onWindowResize();
     },
     (xhr) => console.log((xhr.loaded / xhr.total * 100) + '% loaded'),
     (error) => console.error('An error happened', error)
@@ -422,11 +507,40 @@ function animate() {
 
     if (globe) { // 지구본 객체가 로드되었는지 확인
         globe.rotation.y += 0.0003; // 지구본을 Y축으로 자동 회전 줄이면 느리게 회전 늘리면 빠르게 회전 
+
+        // 카메라 위치를 기준으로 마커의 가시성 조절
+        const cameraPosition = new THREE.Vector3();
+        camera.getWorldPosition(cameraPosition); // 카메라의 월드 좌표
+
+        const globePosition = globe.position.clone(); // 지구본의 월드 좌표
+
+        const camToGlobeDir = cameraPosition.sub(globePosition).normalize(); // 지구에서 카메라를 향하는 벡터
+
+        for (const marker of markers) {
+            const markerPosition = new THREE.Vector3();
+            marker.getWorldPosition(markerPosition); // 마커의 월드 좌표
+
+            const globeToMarkerDir = markerPosition.sub(globePosition).normalize(); // 지구에서 마커를 향하는 벡터
+
+            // 두 벡터의 내적을 계산합니다.
+            // 내적값이 0보다 크면 마커가 카메라를 향한 면에 있다는 의미입니다.
+            const dot = camToGlobeDir.dot(globeToMarkerDir);
+
+            // 가장자리에서 깜빡이는 현상을 줄이기 위해 임계값을 0보다 약간 작게 설정할 수 있습니다.
+            marker.visible = dot > 0.1; 
+        }
     }
 
     if (globePoints && shaderMaterial) {
         // 1. 카메라 및 레이캐스터 업데이트
         shaderMaterial.uniforms.uCameraPosition.value.copy(camera.position);
+        
+        // UI Scene의 그라디언트 껍질은 고정된 uiCamera 사용 (움직이지 않음)
+        if (gradientShellGlobal && gradientShellGlobal.material.uniforms) {
+            gradientShellGlobal.material.uniforms.uCameraPosition.value.copy(uiCamera.position);
+            // 그라디언트 껍질은 uiScene 원점에 고정 (움직이지 않음)
+        }
+        
         raycaster.setFromCamera(mouse, camera);
 
         const intersects = hoverTargetSphere ? raycaster.intersectObject(hoverTargetSphere) : [];
@@ -476,55 +590,68 @@ function animate() {
 
     // 6. 렌더링
     controls.update();
+
+    // UI 카메라의 거리는 동기화하되, 항상 정면(0,0,0)을 바라보도록 수정
+    if (globe && uiCamera) {
+        // 1. 메인 카메라와 지구본 사이의 거리를 계산합니다 (크기 동기화를 위해).
+        const distance = camera.position.distanceTo(globe.position);
+
+        // 2. uiCamera의 위치를 (0, 0, distance)로 설정하여 정면에 배치합니다.
+        uiCamera.position.set(0, 0, distance);
+        
+        // 3. uiCamera가 항상 원점(0, 0, 0)을 바라보게 합니다.
+        uiCamera.lookAt(0, 0, 0);
+    }
+    
+    // 메인 Scene 렌더링 (지구본)
     renderer.render(scene, camera);
+    
+    // spotLightHelper 제거됨 - 더 이상 사용하지 않음
+    
+    // UI Scene 렌더링 (고리를 맨 위에 오버레이)
+    renderer.autoClear = false;
+    renderer.render(uiScene, uiCamera);
+    renderer.autoClear = true;
 }
 
 // 위도/경도 위치에 정육면체 Mesh로 마커 생성 (표준 구면 좌표 변환)
-function addSeoulCube(lat, lon) {
+function addCube(lat, lon, color) {
     // Points와 동일한 반지름 사용
     const radius = shaderMaterial.uniforms.uSphereRadius.value;
-    
-    // GLB 모델의 좌표계에 맞춘 변환 (원래 공식 복원)
-    const phi = (91 - (lat - -1)) * (Math.PI / 180);    // 원래 보정값 복원
-    const theta = (lon + 106.5) * (Math.PI / 180);       // 원래 보정값 복원
 
-    const x = radius * Math.sin(phi) * Math.cos(theta);
+    // 위도(latitude)와 경도(longitude)를 라디안(radian)으로 변환합니다.
+    // 위도는 90도에서 빼서 극좌표계의 각도(phi)로 변환합니다. (북극 = 0)
+    const phi = (90 - lat) * (Math.PI / 180);
+    // 경도는 180도를 더해 Three.js 좌표계에 맞춥니다.
+    const theta = (lon + 180) * (Math.PI / 180);
+
+    // 표준 구면 좌표계를 사용하여 x, y, z 좌표를 계산합니다.
+    const x = -radius * Math.sin(phi) * Math.cos(theta);
     const y = radius * Math.cos(phi);
     const z = radius * Math.sin(phi) * Math.sin(theta);
-    
+
     // 정육면체 생성 (작은 크기)
     const cubeSize = 0.006;
     const cubeGeometry = new THREE.BoxGeometry(cubeSize, cubeSize, cubeSize);
     
-    // 표면에서 살짝 안쪽으로 이동
-    const surfaceNormal = new THREE.Vector3(x, y, z).normalize();
-    const offsetDistance = 0.001; // 음수로 안쪽으로 (조정 가능)
-    
-    const finalX = x + surfaceNormal.x * offsetDistance;
-    const finalY = y + surfaceNormal.y * offsetDistance;
-    const finalZ = z + surfaceNormal.z * offsetDistance;
     const cubeMaterial = new THREE.MeshBasicMaterial({ 
-        color: 0xffffff,
+        color: color,
         transparent: false
     });
     
-    const seoulCube = new THREE.Mesh(cubeGeometry, cubeMaterial);
-    seoulCube.position.set(finalX, finalY, finalZ);
+    const cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
+    cube.position.set(x, y, z);
     
     // 구 중심을 바라보도록 회전 (플랫한 면이 바깥쪽을 향하게)
-    seoulCube.lookAt(0, 0, 0);
+    cube.lookAt(new THREE.Vector3(0, 0, 0));
     
     // 지구본에 추가
-    globe.add(seoulCube); // scene 대신 globe에 추가하여 지구본과 함께 움직이도록 함
-    
-    console.log(`Seoul cube added at: lat=${lat}, lon=${lon}`);
-    console.log(`Calculated position: (${x.toFixed(3)}, ${y.toFixed(3)}, ${z.toFixed(3)})`);
-    console.log(`Final cube position: (${finalX.toFixed(3)}, ${finalY.toFixed(3)}, ${finalZ.toFixed(3)})`);
+    globe.add(cube); // scene 대신 globe에 추가하여 지구본과 함께 움직이도록 함
+    markers.push(cube); // 배열에 마커 추가
 }
 
 // Points를 구 표면에 달라붙게 정규화하는 함수
 function normalizePointsToSphere(pointsObject, targetRadius) {
-    console.log('Normalizing points to sphere surface with radius:', targetRadius);
     
     const geometry = pointsObject.geometry;
     const positions = geometry.attributes.position;
@@ -551,20 +678,96 @@ function normalizePointsToSphere(pointsObject, targetRadius) {
     // 변경사항 적용
     positions.needsUpdate = true;
     geometry.computeBoundingSphere();
+}
+
+// 그라디언트 테두리 껍질 생성 함수
+function createGradientShell(radius, globeObject) {
+    // 지구본과 정확히 같은 크기의 구 geometry 생성
+    const gradientGeometry = new THREE.SphereGeometry(radius, 64, 32);
+
+    // 그라디언트 셰이더 재질
+    const gradientVertexShader = `
+        varying vec3 vWorldPosition;
+        varying vec3 vNormal;
+        
+        void main() {
+            vec4 worldPosition = modelMatrix * vec4(position, 1.0);
+            vWorldPosition = worldPosition.xyz;
+            vNormal = normalize(normalMatrix * normal);
+            
+            gl_Position = projectionMatrix * viewMatrix * worldPosition;
+        }
+    `;
     
-    console.log('Points normalized to sphere surface');
+    const gradientFragmentShader = `
+        varying vec3 vWorldPosition;
+        varying vec3 vNormal;
+        uniform float uRadius;
+        uniform vec3 uCameraPosition;
+        
+        void main() {
+            // 구 중심에서의 거리 계산
+            float distanceFromCenter = length(vWorldPosition);
+            
+            // 고리 효과: 바깥쪽과 안쪽 가장자리에서만 표시
+            float outerEdge = uRadius * 1.0;
+            float innerEdge = uRadius * 0.85;
+            float edgeGradient = smoothstep(innerEdge, outerEdge, distanceFromCenter);
+            
+            // 카메라 방향 기반 투명도 (가장자리 효과)
+            vec3 viewDirection = normalize(uCameraPosition - vWorldPosition);
+            float fresnel = 1.0 - abs(dot(vNormal, viewDirection));
+            fresnel = pow(fresnel, 2.0);
+            
+            // 붉은 그라디언트 색상
+            vec3 gradientColor = mix(
+                vec3(0.8, 0.2, 0.3),  // 안쪽 진한 빨강
+                vec3(1.0, 0.4, 0.5),  // 바깥쪽 밝은 빨강
+                edgeGradient
+            );
+            
+            float alpha = edgeGradient * fresnel * 0.6;
+            
+            gl_FragColor = vec4(gradientColor, alpha);
+        }
+    `;
+    
+    const gradientMaterial = new THREE.ShaderMaterial({
+        vertexShader: gradientVertexShader,
+        fragmentShader: gradientFragmentShader,
+        uniforms: {
+            uRadius: { value: radius },
+            uCameraPosition: { value: new THREE.Vector3() }
+        },
+        transparent: true,
+        side: THREE.DoubleSide,
+        blending: THREE.NormalBlending,
+        depthWrite: false
+    });
+    
+    const gradientShell = new THREE.Mesh(gradientGeometry, gradientMaterial);
+    gradientShell.position.set(0, 0, 0);
+    gradientShell.renderOrder = -2;  // 가장 먼저 렌더링
+    
+    // 고리 회전 설정 (다양한 각도로 테스트 가능)
+    gradientShell.rotation.x = (1 * Math.PI / 360);                    // X축 회전
+    gradientShell.rotation.y = Math.PI / 2;;                    // Y축 회전  
+    gradientShell.rotation.z = Math.PI / 4;          // Z축 45도 회전
+    
+    // uiScene.add(gradientShell);
+    
+    return gradientShell;
 }
 
 // 껍질 생성 함수 (지구본의 자식으로 추가)
-function createBlueShell(radius, globeObject) {
-    console.log('Creating blue shell as child of globe with radius:', radius);
+function createShell(radius, globeObject) {
     
     // Points와 정확히 동일한 크기의 구 geometry 생성
     const shellGeometry = new THREE.SphereGeometry(radius, 64, 32);
     
     // 껍질 재질 
     const shellMaterial = new THREE.MeshBasicMaterial({
-        color: 0xfb233b,        // 회색으로 변경
+        color: 0x4c4c4c,        // 회색으로 변경
         transparent: true,
         opacity: 0.05,          // 투명도 약간 증가
         side: THREE.DoubleSide, 
@@ -579,10 +782,7 @@ function createBlueShell(radius, globeObject) {
     
     // 지구본의 자식으로 추가 (위치 자동 동기화)
     globeObject.add(blueShell);
-    
-    console.log('Blue shell created and added to scene');
 }
-
 
 function onWindowResize() {
     const width = container.clientWidth;
@@ -590,26 +790,30 @@ function onWindowResize() {
     camera.aspect = width / height;
     camera.updateProjectionMatrix();
     renderer.setSize(width, height);
-
-    // Update camera position based on new container width
-    if (objectHeight) { // Ensure globe is loaded and objectHeight is set
-        const desiredPixelWidth = 500; // Reference width for the globe's appearance
+    
+    // UI Camera aspect ratio 업데이트 (Perspective Camera)
+    uiCamera.aspect = width / height;
+    uiCamera.updateProjectionMatrix();
+    
+    // 새 컨테이너 너비에 따라 카메라 위치 업데이트
+    if (objectHeight) { // 지구본이 로드되고 objectHeight가 설정되었는지 확인
+        const desiredPixelWidth = 500; // 지구본의 보이는 크기를 위한 기준 너비
         const fov = camera.fov * (Math.PI / 180);
 
-        // Calculate base distance for the object to fit vertically
+        // 객체가 수직으로 맞도록 기본 거리 계산
         const baseVerticalFitDistance = objectHeight / (2 * Math.tan(fov / 2));
 
-        // Now, adjust this distance based on width.
-        // If current width is smaller than desiredPixelWidth, distance should increase (move further away).
-        // If current width is larger than desiredPixelWidth, distance should decrease (move closer).
-        const widthScaleFactor = desiredPixelWidth / width; // Inverted relationship
+        // 이제 너비에 따라 이 거리를 조정합니다.
+        // 현재 너비가 desiredPixelWidth보다 작으면, 거리는 증가해야 합니다 (더 멀리 이동).
+        // 현재 너비가 desiredPixelWidth보다 크면, 거리는 감소해야 합니다 (더 가까이 이동).
+        const widthScaleFactor = desiredPixelWidth / width; // 역관계
         let distance = baseVerticalFitDistance * widthScaleFactor;
 
-        // Add a minimum distance to prevent camera from going inside the globe
+        // 카메라가 지구본 안으로 들어가는 것을 방지하기 위한 최소 거리 추가
         // objectHeight는 지구본의 반지름입니다.
         // objectHeight * 1.5는 지구본 표면에서 0.5 * objectHeight 만큼 떨어진 거리입니다.
         const minCameraDistance = objectHeight * 1.0;
-        distance = Math.max(distance, minCameraDistance); // Ensure it doesn't go too close
+        distance = Math.max(distance, minCameraDistance); // 너무 가까이 가지 않도록 보장
 
         const initialAzimuthalAngle = 1.4;
         const initialPolarAngle = Math.PI / 5.6 + 0.3;
@@ -618,7 +822,7 @@ function onWindowResize() {
         controls.object.position.y = distance * Math.cos(initialPolarAngle);
         controls.object.position.z = distance * Math.sin(initialPolarAngle) * Math.cos(initialAzimuthalAngle);
 
-        controls.update(); // Update controls after changing camera position
+        controls.update(); // 카메라 위치 변경 후 컨트롤 업데이트
     }
 } 
 onWindowResize();
