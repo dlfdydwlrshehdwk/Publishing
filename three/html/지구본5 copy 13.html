@@ -46,20 +46,25 @@
             left: 50%;
             transform: translateX(-50%);
         }
-        .dv {
-            display: none;
-            position: fixed;
-            width: 975px;
-            height: 2px;
-            background-color: aqua;
-            top: 50%;
-            left: 50%;
-            transform: translateX(-50%);
+        .label {
+            position: absolute;
+            color: white;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: sans-serif;
+            font-size: 14px;
+            cursor: pointer;
+            user-select: none;
+            /* 3D 객체 뒤에 있을 때 숨겨지도록 기본 설정 */
+            display: none; 
         }
     </style>
 </head>
 <body>
-    <div id="globe_cont"></div>
+    <div id="globe_cont">
+        <div id="labels-container"></div>
+    </div>
+    <div class="dv" style="width: 975px; height: 2px; background-color: aqua;"></div>
     <!-- Three.js 모듈을 위한 임포트 맵 -->
     <script type="importmap">
         {
@@ -457,26 +462,6 @@ function onMouseMove(event) {
 }
 window.addEventListener('mousemove', onMouseMove, false);
 
-function onDocumentMouseDown(event) {
-    event.preventDefault();
-
-    const rect = renderer.domElement.getBoundingClientRect();
-    const mouse = new THREE.Vector2();
-    mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
-    mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
-
-    const raycaster = new THREE.Raycaster();
-    raycaster.setFromCamera(mouse, camera);
-
-    const labels = markers.map(marker => marker.label);
-    const intersects = raycaster.intersectObjects(labels);
-
-    if (intersects.length > 0) {
-        console.log('a');
-    }
-}
-renderer.domElement.addEventListener('mousedown', onDocumentMouseDown, false);
-
 
 
 const hoverFadeInSpeed = 0.08; // 호버 시 글로우 페이드인 속도 (더 빠르게)
@@ -509,27 +494,37 @@ function animate() {
     frameCount++;
 
     if (globe) { // 지구본 객체가 로드되었는지 확인
-        globe.rotation.y += 0.0003;
+        globe.rotation.y += 0.0003; // 지구본을 Y축으로 자동 회전 줄이면 느리게 회전 늘리면 빠르게 회전 
 
+        // 카메라 위치를 기준으로 마커와 라벨의 가시성 및 위치 조절
         const cameraPosition = new THREE.Vector3();
         camera.getWorldPosition(cameraPosition);
         const globePosition = globe.position.clone();
         const camToGlobeDir = cameraPosition.clone().sub(globePosition).normalize();
 
         for (const marker of markers) {
-            // 1. 가시성 체크 (마커가 카메라를 향하고 있는지)
             const markerWorldPosition = new THREE.Vector3();
-            marker.cube.getWorldPosition(markerWorldPosition); // 회전이 적용된 현재 월드 좌표를 가져옴
-
-            const globeToMarkerDir = markerWorldPosition.clone().sub(globePosition).normalize(); // 월드 좌표 기준으로 방향 벡터 계산
+            marker.cube.getWorldPosition(markerWorldPosition);
+            const globeToMarkerDir = markerWorldPosition.clone().sub(globePosition).normalize();
             const dot = camToGlobeDir.dot(globeToMarkerDir);
-            const isVisible = dot > 0.1;
 
+            // 큐브와 라벨의 가시성 설정
+            const isVisible = dot > 0.1;
             marker.cube.visible = isVisible;
-            marker.label.visible = isVisible;
+            marker.label.style.display = isVisible ? 'block' : 'none';
 
             if (isVisible) {
-                // 이 블록은 비워둡니다. (추후 다른 효과를 위해 남겨둠)
+                // 3D 위치를 2D 화면 좌표로 변환
+                const screenPosition = markerWorldPosition.clone().project(camera);
+                const width = container.clientWidth;
+                const height = container.clientHeight;
+                const x = (screenPosition.x * 0.5 + 0.5) * width;
+                const y = (-screenPosition.y * 0.5 + 0.5) * height;
+
+                // 라벨 위치 업데이트 (라벨의 중앙 상단이 큐브 위치에 오도록)
+                marker.label.style.left = `${x}px`;
+                marker.label.style.top = `${y}px`;
+                marker.label.style.transform = 'translateX(-50%) translateY(-100%)';
             }
         }
     }
@@ -599,77 +594,44 @@ function animate() {
     
 }
 
-function createTextCanvas(text, textColor, backgroundColor) {
-    const canvas = document.createElement('canvas');
-    const context = canvas.getContext('2d');
-    
-    const fontSize = 40;
-    context.font = `${fontSize}px sans-serif`;
-    const textWidth = context.measureText(text).width;
-
-    canvas.width = textWidth + 20; // Add some padding
-    canvas.height = fontSize + 10; // Add some padding
-
-    // Font settings must be reapplied after canvas resize
-    context.font = `${fontSize}px sans-serif`;
-    context.textAlign = 'center';
-    context.textBaseline = 'middle';
-
-    context.fillStyle = backgroundColor;
-    context.fillRect(0, 0, canvas.width, canvas.height);
-
-    context.fillStyle = textColor;
-    context.fillText(text, canvas.width / 2, canvas.height / 2);
-
-    return canvas;
-}
-
-// 위도/경도 위치에 3D 마커(큐브+텍스트) 생성
+// 위도/경도 위치에 정육면체 Mesh와 HTML 라벨을 생성하는 함수
 function addCube(lat, lon, color, name) {
-    // 1. 위치 계산 (기존과 동일)
+    const labelsContainer = document.getElementById('labels-container');
+
+    // Points와 동일한 반지름 사용
     const radius = shaderMaterial.uniforms.uSphereRadius.value;
+
     const phi = (90 - lat) * (Math.PI / 180);
     const theta = (lon + 180) * (Math.PI / 180);
+
     const x = -radius * Math.sin(phi) * Math.cos(theta);
     const y = radius * Math.cos(phi);
     const z = radius * Math.sin(phi) * Math.sin(theta);
-    const markerPosition = new THREE.Vector3(x, y, z);
 
-    // 2. 큐브 생성 (기존과 동일)
+    // 큐브 생성
     const cubeSize = 0.006;
     const cubeGeometry = new THREE.BoxGeometry(cubeSize, cubeSize, cubeSize);
     const cubeMaterial = new THREE.MeshBasicMaterial({ color: color });
     const cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
-    cube.position.copy(markerPosition);
+    cube.position.set(x, y, z);
     cube.lookAt(new THREE.Vector3(0, 0, 0));
     globe.add(cube);
 
-    // 3. 3D 텍스트 라벨 생성
-    const textCanvas = createTextCanvas(name, 'white', 'rgba(0, 0, 0, 0.5)');
-    const texture = new THREE.CanvasTexture(textCanvas);
-    texture.needsUpdate = true;
-    texture.wrapS = THREE.RepeatWrapping;
-    texture.repeat.x = -1;
+    // HTML 라벨 생성
+    const label = document.createElement('div');
+    label.className = 'label';
+    label.textContent = name;
+    labelsContainer.appendChild(label);
 
-    const material = new THREE.MeshBasicMaterial({ 
-        map: texture, 
-        transparent: true,
-        depthTest: false, // 라벨이 항상 다른 객체보다 앞에 보이도록 설정
-        side: THREE.DoubleSide // 양면을 모두 렌더링
+    // 라벨 클릭 이벤트
+    label.addEventListener('click', () => {
+        console.log('클릭된 라벨:', name);
+        // 여기에 클릭 시 실행할 로직을 추가할 수 있습니다.
+        // 예: alert('You clicked on ' + name);
     });
-    const geometry = new THREE.PlaneGeometry(textCanvas.width / 1800, textCanvas.height / 1800); 
-    const labelPlane = new THREE.Mesh(geometry, material);
-    labelPlane.userData.name = name; // 클릭 시 식별을 위해 라벨 객체에 이름 저장
 
-    // 4. 라벨 위치 및 방향 설정
-    labelPlane.position.copy(markerPosition);
-    labelPlane.lookAt(new THREE.Vector3(0,0,0));
-    labelPlane.translateY(0.015); // 라벨을 큐브 위로 이동
-
-    globe.add(labelPlane);
-
-    // 5. 마커 배열에 정보 저장
-    markers.push({ cube: cube, label: labelPlane, name: name, position: markerPosition });
+    // 마커 배열에 큐브와 라벨을 함께 저장
+    markers.push({ cube: cube, label: label });
 }
 
 // Points를 구 표면에 달라붙게 정규화하는 함수

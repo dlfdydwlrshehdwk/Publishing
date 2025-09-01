@@ -457,26 +457,6 @@ function onMouseMove(event) {
 }
 window.addEventListener('mousemove', onMouseMove, false);
 
-function onDocumentMouseDown(event) {
-    event.preventDefault();
-
-    const rect = renderer.domElement.getBoundingClientRect();
-    const mouse = new THREE.Vector2();
-    mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
-    mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
-
-    const raycaster = new THREE.Raycaster();
-    raycaster.setFromCamera(mouse, camera);
-
-    const labels = markers.map(marker => marker.label);
-    const intersects = raycaster.intersectObjects(labels);
-
-    if (intersects.length > 0) {
-        console.log('a');
-    }
-}
-renderer.domElement.addEventListener('mousedown', onDocumentMouseDown, false);
-
 
 
 const hoverFadeInSpeed = 0.08; // 호버 시 글로우 페이드인 속도 (더 빠르게)
@@ -659,7 +639,6 @@ function addCube(lat, lon, color, name) {
     });
     const geometry = new THREE.PlaneGeometry(textCanvas.width / 1800, textCanvas.height / 1800); 
     const labelPlane = new THREE.Mesh(geometry, material);
-    labelPlane.userData.name = name; // 클릭 시 식별을 위해 라벨 객체에 이름 저장
 
     // 4. 라벨 위치 및 방향 설정
     labelPlane.position.copy(markerPosition);
