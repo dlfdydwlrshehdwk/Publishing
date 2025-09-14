@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", function () {
     spaceBetween: 10,
     centeredSlides: true,     // 활성 슬라이드 중앙 정렬
     slideToClickedSlide: true, // 클릭한 슬라이드로 이동
+    resistanceRatio: 0, // 맨 끝에서는 드래그 안되게
     navigation: {
       nextEl: ".swiper-button-next",
       prevEl: ".swiper-button-prev",
@@ -44,12 +45,29 @@ document.addEventListener("DOMContentLoaded", function () {
 
           swiperWrapper.style.left = newLeft + 'px';
           slides.forEach((slide)=>{
-            slide.style.transition = 'all .3s';
+            slide.style.transition = 'all .5s';
           })
         } catch (e) {
           console.error("Error during manual centering:", e);
         }
       },
+      setTranslate: function () {
+
+        // this.slides.forEach((slide)=>{
+        //   slide.style.transition = 'all .5s';
+        // })
+        
+        // console.log(this.progress * this.slides.length)
+        // console.log(this.slides[this.realIndex])
+        // this.slides[this.realIndex].style.marginTop = 40 * this.progress + 'px'
+        // console.log(40 / this.progress + 'px')
+      },
+      setTransition: function (duration) {
+        console.log('abc')
+        // for (let i = 0; i < this.slides.length; i++) {
+          // this.slides[i].style.transition = duration + "ms";
+        // }
+      }
     },
 
   });
