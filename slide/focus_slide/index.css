@@ -1,0 +1,35 @@
+body,html {
+  margin: 0;
+  padding: 0;
+}
+* {
+  margin: 0;
+  padding: 0;
+}
+body .swiper {
+  width: 100%;
+  height: 400px;
+}
+
+body .swiper-wrapper {
+  
+}
+body .swiper-slide {
+  width: 100px;   /* 기본 슬라이드 폭 (작은 상태) */
+  height: 300px;
+  /* transition: all 0.3s ease; */
+  background: #ddd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  opacity: 0.5;
+  border-radius: 10px;
+}
+
+body .swiper-slide-active {
+  width: 790px; /* 선택된 슬라이드만 크게 */
+  height: 400px;
+  opacity: 1;
+  background: #aaa;
+}
