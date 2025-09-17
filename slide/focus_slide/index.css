@@ -12,12 +12,14 @@ body .swiper {
 }
 
 body .swiper-wrapper {
-  
+  align-items: center;
 }
 body .swiper-slide {
   width: 100px;   /* 기본 슬라이드 폭 (작은 상태) */
   height: 300px;
   /* transition: all 0.3s ease; */
+  /* transform-origin: center; */
+  transform-origin: unset;
   background: #ddd;
   display: flex;
   align-items: center;
