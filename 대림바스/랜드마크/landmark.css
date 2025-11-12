@@ -1,0 +1,90 @@
+/* 임시코드 */
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 97px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+}
+.landmark_container {
+    padding-top: 97px;
+}
+/* 임시코드 */
+html, body {
+    overflow: visible;
+}
+.landmark_container section {
+    position: relative;
+    height: calc(100vh - 97px);
+}
+.landmark_container section .bg {
+    width: 100%;
+    height: 100%;
+}
+.landmark_container section .bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.landmark_container .section2 {
+    height: 200vh;
+}
+
+.landmark_container .section2 .sticky {
+    height: 100vh;
+    position: sticky;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.landmark_container .section2 .scroll_text {
+    font-size: 48px;
+    font-weight: 600;
+    background: linear-gradient(to right, #ff4b2b 0%, #ff9068 0%);
+    -webkit-background-clip: text;
+    color: rgba(0, 0, 0, 0.3);
+    background-repeat: no-repeat;
+    background-size: 0% 100%;
+}
+
+
+.lankmark_container section .intro {
+    background-color: #fff;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.lankmark_container section .intro p {
+    font-weight: bold;
+    font-size: 20px;
+    color: rgba(0, 0, 0, 0.6);
+}
+.lankmark_container section .intro h3 {
+    margin-top: 20px;
+    font-weight: 500;
+    font-size: 40px;
+    letter-spacing: -1.2px;
+    color: #000;
+}
+
+
+.lankmark_container .section3 .bg_cont {
+    display: none;
+}
+.lankmark_container .section4 .bg_cont {
+    display: none;
+}
+.lankmark_container .section5 .bg_cont {
+    display: none;
+}
