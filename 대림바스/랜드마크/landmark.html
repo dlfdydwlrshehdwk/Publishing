@@ -9,65 +9,190 @@
 
     <link rel="stylesheet" href="./landmark.css">
 
+    <script src="https://unpkg.com/lenis@1.3.4/dist/lenis.min.js"></script> 
     <script src="../../js/swiper-bundle.min.js"></script>
     <script src="../../js/gsap.min.js"></script>
     <script src="../../js/ScrollTrigger.min.js"></script>
     
 </head>
 <body>
-    <header>헤더입니다.</header>
+    <header id="header">헤더입니다.</header>
     <div class="lankmark_container">
-        <div class="inner">
+        <section class="section1">
+            <div class="bg"><img src="./img/bg1.png" alt=""></div>
+            <div class="txt_box">
+                REFERENCE
+            </div>
+        </section>
 
-            <section class="section1">
-                <div class="bg"><img src="./img/bg1.png" alt=""></div>
-            </section>
+        <section class="section2">
+            <div class="sticky">
+                <div class="scroll_text">당신의 일상이 더 특별해지도록</div>
+            </div>
+        </section>
 
-            <section class="section2">
-                <div class="sticky">
-                    <div class="scroll_text">당신의 일상이 더 특별해지도록</div>
+        <section class="section3">
+            <div class="bg">
+                <img src="./img/bg2.png" alt="">
+                <div class="text_wrap">
+                    <div class="text_set">
+                        <h4>APARTMENT</h4>
+                        <p>섬세하게 채워지는 고급 주거 공간의 품격</p>
+                    </div>
+                </div>
+            </div>
+                
+            <div class="text_scroll_zone">
+            </div>
 
-                </div>
-            </section>
+            <div class="logo_list_wrap">
+                <ul class="logo_list">
+                    <li><img src="./img/logo_1_1.svg" alt="이미지"></li>
+                    <li><img src="./img/logo_1_2.svg" alt="이미지"></li>
+                    <li><img src="./img/logo_1_3.svg" alt="이미지"></li>
+                    <li><img src="./img/logo_1_4.svg" alt="이미지"></li>
+                    <li><img src="./img/logo_1_5.svg" alt="이미지"></li>
+                    <li><img src="./img/logo_1_6.svg" alt="이미지"></li>
+                    <li><img src="./img/logo_1_7.svg" alt="이미지"></li>
+                    <li><img src="./img/logo_1_8.svg" alt="이미지"></li>
+                    <li><img src="./img/logo_1_9.svg" alt="이미지"></li>
+                    <li><img src="./img/logo_1_10.svg" alt="이미지"></li>
+                    <li><img src="./img/logo_1_11.svg" alt="이미지"></li>
+                    <li><img src="./img/logo_1_12.svg" alt="이미지"></li>
+                </ul>
+            </div>
+        </section>
 
-            <section class="section3">
-                <div class="bg"><img src="./img/bg2.png" alt=""></div>
-            </section>
+        <section class="section4">
+            <div class="bg_cont">
+                <div class="bg"><img src="./img/bg3.png" alt=""><div class="bg_filter"></div></div>
+                <div class="cont">
+                    <ul class="logo_list_1">
+                        <li><img src="./img/logo_2_12.svg" alt=""></li>
+                        <li><img src="./img/logo_2_11.svg" alt=""></li>
+                        <li><img src="./img/logo_2_10.svg" alt=""></li>
+                        <li><img src="./img/logo_2_9.svg" alt=""></li>
+                        <li><img src="./img/logo_2_8.svg" alt=""></li>
+                        <li><img src="./img/logo_2_7.svg" alt=""></li>
+                        <li><img src="./img/logo_2_6.svg" alt=""></li>
+                        <li><img src="./img/logo_2_5.svg" alt=""></li>
+                        <li><img src="./img/logo_2_4.svg" alt=""></li>
+                        <li><img src="./img/logo_2_3.svg" alt=""></li>
+                        <li><img src="./img/logo_2_2.svg" alt=""></li>
+                        <li><img src="./img/logo_2_1.svg" alt=""></li>
+                    </ul>
 
-            <section class="section4">
-                <div class="intro">
-                    <p>HOTEL</p>
-                    <h3>격조 높은 프리미엄 공간의 선택</h3>
+                    <ul class="logo_list_2">
+                        <li><img src="./img/logo_2_1.svg" alt=""></li>
+                        <li><img src="./img/logo_2_2.svg" alt=""></li>
+                        <li><img src="./img/logo_2_3.svg" alt=""></li>
+                        <li><img src="./img/logo_2_4.svg" alt=""></li>
+                        <li><img src="./img/logo_2_5.svg" alt=""></li>
+                        <li><img src="./img/logo_2_6.svg" alt=""></li>
+                        <li><img src="./img/logo_2_7.svg" alt=""></li>
+                        <li><img src="./img/logo_2_8.svg" alt=""></li>
+                        <li><img src="./img/logo_2_9.svg" alt=""></li>
+                        <li><img src="./img/logo_2_10.svg" alt=""></li>
+                        <li><img src="./img/logo_2_11.svg" alt=""></li>
+                        <li><img src="./img/logo_2_12.svg" alt=""></li>
+                    </ul>
                 </div>
-                <div class="bg_cont">
-                    <div class="cont"></div>
-                    <div class="bg"><img src="./img/bg3.png" alt=""></div>
-                </div>
-            </section>
+                
+            </div>
+            <div class="intro text_set">
+                <h4>HOTEL</h4>
+                <p>격조 높은 프리미엄 공간의 선택</p>
+            </div>
+        </section>
 
-            <section class="section5">
-                <div class="intro">
-                    <p>RESORT</p>
-                    <h3>머무는 공간, 머무는 순간의 가치</h3>
-                </div>
-                <div class="bg_cont">
-                    <div class="cont"></div>
-                    <div class="bg"><img src="./img/bg3.png" alt=""></div>
-                </div>
-            </section>
+        <section class="section5">
+            
+            <div class="cont1">
+                <div class="cont1_bg"><img src="./img/bg4.png" alt="이미지"></div>
+                <ul class="cont1_dim_list">
+                    <li class="dim dim1"></li>
+                    <li class="divide"></li>
+                    <li class="dim dim2"></li>
+                    <li class="divide"></li>
+                    <li class="dim dim3"></li>
+                </ul>
+            </div>
+            
+            <div class="bg"><img src="./img/bg5.png" alt="이미지"></div>
+            
+            <div class="intro text_set">
+                <h4>RESORT</h4>
+                <p>머무는 공간, 머무는 순간의 가치</p>
+            </div>
 
-            <section class="section5">
-                <div class="intro">
-                    <p>GOLF CLUB</p>
-                    <h3>트렌드를 넘어선 새로운 라이프씬</h3>
+            <div class="cont2">
+                <ul>
+                    <li><img src="./img/logo_3_1.svg" alt="이미지"></li>
+                    <li><img src="./img/logo_3_2.svg" alt="이미지"></li>
+                    <li><img src="./img/logo_3_3.svg" alt="이미지"></li>
+                    <li><img src="./img/logo_3_4.svg" alt="이미지"></li>
+                    <li><img src="./img/logo_3_5.svg" alt="이미지"></li>
+                    <li><img src="./img/logo_3_6.svg" alt="이미지"></li>
+                    <li><img src="./img/logo_3_7.svg" alt="이미지"></li>
+                    <li><img src="./img/logo_3_8.svg" alt="이미지"></li>
+                    <li><img src="./img/logo_3_9.svg" alt="이미지"></li>
+                    <li><img src="./img/logo_3_10.svg" alt="이미지"></li>
+                    <li><img src="./img/logo_3_11.svg" alt="이미지"></li>
+                    <li><img src="./img/logo_3_12.svg" alt="이미지"></li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="section6">
+            <div class="bg">
+                <img src="./img/bg6.png" alt="">
+            
+                <div class="intro text_set">
+                    <h4>GOLF CLUB</h4>
+                    <p>트렌드를 넘어선 새로운 라이프씬</p>
                 </div>
-                <div class="bg_cont">
-                    <div class="cont"></div>
-                    <div class="bg"><img src="./img/bg3.png" alt=""></div>
+            </div>
+                
+            <div class="text_scroll_zone">
+            </div>
+
+            <div class="overflow_none">
+                <div class="logo_list_wrap">
+                    <ul class="logo_list_1">
+                        <li><img src="./img/logo_3_1.svg" alt="이미지"></li>
+                        <li><img src="./img/logo_3_2.svg" alt="이미지"></li>
+                        <li><img src="./img/logo_3_3.svg" alt="이미지"></li>
+                        <li><img src="./img/logo_3_4.svg" alt="이미지"></li>
+                        <li><img src="./img/logo_3_5.svg" alt="이미지"></li>
+                        <li><img src="./img/logo_3_6.svg" alt="이미지"></li>
+                        <li><img src="./img/logo_3_7.svg" alt="이미지"></li>
+                        <li><img src="./img/logo_3_8.svg" alt="이미지"></li>
+                        <li><img src="./img/logo_3_9.svg" alt="이미지"></li>
+                        <li><img src="./img/logo_3_10.svg" alt="이미지"></li>
+                        <li><img src="./img/logo_3_11.svg" alt="이미지"></li>
+                        <li><img src="./img/logo_3_12.svg" alt="이미지"></li>
+                    </ul>
+                    <ul class="logo_list_2">
+                        <li><img src="./img/logo_3_12.svg" alt="이미지"></li>
+                        <li><img src="./img/logo_3_11.svg" alt="이미지"></li>
+                        <li><img src="./img/logo_3_10.svg" alt="이미지"></li>
+                        <li><img src="./img/logo_3_9.svg" alt="이미지"></li>
+                        <li><img src="./img/logo_3_8.svg" alt="이미지"></li>
+                        <li><img src="./img/logo_3_7.svg" alt="이미지"></li>
+                        <li><img src="./img/logo_3_6.svg" alt="이미지"></li>
+                        <li><img src="./img/logo_3_5.svg" alt="이미지"></li>
+                        <li><img src="./img/logo_3_4.svg" alt="이미지"></li>
+                        <li><img src="./img/logo_3_3.svg" alt="이미지"></li>
+                        <li><img src="./img/logo_3_2.svg" alt="이미지"></li>
+                        <li><img src="./img/logo_3_1.svg" alt="이미지"></li>
+                    </ul>
+    
                 </div>
-            </section>
-        </div>
+            </div>
+
+        </section>
     </div>
+    <footer id="footer">푸터입니다</footer>
     <script src="./landmark.js"></script>
 </body>
 </html>

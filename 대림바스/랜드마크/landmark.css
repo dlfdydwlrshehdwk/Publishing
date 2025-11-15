@@ -9,32 +9,34 @@ header {
     align-items: center;
     justify-content: center;
     background-color: #fff;
+    z-index: 9999999999999;
+    opacity: 0;
 }
-.landmark_container {
+.lankmark_container {
     padding-top: 97px;
 }
 /* 임시코드 */
 html, body {
     overflow: visible;
 }
-.landmark_container section {
+.lankmark_container section {
     position: relative;
     height: calc(100vh - 97px);
 }
-.landmark_container section .bg {
+.lankmark_container section .bg {
     width: 100%;
     height: 100%;
 }
-.landmark_container section .bg img {
+.lankmark_container section .bg img {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
-.landmark_container .section2 {
+.lankmark_container .section2 {
     height: 200vh;
 }
 
-.landmark_container .section2 .sticky {
+.lankmark_container .section2 .sticky {
     height: 100vh;
     position: sticky;
     top: 0;
@@ -45,10 +47,10 @@ html, body {
     align-items: center;
     justify-content: center;
 }
-.landmark_container .section2 .scroll_text {
+.lankmark_container .section2 .scroll_text {
     font-size: 48px;
     font-weight: 600;
-    background: linear-gradient(to right, #ff4b2b 0%, #ff9068 0%);
+    background: linear-gradient(to right, #000);
     -webkit-background-clip: text;
     color: rgba(0, 0, 0, 0.3);
     background-repeat: no-repeat;
@@ -57,20 +59,19 @@ html, body {
 
 
 .lankmark_container section .intro {
-    background-color: #fff;
+    position: absolute;
     width: 100%;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
 }
-.lankmark_container section .intro p {
+.lankmark_container section .intro h4 {
     font-weight: bold;
     font-size: 20px;
     color: rgba(0, 0, 0, 0.6);
 }
-.lankmark_container section .intro h3 {
+.lankmark_container section .intro p {
     margin-top: 20px;
     font-weight: 500;
     font-size: 40px;
@@ -79,12 +80,304 @@ html, body {
 }
 
 
-.lankmark_container .section3 .bg_cont {
-    display: none;
+/* section1 start */
+.lankmark_container .section1 {
+    position: relative;
+    overflow: hidden;
+}
+.lankmark_container .section1 .bg {
+    transform: scale(1.3);
+}
+.lankmark_container .section1.active .bg {
+    transition: 3s;
+    transform: scale(1);
+}
+.lankmark_container .section1 .txt_box {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(20px, 2.083vw, 40px);
+    font-weight: 800;
+    font-size: clamp(90px, 9.375vw, 180px);
+    background-color: #fff;
+    transform: translateY(100%);
+}
+.lankmark_container .section1.active .txt_box {
+    transform: translateY(0);
+    transition: 1s 1.8s;
+}
+/* section1 end*/
+
+/* section2 start */
+.lankmark_container .section2 {}
+/* section2 end*/
+
+/* section3 start */
+.lankmark_container .section3 {
+    height: auto;
+}
+.lankmark_container .section3 .inner {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transform: scale(0.85);
+    transform-origin: bottom;
+}
+.lankmark_container .section3 .bg {
+    position: sticky;
+    width: 100%;
+    height: calc(100vh - 97px);
+    top: 97px;
+    left: 0;
+    transform: scale(0.85);
+    transform-origin: bottom;
+}
+.lankmark_container .section3 .bg img {
+    filter: brightness(.6)
+}
+.lankmark_container .section3 .text_wrap {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+}
+.lankmark_container .section3 .text_wrap .text_set {
+    width: 100%;
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+
+}
+.lankmark_container .section3 .text_wrap .text_set h4 {
+    font-weight: 700;
+    font-size: 20px;
+    color: rgba(255, 255, 255, 0.6);
+    opacity: 0;
+}
+.lankmark_container .section3 .text_wrap .text_set p {
+    margin-top: 24px;
+    font-size: 40px;
+    font-weight: 500;
+    letter-spacing: -0.72px;
+    color: #fff;
+    opacity: 0;
+}
+.lankmark_container .section3 .logo_list_wrap {
+    opacity: 0;
+    position: relative;
+    top: 0;
+    z-index: 1;
+    padding-bottom: 300px;
+}
+.lankmark_container .section3 .logo_list {
+    display: flex;
+    align-items: flex-end;
+    flex-direction: column;
+    transition: 0.2s;
+    padding-right: 480px;
+}
+.lankmark_container .section3 .logo_list li {
+    opacity: 0.2;
+    padding: 70px 0;
+    transition: .3s;
+}
+.lankmark_container .section3 .logo_list li.active {
+    opacity: 1;
+}
+/* .lankmark_container .section3 .logo_list::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 60%, rgba(0,0,0,0) 100%);
+    -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 60%, rgba(0,0,0,0) 100%);
+}
+.lankmark_container .section3 .logo_list::after {
+        content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    mask-image: linear-gradient(to top, rgba(0,0,0,1) 60%, rgba(0,0,0,0) 100%);
+    -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,1) 60%, rgba(0,0,0,0) 100%);
+} */
+/* section3 end*/
+
+/* section4 start */
+.lankmark_container .section4 .bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+}
+.lankmark_container .section4 .bg img {
+}
+.lankmark_container .section4 .bg_filter {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: brightness(0.7);
+}
+.lankmark_container .section4 .cont {
+    opacity: 0;
 }
 .lankmark_container .section4 .bg_cont {
-    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
 }
-.lankmark_container .section5 .bg_cont {
-    display: none;
+.lankmark_container .section4 .cont {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    bottom: 244px;
+}
+.lankmark_container .section4 .cont ul {
+    display: flex;
+    gap: 30px;
+    width: max-content;
+}
+.lankmark_container .section4 .cont ul + ul {
+    margin-top: 10px;
+}
+/* section4 end*/
+
+/* section5 start */
+.lankmark_container .section5 {
+    position: relative;
+    overflow: hidden;
+}
+.lankmark_container .section5 .cont1 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.lankmark_container .section5 .cont1 .cont1_dim_list {
+    display: flex;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    left: 0;
+}
+.lankmark_container .section5 .cont1 li {
+    width: 100%;
+    background-color: #fff;
+}
+.lankmark_container .section5 .cont1 li.divide {
+    width: 18px;
+    flex-shrink: 0;
+}
+.lankmark_container .section5 .cont1 li img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.lankmark_container .section5 .bg {
+    filter: brightness(0.7);
+    opacity: 0;
+}
+.lankmark_container .section5 .cont2 {
+    /* opacity: 0; */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.lankmark_container .section5 .cont2 ul {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+}
+.lankmark_container .section5 .cont2 ul li {
+    opacity: 0;
+}
+/* section5 end*/
+
+/* section6 start */
+.lankmark_container .section6 {
+    position: relative;
+    height: auto;
+}
+.lankmark_container .section6 .bg {
+    position: sticky;
+    width: 100%;
+    height: calc(100vh - 97px);
+    top: 97px;
+    left: 0;
+}
+.lankmark_container .section6 .bg img {
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.9);
+}
+.lankmark_container .section6 .logo_list_wrap {
+    display: flex;
+    gap: 10px;
+    position: relative;
+    justify-content: flex-end;
+    padding-right: 323px;
+    margin-left: auto;
+    width: fit-content;
+}
+
+.lankmark_container .section6 .logo_list_wrap ul {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.lankmark_container .section6 .logo_list_wrap ul.logo_list_1 {
+    opacity: 0;
+    position: absolute;
+    top: 87px;
+    left: calc(0% - 30px);
+}
+.lankmark_container .section6 .logo_list_wrap ul.logo_list_2 {
+    position: relative;
+    top: 87px;
+    opacity: 0;
+}
+.lankmark_container .section6 .pin-spacer {
+}
+.lankmark_container .section6 .overflow_none {
+    overflow: hidden;
+}
+/* section6 end */
+
+
+#footer {
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
