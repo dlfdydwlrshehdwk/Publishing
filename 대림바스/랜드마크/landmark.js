@@ -42,7 +42,10 @@ const headerH = document.querySelector('#header').clientHeight;
 const contentH = window.innerHeight - headerH;
 const vw = window.innerWidth;
 const section4ListlWidth = document.querySelector('.section4 .logo_list_1').clientWidth;
-
+console.log('section4ListlWidth',section4ListlWidth)
+document.addEventListener('DOMContentLoaded', function(){
+    console.log('section4ListlWidth',section4ListlWidth)
+})
 ScrollTrigger.matchMedia({
     // --- PC (가로 768px 이상) ---
     "(min-width: 768px)": function() {

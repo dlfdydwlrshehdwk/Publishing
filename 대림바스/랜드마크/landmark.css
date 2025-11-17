@@ -10,7 +10,7 @@ header {
     justify-content: center;
     background-color: #fff;
     z-index: 9999999999999;
-    opacity: 0;
+    /* opacity: 0; */
 }
 .lankmark_container {
     padding-top: 97px;
@@ -263,6 +263,9 @@ html, body {
 }
 .lankmark_container .section4 .cont ul + ul {
     margin-top: 10px;
+}
+.lankmark_container .section4 .cont ul li {
+    width: 200px;
 }
 /* section4 end*/
 
