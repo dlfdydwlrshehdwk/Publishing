@@ -81,6 +81,7 @@ html, body {
 }
 .lankmark_container .section1 .bg {
     transform: scale(1.3);
+    background: url(./img/bg1.png) no-repeat center/cover;
 }
 .lankmark_container .section1.active .bg {
     transition: 5s;
@@ -95,14 +96,19 @@ html, body {
     align-items: center;
     justify-content: center;
     padding: clamp(20px, 2.083vw, 40px);
-    font-weight: 800;
-    font-size: clamp(90px, 9.375vw, 180px);
     background-color: #fff;
     transform: translateY(100%);
 }
 .lankmark_container .section1.active .txt_box {
     transform: translateY(0);
     transition: 1s 1s;
+}
+.lankmark_container .section1.active .txt_box h4 {
+    font-weight: 800;
+    font-size: clamp(90px, 9.375vw, 180px);
+}
+.lankmark_container .section1.active .txt_box p {
+    display: none;
 }
 /* section1 end*/
 
@@ -163,6 +169,9 @@ html, body {
     letter-spacing: -0.72px;
     color: #fff;
     opacity: 0;
+}
+.lankmark_container .section3 .mobile_text_wrap {
+    display: none;
 }
 .lankmark_container .section3 .logo_list_wrap {
     opacity: 0;
@@ -552,4 +561,574 @@ html, body {
 .section6.dim_on .dim_top,
 .section6.dim_on .dim_bottom {
     opacity: 1;
+}
+
+@media (max-width: 767px) {
+.lankmark_container {
+    padding-top: 61px;
+}
+.lankmark_container section {
+    position: relative;
+    height: calc(100vh - 61px);
+}
+.lankmark_container .section2 {
+    height: 200vh;
+}
+.lankmark_container .section2 .sticky {
+    height: 100vh;
+    position: sticky;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.lankmark_container .section2 .scroll_text {
+    font-size: clamp(24px, 2.5vw, 48px);
+    font-weight: 600;
+    background: linear-gradient(to right, #000);
+    -webkit-background-clip: text;
+    color: rgba(0, 0, 0, 0.3);
+    background-repeat: no-repeat;
+    background-size: 0% 100%;
+}
+.lankmark_container section .intro {
+    position: absolute;
+    width: 100%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+.lankmark_container section .intro h4 {
+    font-weight: bold;
+    font-size: clamp(10px, 1.041666vw, 20px);
+    color: rgba(0, 0, 0, 0.6);
+}
+.lankmark_container section .intro p {
+    margin-top: clamp(10px, 1.041666vw, 20px);
+    font-weight: 500;
+    font-size: clamp(20px, 2.083333vw, 40px);
+    letter-spacing: -1.2px;
+    color: #000;
+}
+
+/* section1 start */
+.lankmark_container .section1 {
+    position: relative;
+    overflow: hidden;
+}
+.lankmark_container .section1 .bg {
+    transform: scale(1.3);
+}
+.lankmark_container .section1.active .bg {
+    transition: 5s;
+    transform: scale(1);
+}
+.lankmark_container .section1 .txt_box {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 52px 0 57px;
+    font-weight: 800;
+    background-color: #fff;
+    transform: translateY(100%);
+}
+.lankmark_container .section1.active .txt_box {
+    transform: translateY(0);
+    transition: 1s 1s;
+    flex-direction: column;
+}
+.lankmark_container .section1.active .txt_box h4 {
+    font-size: 55px;
+}
+.lankmark_container .section1.active .txt_box p {
+    display: block;
+    margin-top: 12px;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 1.5;
+    letter-spacing: -0.32px;
+}
+/* section1 end*/
+
+/* section2 start */
+.lankmark_container .section2 {
+    display: none;
+}
+/* section2 end*/
+
+/* section3 start */
+.lankmark_container .section3 {
+    height: auto;
+}
+.lankmark_container .section3 .inner {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transform: scale(0.85);
+    transform-origin: bottom;
+}
+.lankmark_container .section3 .bg {
+    position: sticky;
+    width: 100%;
+    height: calc(100vh - 61px);
+    top: 61px;
+    left: 0;
+    transform: scale(0.85);
+}
+.lankmark_container .section3 .bg img {
+    filter: brightness(.6)
+}
+.lankmark_container .section3 .text_wrap {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+}
+.lankmark_container .section3 .text_wrap .text_set {
+    width: 100%;
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+}
+.lankmark_container .section3 .text_wrap .text_set h4 {
+    font-weight: 700;
+    font-size: clamp(10px, 1.041666vw, 20px);
+    color: rgba(255, 255, 255, 0.6);
+    opacity: 0;
+}
+.lankmark_container .section3 .text_wrap .text_set p {
+    margin-top: clamp(12px, 1.25vw, 24px);
+    font-size: clamp(20px, 2.083333vw, 40px);
+    font-weight: 500;
+    letter-spacing: -0.72px;
+    color: #fff;
+    opacity: 0;
+}
+.lankmark_container .section3 .overflow_none {
+    height: 100vh;
+    overflow: hidden;
+}
+.lankmark_container .section3 .logo_list_wrap {
+    opacity: 1;
+    position: relative;
+    top: 0;
+    z-index: 1;
+    padding-bottom: 0;
+
+    position: fixed;
+    bottom: 0;
+    height: 60vh;
+    width: 100%;
+    top: auto;
+    overflow: hidden;
+}
+.lankmark_container .section3 .logo_list {
+    align-items: center;
+    flex-direction: column;
+    transition: none;
+    padding-right: 0;
+}
+.lankmark_container .section3 .logo_list li {
+    opacity: 0.2;
+    padding: clamp(35px, 3.6458vw, 70px) 0;
+    transition: .3s;
+}
+.lankmark_container .section3 .logo_list li.active {
+    opacity: 1;
+}
+.lankmark_container .section3 .dim_top,
+.lankmark_container .section3 .dim_bottom {
+    opacity: 0;
+}
+.lankmark_container .section3.dim_on .dim_top,
+.lankmark_container .section3.dim_on .dim_bottom {
+    opacity: 1;
+}
+.lankmark_container .section3 .dim_top {
+    position: fixed;
+    top: 61px;
+    left: 0;
+    width: 100%;
+    height: 200px;
+    pointer-events: none;
+
+    backdrop-filter: none;
+
+    -webkit-mask-image: linear-gradient(
+        to bottom,
+        rgba(0,0,0,1) 0%,
+        rgba(0,0,0,0) 100%
+    );
+    mask-image: linear-gradient(
+        to bottom,
+        rgba(0,0,0,1) 0%,
+        rgba(0,0,0,0) 100%
+    );
+
+    z-index: 1;
+}
+.lankmark_container .section3 .dim_bottom {
+    position: fixed;
+    bottom: 0px;
+    left: 0;
+    width: 100%;
+    height: 200px;
+    pointer-events: none;
+
+    backdrop-filter: none;
+
+    -webkit-mask-image: linear-gradient(
+        to top,
+        rgba(0,0,0,1) 0%,
+        rgba(0,0,0,0) 100%
+    );
+    mask-image: linear-gradient(
+        to top,
+        rgba(0,0,0,1) 0%,
+        rgba(0,0,0,0) 100%
+    );
+    z-index: 1;
+}
+.lankmark_container .section3 .dim_bottom {
+    display: none !important;
+}
+
+/* section3 end*/
+
+/* section4 start */
+.lankmark_container .section4 .bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+}
+.lankmark_container .section4 .bg img {
+}
+.lankmark_container .section4 .bg_filter {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: brightness(0.7);
+}
+.lankmark_container .section4 .cont {
+    opacity: 0;
+    position: relative;
+}
+.lankmark_container .section4 .cont::before {
+    opacity: 0;
+    content: '';
+    display: block;
+    position: absolute;
+    z-index: 1;
+    left: 0;
+    height: 100%;
+    width: clamp(100px, 10.416666vw, 200px);
+    top: 0;
+    pointer-events: none;
+
+    backdrop-filter: blur(5px);
+
+    -webkit-mask-image: linear-gradient(
+        to right,
+        rgba(0,0,0,1) 0%,
+        rgba(0,0,0,0) 100%
+    );
+    mask-image: linear-gradient(
+        to right,
+        rgba(0,0,0,1) 0%,
+        rgba(0,0,0,0) 100%
+    );
+}
+.lankmark_container .section4 .cont::after {
+    opacity: 0;
+    content: '';
+    display: block;
+    position: absolute;
+    z-index: 1;
+    right: 0;
+    height: 100%;
+    width: 100px;
+    top: 0;
+    pointer-events: none;
+
+    backdrop-filter: blur(5px);
+
+    -webkit-mask-image: linear-gradient(
+        to left,
+        rgba(0,0,0,1) 0%,
+        rgba(0,0,0,0) 100%
+    );
+    mask-image: linear-gradient(
+        to left,
+        rgba(0,0,0,1) 0%,
+        rgba(0,0,0,0) 100%
+    );
+}
+.lankmark_container .section4.dim_on .cont::before,
+.lankmark_container .section4.dim_on .cont::after {
+    opacity: 1;
+}
+.lankmark_container .section4 .bg_cont {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+.lankmark_container .section4 .cont {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    bottom: 208px;
+}
+.lankmark_container .section4 .cont ul {
+    display: flex;
+    gap: 5px;
+    width: max-content;
+}
+.lankmark_container .section4 .cont ul + ul {
+    margin-top: 5px;
+}
+.lankmark_container .section4 .cont ul li {
+    width: 143px;
+
+}
+/* section4 end*/
+
+/* section5 start */
+.lankmark_container .section5 {
+    position: relative;
+    overflow: hidden;
+}
+.lankmark_container .section5 .cont1 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+.lankmark_container .section5 .cont1 .cont1_bg {
+    width: 100%;
+    height: 100%;
+}
+.lankmark_container .section5 .cont1 .cont1_bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.lankmark_container .section5 .cont1 .cont1_dim_list {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    left: 0;
+}
+.lankmark_container .section5 .cont1 li {
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+}
+.lankmark_container .section5 .cont1 li.divide {
+    height: 6px;
+    width: 100%;
+    flex-shrink: 0;
+}
+.lankmark_container .section5 .cont1 li img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.lankmark_container .section5 .bg {
+    filter: brightness(0.7);
+    opacity: 0;
+}
+.lankmark_container .section5 .cont2 {
+    /* opacity: 0; */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.lankmark_container .section5 .cont2 ul {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: clamp(15px, 1.5625vw, 30px);
+}
+.lankmark_container .section5 .cont2 ul li {
+    opacity: 0;
+}
+/* section5 end*/
+
+/* section6 start */
+.lankmark_container .section6 {
+    position: relative;
+    height: auto;
+}
+.lankmark_container .section6 .bg {
+    position: sticky;
+    width: 100%;
+    height: calc(100vh - 61px);
+    top: 61px;
+    left: 0;
+}
+.lankmark_container .section6 .bg img {
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.9);
+}
+.lankmark_container .section6 .logo_list_wrap {
+    display: flex;
+    gap: 5px;
+    position: relative;
+    justify-content: flex-end;
+    padding-right: 35px;
+    margin-left: auto;
+    width: fit-content;
+    height: 60vh;
+    position: fixed;
+    left: 0;
+    bottom: 30px;
+    width: 100%;
+    overflow: hidden;
+}
+
+.lankmark_container .section6 .logo_list_wrap ul {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.lankmark_container .section6 .logo_list_wrap ul.logo_list_1 {
+    position: absolute;
+    left: 35px;
+    top: 0;
+    right: auto;
+    height: max-content;
+}
+.lankmark_container .section6 .logo_list_wrap ul.logo_list_2 {
+    position: relative;
+    padding-top: 0;
+    padding-bottom: 0;
+    height: max-content;
+}
+.lankmark_container .section6 .logo_list_wrap ul li {
+    width: 143px;
+    height: 100px;
+}
+.lankmark_container .section6 .pin-spacer {
+}
+.lankmark_container .section6 .overflow_none {
+    overflow: hidden;
+    height: 100vh;
+}
+/* section6 end */
+
+.landmark_pagination {
+    position: fixed;
+    top: calc(50% + (61px / 2));
+    transform: translateY(-50%);
+    left: clamp(30px, 3.125vw, 60px);
+    z-index: 10001;
+    opacity: 0;
+}
+.landmark_pagination ul {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(10px, 1.041666vw, 20px);
+}
+.landmark_pagination ul li {}
+.landmark_pagination a {
+    font-weight: bold;
+    font-size: 14px;
+    color: #fff;
+    opacity: 0.2;
+    mix-blend-mode: difference;
+}
+.landmark_pagination ul li a::before {
+    content: '•';
+    margin-right: 10px;
+}
+.landmark_pagination ul li.active a {
+    font-weight: bold;
+    font-size: 14px;
+    opacity: 1;
+}
+
+.section6 .dim_top,
+.section6 .dim_bottom {
+    opacity: 0;
+}
+.section6 .dim_top {
+    position: fixed;
+    top: 61px;
+    right: clamp(161.5px, 16.822916vw, 323px);
+    width: clamp(225px, 23.4375vw, 450px);
+    height: clamp(100px, 10.416666vw, 200px);
+    pointer-events: none;
+    
+    backdrop-filter: blur(5px);
+    
+    -webkit-mask-image: linear-gradient(
+        to bottom,
+        rgba(0,0,0,1) 0%,
+        rgba(0,0,0,0) 100%
+    );
+    mask-image: linear-gradient(
+        to bottom,
+        rgba(0,0,0,1) 0%,
+        rgba(0,0,0,0) 100%
+    );
+    
+    z-index: 2;
+}
+.section6 .dim_bottom {
+    position: fixed;
+    bottom: 0px;
+    right: clamp(161.5px, 16.822916vw, 323px);
+    width: clamp(205px, 21.354166vw, 410px);
+    height: clamp(100px, 10.416666vw, 200px);
+    pointer-events: none;
+    
+    backdrop-filter: blur(5px);
+    
+    -webkit-mask-image: linear-gradient(
+        to top,
+        rgba(0,0,0,1) 0%,
+        rgba(0,0,0,0) 100%
+    );
+    mask-image: linear-gradient(
+        to top,
+        rgba(0,0,0,1) 0%,
+        rgba(0,0,0,0) 100%
+    );
+    
+    z-index: 2;
+}
+.section6.dim_on .dim_top,
+.section6.dim_on .dim_bottom {
+    opacity: 1;
+}
 }
