@@ -1,4 +1,4 @@
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
 //모바일 브라우저 감지
 function isMobileBrowser() {
@@ -38,15 +38,17 @@ function raf(time) {
 }
 requestAnimationFrame(raf);
 
-const headerH = document.querySelector('#header').clientHeight;
+const headerH = document.querySelector('#header .gnb').clientHeight;
 const contentH = window.innerHeight - headerH;
 const vw = window.innerWidth;
 const windowH = window.innerHeight;
 const section4ListlWidth = document.querySelector('.section4 .logo_list_1').clientWidth;
 const section6ListHeight = document.querySelector('.section6 .logo_list_1').clientHeight;
-console.log('section4ListlWidth',section4ListlWidth)
+
 document.addEventListener('DOMContentLoaded', function(){
-    console.log('section4ListlWidth',section4ListlWidth)
+    const section1 = document.querySelector('.section1');
+    section1.classList.add('active');
+    
     ScrollTrigger.matchMedia({
         // --- PC (가로 768px 이상) ---
         "(min-width: 768px)": function() {
@@ -104,24 +106,39 @@ document.addEventListener('DOMContentLoaded', function(){
             .to('.lankmark_container .section3 .bg img', {filter: "brightness(0.35)"} ,"<")
             .to('.lankmark_container .section3 .text_wrap p', {opacity: 0})
             .to('.lankmark_container .section3 .text_wrap h4', {
-                fontSize: '40px',
+                fontSize: 'clamp(20px, 2.083333vw, 40px)',
                 color: 'rgba(255,255,255,1)',
                 y: getSectionTextCenterY(3)
             })
+            .addLabel('apartment')
             .to('.lankmark_container .section3 .text_wrap', {xPercent: -75})
             .to({},{})
     
             // section3 로고 리스트 등장
-            gsap.to('.logo_list_wrap', {
-                opacity: 1,
-                duration: .2,
+            let section3Timeline2 = gsap.timeline({
                 scrollTrigger: {
                     trigger: '.logo_list_wrap',
                     start: "top 70%",
                     toggleActions: "play none none reverse",
-                },
+                    onEnter: () => {
+                        document.querySelector('.lankmark_container .section3').classList.add('dim_on');
+                    },
+                    onEnterBack: () => {
+                        document.querySelector('.lankmark_container .section3').classList.add('dim_on');
+                    },
+                    onLeave: () => {
+                        document.querySelector('.lankmark_container .section3').classList.remove('dim_on');
+                    },
+                    onLeaveBack: () => {
+                        document.querySelector('.lankmark_container .section3').classList.remove('dim_on');
+                    },
+                }
             });
-    
+            
+            section3Timeline2
+            .to('.logo_list_wrap', { opacity: 1, duration: 0.2 })
+
+            
             // section3 로고 가운데 위치체크
             ScrollTrigger.create({
                 trigger: ".lankmark_container .section3 .logo_list_wrap",
@@ -149,7 +166,20 @@ document.addEventListener('DOMContentLoaded', function(){
                     end: contentH * 8 + 'px',
                     scrub: true,
                     pin: true,
-                    pinType: isMobileBrowser() ? 'fixed' : 'transform'
+                    pinType: isMobileBrowser() ? 'fixed' : 'transform',
+                    onUpdate: self => {
+                        const tl = section4Timeline;
+                        const t = tl.time();
+            
+                        const start = tl.labels.dimOnStart;
+                        const end   = tl.labels.dimOnEnd;
+            
+                        if (t >= start && t < end) {
+                            document.querySelector('.section4').classList.add("dim_on");
+                        } else {
+                            document.querySelector('.section4').classList.remove("dim_on");
+                        }
+                    }
                 }
             })
             section4Timeline
@@ -162,15 +192,26 @@ document.addEventListener('DOMContentLoaded', function(){
             .to({},{})
             .to('.section4 .intro p',{opacity: 0})
             .to('.section4 .intro h4', {
-                fontSize: '40px',
+                fontSize: 'clamp(20px, 2.083333vw, 40px)',
                 color: 'rgba(255,255,255,1)',
                 y: getSectionTextCenterY(4)
             })
+            .addLabel('hotel')
             .to('.section4 .bg_filter', {backdropFilter: "brightness(0.45) blur(5px)"})
             .to('.section4 .intro h4', {y: -200})
-            .to('.section4 .cont', {opacity: 1})
+            .to('.section4 .cont', {
+                opacity: 1,
+            })
+            .addLabel("dimOnStart")
             .to('.section4 .logo_list_1', {x: Math.round(vw), duration: 3, force3D: true, ease: 'none'})
-            .to('.section4 .logo_list_2', {x: Math.round(-section4ListlWidth), duration: 3, force3D: true, ease: 'none'}, "<")
+            .to('.section4 .logo_list_2', {
+                x: Math.round(-section4ListlWidth), 
+                duration: 3, 
+                force3D: true, 
+                ease: 'none',
+            }, "<")
+            .addLabel("dimOnEnd")
+
     
             // section5
             const cont2List = gsap.utils.shuffle(
@@ -195,10 +236,11 @@ document.addEventListener('DOMContentLoaded', function(){
             .to('.section5 .divide', {width: 0})
             .to('.section5 .intro p', {opacity: 0})
             .to('.section5 .intro h4', {
-                fontSize: '40px',
+                fontSize: 'clamp(20px, 2.083333vw, 40px)',
                 color: 'rgba(0,0,0,1)',
                 y: getSectionTextCenterY(4)
             })
+            .addLabel('resort')
             .to({},{})
             .to('.section5 .intro h4', {color: '#fff'})
             .to('.section5 .cont1', {opacity: 0}, "<")
@@ -215,8 +257,6 @@ document.addEventListener('DOMContentLoaded', function(){
                 }, "<+" + (i * 0.05));
             });
     
-            
-            console.log(section6ListHeight)
             const section6Timeline = gsap.timeline({
                 scrollTrigger: {
                     trigger: ".section6 .text_scroll_zone",
@@ -233,11 +273,12 @@ document.addEventListener('DOMContentLoaded', function(){
             .to('.section6 .bg img', {opacity: 1})
             .to('.section6 .intro p', {opacity: 0})
             .to('.section6 .intro h4', {
-                fontSize: '40px',
+                fontSize: 'clamp(20px, 2.083333vw, 40px)',
                 color: 'rgba(0,0,0,1)',
                 y: getSectionTextCenterY(4)
             })
             .to('.section6 .intro h4', {color: '#fff'})
+            .addLabel('golfclub')
             .to('.section6 .bg img', {filter: 'brightness(0.5'})
             .to('.section6 .intro', {xPercent: -75})
     
@@ -249,22 +290,99 @@ document.addEventListener('DOMContentLoaded', function(){
                     pinSpacing: false,
                     scrub: true,
                     // markers:true,
-                    onEnter: () => gsap.to(['.section6 .logo_list_1', '.section6 .logo_list_2'], {opacity: 1, duration: 0}),
-                    onLeaveBack: () => gsap.to(['.section6 .logo_list_1', '.section6 .logo_list_2'], {opacity: 0, duration: 0}),
+                    onEnter: () => {
+                        gsap.to(['.section6 .logo_list_1', '.section6 .logo_list_2'], {opacity: 1, duration: 0})
+                        document.querySelector('.lankmark_container .section6').classList.add('dim_on');
+                    }
+                    ,
+                    onLeaveBack: () => {
+                        gsap.to(['.section6 .logo_list_1', '.section6 .logo_list_2'], {opacity: 0, duration: 0}),
+                        document.querySelector('.lankmark_container .section6').classList.remove('dim_on');
+                    },
+                    onEnterBack: () => {
+                        document.querySelector('.lankmark_container .section6').classList.add('dim_on');
+                    },
+                    onLeave: () => {
+                        document.querySelector('.lankmark_container .section6').classList.remove('dim_on');
+                    },
                 }
             })
             section6Timeline2
             .to('.section6 .logo_list_1', 
                 { y:section6ListHeight + windowH,  ease: "none", force3D: true, willChange: 'transform'}
             )
+
+            window.landmarkTimelineMap = {
+                apartment: section3Timeline,
+                hotel: section4Timeline,
+                resort: section5Timeline,
+                golfclub: section6Timeline,
+            }
+
+            document.querySelectorAll('.landmark_pagination a').forEach(ele => {
+                ele.addEventListener('click', function(e){
+                    e.preventDefault();
+
+                    const label = this.getAttribute('href').replace('#', '');
+                    const tl = window.landmarkTimelineMap[label];
+
+                    if(!tl) return;
+
+                    const st = tl.scrollTrigger;
+                    const progress = tl.labels[label] / tl.duration();
+
+                    // scrollTrigger 시작~끝 사이의 실제 스크롤 좌표
+                    const targetY = st.start + (st.end - st.start) * progress;
+
+                    // 이동
+                    gsap.to(window, {
+                        scrollTo: targetY,
+                        duration: 0.5
+                    });
+                    
+                });
+            });
+
+            const paginationSections = ['apartment', 'hotel', 'resort', 'golfclub'];
+            let currentActiveSection = null;
+
+            ScrollTrigger.create({
+                trigger: 'body',
+                start: 'top top',
+                end: 'bottom bottom',
+                onUpdate: (self) => {
+                    const sections = ['#apartment', '#hotel', '#resort', '#golfclub'];
+                    let foundActive = false;
+
+                    sections.forEach(id => {
+                        const section = document.querySelector(id);
+                        const rect = section.getBoundingClientRect();
+                        if (rect.top <= window.innerHeight / 2 && rect.bottom >= window.innerHeight / 2) {
+                            foundActive = true;
+                            document.querySelectorAll('.landmark_pagination li').forEach(li => li.classList.remove('active'));
+                            document.querySelector(`.landmark_pagination li[data-link="${id.slice(1)}"]`).classList.add('active');
+                        }
+                    });
+
+                    // pagination 표시/숨김
+                    const pagination = document.querySelector('.landmark_pagination');
+                    if (foundActive) {
+                        pagination.style.opacity = '1';
+                    } else {
+                        pagination.style.opacity = '0';
+                    }
+                }
+            });
         },
         // --- Mobile (가로 767px 이하) ---
         "(max-width: 767px)": function() {
         },
         // --- All Breakpoints ---
         "all": function() {
+
         }
     });
+
 })
 
 function getSectionTextCenterY(sectionNumber) {
@@ -285,8 +403,3 @@ function getSectionTextCenterY(sectionNumber) {
 }
 
 
-
-document.addEventListener('DOMContentLoaded', function(){
-    const section1 = document.querySelector('.section1');
-    section1.classList.add('active');
-})

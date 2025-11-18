@@ -1,21 +1,19 @@
-/* 임시코드 */
-header {
+#header .gnb {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    height: 97px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #fff;
-    z-index: 9999999999999;
-    opacity: 0;
+}
+.main_notice_pop,
+#side_left {
+	display: none !important;
+}
+.container.fixed {
+	padding-top: 0;
 }
 .lankmark_container {
     padding-top: 97px;
 }
-/* 임시코드 */
 html, body {
     overflow: visible;
 }
@@ -35,7 +33,6 @@ html, body {
 .lankmark_container .section2 {
     height: 200vh;
 }
-
 .lankmark_container .section2 .sticky {
     height: 100vh;
     position: sticky;
@@ -48,7 +45,7 @@ html, body {
     justify-content: center;
 }
 .lankmark_container .section2 .scroll_text {
-    font-size: 48px;
+    font-size: clamp(24px, 2.5vw, 48px);
     font-weight: 600;
     background: linear-gradient(to right, #000);
     -webkit-background-clip: text;
@@ -56,8 +53,6 @@ html, body {
     background-repeat: no-repeat;
     background-size: 0% 100%;
 }
-
-
 .lankmark_container section .intro {
     position: absolute;
     width: 100%;
@@ -68,17 +63,16 @@ html, body {
 }
 .lankmark_container section .intro h4 {
     font-weight: bold;
-    font-size: 20px;
+    font-size: clamp(10px, 1.041666vw, 20px);
     color: rgba(0, 0, 0, 0.6);
 }
 .lankmark_container section .intro p {
-    margin-top: 20px;
+    margin-top: clamp(10px, 1.041666vw, 20px);
     font-weight: 500;
-    font-size: 40px;
+    font-size: clamp(20px, 2.083333vw, 40px);
     letter-spacing: -1.2px;
     color: #000;
 }
-
 
 /* section1 start */
 .lankmark_container .section1 {
@@ -155,17 +149,16 @@ html, body {
     left: 50%;
     transform: translate(-50%, -50%);
     width: 100%;
-
 }
 .lankmark_container .section3 .text_wrap .text_set h4 {
     font-weight: 700;
-    font-size: 20px;
+    font-size: clamp(10px, 1.041666vw, 20px);
     color: rgba(255, 255, 255, 0.6);
     opacity: 0;
 }
 .lankmark_container .section3 .text_wrap .text_set p {
-    margin-top: 24px;
-    font-size: 40px;
+    margin-top: clamp(12px, 1.25vw, 24px);
+    font-size: clamp(20px, 2.083333vw, 40px);
     font-weight: 500;
     letter-spacing: -0.72px;
     color: #fff;
@@ -176,47 +169,80 @@ html, body {
     position: relative;
     top: 0;
     z-index: 1;
-    padding-bottom: 300px;
+    padding-bottom: clamp(150px, 15.625vw, 300px);
 }
 .lankmark_container .section3 .logo_list {
     display: flex;
     align-items: flex-end;
     flex-direction: column;
     transition: 0.2s;
-    padding-right: 480px;
+    padding-right: clamp(240px, 25vw, 480px);
 }
 .lankmark_container .section3 .logo_list li {
     opacity: 0.2;
-    padding: 70px 0;
+    padding: clamp(35px, 3.6458vw, 70px) 0;
     transition: .3s;
 }
 .lankmark_container .section3 .logo_list li.active {
     opacity: 1;
 }
-/* .lankmark_container .section3 .logo_list::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100px;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 60%, rgba(0,0,0,0) 100%);
-    -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 60%, rgba(0,0,0,0) 100%);
+.lankmark_container .section3 .dim_top,
+.lankmark_container .section3 .dim_bottom {
+    opacity: 0;
 }
-.lankmark_container .section3 .logo_list::after {
-        content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 100px;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    mask-image: linear-gradient(to top, rgba(0,0,0,1) 60%, rgba(0,0,0,0) 100%);
-    -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,1) 60%, rgba(0,0,0,0) 100%);
-} */
+.lankmark_container .section3.dim_on .dim_top,
+.lankmark_container .section3.dim_on .dim_bottom {
+    opacity: 1;
+}
+.lankmark_container .section3 .dim_top {
+    position: fixed;
+    top: 97px;
+    right: clamp(240px, 25vw, 480px);
+    width: clamp(85px, 8.854166vw, 170px);
+    height: clamp(100px, 10.416666vw, 200px);
+    pointer-events: none;
+
+    backdrop-filter: blur(5px);
+
+    -webkit-mask-image: linear-gradient(
+        to bottom,
+        rgba(0,0,0,1) 0%,
+        rgba(0,0,0,0) 100%
+    );
+    mask-image: linear-gradient(
+        to bottom,
+        rgba(0,0,0,1) 0%,
+        rgba(0,0,0,0) 100%
+    );
+
+    z-index: 1;
+}
+.lankmark_container .section3 .dim_bottom {
+    position: fixed;
+    bottom: 0px;
+    right: clamp(240px, 25vw, 480px);
+    width: clamp(85px, 8.854166vw, 170px);
+    height: clamp(100px, 10.416666vw, 200px);
+    pointer-events: none;
+
+    backdrop-filter: blur(5px);
+
+    -webkit-mask-image: linear-gradient(
+        to top,
+        rgba(0,0,0,1) 0%,
+        rgba(0,0,0,0) 100%
+    );
+    mask-image: linear-gradient(
+        to top,
+        rgba(0,0,0,1) 0%,
+        rgba(0,0,0,0) 100%
+    );
+    z-index: 1;
+}
+.lankmark_container .section3 .dim_bottom {
+    display: none !important;
+}
+
 /* section3 end*/
 
 /* section4 start */
@@ -240,6 +266,61 @@ html, body {
 }
 .lankmark_container .section4 .cont {
     opacity: 0;
+    position: relative;
+}
+.lankmark_container .section4 .cont::before {
+    opacity: 0;
+    content: '';
+    display: block;
+    position: absolute;
+    z-index: 1;
+    left: 0;
+    height: 100%;
+    width: clamp(100px, 10.416666vw, 200px);
+    top: 0;
+    pointer-events: none;
+
+    backdrop-filter: blur(5px);
+
+    -webkit-mask-image: linear-gradient(
+        to right,
+        rgba(0,0,0,1) 0%,
+        rgba(0,0,0,0) 100%
+    );
+    mask-image: linear-gradient(
+        to right,
+        rgba(0,0,0,1) 0%,
+        rgba(0,0,0,0) 100%
+    );
+}
+.lankmark_container .section4 .cont::after {
+    opacity: 0;
+    content: '';
+    display: block;
+    position: absolute;
+    z-index: 1;
+    right: 0;
+    height: 100%;
+    width: clamp(100px, 10.416666vw, 200px);
+    top: 0;
+    pointer-events: none;
+
+    backdrop-filter: blur(5px);
+
+    -webkit-mask-image: linear-gradient(
+        to left,
+        rgba(0,0,0,1) 0%,
+        rgba(0,0,0,0) 100%
+    );
+    mask-image: linear-gradient(
+        to left,
+        rgba(0,0,0,1) 0%,
+        rgba(0,0,0,0) 100%
+    );
+}
+.lankmark_container .section4.dim_on .cont::before,
+.lankmark_container .section4.dim_on .cont::after {
+    opacity: 1;
 }
 .lankmark_container .section4 .bg_cont {
     position: absolute;
@@ -264,7 +345,7 @@ html, body {
     margin-top: 10px;
 }
 .lankmark_container .section4 .cont ul li {
-    width: 200px;
+    width: clamp(100px, 10.416666vw, 200px);
 }
 /* section4 end*/
 
@@ -280,7 +361,15 @@ html, body {
     width: 100%;
     height: 100%;
 }
-
+.lankmark_container .section5 .cont1 .cont1_bg {
+    width: 100%;
+    height: 100%;
+}
+.lankmark_container .section5 .cont1 .cont1_bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
 .lankmark_container .section5 .cont1 .cont1_dim_list {
     display: flex;
     position: absolute;
@@ -294,7 +383,7 @@ html, body {
     background-color: #fff;
 }
 .lankmark_container .section5 .cont1 li.divide {
-    width: 18px;
+    width: clamp(9px, 0.9375vw, 18px);
     flex-shrink: 0;
 }
 .lankmark_container .section5 .cont1 li img {
@@ -316,7 +405,7 @@ html, body {
 .lankmark_container .section5 .cont2 ul {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 30px;
+    gap: clamp(15px, 1.5625vw, 30px);
 }
 .lankmark_container .section5 .cont2 ul li {
     opacity: 0;
@@ -344,10 +433,10 @@ html, body {
 }
 .lankmark_container .section6 .logo_list_wrap {
     display: flex;
-    gap: 10px;
+    gap: clamp(5px, 0.520833vw, 10px);
     position: relative;
     justify-content: flex-end;
-    padding-right: 323px;
+    padding-right: clamp(161.5px, 16.822916vw, 323px);
     margin-left: auto;
     width: fit-content;
 }
@@ -355,26 +444,22 @@ html, body {
 .lankmark_container .section6 .logo_list_wrap ul {
     display: flex;
     flex-direction: column;
-    gap: 30px;
+    gap: clamp(15px, 1.5625vw, 30px);
 }
 
 .lankmark_container .section6 .logo_list_wrap ul.logo_list_1 {
-    /* opacity: 0; */
     position: fixed;
-    right: 533px;
-    /* bottom: calc(100% - 97px); */
+    right: clamp(266.5px, 27.760416vw, 533px);
     bottom: 100%;
-    /* padding: 100vh 0; */
 }
 .lankmark_container .section6 .logo_list_wrap ul.logo_list_2 {
     position: relative;
     padding-top: 100vh;
     padding-bottom: 100vh;
-    /* opacity: 0; */
 }
 .lankmark_container .section6 .logo_list_wrap ul li {
-    width: 200px;
-    height: 140px;
+    width: clamp(100px, 10.416666vw, 200px);
+    height: clamp(70px, 7.291666vw, 140px);
 }
 .lankmark_container .section6 .pin-spacer {
 }
@@ -383,10 +468,88 @@ html, body {
 }
 /* section6 end */
 
-
-#footer {
-    height: 200px;
+.landmark_pagination {
+    position: fixed;
+    top: calc(50% + (97px / 2));
+    transform: translateY(-50%);
+    left: clamp(30px, 3.125vw, 60px);
+    z-index: 10001;
+    opacity: 0;
+}
+.landmark_pagination ul {
     display: flex;
-    align-items: center;
-    justify-content: center;
+    flex-direction: column;
+    gap: clamp(10px, 1.041666vw, 20px);
+}
+.landmark_pagination ul li {}
+.landmark_pagination a {
+    font-weight: bold;
+    font-size: 14px;
+    color: #fff;
+    opacity: 0.2;
+    mix-blend-mode: difference;
+}
+.landmark_pagination ul li a::before {
+    content: '•';
+    margin-right: 10px;
+}
+.landmark_pagination ul li.active a {
+    font-weight: bold;
+    font-size: 14px;
+    opacity: 1;
+}
+
+.section6 .dim_top,
+.section6 .dim_bottom {
+    opacity: 0;
+}
+.section6 .dim_top {
+    position: fixed;
+    top: 97px;
+    right: clamp(161.5px, 16.822916vw, 323px);
+    width: clamp(225px, 23.4375vw, 450px);
+    height: clamp(100px, 10.416666vw, 200px);
+    pointer-events: none;
+    
+    backdrop-filter: blur(5px);
+    
+    -webkit-mask-image: linear-gradient(
+        to bottom,
+        rgba(0,0,0,1) 0%,
+        rgba(0,0,0,0) 100%
+    );
+    mask-image: linear-gradient(
+        to bottom,
+        rgba(0,0,0,1) 0%,
+        rgba(0,0,0,0) 100%
+    );
+    
+    z-index: 2;
+}
+.section6 .dim_bottom {
+    position: fixed;
+    bottom: 0px;
+    right: clamp(161.5px, 16.822916vw, 323px);
+    width: clamp(205px, 21.354166vw, 410px);
+    height: clamp(100px, 10.416666vw, 200px);
+    pointer-events: none;
+    
+    backdrop-filter: blur(5px);
+    
+    -webkit-mask-image: linear-gradient(
+        to top,
+        rgba(0,0,0,1) 0%,
+        rgba(0,0,0,0) 100%
+    );
+    mask-image: linear-gradient(
+        to top,
+        rgba(0,0,0,1) 0%,
+        rgba(0,0,0,0) 100%
+    );
+    
+    z-index: 2;
+}
+.section6.dim_on .dim_top,
+.section6.dim_on .dim_bottom {
+    opacity: 1;
 }
