@@ -38,6 +38,563 @@ function raf(time) {
 }
 requestAnimationFrame(raf);
 
+
+// document.addEventListener('DOMContentLoaded', function(){
+    
+//     let vw = window.innerWidth;
+//     ScrollTrigger.matchMedia({
+//         // --- PC (가로 768px 이상) ---
+//         "(min-width: 768px)": function() {
+
+//             const headerH = document.querySelector('#header .gnb').clientHeight;
+//             const contentH = window.innerHeight - headerH;
+//             const windowH = window.innerHeight;
+//             const section3ListWrapHeight = document.querySelector('.section3 .logo_list_wrap').clientHeight;
+//             const section3ListHeight = document.querySelector('.section3 .logo_list').clientHeight;
+//             const section4ListlWidth = document.querySelector('.section4 .logo_list_1').clientWidth;
+//             const section6ListHeight = document.querySelector('.section6 .logo_list_1').clientHeight;
+//             const section6ListWrapHeight = document.querySelector('.section6 .logo_list_wrap').clientHeight;
+    
+//             gsap.set([
+//                 '.section3 .text_set h4',
+//                 '.section3 .text_set p',
+//                 '.section4 .intro p',
+//                 '.section4 .intro h4',
+//                 '.section5 .intro p',
+//                 '.section5 .intro h4',
+//                 '.section6 .intro h4',
+//                 '.section6 .intro p',
+//             ], {
+//                 opacity: 0,
+//                 y:20,
+//             })
+//             // section3
+//             gsap.set('.section3 .logo_list', {y: section3ListWrapHeight})
+//             gsap.set('.section3 .overflow_none', { clearProps: 'transform' });
+
+//             // section4
+//             gsap.set('.section4 .logo_list_1',{xPercent: -100})
+//             gsap.set('.section4 .logo_list_2',{x: vw})
+//             gsap.set('.section4 .logo_list_1, .section4 .logo_list_2', {willChange: 'transform'});
+//             gsap.set('.lankmark_container .section6 .logo_list_wrap ul.logo_list_1', {
+//                 willChange: 'transform', 
+//                 ease: 'none', 
+//                 force3D: true,
+//             })
+            
+//             // section5 
+//             gsap.set('.lankmark_container .section5 .cont1 li.divide', {width: 'clamp(9px, 0.9375vw, 18px)',height: '100%'})
+
+//             // section6
+//             gsap.set('.section6 .logo_list_1', {y: -section6ListHeight});
+//             gsap.set('.section6 .logo_list_2', {y: section3ListWrapHeight});
+//             gsap.set('.section6 .overflow_none', { clearProps: 'transform' });
+    
+//             // section2 스크롤 텍스트
+//             gsap.to(".scroll_text", {
+//                 backgroundSize: "100% 100%",
+//                 ease: "none",
+//                 scrollTrigger: {
+//                     trigger: ".section2",
+//                     start: "top 10%",
+//                     end: "bottom 90%",
+//                     scrub: true,
+//                 },
+//             });
+    
+//             const section3Timeline = gsap.timeline({
+//                 scrollTrigger: {
+//                     trigger: ".section3 .text_scroll_zone",
+//                     start: 'top ' + headerH + 'px',
+//                     end: contentH * 4 + 'px',
+//                     scrub: true,
+//                     pin: true,
+//                     pinType: isMobileBrowser() ? 'fixed' : 'transform'
+//                 }
+//             })
+//             section3Timeline
+//             .to('.lankmark_container .section3 .text_wrap h4', {opacity: 1, y: 0})
+//             .to('.lankmark_container .section3 .text_wrap p', {opacity: 1, y: 0})
+//             .to('.lankmark_container .section3 .bg', {scale: 1})
+//             .to('.lankmark_container .section3 .bg img', {filter: "brightness(0.35)"} ,"<")
+//             .to('.lankmark_container .section3 .text_wrap p', {opacity: 0})
+//             .to('.lankmark_container .section3 .text_wrap h4', {
+//                 fontSize: 'clamp(20px, 2.083333vw, 40px)',
+//                 color: 'rgba(255,255,255,1)',
+//                 y: getSectionTextCenterY(3)
+//             })
+//             .addLabel('apartment')
+//             .to('.lankmark_container .section3 .text_wrap', {xPercent: -75})
+//             .to({},{})
+    
+//             // section3 로고 리스트 등장
+//             let section3Timeline2 = gsap.timeline({
+//                 scrollTrigger: {
+//                     trigger: '.section3 .logo_list_wrap',
+//                     end: '+=' + (section3ListHeight + section3ListHeight) + 'px',
+//                     start: 'top ' + headerH + 'px',
+//                     pin: true, 
+//                     scrub: true,
+//                     onEnter: () => {
+//                         gsap.to('.section3 .logo_list_wrap', { opacity: 1, duration: 0.2 })
+//                     },
+//                     onEnterBack: () => {
+//                         gsap.to('.section3 .logo_list_wrap', { opacity: 1, duration: 0.2 })
+//                     },
+//                     onLeave: () => {
+//                         gsap.to('.section3 .logo_list_wrap', { opacity: 1, duration: 0.2 })
+//                     },
+//                     onLeaveBack: () => {
+//                         gsap.to('.section3 .logo_list_wrap', { opacity: 1, duration: 0.2 })
+//                     },
+//                 }
+//             });
+            
+//             section3Timeline2
+//             .to('.section3 .logo_list', {y: -section3ListHeight, ease: 'none'})
+
+            
+//             // section3 로고 가운데 위치체크
+//             ScrollTrigger.create({
+//                 trigger: ".lankmark_container .section3 .logo_list_wrap",
+//                 start: "top bottom",
+//                 end: '+=' + (section3ListHeight + section3ListHeight) + 'px',
+//                 scrub: true,
+//                 onUpdate: self => {
+//                     const center = window.innerHeight / 2;
+//                     const listItems = gsap.utils.toArray('.lankmark_container .section3 .logo_list li');
+    
+//                     listItems.forEach(li => {
+//                         const rect = li.getBoundingClientRect();
+//                         const liCenter = rect.top + rect.height / 2;
+//                         const inCenter = Math.abs(liCenter - center) < rect.height / 2;
+//                         li.classList.toggle('active', inCenter);
+//                     });
+//                 }
+//             });
+    
+//             // section4 
+//             const section4Timeline = gsap.timeline({
+//                 scrollTrigger: {
+//                     trigger: ".section4",
+//                     start: 'top ' + headerH + 'px',
+//                     end: contentH * 8 + 'px',
+//                     scrub: true,
+//                     pin: true,
+//                     pinType: isMobileBrowser() ? 'fixed' : 'transform',
+//                 }
+//             })
+//             section4Timeline
+//             .to('.section4 .intro h4', {opacity: 1, y: 0})
+//             .to('.section4 .intro p', {opacity: 1, y: 0})
+//             .to({},{})
+//             .to('.section4 .bg', {opacity: 1})
+//             .to('.section4 .intro h4',{color: 'rgba(255, 255, 255, 0.6'}, "<")
+//             .to('.section4 .intro p',{color: '#fff'}, "<")
+//             .to({},{})
+//             .to('.section4 .intro p',{opacity: 0})
+//             .to('.section4 .intro h4', {
+//                 fontSize: 'clamp(20px, 2.083333vw, 40px)',
+//                 color: 'rgba(255,255,255,1)',
+//                 y: getSectionTextCenterY(4)
+//             })
+//             .addLabel('hotel')
+//             .to('.section4 .bg_filter', {backdropFilter: "brightness(0.45) blur(5px)"})
+//             .to('.section4 .intro h4', {y: -200})
+//             .to('.section4 .cont', {
+//                 opacity: 1,
+//             })
+//             .to('.section4 .logo_list_1', {x: Math.round(vw), duration: 3, force3D: true, ease: 'none'})
+//             .to('.section4 .logo_list_2', {
+//                 x: Math.round(-section4ListlWidth), 
+//                 duration: 3, 
+//                 force3D: true, 
+//                 ease: 'none',
+//             }, "<")
+
+    
+//             // section5
+//             const cont2List = gsap.utils.shuffle(
+//                 gsap.utils.toArray('.section5 .cont2 li')
+//             )
+//             const section5Timeline = gsap.timeline({
+//                 scrollTrigger: {
+//                     trigger: ".section5",
+//                     start: 'top ' + headerH + 'px',
+//                     end: contentH * 8 + 'px',
+//                     scrub: true,
+//                     pin: true,
+//                     pinType: isMobileBrowser() ? 'fixed' : 'transform'
+//                 }
+//             })
+//             section5Timeline
+//             .to('.section5 .intro h4', {opacity: 1, y: 0})
+//             .to('.section5 .intro p', {opacity: 1, y: 0})
+//             .to('.section5 .dim1', {opacity: 0})
+//             .to('.section5 .dim2', {opacity: 0})
+//             .to('.section5 .dim3', {opacity: 0})
+//             .to('.section5 .divide', {width: 0})
+//             .to('.section5 .intro p', {opacity: 0})
+//             .to('.section5 .intro h4', {
+//                 fontSize: 'clamp(20px, 2.083333vw, 40px)',
+//                 color: 'rgba(0,0,0,1)',
+//                 y: getSectionTextCenterY(4)
+//             })
+//             .addLabel('resort')
+//             .to({},{})
+//             .to('.section5 .intro h4', {color: '#fff'})
+//             .to('.section5 .cont1', {opacity: 0}, "<")
+//             .to('.section5 .bg', {opacity: 1},"<")
+//             .to({},{})
+//             .to('.section5 .bg', {filter: 'brightness(0.3)'})
+//             .to('.section5 .intro h4', {opacity: 0.1},"<")
+//             .to({},{})
+//             .to({},{});
+//             cont2List.forEach((li, i) => {
+//                 section5Timeline.to(li, {
+//                     opacity: 1,
+//                     duration: 0.2
+//                 }, "<+" + (i * 0.05));
+//             });
+    
+//             const section6Timeline = gsap.timeline({
+//                 scrollTrigger: {
+//                     trigger: ".section6 .text_scroll_zone",
+//                     start: 'top ' + headerH + 'px',
+//                     end: contentH * 4 + 'px',
+//                     scrub: true,
+//                     pin: true,
+//                     pinType: isMobileBrowser() ? 'fixed' : 'transform',
+//                 }
+//             })
+//             section6Timeline
+//             .to('.section6 .intro h4', {opacity: 1, y: 0})
+//             .to('.section6 .intro p', {opacity: 1, y: 0})   
+//             .to('.section6 .bg img', {opacity: 1})
+//             .to('.section6 .intro p', {opacity: 0})
+//             .to('.section6 .intro h4', {
+//                 fontSize: 'clamp(20px, 2.083333vw, 40px)',
+//                 color: 'rgba(0,0,0,1)',
+//                 y: getSectionTextCenterY(4)
+//             })
+//             .to('.section6 .intro h4', {color: '#fff'})
+//             .addLabel('golfclub')
+//             .to('.section6 .bg img', {filter: 'brightness(0.5'})
+//             .to('.section6 .intro', {xPercent: -75})
+    
+//             const section6Timeline2 = gsap.timeline({
+//                 scrollTrigger: {
+//                     trigger: ".section6 .logo_list_wrap",
+//                     start: 'top ' + headerH + 'px',
+//                     end: '+=' + section6ListHeight * 2 + 'px',
+//                     scrub: true,
+//                     pin: true,
+//                 }
+//             })
+//             section6Timeline2
+//             .to('.section6 .logo_list_1', { y:section6ListWrapHeight, ease: 'none' })
+//             .to('.section6 .logo_list_2', { y: -section6ListHeight, ease: 'none' },"<")
+
+//             window.landmarkTimelineMap = {
+//                 apartment: section3Timeline,
+//                 hotel: section4Timeline,
+//                 resort: section5Timeline,
+//                 golfclub: section6Timeline,
+//             }
+
+//             document.querySelectorAll('.landmark_pagination a').forEach(ele => {
+//                 ele.addEventListener('click', function(e){
+//                     e.preventDefault();
+
+//                     const label = this.getAttribute('href').replace('#', '');
+//                     const tl = window.landmarkTimelineMap[label];
+
+//                     if(!tl) return;
+
+//                     const st = tl.scrollTrigger;
+//                     const progress = tl.labels[label] / tl.duration();
+
+//                     // scrollTrigger 시작~끝 사이의 실제 스크롤 좌표
+//                     const targetY = st.start + (st.end - st.start) * progress;
+
+//                     // 이동
+//                     gsap.to(window, {
+//                         scrollTo: targetY,
+//                         duration: 0.5
+//                     });
+                    
+//                 });
+//             });
+
+//             const paginationSections = ['apartment', 'hotel', 'resort', 'golfclub'];
+//             let currentActiveSection = null;
+
+//             ScrollTrigger.create({
+//                 trigger: 'body',
+//                 start: 'top top',
+//                 end: 'bottom bottom',
+//                 onUpdate: (self) => {
+//                     const sections = ['#apartment', '#hotel', '#resort', '#golfclub'];
+//                     let foundActive = false;
+
+//                     sections.forEach(id => {
+//                         const section = document.querySelector(id);
+//                         const rect = section.getBoundingClientRect();
+//                         if (rect.top <= window.innerHeight / 2 && rect.bottom >= window.innerHeight / 2) {
+//                             foundActive = true;
+//                             document.querySelectorAll('.landmark_pagination li').forEach(li => li.classList.remove('active'));
+//                             document.querySelector(`.landmark_pagination li[data-link="${id.slice(1)}"]`).classList.add('active');
+//                         }
+//                     });
+
+//                     // pagination 표시/숨김
+//                     const pagination = document.querySelector('.landmark_pagination');
+//                     if (foundActive) {
+//                         pagination.style.opacity = '1';
+//                     } else {
+//                         pagination.style.opacity = '0';
+//                     }
+//                 }
+//             });
+//         },
+//         // --- Mobile (가로 767px 이하) ---
+//         "(max-width: 767px)": function() {
+//             const headerH = document.querySelector('#header .gnb').clientHeight;
+//             const contentH = window.innerHeight - headerH;
+//             const vw = window.innerWidth;
+//             const windowH = window.innerHeight;
+//             const section3ListWrapHeight = document.querySelector('.section3 .logo_list_wrap').clientHeight;
+//             const section3ListHeight = document.querySelector('.section3 .logo_list').clientHeight;
+//             const section4ListlWidth = document.querySelector('.section4 .logo_list_1').clientWidth;
+//             const section6ListHeight = document.querySelector('.section6 .logo_list_1').clientHeight;
+//             const section6ListWrapHeight = document.querySelector('.section6 .logo_list_wrap').clientHeight;
+
+//             gsap.set([
+//                 '.section3 .text_set h4',
+//                 '.section3 .text_set p',
+//                 '.section4 .intro p',
+//                 '.section4 .intro h4',
+//                 '.section5 .intro p',
+//                 '.section5 .intro h4',
+//                 '.section6 .intro h4',
+//                 '.section6 .intro p',
+//             ], {
+//                 opacity: 0,
+//                 y:20,
+//             })
+//             // gsap.set('.section3 .logo_list', {y: section3ListWrapHeight})
+//             gsap.set('.section4 .logo_list_1',{x: -section4ListlWidth})
+//             gsap.set('.section4 .logo_list_2',{x: vw})
+//             gsap.set('.section4 .logo_list_1, .section4 .logo_list_2', {willChange: 'transform'});
+//             gsap.set('.lankmark_container .section6 .logo_list_wrap ul.logo_list_1', {
+//                 willChange: 'transform', 
+//                 ease: 'none', 
+//                 force3D: true,
+//             })
+
+//             // section5
+//             gsap.set('.lankmark_container .section5 .cont1 li.divide', {width: '100%',height: '6px'})
+//             // section6
+//             gsap.set('.section6 .logo_list_1', {y: -section6ListHeight});
+//             gsap.set('.section6 .logo_list_2', {y: section3ListWrapHeight});
+
+//             const section3Timeline = gsap.timeline({
+//                 scrollTrigger: {
+//                     trigger: ".section3 .text_scroll_zone",
+//                     start: 'top ' + headerH + 'px',
+//                     end: contentH * 4 + 'px',
+//                     scrub: true,
+//                     pin: true,
+//                     pinType: isMobileBrowser() ? 'fixed' : 'transform'
+//                 }
+//             })
+//             section3Timeline
+//             .to('.lankmark_container .section3 .text_wrap h4', {opacity: 1, y: 0})
+//             .to('.lankmark_container .section3 .text_wrap p', {opacity: 1, y: 0})
+//             .to('.lankmark_container .section3 .bg', {scale: 1})
+//             .to('.lankmark_container .section3 .bg img', {filter: "brightness(0.35)"} ,"<")
+//             .to('.lankmark_container .section3 .text_wrap p', {opacity: 0})
+//             .to('.lankmark_container .section3 .text_wrap h4', {
+//                 fontSize: 'clamp(20px, 2.083333vw, 40px)',
+//                 color: 'rgba(255,255,255,1)',
+//                 y: getSectionTextCenterY(3)
+//             })
+//             .to('.lankmark_container .section3 .text_wrap', {top: '20%'})
+//             .to({},{})
+    
+//             // section3 로고 리스트 등장
+//             let section3Timeline2 = gsap.timeline({
+//                 scrollTrigger: {
+//                     trigger: '.section3 .overflow_none',
+//                     start: 'top ' + headerH + 'px',
+//                     end: '+=' + section3ListHeight + 'px',
+//                     pin: true, 
+//                     scrub: true,
+//                     onEnter: () => {
+//                         gsap.to('.section3 .logo_list_wrap', { opacity: 1, duration: 0.2 })
+//                     },
+//                     onEnterBack: () => {
+//                         gsap.to('.section3 .logo_list_wrap', { opacity: 1, duration: 0.2 })
+//                     },
+//                     onLeave: () => {
+//                         gsap.to('.section3 .logo_list_wrap', { opacity: 1, duration: 0.2 })
+//                     },
+//                     onLeaveBack: () => {
+//                         gsap.to('.section3 .logo_list_wrap', { opacity: 1, duration: 0.2 })
+//                     },
+//                 }
+//             });
+            
+//             section3Timeline2
+//             .to('.section3 .logo_list', {y: -section3ListHeight, ease: 'none'})
+            
+//             // section3 로고 가운데 위치체크
+//             ScrollTrigger.create({
+//                 trigger: ".lankmark_container .section3 .logo_list_wrap",
+//                 start: "top bottom",
+//                 end: '+=' + (section3ListHeight + section3ListHeight) + 'px',
+//                 scrub: true,
+//                 onUpdate: self => {
+//                     const center = window.innerHeight / 2;
+//                     const listItems = gsap.utils.toArray('.lankmark_container .section3 .logo_list li');
+    
+//                     listItems.forEach(li => {
+//                         const rect = li.getBoundingClientRect();
+//                         const liCenter = rect.top + rect.height / 2;
+//                         const inCenter = Math.abs(liCenter - center) < rect.height / 2;
+//                         li.classList.toggle('active', inCenter);
+//                     });
+//                 }
+//             });
+
+//             // section4 
+//             const section4Timeline = gsap.timeline({
+//                 scrollTrigger: {
+//                     trigger: ".section4",
+//                     start: 'top ' + headerH + 'px',
+//                     end: contentH * 8 + 'px',
+//                     scrub: true,
+//                     pin: true,
+//                     pinType: isMobileBrowser() ? 'fixed' : 'transform',
+//                 }
+//             })
+//             section4Timeline
+//             .to('.section4 .intro h4', {opacity: 1, y: 0})
+//             .to('.section4 .intro p', {opacity: 1, y: 0})
+//             .to({},{})
+//             .to('.section4 .bg', {opacity: 1})
+//             .to('.section4 .intro h4',{color: 'rgba(255, 255, 255, 0.6'}, "<")
+//             .to('.section4 .intro p',{color: '#fff'}, "<")
+//             .to({},{})
+//             .to('.section4 .intro p',{opacity: 0})
+//             .to('.section4 .intro h4', {
+//                 fontSize: 'clamp(20px, 2.083333vw, 40px)',
+//                 color: 'rgba(255,255,255,1)',
+//                 y: getSectionTextCenterY(4)
+//             })
+//             .addLabel('hotel')
+//             .to('.section4 .bg_filter', {backdropFilter: "brightness(0.45) blur(5px)"})
+//             .to('.section4 .intro h4', {y: -200})
+//             .to('.section4 .cont', {
+//                 opacity: 1,
+//             })
+//             .to('.section4 .logo_list_1', {x: Math.round(vw), duration: 3, force3D: true, ease: 'none'})
+//             .to('.section4 .logo_list_2', {
+//                 x: Math.round(-section4ListlWidth), 
+//                 duration: 3, 
+//                 force3D: true, 
+//                 ease: 'none',
+//             }, "<")
+
+//             // section5
+//             const cont2List = gsap.utils.shuffle(
+//                 gsap.utils.toArray('.section5 .cont2 li')
+//             )
+//             const section5Timeline = gsap.timeline({
+//                 scrollTrigger: {
+//                     trigger: ".section5",
+//                     start: 'top ' + headerH + 'px',
+//                     end: contentH * 8 + 'px',
+//                     scrub: true,
+//                     pin: true,
+//                     pinType: isMobileBrowser() ? 'fixed' : 'transform'
+//                 }
+//             })
+//             section5Timeline
+//             .to('.section5 .intro h4', {opacity: 1, y: 0})
+//             .to('.section5 .intro p', {opacity: 1, y: 0})
+//             .to('.section5 .dim1', {opacity: 0})
+//             .to('.section5 .dim2', {opacity: 0})
+//             .to('.section5 .dim3', {opacity: 0})
+//             .to('.section5 .divide', {height: 0})
+//             .to('.section5 .intro p', {opacity: 0})
+//             .to('.section5 .intro h4', {
+//                 fontSize: 'clamp(20px, 2.083333vw, 40px)',
+//                 color: 'rgba(0,0,0,1)',
+//                 y: getSectionTextCenterY(4)
+//             })
+//             .to({},{})
+//             .to('.section5 .intro h4', {color: '#fff'})
+//             .to('.section5 .cont1', {opacity: 0}, "<")
+//             .to('.section5 .bg', {opacity: 1},"<")
+//             .to({},{})
+//             .to('.section5 .bg', {filter: 'brightness(0.3)'})
+//             .to('.section5 .intro h4', {opacity: 0.1},"<")
+//             .to({},{})
+//             .to({},{});
+//             cont2List.forEach((li, i) => {
+//                 section5Timeline.to(li, {
+//                     opacity: 1,
+//                     duration: 0.2
+//                 }, "<+" + (i * 0.05));
+//             });
+
+//             const section6Timeline = gsap.timeline({
+//                 scrollTrigger: {
+//                     trigger: ".section6 .text_scroll_zone",
+//                     start: 'top ' + headerH + 'px',
+//                     end: contentH * 4 + 'px',
+//                     scrub: true,
+//                     pin: true,
+//                     pinType: isMobileBrowser() ? 'fixed' : 'transform',
+//                 }
+//             })
+//             section6Timeline
+//             .to('.section6 .intro h4', {opacity: 1, y: 0})
+//             .to('.section6 .intro p', {opacity: 1, y: 0})   
+//             .to('.section6 .bg img', {opacity: 1})
+//             .to('.section6 .intro p', {opacity: 0})
+//             .to('.section6 .intro h4', {
+//                 fontSize: 'clamp(20px, 2.083333vw, 40px)',
+//                 color: 'rgba(0,0,0,1)',
+//                 y: getSectionTextCenterY(4)
+//             })
+//             .to('.section6 .intro h4', {color: '#fff'})
+//             .to('.section6 .bg img', {filter: 'brightness(0.5'})
+//             .to('.section6 .intro', {top: '20%'})
+    
+//             const section6Timeline2 = gsap.timeline({
+//                 scrollTrigger: {
+//                     trigger: ".section6 .overflow_none",
+//                     start: 'top ' + headerH + 'px',
+//                     end: '+=' + section6ListHeight * 2 + 'px',
+//                     scrub: true,
+//                     pin: true,
+//                 }
+//             })
+//             section6Timeline2
+//             .to('.section6 .logo_list_1', { y:section6ListWrapHeight, ease: 'none' })
+//             .to('.section6 .logo_list_2', { y: -section6ListHeight, ease: 'none' },"<")
+    
+//         },
+//         // --- All Breakpoints ---
+//         "all": function() {
+//             const section1 = document.querySelector('.section1');
+//             section1.classList.add('active');
+//         }
+//     });
+// })
+
 document.addEventListener('DOMContentLoaded', function(){
 
     let landmarkPaginationBound = false; // pagination 클릭 바인딩 여부 플래그
@@ -488,7 +1045,7 @@ document.addEventListener('DOMContentLoaded', function(){
                 .to('.lankmark_container .section3 .bg img', {filter: "brightness(0.35)"} ,"<")
                 .to('.lankmark_container .section3 .text_wrap p', {opacity: 0})
                 .to('.lankmark_container .section3 .text_wrap h4', {
-                    fontSize: '36px',
+                    fontSize: 'clamp(20px, 2.083333vw, 40px)',
                     color: 'rgba(255,255,255,1)',
                     y: getSectionTextCenterY(3)
                 })
@@ -561,7 +1118,7 @@ document.addEventListener('DOMContentLoaded', function(){
                 .to({},{})
                 .to('.section4 .intro p',{opacity: 0})
                 .to('.section4 .intro h4', {
-                    fontSize: '36px',
+                    fontSize: 'clamp(20px, 2.083333vw, 40px)',
                     color: 'rgba(255,255,255,1)',
                     y: getSectionTextCenterY(4)
                 })
@@ -602,7 +1159,7 @@ document.addEventListener('DOMContentLoaded', function(){
                 .to('.section5 .divide', {height: 0})
                 .to('.section5 .intro p', {opacity: 0})
                 .to('.section5 .intro h4', {
-                    fontSize: '36px',
+                    fontSize: 'clamp(20px, 2.083333vw, 40px)',
                     color: 'rgba(0,0,0,1)',
                     y: getSectionTextCenterY(4)
                 })
@@ -638,7 +1195,7 @@ document.addEventListener('DOMContentLoaded', function(){
                 .to('.section6 .bg img', {opacity: 1})
                 .to('.section6 .intro p', {opacity: 0})
                 .to('.section6 .intro h4', {
-                    fontSize: '36px',
+                    fontSize: 'clamp(20px, 2.083333vw, 40px)',
                     color: 'rgba(0,0,0,1)',
                     y: getSectionTextCenterY(4)
                 })
