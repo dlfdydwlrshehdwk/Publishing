@@ -1,19 +1,35 @@
 <!DOCTYPE html>
 <html lang="ko">
+<!-- 작업용 -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../css/reset.css">
     <link rel="stylesheet" href="../../css/swiper-bundle.min.css">
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
     <link rel="stylesheet" href="./k2.css">
 
-    <script src="https://unpkg.com/lenis@1.3.4/dist/lenis.min.js"></script> 
     <script src="../../js/swiper-bundle.min.js"></script>
     <script src="../../js/gsap.min.js"></script>
     <script src="../../js/ScrollTrigger.min.js"></script>
     <script src="../../js/ScrollToPlugin.min.js"></script>
     <title>K2</title>
 </head>
+<!-- 배포용 -->
+<!-- <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./reset.css">
+    <link rel="stylesheet" href="../lib/swiper-bundle.css">
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+    <link rel="stylesheet" href="./k2.css">
+
+    <script src="../lib/swiper-bundle.js"></script>
+    <script src="../lib/gsap/gsap.min.js"></script>
+    <script src="../lib/gsap/ScrollTrigger.min.js"></script>
+    <script src="../lib/gsap/ScrollToPlugin.min.js"></script>
+    <title>K2</title>
+</head> -->
 <body>
     <div id="container">
         <div class="mobile_wrap">
@@ -58,47 +74,100 @@
 
                 <div class="scroll_container">
                     <ul class="tabs">
-                        <li class="tab active"><a href="">G900 TRINITY DOWN</a></li>
-                        <li class="tab"><a href="">THINAIR VIBE</a></li>
-                        <li class="tab"><a href="">SIGNATUE THINAIR BLANC</a></li>
-                        <li class="tab"><a href="">SIGNATURE DOROTHY LONG</a></li>
+                        <li class="tab"><a href="#section2">G900 TRINITY DOWN</a></li>
+                        <li class="tab"><a href="#section3">THINAIR VIBE</a></li>
+                        <li class="tab"><a href="#section4">SIGNATUE THINAIR BLANC</a></li>
+                        <li class="tab"><a href="#section5">SIGNATURE DOROTHY LONG</a></li>
                     </ul>
 
-                    <section class="section2">
-
-                        <!-- <div class="swiper section2_swiper">
-                            <ul class="swiper-wrapper">
-                                <li class="swiper-slide"><img src="" alt=""></li>
-                                <li class="swiper-slide"><img src="" alt=""></li>
-                                <li class="swiper-slide"><img src="" alt=""></li>
-                            </ul>
-                        </div> -->
-
+                    <section id="section2" class="section2">
                         <div class="bg_wrap">
                             <div class="bg bg1"><img src="./images/section2_bg_1.png" alt=""></div>
                             <div class="bg bg2"><img src="./images/section2_bg_2.png" alt=""></div>
                             <div class="bg bg3"><img src="./images/section2_bg_3.png" alt=""></div>
                             <div class="bg bg4"><img src="./images/section2_bg_4.png" alt=""></div>
                         </div>
+                        <div class="contents">
+                            <div class="section2_header"><img src="./images/section2_asset1.png" alt=""></div>
+    
+                            <div class="swiper section2_swiper">
+                                <ul class="swiper-wrapper">
+                                    <li class="swiper-slide"><img src="./images/section2_item1.png" alt=""></li>
+                                    <li class="swiper-slide"><img src="./images/section2_item2.png" alt=""></li>
+                                    <li class="swiper-slide"><img src="./images/section2_item3.png" alt=""></li>
+                                    <li class="swiper-slide"><img src="./images/section2_item1.png" alt=""></li>
+                                    <li class="swiper-slide"><img src="./images/section2_item2.png" alt=""></li>
+                                    <li class="swiper-slide"><img src="./images/section2_item3.png" alt=""></li>
+                                </ul>
+                            </div>
+    
+                            <div class="section2_title"><img src="./images/section2_asset2.png" alt=""></div>
+                            <div class="section2_desc"><img src="./images/section2_asset3.png" alt=""></div>
+                            <div class="section2_button"><img src="./images/section2_asset4.png" alt=""></div>
+                        </div>
                     </section>
 
-                    <section class="section3"></section>
-                    <section class="section4">
+                    <section id="section3" class="section3">
+                        <div class="bg_wrap">
+                            <div class="bg bg_main active"><img src="./images/section3_bg_1.png" alt=""></div>
+                            <div class="bg bg1"><img src="./images/section3_bg_2.png" alt=""></div>
+                            <div class="bg bg2"><img src="./images/section3_bg_3.png" alt=""></div>
+                            <div class="bg bg3"><img src="./images/section3_bg_4.png" alt=""></div>
+                            <div class="bg bg4"><img src="./images/section3_bg_5.png" alt=""></div>
+                            <div class="bg bg5"><img src="./images/section3_bg_6.png" alt=""></div>
+                        </div>
+
+                        <div class="section_header"><img src="./images/section3_header.png" alt=""></div>
+                        <div class="scroll_zone">
+                            <ul>
+                                <li class="active"><img src="./images/section3_asset1.svg" alt=""></li>
+                                <li><img src="./images/section3_asset2.svg" alt=""></li>
+                                <li><img src="./images/section3_asset3.svg" alt=""></li>
+                                <li><img src="./images/section3_asset4.svg" alt=""></li>
+                                <li><img src="./images/section3_asset5.svg" alt=""></li>
+                            </ul>
+                        </div>
+                    </section>
+
+                    <section id="section4" class="section4">
 
                         <div class="part_wrap">
+                            <div class="part_header"><img src="./images/section4_1.png" alt=""></div>
+
                             <div class="part1">
-                                <img src="./images/section4_1.png" alt="">
-                                <img src="./images/section4_2.png" alt="">
-                                <img src="./images/section4_3.png" alt="">
+                                <div class="img_set"><img src="./images/section4_2.png" alt=""></div>
+                                <div class="text_set"><img src="./images/section4_3.png" alt=""></div>
                             </div>
+
                             <div class="part2">
-                                <img src="./images/section4_4.png" alt="">
-                                <img src="./images/section4_5.png" alt="">
+                                <div class="img_set">
+                                    <img src="./images/section4_4.png" alt="">
+                                    <button type="button" class="pointer"><img src="./images/pointer.svg" alt=""></button>
+                                </div>
+                                <div class="text_set"><img src="./images/section4_5.png" alt=""></div>
                             </div>
+                            
                             <div class="part3">
-                                <img src="./images/section4_6.png" alt="">
-                                <img src="./images/section4_7.png" alt="">
+                                <div class="img_set">
+                                    <img src="./images/section4_6.png" alt="">
+                                    <button type="button" class="pointer">
+                                        <img class="img1" src="./images/pointer.svg" alt="">
+                                        <img class="img2" src="./images/pointer_close.svg" alt="">
+                                    </button>
+                                    <div class="popup_product_detail"><img src="./images/section4_8.png" alt=""></div>
+                                </div>
+                                <div class="text_set"><img src="./images/section4_7.png" alt=""></div>
                             </div>
+
+                        </div>
+
+                        <div class="video_wrap">
+                            <div class="img_video_toggle video_pause">
+                                <img class="img_video_play" src="./images/video_play.svg" alt="">
+                                <img class="img_video_pause" src="./images/video_pause.svg" alt="">
+                            </div>
+                            <video autoplay="" muted="" playsinline="" loop="" src="https://player.vimeo.com/progressive_redirect/playback/1136801501/rendition/1080p/file.mp4?loc=external&amp;signature=6059533f908a026267e2f050ac61d0db861639cb8cb4a3e0125c779258b63ec8"></video>
+                            <div class="video_bottom"><img src="./images/section5_bottom.png" alt=""></div>
                         </div>
                         
                         <div class="bg_wrap">
@@ -106,36 +175,33 @@
                             <div class="bg2"><img src="./images/section4_bg_2.png" alt=""></div>
                             <div class="bg3"><img src="./images/section4_bg_3.png" alt=""></div>
                         </div>
+
                     </section>
 
-                    <section class="section5">
-                        <div class="video_wrap">
-                            <div class="img_video_toggle video_pause">
-                                <img class="img_video_play" src="./images/video_play.svg" alt="">
-                                <img class="img_video_pause" src="./images/video_pause.svg" alt="">
+                    <section id="section5" class="section5">
+
+                        <div class="contents1">
+                            <div class="swiper section5_swiper">
+                                <ul class="swiper-wrapper">
+                                    <li class="swiper-slide"><img src="./images/section6_1.png" alt=""></li>
+                                    <li class="swiper-slide"><img src="./images/section6_2.png" alt=""></li>
+                                    <li class="swiper-slide"><img src="./images/section6_1.png" alt=""></li>
+                                    <li class="swiper-slide"><img src="./images/section6_2.png" alt=""></li>
+                                </ul>
                             </div>
-                            <video class="video_top" style="width: 100%;" autoplay="" muted="" playsinline="" loop="" src="https://player.vimeo.com/progressive_redirect/playback/1136801501/rendition/1080p/file.mp4?loc=external&amp;signature=6059533f908a026267e2f050ac61d0db861639cb8cb4a3e0125c779258b63ec8"></video>
-                            <div class="video_bottom"><img src="./images/section5_bottom.png" alt=""></div>
+                            <div class="bg_wrap">
+                                <div class="bg bg1"><img src="./images/section6_bg_1.png" alt=""></div>
+                                <div class="bg bg2"><img src="./images/section6_bg_2.png" alt=""></div>
+                                <div class="bg bg3"><img src="./images/section6_bg_3.png" alt=""></div>
+                                <div class="bg_top"><img src="./images/section6_top.png" alt=""></div>
+                            </div>
                         </div>
-                    </section>
 
-                    <section class="section6">
-                        <div class="swiper section6_swiper">
-                            <ul class="swiper-wrapper">
-                                <li class="swiper-slide"><img src="./images/section6_1.png" alt=""></li>
-                                <li class="swiper-slide"><img src="./images/section6_2.png" alt=""></li>
-                                <li class="swiper-slide"><img src="./images/section6_1.png" alt=""></li>
-                                <li class="swiper-slide"><img src="./images/section6_2.png" alt=""></li>
-                            </ul>
+                        <div class="contents2">
+                            <img src="./images/section7.png" alt="">
                         </div>
-                        <div class="bg_wrap">
-                            <div class="bg bg1"><img src="./images/section6_bg_1.png" alt=""></div>
-                            <div class="bg bg2"><img src="./images/section6_bg_2.png" alt=""></div>
-                            <div class="bg bg3"><img src="./images/section6_bg_3.png" alt=""></div>
-                            <div class="bg_top"><img src="./images/section6_top.png" alt=""></div>
-                        </div>
+
                     </section>
-                    <section class="section7"><img src="./images/section7.png" alt=""></section>
                 </div>
             </div>
         </div>
