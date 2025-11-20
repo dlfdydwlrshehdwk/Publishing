@@ -15,6 +15,9 @@
 .lankmark_container {
     padding-top: 97px;
 }
+.lankmark_container * {
+    font-family: 'Pretendard', sans-serif;
+}
 html, body {
     overflow: visible;
 }
@@ -574,7 +577,7 @@ html, body {
 
         position: fixed;
         bottom: 0;
-        height: 60vh;
+        height: 73vh;
         width: 100%;
         top: auto;
         overflow: hidden;
@@ -588,7 +591,7 @@ html, body {
     .lankmark_container .section3 .logo_list li {
         opacity: 0.2;
         padding: clamp(35px, 3.6458vw, 70px) 0;
-        width: calc(100% - 80px);
+        width: calc(100% - 75px);
     }
     .lankmark_container .section3 .logo_list li.active {
         opacity: 1;
@@ -597,10 +600,12 @@ html, body {
         display: flex;
         gap: 5px;
         align-items: center;
+        justify-content: center;
     }
     .lankmark_container .section3 .logo_list li .display_mo .img_set {
-        width: 139px;
-        height: 90px;
+        /* width: 139px;
+        height: 90px; */
+        flex: 278;
     }
     .lankmark_container .section3 .logo_list li .display_mo .img_set img {
         width: 100%;
@@ -613,6 +618,7 @@ html, body {
         line-height: 1.6;
         letter-spacing: -0.48px;
         color: rgba(255, 255, 255, 0.8);
+        flex: 270;
     }
     /* section3 end*/
 
@@ -826,7 +832,7 @@ html, body {
         gap: 5px;
         position: relative;
         justify-content: flex-end;
-        padding-right: 35px;
+        padding-right: 0;
         margin-left: auto;
         width: fit-content;
         height: 60vh;
@@ -835,17 +841,20 @@ html, body {
         bottom: 30px;
         width: 100%;
         overflow: hidden;
+
+        width: calc(100% - 70px);
     }
 
     .lankmark_container .section6 .logo_list_wrap ul {
         display: flex;
         flex-direction: column;
         gap: 15px;
+        width: calc(50% - 5px);
     }
 
     .lankmark_container .section6 .logo_list_wrap ul.logo_list_1 {
         position: absolute;
-        left: 35px;
+        left: 0;
         top: 0;
         right: auto;
         height: max-content;
@@ -857,8 +866,13 @@ html, body {
         height: max-content;
     }
     .lankmark_container .section6 .logo_list_wrap ul li {
-        width: 143px;
-        height: 100px;
+        width: 100%;
+        height: auto;
+    }
+    .lankmark_container .section6 .logo_list_wrap ul li img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
     }
     .lankmark_container .section6 .overflow_none {
         overflow: hidden;

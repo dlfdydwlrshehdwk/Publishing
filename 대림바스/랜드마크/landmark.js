@@ -108,6 +108,7 @@ document.addEventListener('DOMContentLoaded', function(){
                 gsap.set('.section6 .logo_list_1', { y: -section6ListHeight });
                 gsap.set('.section6 .logo_list_2', { y: section3ListWrapHeight });
                 gsap.set('.section6 .overflow_none', { clearProps: 'transform' });
+                gsap.set('.lankmark_container .section6 .logo_list_wrap', {left: 'auto', clearProps: 'transform', right: 0});
 
                 // section2 스크롤 텍스트
                 const scrollTextTween = gsap.to(".scroll_text", {
@@ -464,6 +465,7 @@ document.addEventListener('DOMContentLoaded', function(){
                 ease: 'none',
                 force3D: true,
             });
+            gsap.set('.lankmark_container .section6 .logo_list_wrap', {left: '50%',xPercent: -50, right:'auto'});
 
             // section5
             gsap.set('.lankmark_container .section5 .cont1 li.divide', {width: '100%',height: '6px'});
@@ -528,7 +530,10 @@ document.addEventListener('DOMContentLoaded', function(){
                 end: '+=' + (section3ListHeight + section3ListHeight) + 'px',
                 scrub: true,
                 onUpdate: self => {
-                    const center = window.innerHeight / 2;
+                    const wrap = document.querySelector('.lankmark_container .section3 .logo_list_wrap');
+                    const wrapRect = wrap.getBoundingClientRect();
+                    // const center = (window.innerHeight / 2);
+                    const center = wrapRect.top + (wrapRect.height / 2);
                     const listItems = gsap.utils.toArray('.lankmark_container .section3 .logo_list li');
 
                     listItems.forEach(li => {

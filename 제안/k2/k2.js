@@ -68,11 +68,6 @@ document.addEventListener('DOMContentLoaded', function(){
         slidesPerView: 1.15,
         centeredSlides: true,
         spaceBetween: 10,
-        loopAdditionalSlides: 6,
-        // autoplay: {
-            // delay: 3000
-        // },
-        // allowTouchMove: false,
     });
 
     // section3 로고 가운데 위치체크
@@ -83,7 +78,7 @@ document.addEventListener('DOMContentLoaded', function(){
         scrub: true,
         onUpdate: self => {
             // const center = window.innerHeight / 2;
-            const center = (window.innerHeight / 2) + 40;
+            const center = (window.innerHeight / 2);
             const listItems = gsap.utils.toArray('.scroll_zone ul li');
             const lastIndex = listItems.length - 1;
             const bgItems = gsap.utils.toArray('.section3 .bg');
@@ -134,38 +129,38 @@ document.addEventListener('DOMContentLoaded', function(){
     });
 
     // 탭 스크롤위치에 맞게 활성화
-    ScrollTrigger.create({
-        trigger: 'body',
-        start: 'top top',
-        end: 'bottom bottom',
-        onUpdate: (self) => {
-            const sections = ['#section2', '#section3', '#section4', '#section5'];
-            const tabs = document.querySelectorAll('.tabs .tab');
-            const center = window.innerHeight / 2;
+    // ScrollTrigger.create({
+    //     trigger: 'body',
+    //     start: 'top top',
+    //     end: 'bottom bottom',
+    //     onUpdate: (self) => {
+    //         const sections = ['#section2', '#section3', '#section4', '#section5'];
+    //         const tabs = document.querySelectorAll('.tabs .tab');
+    //         const center = window.innerHeight / 2;
     
-            let activeIndex = -1;
+    //         let activeIndex = -1;
     
-            sections.forEach((id, i) => {
-                const sec = document.querySelector(id);
-                if (!sec) return;
+    //         sections.forEach((id, i) => {
+    //             const sec = document.querySelector(id);
+    //             if (!sec) return;
     
-                const rect = sec.getBoundingClientRect();
+    //             const rect = sec.getBoundingClientRect();
     
-                // 화면 중앙이 섹션 안에 있을 경우
-                if (rect.top <= center && rect.bottom >= center) {
-                    activeIndex = i;
-                }
-            });
+    //             // 화면 중앙이 섹션 안에 있을 경우
+    //             if (rect.top <= center && rect.bottom >= center) {
+    //                 activeIndex = i;
+    //             }
+    //         });
     
-            // 모든 active 제거
-            tabs.forEach(t => t.classList.remove('active'));
+    //         // 모든 active 제거
+    //         tabs.forEach(t => t.classList.remove('active'));
     
-            // 해당 섹션이 있으면 active
-            if (activeIndex !== -1) {
-                tabs[activeIndex].classList.add('active');
-            }
-        }
-    }); 
+    //         // 해당 섹션이 있으면 active
+    //         if (activeIndex !== -1) {
+    //             tabs[activeIndex].classList.add('active');
+    //         }
+    //     }
+    // }); 
 
     // section2 등장 애니메이션
     const section2Timeline = gsap.timeline({
@@ -226,3 +221,22 @@ videoWrap.addEventListener('click', () => {
         toggleBtn.classList.add('video_play');
     }
 });
+
+// 탭클릭
+const tabs = document.querySelector('.scroll_container .tabs');
+const tab = tabs.querySelectorAll('.tab');
+const tabContents = document.querySelectorAll('.tab_contents');
+tab.forEach((t, index) => {
+
+    
+    t.addEventListener('click', function(){
+        tab.forEach(t2 => {
+            t2.classList.remove('active');
+        })
+        t.classList.add('active');
+        
+        tabContents.forEach((c, i) => {
+            c.style.display = (i === index) ? 'block' : 'none';
+        });
+    })
+})

@@ -2,7 +2,7 @@ html, body {
   overflow: visible;
 }
 .mobile_wrap {
-  max-width: 360px;
+  max-width: 720px;
   width: 100%;
   margin: 0 auto;
 }
@@ -69,6 +69,8 @@ html, body {
   overflow: hidden;
 }
 .snowflake{
+  width: 16px;
+  height: 16px;
   position:absolute;
   top:-10%;
   z-index:9999;
@@ -133,6 +135,18 @@ html, body {
   position: relative;
   border-top: 1px solid rgba(255, 255, 255, 0.3);
   background-color: #000;
+  font-weight: bold;
+  font-size: 11px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.5);
+  font-family: "Inter", "Helvetica", "Arial", sans-serif;
+  cursor: pointer;
+}
+.scroll_container .tab.active {
+  color: #fff;
 }
 .scroll_container .tab:nth-child(2n) {
   border-left: 1px solid rgba(255, 255, 255, 0.3);
@@ -149,19 +163,10 @@ html, body {
     top: 0;
     left: 0;
 }
-.scroll_container .tab a {
-  font-weight: bold;
-  font-size: 11px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: rgba(255, 255, 255, 0.5);
-  font-family: "Inter", "Helvetica", "Arial", sans-serif;
+.scroll_container .tab_contents {
+  position: relative;
 }
-.scroll_container .tab.active a {
-  color: #fff;
-}
+
 .section2 {
   position: relative;
   padding: 60px 0 80px;
@@ -227,16 +232,16 @@ html, body {
   top: 0;
   left: 0;
   width: 100%;
-  height: calc(100vh - 80px);
+  height: 100vh;
 }
 .section3 .section_header img {
   padding-top: 50px;
 }
 .section3 .bg_wrap {
   position: sticky;
-  top: 80px;
+  top: 0;
   left: 0;
-  height: calc(100vh - 80px);
+  height: 100vh;
 }
 .section3 .bg {
   position: absolute;
@@ -466,6 +471,8 @@ html, body {
 }
 .section4 .video_wrap .video_bottom img {
   width: 100%;
+  display: block;
+  object-fit: cover;
 }
 .section4 .bg2,
 .section4 .bg3 {
