@@ -1,87 +1,12 @@
-gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
-
-// ----------------------
-// vh 계산 함수
-// ----------------------
 function setRealVH() {
-    // window.innerHeight 대신 clientHeight 사용
-    const vh = document.documentElement.clientHeight * 0.01;
+    const vh = window.innerHeight * 0.01;
     document.documentElement.style.setProperty('--vh', `${vh}px`);
 }
 
-function clearRealVH() {
-    document.documentElement.style.removeProperty('--vh');
-}
+setRealVH();
+// window.addEventListener('resize', setRealVH);
 
-// ----------------------
-// 모바일 / 카카오 감지
-// ----------------------
-function isMobileBrowser() {
-    const ua = navigator.userAgent.toLowerCase();
-    const mobileKeywords = ['android', 'iphone', 'ipad', 'ipod', 'mobile', 'blackberry', 'windows phone'];
-    return mobileKeywords.some(keyword => ua.includes(keyword));
-}
-
-function isKakaoInApp() {
-    return navigator.userAgent.toLowerCase().includes('kakaotalk');
-}
-
-// ----------------------
-// 카카오 인앱뷰 안정화 루프
-// ----------------------
-function stabilizeForKakao() {
-    let count = 0;
-    const max = 10;     // 약 1.2초 동안 반복
-    const timer = setInterval(() => {
-        setRealVH();
-        ScrollTrigger.refresh();
-        count++;
-
-        if (count >= max) clearInterval(timer);
-    }, 120);
-}
-
-// ----------------------
-// 메인 로직
-// ----------------------
-if (isMobileBrowser()) {
-    if (isKakaoInApp()) {
-
-        // 1) ScrollTrigger 설정 먼저
-        ScrollTrigger.config({
-            syncInterval: 0.02,
-            autoRefreshEvents: "visibilitychange,DOMContentLoaded,load"
-        });
-
-        ScrollTrigger.defaults({
-            pinType: "fixed"
-        });
-
-        ScrollTrigger.normalizeScroll(true);
-
-        // 2) 처음에는 바로 vh 적용하지 말고 load 후 안정화
-        window.addEventListener('load', () => {
-            setTimeout(() => {
-                stabilizeForKakao();
-            }, 200); // 카카오 주소창 hide 대기
-        });
-
-    } else {
-        // 일반 모바일 브라우저 → vh 보정 제거
-        clearRealVH();
-
-        window.addEventListener('load', () => {
-            ScrollTrigger.refresh();
-        });
-    }
-
-} else {
-    // 데스크탑
-    window.addEventListener('load', () => {
-        ScrollTrigger.refresh();
-    });
-}
-
+gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
 //모바일 브라우저 감지
 function isMobileBrowser() {
@@ -106,33 +31,17 @@ function isKakaoInApp() {
     return navigator.userAgent.toLowerCase().includes('kakaotalk');
 }
 
-// 카카오톡 인앱뷰: 여러 번 높이가 바뀌므로 안정화 루프
-function stabilizeForKakao() {
-    let count = 0;
-    const maxCount = 10; // 총 10번 (약 1.5초 동안 안정화)
-
-    const interval = setInterval(() => {
-        count++;
-        setRealVH();
-        ScrollTrigger.refresh();
-
-        if (count >= maxCount) {
-            clearInterval(interval);
-        }
-    }, 150); // 0.15초마다 체크
-}
-
 window.addEventListener('load', () => {
-    if (isMobileBrowser() && isKakaoInApp()) {
-        setRealVH();
 
-        // 첫 로딩 후 약간 기다린 후 안정화 시작
+    if (isMobileBrowser() && isKakaoInApp()) {
+        // 주소창 hide까지 300~400ms 필요함
         setTimeout(() => {
-            setRealVH();
-            stabilizeForKakao();
-        }, 200);
+            setRealVH();          // 다시 계산  
+            ScrollTrigger.refresh();
+        }, 350);
+
     } else {
-        ScrollTrigger.refresh();
+        ScrollTrigger.refresh();  // 다른 브라우저는 즉시 refresh
     }
 });
 

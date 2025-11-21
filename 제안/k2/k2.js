@@ -6,46 +6,77 @@ document.addEventListener('DOMContentLoaded', function(){
             delay: 4000
         },
         speed: 500,
+        effect: 'fade',
+        fadeEffect: { crossFade: true },
         allowTouchMove: false,
         on: {
-            init: function() {
-                const activeSlide = this.slides[this.activeIndex];
-                const items = activeSlide.querySelectorAll('div');
-
-                // 초기화
-                items.forEach(function(el){
+            init: function () {
+                const slide = this.slides[this.activeIndex];
+                const assets = slide.querySelectorAll('.asset');
+                const model = slide.querySelector('.asset_model');
+    
+                // asset만 초기화
+                assets.forEach(el => {
                     el.style.transition = 'none';
                     el.style.opacity = 0;
                 });
-
-                // 순차 등장
-                items.forEach(function(el, i){
-                    el.style.transition = 'opacity .3s';
-                    setTimeout(function(){
+                if(model){
+                    model.style.transition = 'none';
+                    model.style.opacity = 0;
+                }
+    
+                // asset 순차 등장 (0.7s 간격)
+                assets.forEach((el, i) => {
+                    setTimeout(() => {
+                        el.style.transition = 'opacity .5s';
                         el.style.opacity = 1;
-                    }, i * 200);
+                    }, i * 500);
                 });
+    
+                // 모델은 1초 뒤 등장
+                setTimeout(() => {
+                    if (model) {
+                        model.style.transition = 'opacity .5s';
+                        model.style.opacity = 1;
+                    }
+                }, 1000);
             },
             slideChangeTransitionStart: function () {
-                const activeSlide = this.slides[this.activeIndex];
-                const items = activeSlide.querySelectorAll('div');
+                const slide = this.slides[this.activeIndex];
+                const assets = slide.querySelectorAll('.asset');
+                const model = slide.querySelector('.asset_model');
     
-                items.forEach(function (el) {
+                // asset만 초기화 (.bg 건들지 않음)
+                assets.forEach(el => {
                     el.style.transition = 'none';
                     el.style.opacity = 0;
                 });
+                if(model){
+                    model.style.transition = 'none';
+                    model.style.opacity = 0;
+                }
             },
     
             slideChangeTransitionEnd: function () {
-                const activeSlide = this.slides[this.activeIndex];
-                const items = activeSlide.querySelectorAll('div');
+                const slide = this.slides[this.activeIndex];
+                const assets = slide.querySelectorAll('.asset');
+                const model = slide.querySelector('.asset_model');
     
-                items.forEach(function (el, i) {
-                    setTimeout(function () {
-                        el.style.transition = 'opacity .3s';
+                // asset 순차 등장 (0.7s 간격)
+                assets.forEach((el, i) => {
+                    setTimeout(() => {
+                        el.style.transition = 'opacity .5s';
                         el.style.opacity = 1;
-                    }, i * 200);
+                    }, i * 500);
                 });
+    
+                // 모델은 1초 뒤 등장
+                setTimeout(() => {
+                    if (model) {
+                        model.style.transition = 'opacity .5s';
+                        model.style.opacity = 1;
+                    }
+                }, 1000);
             }
         }
     });
