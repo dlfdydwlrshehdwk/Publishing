@@ -1,30 +1,35 @@
-function setRealVH() {
+gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+
+function setRealVH_Normal() {
     const vh = window.innerHeight * 0.01;
     document.documentElement.style.setProperty('--vh', `${vh}px`);
 }
 
-setRealVH();
-// window.addEventListener('resize', setRealVH);
+function setRealVH_Kakao() {
+    const h = window.visualViewport?.height || window.innerHeight;
+    const vh = h * 0.01;
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+}
 
-gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+setRealVH_Normal();
 
 //모바일 브라우저 감지
 function isMobileBrowser() {
-// User Agent 체크 (가장 확실한 방법)
-const userAgent = navigator.userAgent.toLowerCase();
-const mobileKeywords = ['android', 'iphone', 'ipad', 'ipod', 'blackberry', 'windows phone', 'mobile'];
-const isMobileUA = mobileKeywords.some(keyword => userAgent.includes(keyword));
+    // User Agent 체크 (가장 확실한 방법)
+    const userAgent = navigator.userAgent.toLowerCase();
+    const mobileKeywords = ['android', 'iphone', 'ipad', 'ipod', 'blackberry', 'windows phone', 'mobile'];
+    const isMobileUA = mobileKeywords.some(keyword => userAgent.includes(keyword));
 
-// 터치 지원 여부
-const hasTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    // 터치 지원 여부
+    const hasTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 
-// 화면 크기
-const isSmallScreen = window.innerWidth <= 768;
+    // 화면 크기
+    const isSmallScreen = window.innerWidth <= 768;
 
-// 모바일 기기인지 확인
-const isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    // 모바일 기기인지 확인
+    const isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 
-return isMobileUA || isMobileDevice || (hasTouch && isSmallScreen);
+    return isMobileUA || isMobileDevice || (hasTouch && isSmallScreen);
 }
 
 function isKakaoInApp() {
@@ -34,21 +39,34 @@ function isKakaoInApp() {
 window.addEventListener('load', () => {
 
     if (isMobileBrowser() && isKakaoInApp()) {
-        // 주소창 hide까지 300~400ms 필요함
-        setTimeout(() => {
-            setRealVH();          // 다시 계산  
-            ScrollTrigger.refresh();
-        }, 350);
+        
+        ScrollTrigger.config({
+            ignoreMobileResize: true,
+            syncInterval: 0.02,
+        });
+
+        setRealVH_Kakao();
+        ScrollTrigger.normalizeScroll(true);
+
+        if (window.visualViewport) {
+            window.visualViewport.addEventListener("resize", setRealVH_Kakao);
+            window.visualViewport.addEventListener("scroll", setRealVH_Kakao);
+        }
+        ScrollTrigger.refresh();
 
     } else {
-        ScrollTrigger.refresh();  // 다른 브라우저는 즉시 refresh
+        // 일반 모바일/PC
+        ScrollTrigger.refresh();
+        ScrollTrigger.normalizeScroll(true);
     }
 });
 
+
+
 // 1. Lenis 인스턴스 생성
 const lenis = new Lenis({
-    smooth: !isMobileBrowser(),
-    smoothTouch: !isMobileBrowser(),     // 모바일도 적용여부
+    smooth: !(isMobileBrowser() && isKakaoInApp()),
+    smoothTouch: !(isMobileBrowser() && isKakaoInApp()),     // 모바일도 적용여부
     lerp: isMobileBrowser() ? 0.05 : 0.1,             // 부드러움 정도 (0.0 ~ 1.0)
 });
 
@@ -355,9 +373,9 @@ document.addEventListener('DOMContentLoaded', function(){
                     scrollTrigger: {
                         trigger: ".section6 .logo_list_wrap",
                         start: 'top ' + headerH + 'px',
-                        end: '+=' + section6ListHeight * 2 + 'px',
+                        // end: '+=' + section6ListHeight + 'px',
                         scrub: true,
-                        pin: true
+                        // pin: true
                     }
                 });
 
