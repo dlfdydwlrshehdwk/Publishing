@@ -51,7 +51,7 @@ html, body {
     justify-content: center;
 }
 .lankmark_container .section2 .scroll_text {
-    font-size: clamp(24px, 2.5vw, 48px);
+    font-size: clamp(30px, 3.125vw, 60px);
     font-weight: 600;
     background: linear-gradient(to right, #000);
     -webkit-background-clip: text;
@@ -73,9 +73,9 @@ html, body {
     color: rgba(0, 0, 0, 0.6);
 }
 .lankmark_container section .intro p {
-    margin-top: clamp(10px, 1.041666vw, 20px);
+    margin-top: clamp(12px, 1.25vw, 24px);
     font-weight: 500;
-    font-size: clamp(20px, 2.083333vw, 40px);
+    font-size: clamp(30px, 3.125vw, 60px);
     letter-spacing: -1.2px;
     color: #000;
 }
@@ -126,6 +126,9 @@ html, body {
 .lankmark_container .section3 {
     height: auto;
 }
+.lankmark_container .section3 .pin-spacer {
+    pointer-events: none;
+}
 .lankmark_container .section3 .inner {
     position: absolute;
     top: 0;
@@ -143,7 +146,7 @@ html, body {
     left: 0;
     transform: scale(0.85);
 }
-.lankmark_container .section3 .bg img {
+.lankmark_container .section3 .bg > img {
     filter: brightness(.6)
 }
 .lankmark_container .section3 .text_wrap {
@@ -170,7 +173,7 @@ html, body {
 }
 .lankmark_container .section3 .text_wrap .text_set p {
     margin-top: clamp(12px, 1.25vw, 24px);
-    font-size: clamp(20px, 2.083333vw, 40px);
+    font-size: clamp(30px, 3.125vw, 60px);
     font-weight: 500;
     letter-spacing: -0.72px;
     color: #fff;
@@ -181,29 +184,66 @@ html, body {
 }
 .lankmark_container .section3 .logo_list_wrap {
     opacity: 0;
-    position: relative;
+    mask-image: linear-gradient(to right, transparent 0%, #000 40%, #000 60%,  transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 40%, #000 60%, transparent 100%);
+    position: absolute;
+    width: 100%;
+    right: clamp(50px, 10.416vw, 200px);
+    width: clamp(355px, 36.97916vw, 710px);
+    display: flex;
+    align-items: center;
     top: 0;
-    z-index: 1;
-    overflow: hidden;
-    height: 100vh;
-    mask-image: linear-gradient(to bottom, transparent 0%, #000 20%, #000 80%,  transparent 100%);
-    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 20%, #000 80%, transparent 100%);
+    height: 100%;
+}
+.lankmark_container .section3 .logo_list_wrap .swiper {
+    padding-top: clamp(75px, 7.8125vw, 150px);
 }
 .lankmark_container .section3 .logo_list {
-    display: flex;
-    align-items: flex-end;
-    flex-direction: column;
-    /* transition: 0.2s; */
-    padding-right: clamp(240px, 25vw, 480px);
-    padding-bottom: clamp(150px, 15.625vw, 300px);
+    height: auto;
+    cursor: pointer;
 }
 .lankmark_container .section3 .logo_list li {
-    opacity: 0.2;
-    padding: clamp(35px, 3.6458vw, 70px) 0;
-    transition: .3s;
+    user-select: none;
+    height: auto;
 }
-.lankmark_container .section3 .logo_list li.active {
-    opacity: 1;
+.lankmark_container .section3 .swiper-pagination-progressbar {
+    position: static;
+    width: 84px;
+    height: 2px;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+.lankmark_container .section3 .swiper-pagination-progressbar-fill {
+    background-color: #fff;
+}
+.lankmark_container .section3 .swiper-util {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: clamp(50px, 5.2083vw, 100px);
+}
+.lankmark_container .section3 .swiper-button-prev,
+.lankmark_container .section3 .swiper-button-next {
+    margin: 0;
+    width: 48px;
+    height: 48px;
+    position: static;
+}
+.lankmark_container .section3 .swiper-button-prev::after,
+.lankmark_container .section3 .swiper-button-next::after {
+    display: none;
+}
+.lankmark_container .section3 .swiper-button-prev {
+    background: url(/img/brand/landmark/swiper_prev_default.svg) no-repeat center/cover;
+}
+.lankmark_container .section3 .swiper-button-prev:hover {
+    background: url(/img/brand/landmark/swiper_prev_hover.svg) no-repeat center/cover;
+}
+.lankmark_container .section3 .swiper-button-next {
+    background: url(/img/brand/landmark/swiper_prev_default.svg) no-repeat center/cover;
+    transform: rotate(180deg);
+}
+.lankmark_container .section3 .swiper-button-next:hover {
+    background: url(/img/brand/landmark/swiper_prev_hover.svg) no-repeat center/cover;
 }
 /* section3 end*/
 
@@ -242,7 +282,7 @@ html, body {
     left: 0;
     width: 100%;
     overflow: hidden;
-    bottom: 244px;
+    bottom: clamp(100px, 10.416vw, 200px);
 
     mask-image: linear-gradient(to right, transparent 0%, #000 20%, #000 80%,  transparent 100%);
     -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 20%, #000 80%, transparent 100%);
@@ -256,7 +296,7 @@ html, body {
     margin-top: 10px;
 }
 .lankmark_container .section4 .cont ul li {
-    width: clamp(100px, 10.416666vw, 200px);
+    width: clamp(120px, 12.5vw, 240px);
 }
 /* section4 end*/
 
@@ -459,9 +499,9 @@ html, body {
     .lankmark_container section .intro p {
         margin-top: 15px;
         font-weight: 600;
-        font-size: 24px;
+        font-size: 26px;
         line-height: 1.5;
-        letter-spacing: -0.48px;
+        letter-spacing: -0.52px;
         color: #000;
     }
 
@@ -502,9 +542,9 @@ html, body {
         display: block;
         margin-top: 12px;
         font-weight: 600;
-        font-size: 16px;
+        font-size: 20px;
         line-height: 1.5;
-        letter-spacing: -0.32px;
+        letter-spacing: -0.4px;
     }
     /* section1 end*/
 
@@ -536,7 +576,7 @@ html, body {
         left: 0;
         transform: scale(0.85);
     }
-    .lankmark_container .section3 .bg img {
+    .lankmark_container .section3 .bg > img {
         filter: brightness(.6)
     }
     .lankmark_container .section3 .text_wrap {
@@ -560,10 +600,10 @@ html, body {
     }
     .lankmark_container .section3 .text_wrap .text_set p {
         margin-top: 15px;
-        font-size: 24px;
+        font-size: 26px;
         font-weight: 600;
         line-height: 1.5;
-        letter-spacing: -0.48px;
+        letter-spacing: -0.52px;
         opacity: 0;
     }
     .lankmark_container .section3 .overflow_none {
@@ -580,36 +620,55 @@ html, body {
 
         position: fixed;
         bottom: 0;
-        height: 73vh;
-        height:calc((var(--vh, 1vh)) * 73);
+        height: calc((var(--vh, 1vh) * 100) - 61px);
         width: 100%;
         top: auto;
         overflow: hidden;
+        right: auto;
+    }
+    .lankmark_container .section3 .logo_list_wrap .swiper {
+        padding: 0;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
     }
     .lankmark_container .section3 .logo_list {
-        align-items: center;
-        flex-direction: column;
-        transition: none;
+        /* align-items: center; */
+        /* flex-direction: column; */
         padding-right: 0;
+        width: max-content;
+    }
+    .lankmark_container .section3 .swiper-util {
+        position: absolute;
+        bottom: 80px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 53.8%;
+    }
+    .lankmark_container .section3 .swiper-pagination-progressbar {
+        width: 100%;
+    }
+    .lankmark_container .section3 .swiper-button-prev, .lankmark_container .section3 .swiper-button-next {
+        width: 32px;
+        height: 32px;
+        flex-shrink: 0;
     }
     .lankmark_container .section3 .logo_list li {
-        opacity: 0.2;
+        /* opacity: 0.2;
         padding: clamp(35px, 3.6458vw, 70px) 0;
-        width: calc(100% - 75px);
+        width: calc(100% - 75px); */
     }
-    .lankmark_container .section3 .logo_list li.active {
-        opacity: 1;
-    }
-    .lankmark_container .section3 .logo_list li .display_mo {
+    /* .lankmark_container .section3 .logo_list li .display_mo {
         display: flex;
         gap: 5px;
         align-items: center;
         justify-content: center;
-    }
+    } */
     .lankmark_container .section3 .logo_list li .display_mo .img_set {
         /* width: 139px;
         height: 90px; */
-        flex: 278;
+        /* flex: 278; */
     }
     .lankmark_container .section3 .logo_list li .display_mo .img_set img {
         width: 100%;
@@ -726,8 +785,11 @@ html, body {
         margin-top: 5px;
     }
     .lankmark_container .section4 .cont ul li {
-        width: 143px;
-
+        /* width: 143px; */
+        width: 39.7vw;
+    }
+    .lankmark_container .section4 .cont ul li img {
+        width: 100%;
     }
     /* section4 end*/
 
@@ -874,6 +936,8 @@ html, body {
     .lankmark_container .section6 .logo_list_wrap ul li {
         width: 100%;
         height: auto;
+        /* width: clamp(143px, 39.722vw, 286px); */
+        aspect-ratio: 286/200;
     }
     .lankmark_container .section6 .logo_list_wrap ul li img {
         width: 100%;

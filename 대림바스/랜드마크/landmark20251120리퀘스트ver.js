@@ -108,49 +108,6 @@ document.addEventListener('DOMContentLoaded', function(){
 
     let landmarkPaginationBound = false; // pagination 클릭 바인딩 여부 플래그
 
-    const sec3Swiper = new Swiper('#apartment .swiper', {
-        slidesPerView: 3,
-        spaceBetween: 100, 
-        loop: true,
-        slidesPerGroup: 1,
-        centeredSlides: true,
-        direction: 'horizontal',
-        touchStartPreventDefault: false,
-        touchMoveStopPropagation: true,
-        navigation: {
-            nextEl: '.swiper-button-next',
-            prevEl: '.swiper-button-prev',
-        },
-        pagination: {
-            el: '.swiper-pagination',
-            type: 'progressbar'
-        },
-        breakpoints: {
-            0: {
-                slidesPerView: 2.2,
-                spaceBetween: 32
-            },
-            768: {
-                spaceBetween: 20
-            },
-            1024: {
-                spaceBetween: 40
-            },
-            1280: {
-                spaceBetween: 60
-            },
-            1366: {
-                spaceBetween: 80
-            },
-            1440: {
-                spaceBetween: 90
-            },
-            1640: {
-                spaceBetween: 100
-            }
-        }
-    })
-
     ScrollTrigger.matchMedia({
         // --- PC (가로 768px 이상) ---
         "(min-width: 768px)": function() {
@@ -194,8 +151,8 @@ document.addEventListener('DOMContentLoaded', function(){
                 });
 
                 // section3
-                // gsap.set('.section3 .logo_list', { y: section3ListWrapHeight });
-                // gsap.set('.section3 .overflow_none', { clearProps: 'transform' });
+                gsap.set('.section3 .logo_list', { y: section3ListWrapHeight });
+                gsap.set('.section3 .overflow_none', { clearProps: 'transform' });
 
                 // section4
                 gsap.set('.section4 .logo_list_1', { x: -section4ListlWidth });
@@ -237,7 +194,7 @@ document.addEventListener('DOMContentLoaded', function(){
                     scrollTrigger: {
                         trigger: ".section3 .text_scroll_zone",
                         start: 'top ' + headerH + 'px',
-                        end: contentH * 4.5 + 'px',
+                        end: contentH * 4 + 'px',
                         scrub: true,
                         pin: true,
                         pinType: isMobileBrowser() ? 'fixed' : 'transform'
@@ -248,73 +205,68 @@ document.addEventListener('DOMContentLoaded', function(){
                     .to('.lankmark_container .section3 .text_wrap h4', { opacity: 1, y: 0 })
                     .to('.lankmark_container .section3 .text_wrap p', { opacity: 1, y: 0 })
                     .to('.lankmark_container .section3 .bg', { scale: 1 })
-                    .to('.lankmark_container .section3 .bg > img', { filter: "brightness(0.35)" }, "<")
+                    .to('.lankmark_container .section3 .bg img', { filter: "brightness(0.35)" }, "<")
                     .to('.lankmark_container .section3 .text_wrap p', { opacity: 0 })
                     .to('.lankmark_container .section3 .text_wrap h4', {
-                        fontSize: 'clamp(44px, 4.583vw, 88px)',
+                        fontSize: 'clamp(20px, 2.083333vw, 40px)',
                         color: 'rgba(255,255,255,1)',
                         y: getSectionTextCenterY(3)
                     })
                     .addLabel('apartment')
-                    .to('.lankmark_container .section3 .text_wrap', { xPercent: -70 })
-                    .to('.lankmark_container .section3 .text_wrap h4', {
-                        fontSize: 'clamp(32px, 3.333vw, 64px)',
-                    }, '<')
-                    .fromTo('.lankmark_container .section3 .logo_list_wrap', {y: 20},{y: 0, opacity: 1})
-                    .to({}, {})
+                    .to('.lankmark_container .section3 .text_wrap', { xPercent: -75 })
                     .to({}, {});
 
                 addPCScrollTriggerFromAnimation(section3Timeline);
 
                 // section3 로고 리스트 등장
-                // const section3Timeline2 = gsap.timeline({
-                //     scrollTrigger: {
-                //         trigger: '.section3 .logo_list_wrap',
-                //         end: '+=' + (section3ListHeight + section3ListHeight) + 'px',
-                //         start: 'top ' + headerH + 'px',
-                //         pin: true,
-                //         scrub: true,
-                //         onEnter: () => {
-                //             gsap.to('.section3 .logo_list_wrap', { opacity: 1, duration: 0.2 });
-                //         },
-                //         onEnterBack: () => {
-                //             gsap.to('.section3 .logo_list_wrap', { opacity: 1, duration: 0.2 });
-                //         },
-                //         onLeave: () => {
-                //             gsap.to('.section3 .logo_list_wrap', { opacity: 1, duration: 0.2 });
-                //         },
-                //         onLeaveBack: () => {
-                //             gsap.to('.section3 .logo_list_wrap', { opacity: 1, duration: 0.2 });
-                //         }
-                //     }
-                // });
+                const section3Timeline2 = gsap.timeline({
+                    scrollTrigger: {
+                        trigger: '.section3 .logo_list_wrap',
+                        end: '+=' + (section3ListHeight + section3ListHeight) + 'px',
+                        start: 'top ' + headerH + 'px',
+                        pin: true,
+                        scrub: true,
+                        onEnter: () => {
+                            gsap.to('.section3 .logo_list_wrap', { opacity: 1, duration: 0.2 });
+                        },
+                        onEnterBack: () => {
+                            gsap.to('.section3 .logo_list_wrap', { opacity: 1, duration: 0.2 });
+                        },
+                        onLeave: () => {
+                            gsap.to('.section3 .logo_list_wrap', { opacity: 1, duration: 0.2 });
+                        },
+                        onLeaveBack: () => {
+                            gsap.to('.section3 .logo_list_wrap', { opacity: 1, duration: 0.2 });
+                        }
+                    }
+                });
 
-                // section3Timeline2.to('.section3 .logo_list', {
-                //     y: -section3ListHeight,
-                //     ease: 'none'
-                // });
+                section3Timeline2.to('.section3 .logo_list', {
+                    y: -section3ListHeight,
+                    ease: 'none'
+                });
 
-                // addPCScrollTriggerFromAnimation(section3Timeline2);
+                addPCScrollTriggerFromAnimation(section3Timeline2);
 
                 // section3 로고 가운데 위치체크
-                // const section3CenterST = ScrollTrigger.create({
-                //     trigger: ".lankmark_container .section3 .logo_list_wrap",
-                //     start: "top bottom",
-                //     end: '+=' + (section3ListHeight + section3ListHeight) + 'px',
-                //     scrub: true,
-                //     onUpdate: self => {
-                //         const center = window.innerHeight / 2;
-                //         const listItems = gsap.utils.toArray('.lankmark_container .section3 .logo_list li');
+                const section3CenterST = ScrollTrigger.create({
+                    trigger: ".lankmark_container .section3 .logo_list_wrap",
+                    start: "top bottom",
+                    end: '+=' + (section3ListHeight + section3ListHeight) + 'px',
+                    scrub: true,
+                    onUpdate: self => {
+                        const center = window.innerHeight / 2;
+                        const listItems = gsap.utils.toArray('.lankmark_container .section3 .logo_list li');
 
-                //         listItems.forEach(li => {
-                //             const rect = li.getBoundingClientRect();
-                //             const liCenter = rect.top + rect.height / 2;
-                //             const inCenter = Math.abs(liCenter - center) < rect.height / 2;
-                //             li.classList.toggle('active', inCenter);
-                //         });
-                //     }
-                // });
-                // addPCScrollTrigger(section3CenterST);
+                        listItems.forEach(li => {
+                            const rect = li.getBoundingClientRect();
+                            const liCenter = rect.top + rect.height / 2;
+                            const inCenter = Math.abs(liCenter - center) < rect.height / 2;
+                            li.classList.toggle('active', inCenter);
+                        });
+                    }
+                });
+                addPCScrollTrigger(section3CenterST);
 
                 // section4
                 const section4Timeline = gsap.timeline({
@@ -338,15 +290,13 @@ document.addEventListener('DOMContentLoaded', function(){
                     .to({}, {})
                     .to('.section4 .intro p', { opacity: 0 })
                     .to('.section4 .intro h4', {
-                        fontSize: 'clamp(44px, 4.583vw, 88px)',
+                        fontSize: 'clamp(20px, 2.083333vw, 40px)',
                         color: 'rgba(255,255,255,1)',
                         y: getSectionTextCenterY(4)
                     })
                     .addLabel('hotel')
                     .to('.section4 .bg_filter', { backdropFilter: "brightness(0.45) blur(5px)" })
-                    // .to('.section4 .intro h4', { y: -200 })
-                    .to('.section4 .intro.text_set', { top: '27.79%'})
-                    .to('.section4 .intro h4', { y: 0 }, '<')
+                    .to('.section4 .intro h4', { y: -200 })
                     .to('.section4 .cont', { opacity: 1 })
                     .to('.section4 .logo_list_1', {
                         x: Math.round(vw),
@@ -359,9 +309,7 @@ document.addEventListener('DOMContentLoaded', function(){
                         duration: 3,
                         force3D: true,
                         ease: 'none'
-                    }, "<")
-                    .to('.section4 .intro.text_set', { top: '50%'}, "<75%")
-                    .to({},{duration: 0.5})
+                    }, "<");
 
                 addPCScrollTriggerFromAnimation(section4Timeline);
 
@@ -390,7 +338,7 @@ document.addEventListener('DOMContentLoaded', function(){
                     .to('.section5 .divide', { width: 0 })
                     .to('.section5 .intro p', { opacity: 0 })
                     .to('.section5 .intro h4', {
-                        fontSize: 'clamp(44px, 4.583vw, 88px)',
+                        fontSize: 'clamp(20px, 2.083333vw, 40px)',
                         color: 'rgba(0,0,0,1)',
                         y: getSectionTextCenterY(4)
                     })
@@ -401,7 +349,7 @@ document.addEventListener('DOMContentLoaded', function(){
                     .to('.section5 .bg', { opacity: 1 }, "<")
                     .to({}, {})
                     .to('.section5 .bg', { filter: 'brightness(0.3)' })
-                    .to('.section5 .intro h4', { opacity: 0 }, "<")
+                    .to('.section5 .intro h4', { opacity: 0.1 }, "<")
                     .to({}, {})
                     .to({}, {});
 
@@ -430,21 +378,16 @@ document.addEventListener('DOMContentLoaded', function(){
                     .to('.section6 .intro h4', { opacity: 1, y: 0 })
                     .to('.section6 .intro p', { opacity: 1, y: 0 })
                     .to('.section6 .bg img', { opacity: 1 })
-                    .to('.section6 .intro h4', { color: '#fff' }, '<')
-                    .to('.section6 .intro p', { color: '#fff' }, '<')
                     .to('.section6 .intro p', { opacity: 0 })
                     .to('.section6 .intro h4', {
-                        fontSize: 'clamp(44px, 4.583vw, 88px)',
+                        fontSize: 'clamp(20px, 2.083333vw, 40px)',
+                        color: 'rgba(0,0,0,1)',
                         y: getSectionTextCenterY(4)
                     })
-                    
+                    .to('.section6 .intro h4', { color: '#fff' })
                     .addLabel('golfclub')
-                    .to('.section6 .bg img', { filter: 'brightness(0.5)' })
-                    .to('.section6 .intro', { xPercent: -65 })
-                    .to('.section6 .intro h4', {
-                        fontSize: 'clamp(32px, 3.333vw, 64px)',
-                        y: getSectionTextCenterY(4)
-                    },"<");
+                    .to('.section6 .bg img', { filter: 'brightness(0.5' })
+                    .to('.section6 .intro', { xPercent: -75 });
 
                 addPCScrollTriggerFromAnimation(section6Timeline);
 
@@ -452,9 +395,9 @@ document.addEventListener('DOMContentLoaded', function(){
                     scrollTrigger: {
                         trigger: ".section6 .logo_list_wrap",
                         start: 'top ' + headerH + 'px',
-                        end: '+=' + section6ListHeight + 'px',
+                        // end: '+=' + section6ListHeight + 'px',
                         scrub: true,
-                        pin: true
+                        // pin: true
                     }
                 });
 
@@ -579,12 +522,10 @@ document.addEventListener('DOMContentLoaded', function(){
                 opacity: 0,
                 y:20,
             });
-            
-            gsap.set('.lankmark_container .section3 .logo_list_wrap', { y: 20, opacity: 0 })
-            gsap.set('.section4 .logo_list_1', {x: -section4ListlWidth});
+            // gsap.set('.section3 .logo_list', {y: section3ListWrapHeight})
+            gsap.set('.section4 .logo_list_1',{x: -section4ListlWidth});
             gsap.set('.section4 .logo_list_2',{x: vw});
             gsap.set('.section4 .logo_list_1, .section4 .logo_list_2', {willChange: 'transform'});
-
             gsap.set('.lankmark_container .section6 .logo_list_wrap ul.logo_list_1', {
                 willChange: 'transform',
                 ease: 'none',
@@ -612,17 +553,63 @@ document.addEventListener('DOMContentLoaded', function(){
                 .to('.lankmark_container .section3 .text_wrap h4', {opacity: 1, y: 0})
                 .to('.lankmark_container .section3 .text_wrap p', {opacity: 1, y: 0})
                 .to('.lankmark_container .section3 .bg', {scale: 1})
-                .to('.lankmark_container .section3 .bg > img', {filter: "brightness(0.35)"} ,"<")
+                .to('.lankmark_container .section3 .bg img', {filter: "brightness(0.35)"} ,"<")
                 .to('.lankmark_container .section3 .text_wrap p', {opacity: 0})
                 .to('.lankmark_container .section3 .text_wrap h4', {
-                    fontSize: '40px',
+                    fontSize: '36px',
                     color: 'rgba(255,255,255,1)',
                     y: getSectionTextCenterY(3)
                 })
                 .to('.lankmark_container .section3 .text_wrap', {top: '20%'})
-                .to({},{duration: 0.2})
-                .to('.lankmark_container .section3 .logo_list_wrap', {y: 0, opacity: 1})
                 .to({},{});
+
+            // section3 로고 리스트 등장
+            let section3Timeline2 = gsap.timeline({
+                scrollTrigger: {
+                    trigger: '.section3 .overflow_none',
+                    start: 'top ' + headerH + 'px',
+                    end: '+=' + section3ListHeight + 'px',
+                    pin: true,
+                    scrub: true,
+                    onEnter: () => {
+                        gsap.to('.section3 .logo_list_wrap', { opacity: 1, duration: 0.2 });
+                    },
+                    onEnterBack: () => {
+                        gsap.to('.section3 .logo_list_wrap', { opacity: 1, duration: 0.2 });
+                    },
+                    onLeave: () => {
+                        gsap.to('.section3 .logo_list_wrap', { opacity: 1, duration: 0.2 });
+                    },
+                    onLeaveBack: () => {
+                        gsap.to('.section3 .logo_list_wrap', { opacity: 1, duration: 0.2 });
+                    }
+                }
+            });
+
+            section3Timeline2
+                .to('.section3 .logo_list', {y: -section3ListHeight, ease: 'none'});
+
+            // section3 로고 가운데 위치체크
+            ScrollTrigger.create({
+                trigger: ".lankmark_container .section3 .logo_list_wrap",
+                start: "top bottom",
+                end: '+=' + (section3ListHeight + section3ListHeight) + 'px',
+                scrub: true,
+                onUpdate: self => {
+                    const wrap = document.querySelector('.lankmark_container .section3 .logo_list_wrap');
+                    const wrapRect = wrap.getBoundingClientRect();
+                    // const center = (window.innerHeight / 2);
+                    const center = wrapRect.top + (wrapRect.height / 2);
+                    const listItems = gsap.utils.toArray('.lankmark_container .section3 .logo_list li');
+
+                    listItems.forEach(li => {
+                        const rect = li.getBoundingClientRect();
+                        const liCenter = rect.top + rect.height / 2;
+                        const inCenter = Math.abs(liCenter - center) < rect.height / 2;
+                        li.classList.toggle('active', inCenter);
+                    });
+                }
+            });
 
             // section4 
             const section4Timeline = gsap.timeline({
@@ -645,14 +632,13 @@ document.addEventListener('DOMContentLoaded', function(){
                 .to({},{})
                 .to('.section4 .intro p',{opacity: 0})
                 .to('.section4 .intro h4', {
-                    fontSize: '40px',
+                    fontSize: '36px',
                     color: 'rgba(255,255,255,1)',
                     y: getSectionTextCenterY(4)
                 })
                 .addLabel('hotel')
                 .to('.section4 .bg_filter', {backdropFilter: "brightness(0.45) blur(5px)"})
-                .to('.section4 .intro h4', {y: getSectionTextCenterY(4) - 120})
-                // .to('.section4 .intro ', {top: '25%'},"<")
+                .to('.section4 .intro h4', {y: -200})
                 .to('.section4 .cont', {
                     opacity: 1,
                 })
@@ -662,9 +648,7 @@ document.addEventListener('DOMContentLoaded', function(){
                     duration: 3,
                     force3D: true,
                     ease: 'none',
-                }, "<")
-                .to('.section4 .intro h4', {y: getSectionTextCenterY(4)}, "<90%")
-                .to({},{})
+                }, "<");
 
             // section5
             const cont2List = gsap.utils.shuffle(
@@ -689,7 +673,7 @@ document.addEventListener('DOMContentLoaded', function(){
                 .to('.section5 .divide', {height: 0})
                 .to('.section5 .intro p', {opacity: 0})
                 .to('.section5 .intro h4', {
-                    fontSize: '40px',
+                    fontSize: '36px',
                     color: 'rgba(0,0,0,1)',
                     y: getSectionTextCenterY(4)
                 })
@@ -699,7 +683,7 @@ document.addEventListener('DOMContentLoaded', function(){
                 .to('.section5 .bg', {opacity: 1},"<")
                 .to({},{})
                 .to('.section5 .bg', {filter: 'brightness(0.3)'})
-                .to('.section5 .intro h4', {opacity: 0.0},"<")
+                .to('.section5 .intro h4', {opacity: 0.1},"<")
                 .to({},{})
                 .to({},{}); 
             cont2List.forEach((li, i) => {
@@ -725,7 +709,7 @@ document.addEventListener('DOMContentLoaded', function(){
                 .to('.section6 .bg img', {opacity: 1})
                 .to('.section6 .intro p', {opacity: 0})
                 .to('.section6 .intro h4', {
-                    fontSize: '40px',
+                    fontSize: '36px',
                     color: 'rgba(0,0,0,1)',
                     y: getSectionTextCenterY(4)
                 })
