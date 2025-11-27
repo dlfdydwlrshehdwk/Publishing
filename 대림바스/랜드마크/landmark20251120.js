@@ -114,9 +114,6 @@ document.addEventListener('DOMContentLoaded', function(){
         loop: true,
         slidesPerGroup: 1,
         centeredSlides: true,
-        direction: 'horizontal',
-        touchStartPreventDefault: false,
-        touchMoveStopPropagation: true,
         navigation: {
             nextEl: '.swiper-button-next',
             prevEl: '.swiper-button-prev',
@@ -452,7 +449,7 @@ document.addEventListener('DOMContentLoaded', function(){
                     scrollTrigger: {
                         trigger: ".section6 .logo_list_wrap",
                         start: 'top ' + headerH + 'px',
-                        end: '+=' + section6ListHeight + 'px',
+                        end: '+=' + section6ListHeight * 2 + 'px',
                         scrub: true,
                         pin: true
                     }
@@ -526,7 +523,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
                             gsap.to(window, {
                                 scrollTo: targetY,
-                                duration: 0.5
+                                duration: 0
                             });
                         });
                     });
