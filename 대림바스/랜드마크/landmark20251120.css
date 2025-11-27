@@ -71,12 +71,14 @@ html, body {
     font-weight: bold;
     font-size: clamp(10px, 1.041666vw, 20px);
     color: rgba(0, 0, 0, 0.6);
+    line-height: 1;
+    letter-spacing: normal;
 }
 .lankmark_container section .intro p {
     margin-top: clamp(12px, 1.25vw, 24px);
     font-weight: 500;
     font-size: clamp(30px, 3.125vw, 60px);
-    letter-spacing: -1.2px;
+    letter-spacing: clamp(-1.2px, -0.0625vw, -0.6px);
     color: #000;
 }
 
@@ -112,6 +114,8 @@ html, body {
 .lankmark_container .section1.active .txt_box h4 {
     font-weight: 800;
     font-size: clamp(90px, 9.375vw, 180px);
+    line-height: 1;
+    letter-spacing: 0;
 }
 .lankmark_container .section1.active .txt_box p {
     display: none;
@@ -170,6 +174,8 @@ html, body {
     font-size: clamp(10px, 1.041666vw, 20px);
     color: rgba(255, 255, 255, 0.6);
     opacity: 0;
+    line-height: 1;
+    letter-spacing: normal;
 }
 .lankmark_container .section3 .text_wrap .text_set p {
     margin-top: clamp(12px, 1.25vw, 24px);
@@ -178,6 +184,7 @@ html, body {
     letter-spacing: -0.72px;
     color: #fff;
     opacity: 0;
+    line-height: 1;
 }
 .lankmark_container .section3 .mobile_text_wrap {
     display: none;
@@ -220,6 +227,7 @@ html, body {
     align-items: center;
     justify-content: center;
     margin-top: clamp(50px, 5.2083vw, 100px);
+    gap: clamp(12px, 1.25vw, 24px);
 }
 .lankmark_container .section3 .swiper-button-prev,
 .lankmark_container .section3 .swiper-button-next {
@@ -282,7 +290,8 @@ html, body {
     left: 0;
     width: 100%;
     overflow: hidden;
-    bottom: clamp(100px, 10.416vw, 200px);
+    /* bottom: clamp(100px, 10.416vw, 200px); */
+    bottom: 15%;
 
     mask-image: linear-gradient(to right, transparent 0%, #000 20%, #000 80%,  transparent 100%);
     -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 20%, #000 80%, transparent 100%);
@@ -293,10 +302,10 @@ html, body {
     width: max-content;
 }
 .lankmark_container .section4 .cont ul + ul {
-    margin-top: 10px;
 }
 .lankmark_container .section4 .cont ul li {
-    width: clamp(120px, 12.5vw, 240px);
+    /* width: clamp(120px, 12.5vw, 240px); */
+    width: 240px;
 }
 /* section4 end*/
 
@@ -403,8 +412,12 @@ html, body {
     height: max-content;
 }
 .lankmark_container .section6 .logo_list_wrap ul li {
-    width: clamp(100px, 10.416666vw, 200px);
-    height: clamp(70px, 7.291666vw, 140px);
+    /* width: clamp(100px, 10.416666vw, 200px); */
+    /* height: clamp(70px, 7.291666vw, 140px); */
+    width: 200px;
+    /* height: 140px; */
+    height: auto;
+    aspect-ratio: 200/140;
 }
 .lankmark_container .section6 .pin-spacer {
 }
@@ -433,6 +446,8 @@ html, body {
     color: #fff;
     opacity: 0.2;
     mix-blend-mode: difference;
+    line-height: 1;
+    letter-spacing: normal;
 }
 .landmark_pagination ul li a::before {
     content: '•';
@@ -443,7 +458,30 @@ html, body {
     font-size: 14px;
     opacity: 1;
 }
+@media (max-width: 1440px) {
+    .lankmark_container .section6 .logo_list_wrap {
+        padding-right: 200px;
+    }
+}
+@media (max-width: 1366px) {
 
+}
+@media (max-width: 1280px) {
+    .lankmark_container .section6 .logo_list_wrap {
+        padding-right: 100px;
+    }
+}
+@media (max-width: 1024px) {
+    .lankmark_container .section4 .cont ul li {
+        width: 200px;
+    }
+    .lankmark_container .section6 .logo_list_wrap ul li {
+        width: 160px;
+    }
+    .lankmark_container .section6 .logo_list_wrap {
+        padding-right: 50px;
+    }
+}
 @media (max-width: 767px) {
     .display_pc {
         display: none !important;
@@ -476,6 +514,7 @@ html, body {
     }
     .lankmark_container .section2 .scroll_text {
         font-size: clamp(24px, 2.5vw, 48px);
+        letter-spacing: clamp(-0.96px, -0.05vw, -0.48px);
         font-weight: 600;
         background: linear-gradient(to right, #000);
         -webkit-background-clip: text;
@@ -645,6 +684,7 @@ html, body {
         left: 50%;
         transform: translateX(-50%);
         width: 53.8%;
+        gap: 20px;
     }
     .lankmark_container .section3 .swiper-pagination-progressbar {
         width: 100%;

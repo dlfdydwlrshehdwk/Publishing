@@ -128,7 +128,8 @@ document.addEventListener('DOMContentLoaded', function(){
                 spaceBetween: 32
             },
             768: {
-                spaceBetween: 20
+                spaceBetween: 20,
+                slidesPerView: 3,
             },
             1024: {
                 spaceBetween: 40
@@ -337,12 +338,13 @@ document.addEventListener('DOMContentLoaded', function(){
                     .to('.section4 .intro h4', {
                         fontSize: 'clamp(44px, 4.583vw, 88px)',
                         color: 'rgba(255,255,255,1)',
-                        y: getSectionTextCenterY(4)
+                        y: getSectionTextCenterY(4),
                     })
                     .addLabel('hotel')
                     .to('.section4 .bg_filter', { backdropFilter: "brightness(0.45) blur(5px)" })
                     // .to('.section4 .intro h4', { y: -200 })
-                    .to('.section4 .intro.text_set', { top: '27.79%'})
+                    // .to('.section4 .intro.text_set', { top: '27.79%'})
+                    .to('.section4 .intro.text_set', { top: '33%'})
                     .to('.section4 .intro h4', { y: 0 }, '<')
                     .to('.section4 .cont', { opacity: 1 })
                     .to('.section4 .logo_list_1', {
@@ -357,7 +359,9 @@ document.addEventListener('DOMContentLoaded', function(){
                         force3D: true,
                         ease: 'none'
                     }, "<")
-                    .to('.section4 .intro.text_set', { top: '50%'}, "<75%")
+                    .to('.section4 .intro h4', { y: getSectionTextCenterY(4)}, "<75%")
+                    .to('.section4 .intro.text_set', { top: '50%'},'<')
+                    .to('.section4 .intro.text_set', { }, "<")
                     .to({},{duration: 0.5})
 
                 addPCScrollTriggerFromAnimation(section4Timeline);
@@ -720,13 +724,14 @@ document.addEventListener('DOMContentLoaded', function(){
                 .to('.section6 .intro h4', {opacity: 1, y: 0})
                 .to('.section6 .intro p', {opacity: 1, y: 0})
                 .to('.section6 .bg img', {opacity: 1})
+                .to('.section6 .intro h4', {color: '#fff'},'<')
+                .to('.section6 .intro p', {color: '#fff'},"<")
                 .to('.section6 .intro p', {opacity: 0})
                 .to('.section6 .intro h4', {
                     fontSize: '40px',
-                    color: 'rgba(0,0,0,1)',
                     y: getSectionTextCenterY(4)
                 })
-                .to('.section6 .intro h4', {color: '#fff'})
+                // .to('.section6 .intro h4', {color: '#fff'})
                 .to('.section6 .bg img', {filter: 'brightness(0.5'})
                 .to('.section6 .intro', {top: '20%'});
 
