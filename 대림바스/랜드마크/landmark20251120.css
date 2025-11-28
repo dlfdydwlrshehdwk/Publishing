@@ -89,7 +89,8 @@ html, body {
 }
 .lankmark_container .section1 .bg {
     transform: scale(1.3);
-    background: url(/img/brand/landmark/bg1.png) no-repeat center/cover;
+    background: url(/img/brand/landmark/bg1x2.png) no-repeat center/cover;
+    background-position-y: bottom;
 }
 .lankmark_container .section1.active .bg {
     transition: 5s;
@@ -433,6 +434,11 @@ html, body {
     left: clamp(30px, 3.125vw, 60px);
     z-index: 10001;
     opacity: 0;
+
+    transition: .3s;
+}
+.landmark_pagination.show {
+    opacity: 1;
 }
 .landmark_pagination ul {
     display: flex;
@@ -689,7 +695,16 @@ html, body {
     .lankmark_container .section3 .swiper-pagination-progressbar {
         width: 100%;
     }
-    .lankmark_container .section3 .swiper-button-prev, .lankmark_container .section3 .swiper-button-next {
+    .lankmark_container .section3 .swiper-button-prev,
+    .lankmark_container .section3 .swiper-button-prev:hover {
+        background: url(/img/brand/landmark/swiper_prev_default_mo.svg) no-repeat center / cover;
+    }
+    .lankmark_container .section3 .swiper-button-next,
+    .lankmark_container .section3 .swiper-button-next:hover {
+        background: url(/img/brand/landmark/swiper_prev_default_mo.svg) no-repeat center / cover;
+    }
+    .lankmark_container .section3 .swiper-button-prev, 
+    .lankmark_container .section3 .swiper-button-next {
         width: 32px;
         height: 32px;
         flex-shrink: 0;
@@ -814,7 +829,9 @@ html, body {
         left: 0;
         width: 100%;
         overflow: hidden;
-        bottom: 208px;
+        top: 60%;
+        bottom: auto;
+        transform: translateY(-50%);
     }
     .lankmark_container .section4 .cont ul {
         display: flex;
@@ -992,6 +1009,6 @@ html, body {
     /* section6 end */
 
     .landmark_pagination {
-        display: none;
+        display: none !important;
     }
 }

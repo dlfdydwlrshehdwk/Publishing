@@ -54,6 +54,17 @@ function isMobileBrowser() {
     return isMobileUA || isMobileDevice || (hasTouch && isSmallScreen);
 }
 
+function isSafari() {
+    let ua = navigator.userAgent.toLowerCase();
+
+    let isSafari = ua.indexOf('safari') > -1;
+    let isChrome = ua.indexOf('chrome') > -1 || ua.indexOf('crios') > -1;
+    let isAndroid = ua.indexOf('android') > -1;
+
+    // Safari 는 safari 포함 && chrome/crios 포함 X && android X
+    return isSafari && !isChrome && !isAndroid;
+}
+
 function isKakaoInApp() {
     return navigator.userAgent.toLowerCase().includes('kakaotalk');
 }
@@ -63,12 +74,11 @@ window.addEventListener('load', () => {
     if (isMobileBrowser() && isKakaoInApp()) {
         
         ScrollTrigger.config({
-            ignoreMobileResize: true,
+            ignoreMobileResize: true, // 카카오톡 인앱브라우저 화면 점프 방지
             syncInterval: 0.02,
         });
 
         setRealVH_Kakao();
-        ScrollTrigger.normalizeScroll(true);
 
         if (window.visualViewport) {
             window.visualViewport.addEventListener("resize", setRealVH_Kakao);
@@ -79,7 +89,6 @@ window.addEventListener('load', () => {
     } else {
         // 일반 모바일/PC
         ScrollTrigger.refresh();
-        ScrollTrigger.normalizeScroll(true);
     }
 });
 
@@ -87,8 +96,8 @@ window.addEventListener('load', () => {
 
 // 1. Lenis 인스턴스 생성
 const lenis = new Lenis({
-    smooth: !(isMobileBrowser() && isKakaoInApp()),
-    smoothTouch: !(isMobileBrowser() && isKakaoInApp()),     // 모바일도 적용여부
+    smooth: !isMobileBrowser(),
+    smoothTouch: !isMobileBrowser(),     // 모바일도 적용여부
     lerp: isMobileBrowser() ? 0.05 : 0.1,             // 부드러움 정도 (0.0 ~ 1.0)
 });
 
@@ -238,7 +247,14 @@ document.addEventListener('DOMContentLoaded', function(){
                         end: contentH * 4.5 + 'px',
                         scrub: true,
                         pin: true,
-                        pinType: isMobileBrowser() ? 'fixed' : 'transform'
+                        pinType: isMobileBrowser() ? 'fixed' : 'transform',
+                        onUpdate: (self) => {
+                            if(self.progress > 0.3) {
+                                document.querySelector('.landmark_pagination').classList.add('show');
+                            } else {
+                                document.querySelector('.landmark_pagination').classList.remove('show');
+                            }
+                        }
                     }
                 });
 
@@ -246,6 +262,7 @@ document.addEventListener('DOMContentLoaded', function(){
                     .to('.lankmark_container .section3 .text_wrap h4', { opacity: 1, y: 0 })
                     .to('.lankmark_container .section3 .text_wrap p', { opacity: 1, y: 0 })
                     .to('.lankmark_container .section3 .bg', { scale: 1 })
+                    // 여기!!!
                     .to('.lankmark_container .section3 .bg > img', { filter: "brightness(0.35)" }, "<")
                     .to('.lankmark_container .section3 .text_wrap p', { opacity: 0 })
                     .to('.lankmark_container .section3 .text_wrap h4', {
@@ -344,7 +361,7 @@ document.addEventListener('DOMContentLoaded', function(){
                     .to('.section4 .bg_filter', { backdropFilter: "brightness(0.45) blur(5px)" })
                     // .to('.section4 .intro h4', { y: -200 })
                     // .to('.section4 .intro.text_set', { top: '27.79%'})
-                    .to('.section4 .intro.text_set', { top: '33%'})
+                    .to('.section4 .intro.text_set', { top: '37%'})
                     .to('.section4 .intro h4', { y: 0 }, '<')
                     .to('.section4 .cont', { opacity: 1 })
                     .to('.section4 .logo_list_1', {
@@ -501,10 +518,10 @@ document.addEventListener('DOMContentLoaded', function(){
                             }
                         });
 
-                        const pagination = document.querySelector('.landmark_pagination');
-                        if (pagination) {
-                            pagination.style.opacity = foundActive ? '1' : '0';
-                        }
+                        // const pagination = document.querySelector('.landmark_pagination');
+                        // if (pagination) {
+                        //     pagination.style.opacity = foundActive ? '1' : '0';
+                        // }
                     }
                 });
                 addPCScrollTrigger(paginationST);
@@ -529,6 +546,11 @@ document.addEventListener('DOMContentLoaded', function(){
                                 scrollTo: targetY,
                                 duration: 0
                             });
+
+                            paginationLinks.forEach((x) => {
+                                x.closest('li').classList.remove('active');
+                            })
+                            ele.closest('li').classList.add('active');
                         });
                     });
                 }
