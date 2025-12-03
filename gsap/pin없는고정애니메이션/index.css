@@ -1,0 +1,65 @@
+html,
+body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden; /* 네이티브 스크롤 유지, 가로만 차단 */
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+/* 항상 뷰포트에 붙어 있는 레이어 (실제 고정) */
+.fixed-layer {
+    position: fixed;          /* transform 조상 밖이면 iOS에서도 안전 */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    pointer-events: none;     /* 필요 시 조정 */
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    opacity: 0;               /* 기본 숨김 */
+    visibility: hidden;       /* autoAlpha로 제어 */
+    z-index: 10;
+}
+
+/* 애니메이션이 실제로 그려질 캔버스 */
+.fixed-inner {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.fixed-inner .box {
+    width: 200px;
+    height: 200px;
+    background: #ff5252;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+}
+
+/* 인트로 섹션 (애니메이션 전) */
+.intro {
+    min-height: 100vh;
+    padding: 80px 20px;
+    background: #f0f0f0;
+}
+
+/* 500vh 애니메이션 구간 */
+.anim-section {
+    height: 500vh;
+    background: linear-gradient(#fafafa, #e0e0ff);
+}
+
+/* 이후 일반 섹션 (여기선 고정 레이어가 보여선 안 됨) */
+.next-section {
+    min-height: 100vh;
+    padding: 80px 20px;
+    background: #ffffff;
+}
