@@ -2,7 +2,7 @@ gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
 function setRealVH_Normal() {
     const vh = window.innerHeight * 0.01;
-    document.documentElement.style.setProperty('--vh', `${vh}px`);
+    document.documentElement.style.setProperty('--vh', vh + 'px');
 }
 
 // requestAnimationFrame용 변수
@@ -12,14 +12,17 @@ let refreshTimer = null;
 function setRealVH_Kakao() {
     if (rafId) return;
 
-    rafId = requestAnimationFrame(() => {
-        const h = window.visualViewport?.height || window.innerHeight;
-        const vh = h * 0.01;
-        document.documentElement.style.setProperty('--vh', `${vh}px`);
+    rafId = requestAnimationFrame(function() {
 
-        // ScrollTrigger refresh는 디바운싱 (너무 자주 호출 방지)
+        var viewportH = (window.visualViewport && window.visualViewport.height)
+            ? window.visualViewport.height
+            : window.innerHeight;
+
+        var vh = viewportH * 0.01;
+        document.documentElement.style.setProperty('--vh', vh + 'px');
+
         clearTimeout(refreshTimer);
-        refreshTimer = setTimeout(() => {
+        refreshTimer = setTimeout(function() {
             ScrollTrigger.refresh();
         }, 100);
 
@@ -28,7 +31,7 @@ function setRealVH_Kakao() {
 }
 
 // 1. 타이밍 문제 해결: 페이지 로드 전에 즉시 실행
-// setRealVH_Normal();
+setRealVH_Normal();
 
 // 2. 카카오톡이면 즉시 업데이트
 if (isMobileBrowser() && isKakaoInApp()) {
@@ -71,25 +74,33 @@ function isKakaoInApp() {
 
 window.addEventListener('load', () => {
 
-    if (isMobileBrowser() && isKakaoInApp()) {
+    // if (isMobileBrowser() && isKakaoInApp()) {
+    if (isMobileBrowser()) {
         
+        if(isKakaoInApp()) {
+            ScrollTrigger.config({
+                ignoreMobileResize: true,
+                syncInterval: 0.02,
+            });
+        }
+        ScrollTrigger.normalizeScroll(true);
         ScrollTrigger.config({
-            ignoreMobileResize: true, // 카카오톡 인앱브라우저 화면 점프 방지
-            syncInterval: 0.02,
+            ignoreMobileResize: true,
+            syncInterval: 0.02
         });
 
         setRealVH_Kakao();
 
         if (window.visualViewport) {
             window.visualViewport.addEventListener("resize", setRealVH_Kakao);
-            // window.visualViewport.addEventListener("scroll", setRealVH_Kakao);
         }
+		
         ScrollTrigger.refresh();
 
     } else {
         // 일반 모바일/PC
-        
-        ScrollTrigger.refresh();
+        // ScrollTrigger.refresh();
+		
     }
 });
 
@@ -134,12 +145,12 @@ document.addEventListener('DOMContentLoaded', function(){
         },
         breakpoints: {
             0: {
-                slidesPerView: 2.2,
+                slidesPerView: 3,
                 spaceBetween: 32
             },
             768: {
                 spaceBetween: 20,
-                slidesPerView: 3,
+                slidesPerView: 2.2,
             },
             1024: {
                 spaceBetween: 40
@@ -189,13 +200,13 @@ document.addEventListener('DOMContentLoaded', function(){
                 // 공통 텍스트 초기값
                 gsap.set([
                     '.section3 .text_set h4',
-                    '.section3 .text_set p',
-                    '.section4 .intro p',
+                    /*'.section3 .text_set p',*/
+                    /*'.section4 .intro p',*/
                     '.section4 .intro h4',
-                    '.section5 .intro p',
+                    /*'.section5 .intro p',*/
                     '.section5 .intro h4',
                     '.section6 .intro h4',
-                    '.section6 .intro p',
+                   /* '.section6 .intro p',*/
                 ], {
                     opacity: 0,
                     y: 20
@@ -249,29 +260,29 @@ document.addEventListener('DOMContentLoaded', function(){
                         scrub: true,
                         pin: true,
                         pinType: isMobileBrowser() ? 'fixed' : 'transform',
-                        onUpdate: (self) => {
-                            if(self.progress > 0.3) {
-                                document.querySelector('.landmark_pagination').classList.add('show');
-                            } else {
-                                document.querySelector('.landmark_pagination').classList.remove('show');
-                            }
-                        }
+						onUpdate: (self) => {
+						    if(self.progress > 0.3) {
+						        document.querySelector('.landmark_pagination').classList.add('show');
+						    } else {
+						        document.querySelector('.landmark_pagination').classList.remove('show');
+						    }
+						}
                     }
                 });
 
                 section3Timeline
                     .to('.lankmark_container .section3 .text_wrap h4', { opacity: 1, y: 0 })
-                    .to('.lankmark_container .section3 .text_wrap p', { opacity: 1, y: 0 })
+                    /*.to('.lankmark_container .section3 .text_wrap p', { opacity: 1, y: 0 })*/
                     .to('.lankmark_container .section3 .bg', { scale: 1 })
-                    // 여기!!!
                     .to('.lankmark_container .section3 .bg > img', { filter: "brightness(0.35)" }, "<")
-                    .to('.lankmark_container .section3 .text_wrap p', { opacity: 0 })
+                    /*.to('.lankmark_container .section3 .text_wrap p', { opacity: 0 })*/
                     .to('.lankmark_container .section3 .text_wrap h4', {
                         fontSize: 'clamp(44px, 4.583vw, 88px)',
                         color: 'rgba(255,255,255,1)',
-                        y: getSectionTextCenterY(3)
+                        /*y: getSectionTextCenterY(3)*/
                     })
                     .addLabel('apartment')
+					.to({},{duration: 0.3})
                     .to('.lankmark_container .section3 .text_wrap', { xPercent: -70 })
                     .to('.lankmark_container .section3 .text_wrap h4', {
                         fontSize: 'clamp(32px, 3.333vw, 64px)',
@@ -337,7 +348,7 @@ document.addEventListener('DOMContentLoaded', function(){
                     scrollTrigger: {
                         trigger: ".section4",
                         start: 'top ' + headerH + 'px',
-                        end: contentH * 8 + 'px',
+                        end: contentH * 7 + 'px',
                         scrub: true,
                         pin: true,
                         pinType: isMobileBrowser() ? 'fixed' : 'transform'
@@ -346,23 +357,18 @@ document.addEventListener('DOMContentLoaded', function(){
 
                 section4Timeline
                     .to('.section4 .intro h4', { opacity: 1, y: 0 })
-                    .to('.section4 .intro p', { opacity: 1, y: 0 })
                     .to({}, {})
                     .to('.section4 .bg', { opacity: 1 })
                     .to('.section4 .intro h4', { color: 'rgba(255, 255, 255, 0.6' }, "<")
-                    .to('.section4 .intro p', { color: '#fff' }, "<")
-                    .to({}, {})
-                    .to('.section4 .intro p', { opacity: 0 })
+                    .to({}, {duration: 0.5})
                     .to('.section4 .intro h4', {
                         fontSize: 'clamp(44px, 4.583vw, 88px)',
                         color: 'rgba(255,255,255,1)',
-                        y: getSectionTextCenterY(4),
+						duration:0.6
                     })
                     .addLabel('hotel')
-                    .to('.section4 .bg_filter', { backdropFilter: "brightness(0.45) blur(5px)" })
-                    // .to('.section4 .intro h4', { y: -200 })
-                    // .to('.section4 .intro.text_set', { top: '27.79%'})
-                    .to('.section4 .intro.text_set', { top: '37%'})
+                    .to('.section4 .bg_filter', { backdropFilter: "brightness(0.45) blur(5px)", duration:0.6 },"<50%")
+                    .to('.section4 .intro.text_set', { top: '30%'},"<50%")
                     .to('.section4 .intro h4', { y: 0 }, '<')
                     .to('.section4 .cont', { opacity: 1 })
                     .to('.section4 .logo_list_1', {
@@ -377,8 +383,7 @@ document.addEventListener('DOMContentLoaded', function(){
                         force3D: true,
                         ease: 'none'
                     }, "<")
-                    .to('.section4 .intro h4', { y: getSectionTextCenterY(4)}, "<75%")
-                    .to('.section4 .intro.text_set', { top: '50%'},'<')
+                    .to('.section4 .intro.text_set', { top: '50%'},'<75%')
                     .to('.section4 .intro.text_set', { }, "<")
                     .to({},{duration: 0.5})
 
@@ -402,16 +407,16 @@ document.addEventListener('DOMContentLoaded', function(){
 
                 section5Timeline
                     .to('.section5 .intro h4', { opacity: 1, y: 0 })
-                    .to('.section5 .intro p', { opacity: 1, y: 0 })
+                    /*.to('.section5 .intro p', { opacity: 1, y: 0 })*/
                     .to('.section5 .dim1', { opacity: 0 })
                     .to('.section5 .dim2', { opacity: 0 })
                     .to('.section5 .dim3', { opacity: 0 })
                     .to('.section5 .divide', { width: 0 })
-                    .to('.section5 .intro p', { opacity: 0 })
+                    /*.to('.section5 .intro p', { opacity: 0 })*/
                     .to('.section5 .intro h4', {
                         fontSize: 'clamp(44px, 4.583vw, 88px)',
                         color: 'rgba(0,0,0,1)',
-                        y: getSectionTextCenterY(4)
+                        /*y: getSectionTextCenterY(4)*/
                     })
                     .addLabel('resort')
                     .to({}, {})
@@ -447,14 +452,14 @@ document.addEventListener('DOMContentLoaded', function(){
 
                 section6Timeline
                     .to('.section6 .intro h4', { opacity: 1, y: 0 })
-                    .to('.section6 .intro p', { opacity: 1, y: 0 })
+                    /*.to('.section6 .intro p', { opacity: 1, y: 0 })*/
                     .to('.section6 .bg img', { opacity: 1 })
                     .to('.section6 .intro h4', { color: '#fff' }, '<')
-                    .to('.section6 .intro p', { color: '#fff' }, '<')
-                    .to('.section6 .intro p', { opacity: 0 })
+                    /*.to('.section6 .intro p', { color: '#fff' }, '<')*/
+                    /*.to('.section6 .intro p', { opacity: 0 })*/
                     .to('.section6 .intro h4', {
                         fontSize: 'clamp(44px, 4.583vw, 88px)',
-                        y: getSectionTextCenterY(4)
+                        /*y: getSectionTextCenterY(4)*/
                     })
                     
                     .addLabel('golfclub')
@@ -462,7 +467,7 @@ document.addEventListener('DOMContentLoaded', function(){
                     .to('.section6 .intro', { xPercent: -65 })
                     .to('.section6 .intro h4', {
                         fontSize: 'clamp(32px, 3.333vw, 64px)',
-                        y: getSectionTextCenterY(4)
+                        /*y: getSectionTextCenterY(4)*/
                     },"<");
 
                 addPCScrollTriggerFromAnimation(section6Timeline);
@@ -519,10 +524,10 @@ document.addEventListener('DOMContentLoaded', function(){
                             }
                         });
 
-                        // const pagination = document.querySelector('.landmark_pagination');
-                        // if (pagination) {
-                        //     pagination.style.opacity = foundActive ? '1' : '0';
-                        // }
+/*                        const pagination = document.querySelector('.landmark_pagination');
+                        if (pagination) {
+                            pagination.style.opacity = foundActive ? '1' : '0';
+                        }*/
                     }
                 });
                 addPCScrollTrigger(paginationST);
@@ -547,11 +552,12 @@ document.addEventListener('DOMContentLoaded', function(){
                                 scrollTo: targetY,
                                 duration: 0
                             });
+							
 
-                            paginationLinks.forEach((x) => {
-                                x.closest('li').classList.remove('active');
-                            })
-                            ele.closest('li').classList.add('active');
+							paginationLinks.forEach((x) => {
+							    x.closest('li').classList.remove('active');
+							})
+							ele.closest('li').classList.add('active');
                         });
                     });
                 }
@@ -629,7 +635,9 @@ document.addEventListener('DOMContentLoaded', function(){
                     end: contentH * 4 + 'px',
                     scrub: true,
                     pin: true,
-                    pinType: isMobileBrowser() ? 'fixed' : 'transform'
+                    // pinType: isMobileBrowser() ? 'fixed' : 'transform',
+                    pinType: 'transform',
+                    
                 }
             });
             section3Timeline
@@ -641,7 +649,7 @@ document.addEventListener('DOMContentLoaded', function(){
                 .to('.lankmark_container .section3 .text_wrap h4', {
                     fontSize: '40px',
                     color: 'rgba(255,255,255,1)',
-                    y: getSectionTextCenterY(3)
+                    /*y: getSectionTextCenterY(3)*/
                 })
                 .to('.lankmark_container .section3 .text_wrap', {top: '20%'})
                 .to({},{duration: 0.2})
@@ -656,7 +664,8 @@ document.addEventListener('DOMContentLoaded', function(){
                     end: contentH * 8 + 'px',
                     scrub: true,
                     pin: true,
-                    pinType: isMobileBrowser() ? 'fixed' : 'transform',
+                    // pinType: isMobileBrowser() ? 'fixed' : 'transform',
+                    pinType: 'transform',
                 }
             });
             section4Timeline
@@ -671,11 +680,12 @@ document.addEventListener('DOMContentLoaded', function(){
                 .to('.section4 .intro h4', {
                     fontSize: '40px',
                     color: 'rgba(255,255,255,1)',
-                    y: getSectionTextCenterY(4)
+                    /*y: getSectionTextCenterY(4)*/
                 })
                 .addLabel('hotel')
                 .to('.section4 .bg_filter', {backdropFilter: "brightness(0.45) blur(5px)"})
-                .to('.section4 .intro h4', {y: getSectionTextCenterY(4) - 120})
+                .to('.section4 .intro h4', {y: - 120})
+				/*.to('.section4 .intro h4', {y: getSectionTextCenterY(4) - 120})*/
                 // .to('.section4 .intro ', {top: '25%'},"<")
                 .to('.section4 .cont', {
                     opacity: 1,
@@ -687,7 +697,8 @@ document.addEventListener('DOMContentLoaded', function(){
                     force3D: true,
                     ease: 'none',
                 }, "<")
-                .to('.section4 .intro h4', {y: getSectionTextCenterY(4)}, "<90%")
+                /*.to('.section4 .intro h4', {y: getSectionTextCenterY(4)}, "<90%")*/
+				.to('.section4 .intro h4', {y: 0}, "<90%")
                 .to({},{})
 
             // section5
@@ -701,7 +712,8 @@ document.addEventListener('DOMContentLoaded', function(){
                     end: contentH * 8 + 'px',
                     scrub: true,
                     pin: true,
-                    pinType: isMobileBrowser() ? 'fixed' : 'transform'
+                    // pinType: isMobileBrowser() ? 'fixed' : 'transform'
+                    pinType: 'transform',
                 }
             });
             section5Timeline
@@ -715,7 +727,7 @@ document.addEventListener('DOMContentLoaded', function(){
                 .to('.section5 .intro h4', {
                     fontSize: '40px',
                     color: 'rgba(0,0,0,1)',
-                    y: getSectionTextCenterY(4)
+                    /*y: getSectionTextCenterY(4)*/
                 })
                 .to({},{})
                 .to('.section5 .intro h4', {color: '#fff'})
@@ -740,7 +752,8 @@ document.addEventListener('DOMContentLoaded', function(){
                     end: contentH * 4 + 'px',
                     scrub: true,
                     pin: true,
-                    pinType: isMobileBrowser() ? 'fixed' : 'transform'
+                    // pinType: isMobileBrowser() ? 'fixed' : 'transform'
+                    pinType: 'transform',
                 }
             });
             section6Timeline
@@ -752,7 +765,7 @@ document.addEventListener('DOMContentLoaded', function(){
                 .to('.section6 .intro p', {opacity: 0})
                 .to('.section6 .intro h4', {
                     fontSize: '40px',
-                    y: getSectionTextCenterY(4)
+                    /*y: getSectionTextCenterY(4)*/
                 })
                 // .to('.section6 .intro h4', {color: '#fff'})
                 .to('.section6 .bg img', {filter: 'brightness(0.5'})
@@ -764,7 +777,8 @@ document.addEventListener('DOMContentLoaded', function(){
                     start: 'top ' + headerH + 'px',
                     end: '+=' + section6ListHeight * 2 + 'px',
                     scrub: true,
-                    pin: true
+                    pin: true,
+                    pinType: 'transform',
                 }
             });
             section6Timeline2
