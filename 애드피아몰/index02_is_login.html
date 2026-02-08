@@ -1,0 +1,1955 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ko" lang="ko"><head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>성원애드피아 홈페이지</title>
+	<meta http-equiv="Content-Script-Type" content="text/javascript">
+	<meta http-equiv="Content-Style-Type" content="text/css">
+	<meta http-equiv="Cache-Control" content="no-cache">
+	<meta http-equiv="Expires" content="0">
+	<meta http-equiv="Pragma" content="no-cache">
+	<meta http-equiv="imagetoolbar" content="no">
+	<meta name="description" content="상업인쇄, 실사출력, 패키지, 디지털인쇄까지 종합광고의 모든 것">
+	<meta name="keywords" content="성원애드피아, 성원에드피아, 성원에드, 성원애드, 성원인쇄">
+
+	<meta property="og:url" content="https://www.swadpia.co.kr/">
+	<meta property="og:title" content="성원애드피아">
+	<meta property="og:type" content="website">
+	<meta property="og:image" content="https://image.swadpia.co.kr/images/logo/logo_kakao.png">
+	<meta property="og:description" content="상업인쇄, 실사출력, 패키지, 디지털인쇄까지 종합광고의 모든 것">
+
+	<!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://image.swadpia.co.kr; script-src 'self'  https://image.swadpia.co.kr https://test.upload.swadpia.co.kr ;"> -->
+
+	<!-- <meta http-equiv="Content-Security-Policy" content="style-src 'self' https://image.swadpia.co.kr; script-src 'self'  https://accounts.google.com https://ssl.pstatic.net https://wcs.naver.net https://image.swadpia.co.kr https://test.upload.swadpia.co.kr ;"> -->
+		<!-- <meta name="GOOGLEBOT" CONTENT="NOINDEX,NOFOLLOW" /> -->
+
+	<script>
+	var REQUEST_URI = "/mypage/spoint2";
+	if(REQUEST_URI.match("/intro/template/")){
+		//console.log('true');
+	}else{
+		//console.log('false');
+	}
+//	console.log(REQUEST_URI);
+
+	window.onpageshow = function(event){
+		if(event.persisted || (window.performance && window.performance.navigation.type == 2)){			
+			if(REQUEST_URI.match("/intro/template/")){
+				alert("앞으로 또는 뒤로가기를 클릭시 편집기 내용을 수정할 수 없습니다.\n\n셀프디자인 메뉴에서 템플릿을 다시 선택해 주십시오.");		
+				window.location.href = "/goods/template_list#tab1";
+			}
+			else if(REQUEST_URI.match("/order/order_cart") || REQUEST_URI.match("/goods/goods_view/")){
+				alert("앞으로 또는 뒤로가기를 클릭하시면 해당페이지의 내용이 초기화 될 수 있습니다.\n\n해당페이지의 내용을 다시 한번 확인 해 주십시오.");		
+				window.location.reload();
+			}
+			// else{
+			// 	alert("앞으로 또는 뒤로가기를 클릭하시면 해당페이지의 내용이 초기화 될 수 있습니다.\n\n해당페이지의 내용을 다시 한번 확인 해 주십시오.");		
+			// 	window.location.reload();
+			// }
+		}
+	}
+
+	//console.log(window.performance);
+	//console.log(window.performance.navigation.type);	
+	</script>
+
+		
+
+	<!-- 네이버 웹로그 -->
+	<script type="text/javascript" src="https://wcs.naver.net/wcslog.js"> </script><script type="text/javascript" async="" src="https://ssl.pstatic.net/melona/libs/gfp-nac-module/synchronizer.js"></script>
+	<!-- 네이버 웹로그 -->
+	<!-- COMMON css -->
+	<link rel="shortcut icon" href="https://www.swadpia.co.kr/images/common/swadpia.ico" type="image/x-icon">
+
+
+
+	<!-- COMMON Custom Javascript /s -->
+	<script type="text/javascript" src="https://www.swadpia.co.kr/js/common.js"></script>
+	<script type="text/javascript" src="https://www.swadpia.co.kr/js/validate.js"></script>
+	<script type="text/javascript" src="https://www.swadpia.co.kr/lib/jquery/jquery-1.3.2.js"></script>
+	<script src="https://www.swadpia.co.kr/js/swad2012.js" type="text/javascript"></script>
+	<script type="text/javascript" src="https://www.swadpia.co.kr/js/logger.js"></script>
+	<!-- COMMON Custom Javascript /e -->
+
+	<script type="text/javascript" src="https://image.swadpia.co.kr/js/bxslider/jquery-1.9.1.min.js"></script>
+	<script src="https://image.swadpia.co.kr/js/bxslider/jquery.bxslider.min.js"></script>
+	<link href="https://image.swadpia.co.kr/js/bxslider/jquery.bxslider.css" rel="stylesheet">
+	<style>
+		/* 배너사이즈와 위치 */
+		.bx-wrapper .bx-controls-auto {display:none;}/*시작 일시정지 위치-left값으로 수정*/
+
+		/*●의 시작위치 설정 - left값으로 수정	*/																		
+		.bx-wrapper .bx-pager {top:400px;}
+		/*각슬라이드 의 가로세로등...	*/
+		#s_banner_wrap1 { height:200px;position: relative; margin:0px 0}
+		#s_banner_wrap { height:490px;position: relative; margin:0px 0}
+	</style>	
+	<script>
+		/*$(document).ready(function(){
+			var top_slider =	$('.top_bxslider').bxSlider({
+			auto: false, autoControls: false, mode:'horizontal', pause:5000,
+			nextSelector: '#top_slider-next',
+			prevSelector: '#top_slider-prev',
+			prevText: "<span class='sprite_top_navi tn_04' id='top_slider-prev'></span>",
+			nextText: "<span class='sprite_top_navi tn_05' id='top_slider-next'></span>"
+			});							
+		});	*/			
+	</script>				
+
+	<!-- SNS 연동 CSS -->
+	<link rel="stylesheet" type="text/css" href="https://image.swadpia.co.kr/css/join_sns.css">
+		
+	<!-- COMMON Library Javascript layer popup/s -->
+			<link type="text/css" href="https://www.swadpia.co.kr/lib/jquery/themes/ui-lightness/ui.all.css" rel="stylesheet">
+	<script type="text/javascript" src="https://www.swadpia.co.kr/lib/jquery/jquery-1.4.2.min.js"></script> 
+	<script type="text/javascript" src="https://www.swadpia.co.kr/lib/jquery/ui/ui.core.js"></script>
+	<script type="text/javascript" src="https://www.swadpia.co.kr/lib/jquery/ui/ui.dialog.js"></script>
+
+	<!-- COMMON Library Javascript layer popup /e -->
+
+	<script>
+	
+	/*//explore 6버젼 체크하여 업그레이드 안내창 띄우기
+	if (getInternetExplorerVersion() == "6") {
+	  window.open('/main/popup/popup_explore6_upgrade_v','explore6_upgrade','width=350,height=480,left=0,top=0');
+	}*/
+
+	//jQuery 로 별도이니셜로 인식하도록... (프로토타입과 같이 쓸 수 있도록...)
+	var $j = jQuery.noConflict();
+
+	var sch_word = "";
+	$j(document).ready(function(){
+	  //sch_word_down();//초기화 ///2014.02.11 검색 어 막음  
+	});
+
+
+	//성원가이드 팝업
+	function swguide_popup(){  	
+	  var url = 'https://www.swadpia.co.kr/sw_guide/main/0/AA01/AB04';//이노릭스때문  
+	  window.open(url,'swguide','width=1040,height=850,left=0,top=0,scrollbars=yes,resizzable=yes,toolbar=no,directories=no,status=no,menubar=no');
+	}
+
+	//성원가이드 팝업(URL이동)
+	function swguide_popup_url(url){
+	  window.open(url,'swguide','width=1040,height=850,left=0,top=0,scrollbars=yes,resizzable=yes,toolbar=no,directories=no,status=no,menubar=no');
+	}
+
+	//성원가이드 랜덤호출
+	function swguide_popup_random(mode,cate_code1,cate_code2,cate_code3,cate_code4){
+	  var url = '/sw_guide/main/'+mode+'/'+cate_code1+'/'+cate_code2+'/'+cate_code3+'/'+cate_code4;
+	  window.open(url,'swguide','width=1040,height=850,left=0,top=0,scrollbars=yes,resizzable=yes,toolbar=no,directories=no,status=no,menubar=no');
+	}
+
+
+	function login(){
+	  //alert('로그인 후 이용해주세요');
+	  //document.getElementById('member_id_gnb').focus();
+		location.href = "/member/login";  
+	}
+
+	//대량명함접수
+	function mascard_popup(){  
+	  var url = '/images/mscard/mascard.html';  
+	  window.open(url,'mascard','width=715,height=650,left=0,top=0,scrollbars=yes,resizzable=yes,toolbar=no,directories=no,status=no,menubar=no');
+	}
+
+
+	//웹하드 로그인
+	function webhard_login(gubun){
+		
+		if(gubun == 'top'){
+			var member_id = document.getElementById('member_id_gnb').value;
+			var member_pw = document.getElementById('member_pw_gnb').value;
+		}
+		else{
+			var member_id = document.getElementById('mem_login_id').value;
+			var member_pw = document.getElementById('mem_login_pw').value;
+		}  	
+		
+		document.getElementById('User_Id').value = member_id;
+		document.getElementById('User_Pw').value = member_pw;
+
+		frm = document.getElementById('frm_webhard');	
+		frm.target = "ifr_webhard_login";
+		frm.action = "http://webhard.ad5555.com/link_login.php";	
+		frm.submit();
+
+		//alert(member_id+"==="+member_pw);
+		//return;	
+			
+		/*
+		//Support = 0:고객 1:관리자		
+		$j.ajax({
+			type: "POST",
+			url: "http://webhard.ad5555.com/link_login.php",
+			data : "Support=0&User_Id="+member_id+"&User_Pw="+member_pw,
+			success: function(resultMsg){
+				//alert(resultMsg);
+			}
+		});
+		*/
+		
+	}
+
+	//웹하드 로그아웃
+	function sw_logout(){
+
+		//성원로그아웃
+		location.href = "/member/logout";
+
+		//웹하드 로그아웃
+		frm = document.getElementById('frm_webhard');	
+		frm.target = "ifr_webhard_login";
+		frm.action = "http://webhard.ad5555.com/link_logout.php";	
+		frm.submit();
+			
+		/*
+		//웹하드 로그아웃
+		$j.ajax({
+			type: "POST",
+			url: "http://webhard.ad5555.com/link_logout.php",
+			data : "Support=0",
+			success: function(resultMsg){
+				//alert(resultMsg);
+			}
+		});
+		*/	
+		
+	}
+	// 쿠키 생성
+	function mymenu_setCookie(cName, cValue, cDay){
+		var expire = new Date();
+		expire.setDate(expire.getDate() + cDay);
+		cookies = cName + '=' + escape(cValue) + '; path=/ '; // 한글 깨짐을 막기위해 escape(cValue)를 합니다.
+		if(typeof cDay != 'undefined') cookies += ';expires=' + expire.toGMTString() + ';';
+		document.cookie = cookies;
+	}
+
+
+	function mypage_open(){
+					if($j('#wrapper_mymenu').css('display')=='block'){
+				$j('#wrapper_mymenu').hide();
+				mymenu_setCookie('my_menu_chk', 'close', 365);mymenu_getCookie('my_menu_chk'); 
+				$j('#mymenu_click').attr("src","https://image.swadpia.co.kr/re_images/btn_mymenu-down.png");
+			}else{
+				$j('#wrapper_mymenu').show();
+				mymenu_setCookie('my_menu_chk', 'open', 365);mymenu_getCookie('my_menu_chk'); 
+				$j('#mymenu_click').attr("src","https://image.swadpia.co.kr/re_images/btn_mymenu-up.png");
+			}
+			$j('#wrapper_category').hide();
+				
+				
+	}
+
+
+	//나의 메뉴등록팝업 open
+	function pop_mymenu_reg(){
+				$j("#popup-mymenu").dialog({	    
+			width : 'auto',
+			height : 'auto',
+			bgiframe: false,
+			resizable: false,
+			autoOpen: false,
+			modal: true,
+			istitle : false,
+			draggable : true,
+			//show : 'slide',
+			//hide : 'slide',
+			open:function() {
+			  $j(this).parent().find(".ui-dialog-titlebar").remove();
+			}
+		  });
+		  $j("#popup-mymenu").dialog('open');
+		 	}
+	//나의메뉴저장...............................................................
+	function my_menu_reg(){
+		var checked = [];
+		i=0;
+		my_good_arr='';
+		$j("input[name='my_goods[]']:checked").each(function ()
+		{
+			if($j(this).val()!=''){
+				i += 1;
+				my_good_arr += $j(this).val()+',';
+				//alert($(this).val()+"xxx"+checked.push(parseInt($(this).val())));
+				}
+			
+		});
+		if(i>9){alert("최대 9개까지만 선택 가능합니다.");return false;		}
+		if(i<=0){alert("추가하실 메뉴를 선택해주세요.");return false;		}
+		
+		if(my_good_arr==''||my_good_arr==0){
+			alert("추가하실 메뉴를 선택해주세요.");return false;
+		}else{
+			$j.ajax({
+					url: '/main/my_menu_reg',
+					type: 'post',
+					data: "my_good_arr="+my_good_arr+"&len="+i,
+					error: function(){
+						//alert('1info error!!!');
+					},
+					success: function(resultMsg){
+								//alert('success');
+								history.go(0);
+					},
+					failed : function (result, request) {
+						//alert('fail');	
+					}
+			}); 
+		} 
+	}
+	//나의메뉴저장<end>...............................................................
+	//분류별 메뉴레이어 보이기.
+		function earch_display(mode){
+			if(mode!='t_category_menu'){$j('#t_category_menu').hide();}
+			if(mode!='t_offset'){$j('#t_offset').hide();				}
+			if(mode!='div_digital'){$j('#div_digital').hide();			}	
+			if(mode!='div_silsa'){$j('#div_silsa').hide();}
+			if(mode!='div_prom'){$j('#div_prom').hide();}
+			if(mode!='div_package'){$j('#div_package').hide();}
+			if(mode!='div_pod'){$j('#div_pod').hide();     }     
+		}
+		function menu_display(mode){
+			//console.log(mode);
+			bottom_all_view('hide');
+			var all_yn='';
+			if(mode=='t_category_menu'){
+				if($j('#t_category_menu').css('display')!='block'){$j('#t_category_menu').show();$j('#mymenu').show();all_yn='';}
+				else																			 				{$j('#t_category_menu').hide();$j('#mymenu').hide();}
+			}				
+			
+			if(mode=='t_offset'){
+					if($j('#t_offset').css('display')!='block'){$j('#t_offset').show();$j('#mymenu').show();all_yn='Y';}
+					else																			 {$j('#t_offset').hide();$j('#mymenu').hide();}
+			}
+			if(mode=='div_digital'){
+				if($j('#div_digital').css('display')!='block'){$j('#div_digital').show();$j('#mymenu').show();all_yn='Y';}
+				else																			 {$j('#div_digital').hide();$j('#mymenu').hide();}
+			}				
+			if(mode=='div_silsa'){
+				if($j('#div_silsa').css('display')!='block'){$j('#div_silsa').show();$j('#mymenu').show();all_yn='Y';}
+				else																			 {$j('#div_silsa').hide();$j('#mymenu').hide();}
+			}
+			if(mode=='div_prom'){
+				if($j('#div_prom').css('display')!='block'){$j('#div_prom').show();$j('#mymenu').show();all_yn='Y';}
+				else																			 {$j('#div_prom').hide();$j('#mymenu').hide();}
+			}				
+			if(mode=='div_package'){
+				
+				if($j('#div_package').css('display')!='block'){$j('#div_package').show();$j('#mymenu').show();all_yn='Y';}
+				else																			 {$j('#div_package').hide();$j('#mymenu').hide();}
+			}							
+			if(mode=='div_pod'){
+				if($j('#div_pod').css('display')!='block'){$j('#div_pod').show();$j('#mymenu').show();all_yn='Y';}
+				else																			 {$j('#div_pod').hide();$j('#mymenu').hide();}
+			}			
+					
+			if(mode=='t_category_menu'){
+				$j('#top_allclose').show();
+				document.getElementById("top_allclose").style.display='block';
+				$j('#top_allopen').hide();
+
+			}else{					
+				$j('#top_allopen').show();
+				$j('#top_allclose').hide();					
+
+			}
+			earch_display(mode);
+			if(mode=='close'){
+				$j('#t_category_menu').hide();
+				$j('#t_offset').hide();
+				$j('#div_digital').hide();
+				$j('#div_silsa').hide();
+				$j('#div_prom').hide();
+				$j('#div_package').hide();
+				$j('#div_pod').hide();		
+				$j('#mymenu').hide();		
+				
+			}					
+			/*		
+		if(mode!=''){
+			if(mode!='or_mode'){	
+					$j('#or_mode').val(mode);	
+					menu=$j('#'+mode);
+					if(menu.css('display')!='block'){
+						$j('#'+mode).show();
+						//$j('#top_allclose').show();
+						//$j('#top_allopen').hide();
+						
+					}else{
+						$j('#'+mode).hide();
+						//$j('#top_allclose').hide();
+						//	$j('#top_allopen').show();										
+					}
+			}else{
+				$j('#'+$j('#or_mode').val()).show();
+			}
+			if(mode=='close'){
+				$j('#t_category_menu').hide();
+				$j('#t_offset').hide();
+				$j('#div_digital').hide();
+				$j('#div_silsa').hide();
+				$j('#div_prom').hide();
+				$j('#div_package').hide();
+				$j('#div_pod').hide();		
+				$j('#mymenu').hide();		
+				
+				//$j('#top_allclose').hide();
+				//$j('#top_allopen').show();
+			}else{
+				$j('#mymenu').show();}
+		}*/
+		
+	}
+	//bottom 메뉴전ㅊ			
+	function bottom_all_view(mode){
+		if(mode=='hide'){
+			$j('#sitemap_all').hide();
+			$j('#footer_open').show();
+			$j('#footer_close').hide();
+		}else{
+				if($j('#sitemap_all').css('display')=='block'){//닫을때
+					$j('#footer_open').show();
+					$j('#sitemap_all').hide();
+					$j('#footer_close').hide();
+					
+				}else{//열릴때
+					
+					$j('#sitemap_all').show();							
+					$j('#footer_close').show();
+					$j('#footer_open').hide();
+					
+					 
+				}
+		}
+	}			
+	function bookmarksite(title,url) { 
+	   // Internet Explorer
+	   if(document.all)
+	   {
+		   window.external.AddFavorite(url, title); 
+	   }
+	   // Google Chrome
+	   else if(window.chrome){
+		  alert("Ctrl+D키를 누르시면 즐겨찾기에 추가하실 수 있습니다.");
+	   }
+	   // Firefox
+	   else if (window.sidebar) // firefox 
+	   {
+		   window.sidebar.addPanel(title, url, ""); 
+	   }
+	   // Opera
+	   else if(window.opera && window.print)
+	   { // opera 
+		  var elem = document.createElement('a'); 
+		  elem.setAttribute('href',url); 
+		  elem.setAttribute('title',title); 
+		  elem.setAttribute('rel','sidebar'); 
+		  elem.click(); 
+	   }
+	} 
+
+	function fncTopHeaderBannerLoad() {
+    return new Promise((resolve, reject) => {
+        var parm = '&banner_code=topheader';
+
+				$j('.right-num').empty();
+        $j('.topslide_bxslider').empty();
+        $j('#topslide_bxslider_totalnum').empty();
+        var topslide_list  = ""; //탑 띠 배너 리스트
+        var topslide_cnt = 0; // 탑 띠 배너 갯수
+
+        $j.ajax({
+            type: 'POST',
+            url: "/main/top_header_banner_json",
+            data: parm,
+            dataType: 'json',
+            success: function(data) {
+                if (data == null || data == '') {
+                    resolve();  // 데이터가 없을 때도 완료로 간주
+                    return;
+                }
+                topslide_cnt = parseInt(data.topheader.length);
+
+                totalCount = data.totalCount;
+                if (data.topheader && topslide_cnt > 0 ) {
+                    var append  = "";
+                    for (i = 0; i < topslide_cnt; i++) {
+                        topslide_list += '<div class="topslide-list"><a href="'+ data.topheader[i]['link_url'] + '" target="_blank"><img src="/uploads/banner/'+ data.topheader[i]['file_name'] + '" alt="'+ data.topheader[i]['b_title'] + '" /></a></div>';
+                        append += '<div class="topslide-list"><a href="'+ data.topheader[i]['link_url'] + '" target="_blank"><img src="/uploads/banner/'+ data.topheader[i]['file_name'] + '" alt="'+ data.topheader[i]['b_title'] + '" /></a></div>';
+                        $j('.topslide_mainslider').append(append);
+                        append = ''; //초기화
+                    }
+                }
+								$j('.right-num').append(topslide_cnt);
+                resolve(); // 성공적으로 데이터를 로드한 후 완료
+            },
+            error: function(request, status, error) {
+                reject(error); // 에러 발생 시 프로미스를 거부
+            },
+            complete: function() {
+                finish = true;
+            }
+        });
+    });
+}
+	function topHeaderBannerClose (v, pop_id, pop_cookie){
+		var close_today = document.getElementById("top_header_bnr_todaybox");
+		var pnl_popup_div = document.getElementById(pop_id);
+
+		if (close_today.checked == true) {
+				//document.getElementById("new_year").pause();
+				setCookie(pop_cookie,"no",1);
+				pnl_popup_div.style.display = "none";
+			}else {
+				pnl_popup_div.style.display = "none";
+			}
+	}
+	var topbnrCookie = getCookie("topbanner");  // 탑 띠 배너 쿠키 확인
+	if (topbnrCookie != "no") {
+		var topslide_list  = ""; //탑 띠 배너 리스트
+		var topslide_cnt = 0; // 탑 띠 배너 갯수
+
+		// var ret= fncTopHeaderBannerLoad();
+	}
+	</script>
+
+		<!-- 2014 리뉴얼 CSS -->
+	<link rel="stylesheet" type="text/css" href="https://www.swadpia.co.kr/css/old_swadpia.css">
+	<link rel="stylesheet" type="text/css" href="https://image.swadpia.co.kr/css/goods_layout.css">
+
+	<!-- COMMON css -->
+	<link rel="stylesheet" type="text/css" href="https://image.swadpia.co.kr/css/comm.css">
+	<link rel="stylesheet" type="text/css" href="https://image.swadpia.co.kr/css/index_2017.css">
+	<link rel="stylesheet" type="text/css" href="https://image.swadpia.co.kr/css/header_2017.css">
+	<link rel="stylesheet" type="text/css" href="https://image.swadpia.co.kr/css/footer_2017.css">
+	<!-- COMMON css -->
+	<link rel="shortcut icon" href="https://www.swadpia.co.kr/images/common/swadpia.ico" type="image/x-icon">
+	<!-- 2025 리뉴얼 CSS -->
+    <!-- <link rel="stylesheet" href="./css/reset.css"> -->
+    <link rel="stylesheet" href="/css/reset.css">
+    <link rel="stylesheet" href="/css/index.css">
+    <link rel="stylesheet" href="/css/header_sub.css">
+    <link rel="stylesheet" href="/css/footer.css">
+    <link rel="stylesheet" href="https://www.swadpia.co.kr/css/2025/swiper-bundle.css">
+
+	<title>성원애드피아</title>
+</head>
+<!--<body style="min-width:1090px;" oncontextmenu="return false">-->
+<body>
+    <header>
+        <div class="banner_top">
+            <div class="max-1180">
+                <div class="swiper">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide">
+                            <img src="/assets/img/top_banner_icon.png" alt=""><strong>[NEWS]</strong> 성원애드피아의 새로운 시작! 홈페이지가 새롭게 리뉴얼 됐어요1
+                        </div>
+                        <div class="swiper-slide">
+                            <img src="/assets/img/top_banner_icon.png" alt=""><strong>[NEWS]</strong> 성원애드피아의 새로운 시작! 홈페이지가 새롭게 리뉴얼 됐어요2
+                        </div>
+                        <div class="swiper-slide">
+                            <img src="/assets/img/top_banner_icon.png" alt=""><strong>[NEWS]</strong> 성원애드피아의 새로운 시작! 홈페이지가 새롭게 리뉴얼 됐어요3
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-pagination-wrap">
+                    <div class="swiper-button-prev"></div>
+                    <div class="swiper-pagination"></div>
+                    <div class="swiper-button-next"></div>
+                </div>
+                <!-- <h5><img src="/assets/img/top_banner_icon.png" alt=""><strong>[NEWS]</strong> 성원애드피아의 새로운 시작! 홈페이지가 새롭게
+                    리뉴얼 됐어요</h5> -->
+                <p class="close">
+                    <!-- 하루동안 보지 않기 -->
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="m16 8.5-8 8m0-8 8 8" stroke="#fff" stroke-width="1.2" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
+                </p>
+            </div>
+        </div>
+        <div class="header_wrap max-1180">
+            <div class="left">
+                <a href="">
+                    <img src="https://www.swadpia.co.kr/images/2025/img/logo.svg" alt="로고">
+                </a>
+            </div>
+            <div class="right">
+                <a class="mypage" href="">
+                    마이페이지
+                </a>
+                <a class="mypage" href="">
+                    로그아웃
+                </a>
+                <a href="" class="basket">
+                    <img src="https://www.swadpia.co.kr/images/2025/img/basket.svg" alt="">
+                    <p class="cnt_box">
+                        246
+                    </p>
+                </a>
+            </div>
+        </div>
+        <div class="gnb_2025">
+            <div class="max-1180">
+                <div class="left">
+                    <div class="menu_wrab" data-id="type01">
+                        <img class="default" src="https://www.swadpia.co.kr/images/2025/img/ham_default.svg" alt="">
+                        <img class="on" src="https://www.swadpia.co.kr/images/2025/img/ham_on.svg" alt="">
+                    </div>
+                    <a class="txt category_btn" data-id="type02" href="javascript:;">
+                        상업인쇄
+                        <p class="sp_tit">대량주문</p>
+                    </a>
+                    <a class="txt category_btn" data-id="type03" href="javascript:;">
+                        디지털인쇄
+                    </a>
+                    <a class="txt category_btn" data-id="type04" href="javascript:;">
+                        판촉물
+                    </a>
+                    <a class="txt category_btn" data-id="type05" href="javascript:;">
+                        패키지
+                    </a>
+                    <a class="txt category_btn" data-id="type06" href="javascript:;">
+                        기획상품
+                    </a>
+                    <a class="txt" href="">
+                        셀프디자인
+                    </a>
+                    <a class="txt" href="">
+                        실사출력
+                    </a>
+                </div>
+                <div class="right">
+                    <div class="txt how_use_btn" href="">
+                        이용방법
+                        <svg width="8" height="6" viewBox="0 0 8 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path opacity="1" d="M3.19 4.876a1 1 0 0 0 1.62 0l2.376-3.29A1 1 0 0 0 6.376 0H1.624a1 1 0 0 0-.811 1.585l2.375 3.291z" fill="#000"></path>
+                        </svg>
+                        <ul class="how_use_box">
+                            <li>
+                                <a href="javascript:;" class="items">
+                                    사이트 이용방법
+                                </a>
+                            </li>
+                            <li>
+                                <a href="javascript:;" class="items">
+                                    작업 주의사항
+                                </a>
+                            </li>
+                            <li>
+                                <a href="javascript:;" class="items">
+                                    양식 다운받기
+                                </a>
+                            </li>
+                            <li>
+                                <a href="javascript:;" class="items">
+                                    인쇄가이드
+                                </a>
+                            </li>
+                            <li>
+                                <a href="javascript:;" class="items">
+                                    상품소개
+                                </a>
+                            </li>
+                            <li>
+                                <a href="javascript:;" class="items">
+                                    별색
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <a class="txt" href="">
+                        고객센터
+                    </a>
+                    <a class="txt active" href="">
+                        웹하드
+                    </a>
+                </div>
+            </div>
+            <div class="menu_box ">
+                <div class="inner_box">
+                    <div class="max-1180">
+                        <div id="type01" class="grid-8 category">
+                            <div class="items">
+                                <ul>
+                                    <li><a href="">명함</a></li>
+                                    <li><a href="">일반지명함</a></li>
+                                    <li><a href="">고급지명함</a></li>
+                                    <li><a href="">카드명함</a></li>
+                                    <li><a href="">하이브리드명함</a></li>
+                                    <li><a href="">투명하이브리드명함</a></li>
+                                    <li><a href="">하이브리드명함</a></li>
+                                    <li><a href="">에폭시명함</a></li>
+                                    <li><a href="">프리컷팅</a></li>
+                                </ul>
+                                <ul>
+                                    <li><a href="">전단</a></li>
+                                    <li><a href="">합판전단</a></li>
+                                    <li><a href="">고급전단</a></li>
+                                    <li><a href="">랑데뷰합판</a></li>
+                                </ul>
+                            </div>
+                            <div class="items">
+                                <ul>
+                                    <li><a href="">스티커</a></li>
+                                    <li><a href="">재단형</a></li>
+                                    <li><a href="">도무송형</a></li>
+                                    <li><a href="">차량스티커</a></li>
+                                    <li><a href="">메탈스티커</a></li>
+                                    <li><a href="">라벨스티커(롤)</a></li>
+                                    <li class="new"><a href="">스페셜스티커</a></li>
+                                    <li class="new"><a href="">팬시스티커</a></li>
+                                    <li class="new"><a href="">팬시롤스티커</a></li>
+                                </ul>
+                                <ul>
+                                    <li><a href="">봉투</a></li>
+                                    <li><a href="">대/중/소</a></li>
+                                    <li><a href="">자켓형</a></li>
+                                    <li><a href="">안내형</a></li>
+                                    <li><a href="">기성형</a></li>
+                                    <li><a href="">캘린더봉투</a></li>
+                                </ul>
+                            </div>
+                            <div class="items">
+                                <ul>
+                                    <li><a href="">홍보물</a></li>
+                                    <li><a href="">카탈로그/브로셔</a></li>
+                                    <li><a href="">포스터</a></li>
+                                    <li><a href="">리플렛/팜플렛</a></li>
+                                    <li><a href="">책자</a></li>
+                                    <li><a href="">종이홀더</a></li>
+                                    <li><a href="">L홀더(PP홀더)</a></li>
+                                    <li><a href="">투포켓홀더</a></li>
+                                    <li><a href="">클리어화일</a></li>
+                                    <li><a href="">서류화일</a></li>
+                                </ul>
+                                <ul>
+                                    <li><a href="">경인쇄</a></li>
+                                    <li><a href="">NCR지</a></li>
+                                    <li><a href="">서식/양식</a></li>
+                                    <li><a href="">떡메모지</a></li>
+                                    <li><a href="">마스터책자</a></li>
+                                </ul>
+                            </div>
+                            <div class="items">
+                                <ul>
+                                    <li><a href="">고급인쇄</a></li>
+                                    <li><a href="">일반지</a></li>
+                                    <li><a href="">고급지/특수지/펄지</a></li>
+                                    <li><a href="">판지/박스</a></li>
+                                    <li><a href="">하이브리드인쇄</a></li>
+                                    <li><a href="">플라스틱/비닐</a></li>
+                                </ul>
+                                <ul>
+                                    <li><a href="">패키지</a>
+                                        <p class="sp_tit">
+                                            특수인쇄
+                                        </p>
+                                    </li>
+                                    <li><a href="">판지/박스</a></li>
+                                    <li><a href="">플라스틱/비닐</a></li>
+                                    <li><a href="">리본&amp;브레이드 쇼핑백</a></li>
+                                    <li><a href="">손잡이쇼핑백</a></li>
+                                    <li class="new"><a href="">일반쇼핑백</a></li>
+                                    <li class="new"><a href="">소량쇼핑백</a></li>
+                                </ul>
+                            </div>
+                            <div class="items">
+                                <ul>
+                                    <li><a href="">안내장</a></li>
+                                    <li><a href="">일반초대장/상품권</a></li>
+                                    <li><a href="">고급초대장/상품권</a></li>
+                                    <li><a href="">하이브리드초대장</a></li>
+                                    <li><a href="">에폭시초대장</a></li>
+                                    <li><a href="">청첩장/연하장</a></li>
+                                    <li><a href="">디자인연하장</a></li>
+                                </ul>
+                                <ul>
+                                    <li><a href="">기획상품</a></li>
+                                    <li><a href="">프리컷팅</a></li>
+                                    <li><a href="">샘플북/칼라차트북</a></li>
+                                    <li><a href="">명함케이스</a></li>
+                                    <li><a href="">알루미늄명함칼러 샘플북</a></li>
+                                </ul>
+                            </div>
+                            <div class="items">
+                                <ul>
+                                    <li><a href="">디지털</a>
+                                        <p class="sp_tit">
+                                            토너인쇄
+                                        </p>
+                                    </li>
+                                    <li><a href="">디지털명함</a></li>
+                                    <li><a href="">디지털엽서/상품권</a></li>
+                                    <li><a href="">디지털포스터</a></li>
+                                    <li><a href="">디지털책자</a></li>
+                                    <li><a href="">디지털전단지</a></li>
+                                    <li><a href="">디지털리플렛/팜플렛</a></li>
+                                    <li><a href="">디지털카탈로그/브로셔</a></li>
+                                    <li><a href="">종이미니배너</a></li>
+                                    <li><a href="">디지털즉석명함</a></li>
+                                </ul>
+                                <ul>
+                                    <li><a href="">기타인쇄</a></li>
+                                    <li><a href="">복권</a></li>
+                                    <li><a href="">문어발</a></li>
+                                    <li><a href="">문고리</a></li>
+                                </ul>
+                            </div>
+                            <div class="items">
+                                <ul>
+                                    <li><a href="">디지털</a>
+                                        <p class="sp_tit">
+                                            인디고인쇄
+                                        </p>
+                                    </li>
+                                    <li><a href="">디지털명함</a></li>
+                                    <li class="new"><a href="">디지털박/에폭시명함</a></li>
+                                    <li><a href="">디지털엽서/상품권</a></li>
+                                    <li><a href="">디지털초대장</a></li>
+                                    <li><a href="">디지털포스터</a></li>
+                                    <li><a href="">디지털책자</a></li>
+                                    <li><a href="">초저가 디지털책자</a></li>
+                                    <li><a href="">디지털전단지</a></li>
+                                    <li><a href="">디지털리플렛/팜플렛</a></li>
+                                    <li><a href="">디지털카탈로그/브로셔</a></li>
+                                    <li><a href="">디지털칼라봉투</a></li>
+                                    <li><a href="">디지털캘린더</a></li>
+                                    <li><a href="">디지털스티커</a></li>
+                                    <li class="new"><a href="">디지털라벨스티커</a></li>
+                                    <li class="new"><a href="">디지털판지/박스</a></li>
+                                    <li class="new"><a href="">디지털노트</a></li>
+                                </ul>
+                            </div>
+                            <div class="items">
+                                <ul>
+                                    <li><a href="">판촉물</a></li>
+                                    <li><a href="">부채</a></li>
+                                    <li><a href="">다용도PP</a></li>
+                                    <li><a href="">책갈피</a></li>
+                                    <li><a href="">종이썬캡</a></li>
+                                    <li><a href="">PP썬캡</a></li>
+                                    <li><a href="">대량캘린더</a></li>
+                                    <li><a href="">소량캘린더</a></li>
+                                    <li class="new"><a href="">대량벽걸이캘린더</a></li>
+                                    <li class="new"><a href="">소량벽걸이캘린더</a></li>
+                                    <li><a href="">사각포스트잇</a></li>
+                                    <li><a href="">모양포스트잇</a></li>
+                                    <li><a href="">휴대폰케이스</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div id="type02" class="grid-8 category">
+                            <div class="items">
+                                <ul>
+                                    <li><a href="">명함</a></li>
+                                    <li><a href="">일반지명함</a></li>
+                                    <li><a href="">고급지명함</a></li>
+                                    <li><a href="">카드명함</a></li>
+                                    <li><a href="">하이브리드명함</a></li>
+                                    <li><a href="">투명하이브리드명함</a></li>
+                                    <li><a href="">하이브리드명함</a></li>
+                                    <li><a href="">에폭시명함</a></li>
+                                    <li><a href="">프리컷팅</a></li>
+                                </ul>
+                                <ul>
+                                    <li><a href="">패키지</a>
+                                        <p class="sp_tit">
+                                            특수인쇄
+                                        </p>
+                                    </li>
+                                    <li><a href="">판지/박스</a></li>
+                                    <li><a href="">플라스틱/비닐</a></li>
+                                    <li><a href="">리본&amp;브레이드 쇼핑백</a></li>
+                                    <li><a href="">손잡이쇼핑백</a></li>
+                                    <li class="new"><a href="">일반쇼핑백</a></li>
+                                    <li class="new"><a href="">소량쇼핑백</a></li>
+                                </ul>
+                            </div>
+                            <div class="items">
+                                <ul>
+                                    <li><a href="">스티커</a></li>
+                                    <li><a href="">재단형</a></li>
+                                    <li><a href="">도무송형</a></li>
+                                    <li><a href="">차량스티커</a></li>
+                                    <li><a href="">메탈스티커</a></li>
+                                    <li><a href="">라벨스티커(롤)</a></li>
+                                    <li class="new"><a href="">스페셜스티커</a></li>
+                                    <li class="new"><a href="">팬시스티커</a></li>
+                                    <li class="new"><a href="">팬시롤스티커</a></li>
+                                </ul>
+                                <ul>
+                                    <li><a href="">기타인쇄</a></li>
+                                    <li><a href="">복권</a></li>
+                                    <li><a href="">문어발</a></li>
+                                    <li><a href="">문고리</a></li>
+                                </ul>
+                            </div>
+                            <div class="items">
+                                <ul>
+                                    <li><a href="">홍보물</a></li>
+                                    <li><a href="">카탈로그/브로셔</a></li>
+                                    <li><a href="">포스터</a></li>
+                                    <li><a href="">리플렛/팜플렛</a></li>
+                                    <li><a href="">책자</a></li>
+                                    <li><a href="">종이홀더</a></li>
+                                    <li><a href="">L홀더(PP홀더)</a></li>
+                                    <li><a href="">투포켓홀더</a></li>
+                                    <li><a href="">클리어화일</a></li>
+                                    <li><a href="">서류화일</a></li>
+                                </ul>
+                            </div>
+                            <div class="items">
+                                <ul>
+                                    <li><a href="">고급인쇄</a></li>
+                                    <li><a href="">일반지</a></li>
+                                    <li><a href="">고급지/특수지/펄지</a></li>
+                                    <li><a href="">판지/박스</a></li>
+                                    <li><a href="">하이브리드인쇄</a></li>
+                                    <li><a href="">플라스틱/비닐</a></li>
+                                </ul>
+                            </div>
+                            <div class="items">
+                                <ul>
+                                    <li><a href="">안내장</a></li>
+                                    <li><a href="">일반초대장/상품권</a></li>
+                                    <li><a href="">고급초대장/상품권</a></li>
+                                    <li><a href="">하이브리드초대장</a></li>
+                                    <li><a href="">에폭시초대장</a></li>
+                                    <li><a href="">청첩장/연하장</a></li>
+                                    <li><a href="">디자인연하장</a></li>
+                                </ul>
+                            </div>
+                            <div class="items">
+                                <ul>
+                                    <li><a href="">전단</a></li>
+                                    <li><a href="">합판전단</a></li>
+                                    <li><a href="">고급전단</a></li>
+                                    <li><a href="">랑데뷰합판</a></li>
+                                </ul>
+                            </div>
+                            <div class="items">
+                                <ul>
+                                    <li><a href="">봉투</a></li>
+                                    <li><a href="">대/중/소</a></li>
+                                    <li><a href="">자켓형</a></li>
+                                    <li><a href="">안내형</a></li>
+                                    <li><a href="">기성형</a></li>
+                                    <li><a href="">캘린더봉투</a></li>
+                                </ul>
+                            </div>
+                            <div class="items">
+                                <ul>
+                                    <li><a href="">경인쇄</a></li>
+                                    <li><a href="">NCR지</a></li>
+                                    <li><a href="">서식/양식</a></li>
+                                    <li><a href="">떡메모지</a></li>
+                                    <li><a href="">마스터책자</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div id="type03" class="grid-8 category">
+                            <div class="items line_none">
+                                <ul>
+                                    <li><a href="">디지털</a>
+                                        <p class="sp_tit">
+                                            인디고인쇄
+                                        </p>
+                                    </li>
+                                    <li><a href="">디지털명함</a></li>
+                                    <li class="new"><a href="">디지털박/에폭시명함</a></li>
+                                    <li><a href="">디지털엽서/상품권</a></li>
+                                    <li><a href="">디지털초대장</a></li>
+                                    <li><a href="">디지털포스터</a></li>
+                                    <li><a href="">디지털책자</a></li>
+                                    <li><a href="">초저가 디지털책자</a></li>
+                                    <li><a href="">디지털전단지</a></li>
+                                    <li><a href="">디지털리플렛/팜플렛</a></li>
+                                    <li><a href="">디지털카탈로그/브로셔</a></li>
+                                    <li><a href="">디지털칼라봉투</a></li>
+                                    <li><a href="">디지털캘린더</a></li>
+                                </ul>
+                            </div>
+                            <div class="items">
+                                <ul>
+                                    <li>&nbsp;</li>
+                                    <li><a href="">디지털스티커</a></li>
+                                    <li class="new"><a href="">디지털라벨스티커</a></li>
+                                    <li class="new"><a href="">디지털판지/박스</a></li>
+                                    <li class="new"><a href="">디지털노트</a></li>
+                                </ul>
+                            </div>
+                            <div class="items line_none">
+                                <ul>
+                                    <li><a href="">디지털</a>
+                                        <p class="sp_tit">
+                                            토너인쇄
+                                        </p>
+                                    </li>
+                                    <li><a href="">디지털명함</a></li>
+                                    <li><a href="">디지털엽서/상품권</a></li>
+                                    <li><a href="">디지털포스터</a></li>
+                                    <li><a href="">디지털책자</a></li>
+                                    <li><a href="">디지털전단지</a></li>
+                                    <li><a href="">디지털리플렛/팜플렛</a></li>
+                                    <li><a href="">디지털카탈로그/브로셔</a></li>
+                                    <li><a href="">종이미니배너</a></li>
+                                    <li><a href="">디지털즉석명함</a></li>
+                                </ul>
+                            </div>
+                            <div class="other_box">
+                                <div class="img_box">
+                                    <img src="https://www.swadpia.co.kr/images/2025/img/category_img01.webp" alt="">
+                                </div>
+                            </div>
+                        </div>
+                        <div id="type04" class="grid-8 category">
+                            <div class="items line_none">
+                                <ul>
+                                    <li><a href="">판촉물</a></li>
+                                    <li><a href="">부채</a></li>
+                                    <li><a href="">다용도PP</a></li>
+                                    <li><a href="">책갈피</a></li>
+                                    <li><a href="">종이썬캡</a></li>
+                                    <li><a href="">PP썬캡</a></li>
+                                    <li><a href="">대량캘린더</a></li>
+                                    <li><a href="">소량캘린더</a></li>
+                                </ul>
+                            </div>
+                            <div class="items">
+                                <ul>
+                                    <li>&nbsp;</li>
+                                    <li class="new"><a href="">대량벽걸이캘린더</a></li>
+                                    <li class="new"><a href="">소량벽걸이캘린더</a></li>
+                                    <li><a href="">사각포스트잇</a></li>
+                                    <li><a href="">모양포스트잇</a></li>
+                                    <li><a href="">휴대폰케이스</a></li>
+                                </ul>
+                            </div>
+                            <div class="other_box">
+                                <div class="left_txt_box">
+                                    <div class="left">
+                                        <img src="https://www.swadpia.co.kr/images/2025/img/category_type04_img.svg" alt="">
+                                    </div>
+                                    <div class="right">
+                                        <p class="head">
+                                            제작문의
+                                        </p>
+                                        <p>
+                                            02-6262-5509
+                                        </p>
+                                        <p>
+                                            02-6262-5741
+                                        </p>
+                                        <p>
+                                            02-6262-5500
+                                        </p>
+                                        <p>
+                                            02-6262-5536
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="img_box">
+                                    <img src="https://www.swadpia.co.kr/images/2025/img/category_img02.webp" alt="">
+                                </div>
+                            </div>
+                        </div>
+                        <div id="type05" class="grid-8 category">
+                            <div class="items">
+                                <ul>
+                                    <li><a href="">패키지</a>
+                                        <p class="sp_tit">
+                                            특수인쇄
+                                        </p>
+                                    </li>
+                                    <li><a href="">판지/박스</a></li>
+                                    <li><a href="">플라스틱/비닐</a></li>
+                                    <li><a href="">리본&amp;브레이드 쇼핑백</a></li>
+                                    <li><a href="">손잡이쇼핑백</a></li>
+                                    <li class="new"><a href="">일반쇼핑백</a></li>
+                                    <li class="new"><a href="">소량쇼핑백</a></li>
+                                </ul>
+                            </div>
+                            <div class="other_box">
+                                <div class="left_txt_box">
+                                    <div class="inner_item">
+                                        <img src="https://www.swadpia.co.kr/images/2025/img/category_type05_img01.svg" alt="">
+                                        <p>박스, 포장재,<br>
+                                            홀더, 표지, 상품텍</p>
+                                    </div>
+                                    <div class="inner_item">
+                                        <img src="https://www.swadpia.co.kr/images/2025/img/category_type05_img02.svg" alt="">
+                                        <p>옵션인쇄, UV인쇄</p>
+                                    </div>
+                                    <div class="inner_item">
+                                        <img src="https://www.swadpia.co.kr/images/2025/img/category_type05_img03.svg" alt="">
+                                        <p>전지기준 25매 부터</p>
+                                    </div>
+                                </div>
+                                <div class="img_box">
+                                    <img src="https://www.swadpia.co.kr/images/2025/img/category_img02.webp" alt="">
+                                </div>
+                            </div>
+                        </div>
+                        <div id="type06" class="grid-8 category">
+                            <div class="items">
+                                <ul>
+                                    <li><a href="">판촉물</a></li>
+                                    <li><a href="">부채</a></li>
+                                    <li><a href="">다용도PP</a></li>
+                                    <li><a href="">책갈피</a></li>
+                                    <li><a href="">종이썬캡</a></li>
+                                    <li><a href="">PP썬캡</a></li>
+                                    <li><a href="">대량캘린더</a></li>
+                                    <li><a href="">소량캘린더</a></li>
+                                </ul>
+                            </div>
+                            <div class="other_box">
+                                <div class="left_txt_box">
+                                    <div class="inner_item">
+                                        <img src="https://www.swadpia.co.kr/images/2025/img/category_type06_img01.svg" alt="">
+                                        <p>샘플북 6종류<br>
+                                            컬러차트북 3종류</p>
+                                    </div>
+                                    <div class="inner_item">
+                                        <img src="https://www.swadpia.co.kr/images/2025/img/category_type06_img02.svg" alt="">
+                                        <p>운영시간<br>
+                                            오전 9시~오후 7시</p>
+                                    </div>
+                                </div>
+                                <div class="img_box">
+                                    <img src="https://www.swadpia.co.kr/images/2025/img/category_img01.webp" alt="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="outer_box">
+                    <div class="max-1180">
+                        <div class="left">
+                            <div class="tit_box">
+                                <p class="tit">나만의 메뉴보기</p>
+                                <p class="sub_tit">메뉴설정
+                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M5.007 9.993 11 4m0 0H5m6 0v6" stroke="#335CFF" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"></path>
+                                    </svg>
+                                </p>
+                            </div>
+                            <ul>
+                                <li><a class="card" href="javascript:;">별도견적 카탈로그</a></li>
+                                <li><a class="card" href="javascript:;">포스터</a></li>
+                                <li><a class="card" href="javascript:;">디지털 포스터</a></li>
+                                <li><a class="card" href="javascript:;">프리컷팅</a></li>
+                                <li><a class="card empty" href="javascript:;"></a></li>
+                                <li><a class="card empty" href="javascript:;"></a></li>
+                                <li><a class="card empty" href="javascript:;"></a></li>
+                                <li><a class="card empty" href="javascript:;"></a></li>
+                                <li><a class="card empty" href="javascript:;"></a></li>
+                            </ul>
+                        </div>
+                        <div class="right">
+                            <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect width="60" height="60" rx="30" fill="#fff"></rect>
+                                <path d="M26.577 41.207h-5.295a.498.498 0 0 1-.496-.498V19.29c0-.274.223-.498.496-.498h17.024c.274 0 .497.224.497.498v3.166c0 .357.288.646.643.646.355 0 .643-.289.643-.646v-3.166c0-.987-.8-1.791-1.783-1.791H21.282c-.983 0-1.782.804-1.782 1.791V40.71c0 .987.799 1.791 1.782 1.791h5.295c.355 0 .643-.289.643-.646a.645.645 0 0 0-.643-.647zM39.41 36.617a.678.678 0 0 0-.68.679v3.323a.524.524 0 0 1-.523.523h-3.324a.678.678 0 0 0 0 1.358h3.324c1.038 0 1.88-.844 1.88-1.881v-3.323a.678.678 0 0 0-.678-.679z" fill="#DCDDE0" stroke="#DCDDE0" stroke-width=".288" stroke-miterlimit="10"></path>
+                                <path d="M24.516 27.793c-.335 0-.608.329-.608.735 0 .407.272.736.608.736h9.078c.336 0 .608-.33.608-.736 0-.406-.272-.735-.608-.735h-9.078zM24.501 32.207c-.327 0-.593.33-.593.735 0 .407.266.736.593.736h4.697c.327 0 .593-.33.593-.736 0-.406-.266-.735-.593-.735H24.5zM35.673 24.118c0-.406-.283-.735-.633-.735h-10.5c-.348 0-.632.329-.632.735 0 .406.284.735.633.735h10.5c.349 0 .632-.329.632-.735zM44.318 28.14l-3.107-3.106a.62.62 0 0 0-.877 0l-9.321 9.32a.62.62 0 0 0-.164.289l-1.036 4.142a.622.622 0 0 0 .754.754l4.142-1.035a.623.623 0 0 0 .289-.164l9.32-9.32a.62.62 0 0 0 0-.878v-.002zM34.241 37.34l-2.971.742.743-2.97 1.244-1.244 2.228 2.228-1.244 1.244zm2.123-2.122-2.229-2.228 6.638-6.637L43 28.58l-6.637 6.637z" fill="#DCDDE0" stroke="#DCDDE0" stroke-width=".288" stroke-miterlimit="10"></path>
+                            </svg>
+                            <div class="inner_right_box">
+                                <p class="tit">별도견적</p>
+                                <p class="sub_tit">원하는 견적이 없으신가요?</p>
+                                <ul class="flr">
+                                    <li>전단지</li>
+                                    <li>카탈로그</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+		<!-- 나만의메뉴 st --><!-- 카테고리 밑에 항상 붙어다님 -->
+					<!--나만의 메뉴 설정##############################################################################-->
+						<div id="popup-mymenu" style="display:none">
+							<span class="t_left p_l10">자주 사용하는 메뉴 <span class="re_red re_bold">9</span>개를 선택하신 후 저장버튼을 누르시기 바랍니다.</span>
+							<span class="close"><button type="button" onclick="$j('#popup-mymenu').dialog('close');"><span>닫 기</span></button></span>
+							<table class="re_mbox">
+								<caption>나의메뉴 설정하기</caption>
+								<colgroup>
+									<col width="100px">
+									<col width="20px">
+									<col width="131px">
+									<col width="131px">
+									<col width="131px">
+									<col width="131px">
+									<col width="131px">
+									<col width="131px">
+								</colgroup>
+								<tbody>
+								<tr>
+								</tr><tr>
+										<th rowspan="2" class="h_26">홍보물</th>
+										<td class="bb_none h_26"></td>
+										<td class="t_left"><input type="checkbox" name="my_goods[]" id="CPR1000/GPR1001" value="CPR1000/GPR1001"><label for="CPR1000/GPR1001">카탈로그/브로셔</label></td>
+										<td class="t_left"><input type="checkbox" name="my_goods[]" id="CPR2000/GPR2001" value="CPR2000/GPR2001"><label for="CPR2000/GPR2001">포스터</label></td>
+										<td class="t_left"><input type="checkbox" name="my_goods[]" id="CPR3000/GPR3001" value="CPR3000/GPR3001"><label for="CPR3000/GPR3001">리플렛/팜플렛</label></td>
+										<td class="t_left"><input type="checkbox" name="my_goods[]" id="CPR4000/GPR4001" value="CPR4000/GPR4001"><label for="CPR4000/GPR4001">책자</label></td>
+										<td class="t_left"><input type="checkbox" name="my_goods[]" id="CPR5000/GPR5001" value="CPR5000/GPR5001" checked=""><label for="CPR5000/GPR5001">종이홀더</label></td>
+										<td class="t_left"><input type="checkbox" name="my_goods[]" id="CPR5100/GPR5101" value="CPR5100/GPR5101"><label for="CPR5100/GPR5101">L홀더(PP홀더)</label></td>
+
+									</tr>
+									<tr>
+										<td class="h_26"></td>
+										<td class="t_left"><input type="checkbox" name="my_goods[]" id="CPR5200/GPR5201" value="CPR5200/GPR5201"><label for="CPR5200/GPR5201">투포켓홀더</label></td>
+										<td class="t_left"><input type="checkbox" name="my_goods[]" id="CPR5400/GPR5401" value="CPR5400/GPR5401"><label for="CPR5400/GPR5401">클리어화일</label></td>
+										<td class="t_left"><input type="checkbox" name="my_goods[]" id="CPR5300/GPR5301" value="CPR5300/GPR5301"><label for="CPR5300/GPR5301">서류화일</label></td>
+
+										<td class="t_left h_26"></td>
+										<td class="t_left h_26"></td>
+										<td class="t_left h_26"></td>
+									</tr>
+
+									<tr>
+										<th rowspan="1">고급인쇄</th>
+										<td class="bb_none h_26"></td>
+										<td class="t_left"><input type="checkbox" name="my_goods[]" id="CHI1000/GHI1001" value="CHI1000/GHI1001" checked=""><label for="CHI1000/GHI1001">일반지</label></td>										<td class="t_left"><input type="checkbox" name="my_goods[]" id="CHI2000/GHI2001" value="CHI2000/GHI2001"><label for="CHI2000/GHI2001">고급지/특수지/펄지</label></td>										<td class="t_left"><input type="checkbox" name="my_goods[]" id="CHI3000/GHI3001_" value="CHI3000/GHI3001"><label for="CHI3000/GHI3001">판지/박스</label></td>										<td class="t_left"><input type="checkbox" name="my_goods[]" id="CHI4000/GHI4001" value="CHI4000/GHI4001"><label for="CHI4000/GHI4001">하이브리드인쇄</label></td>										<td class="t_left"><input type="checkbox" name="my_goods[]" id="CPS2000/GPS2001_" value="CPS2000/GPS2001" checked=""><label for="CPS2000/GPS2001">플라스틱/비닐</label></td>										<td class="t_left"><input type="checkbox" name="my_goods[]" id="CNC7000/GNC7001" value="CNC7000/GNC7001"><label for="CNC7000/GNC7001">프리컷팅</label></td>
+									</tr>
+									<!-- <tr>
+										<td class="h_26"></td>
+										<td class="t_left"><input type="checkbox" name="my_goods[]" id="CDP1700/GDP1701" value="CDP1700/GDP1701" /><label for="CDP1700/GDP1701">포토카드</label></td>										<td class="t_left h_26"></td>
+										<td class="t_left h_26"></td>
+										<td class="t_left h_26"></td>
+										<td class="t_left h_26"></td>
+										<td class="t_left h_26"></td>
+									</tr> -->
+
+									<tr>
+										<th>명함</th>
+										<td></td>
+										<td class="t_left"><input type="checkbox" name="my_goods[]" id="CNC1000/GNC1001" value="CNC1000/GNC1001"><label for="CNC1000/GNC1001">일반지명함</label></td>										<td class="t_left"><input type="checkbox" name="my_goods[]" id="CNC2000/GNC2001" value="CNC2000/GNC2001"><label for="CNC2000/GNC2001">고급지명함</label></td>										<td class="t_left"><input type="checkbox" name="my_goods[]" id="CNC3000/GNC3001" value="CNC3000/GNC3001"><label for="CNC3000/GNC3001">카드명함</label></td>										<td class="t_left"><input type="checkbox" name="my_goods[]" id="CNC4000/GNC4001" value="CNC4000/GNC4001"><label for="CNC4000/GNC4001">하이브리드</label></td>										<td class="t_left"><input type="checkbox" name="my_goods[]" id="CNC5000/GNC5001" value="CNC5000/GNC5001"><label for="CNC5000/GNC5001">투명하이브리드명함</label></td>										<td class="t_left"><input type="checkbox" name="my_goods[]" id="CNC6000/GNC6001" value="CNC6000/GNC6001"><label for="CRP1100/GRP1101">에폭시명함</label></td>									</tr>
+									<tr>
+										<th>전단</th>
+										<td></td>
+										<td class="t_left"><input type="checkbox" name="my_goods[]" id="CLF1000/GLF1001" value="CLF1000/GLF1001"><label for="CLF1000/GLF1001">합판전단</label></td>										<td class="t_left"><input type="checkbox" name="my_goods[]" id="CLF2000/GLF2001" value="CLF2000/GLF2001"><label for="CLF2000/GLF2001">고급전단</label></td>										<!--  <td class="t_left"><input type="checkbox" name="my_goods[]" id="CLF3000/GLF3001" value="CLF3000/GLF3001" /><label for="CLF3000/GLF3001">특가전단</label></td>-->
+										<td class="t_left"><input type="checkbox" name="my_goods[]" id="CLF5000/GLF5001" value="CLF5000/GLF5001"><label for="CLF5000/GLF5001">랑데뷰합판</label></td>										<td class="t_left"></td>
+										<td class="t_left"></td>
+										<td class="t_left"></td>
+									</tr>
+
+									<tr>
+										<th rowspan="2">스티커</th>
+										<td class="bb_none h_26"></td>
+										<td class="t_left"><input type="checkbox" name="my_goods[]" id="CST1000/GST1001" value="CST1000/GST1001"><label for="CST1000/GST1001">재단형</label></td>										<td class="t_left"><input type="checkbox" name="my_goods[]" id="CST2000/GST2001" value="CST2000/GST2001"><label for="CST2000/GST2001">도무송형</label></td>										<td class="t_left"><input type="checkbox" name="my_goods[]" id="CST3000/GST3001" value="CST3000/GST3001"><label for="CST3000/GST3001">차량스티커</label></td>      
+										<td class="t_left"><input type="checkbox" name="my_goods[]" id="CST4000/GST4001" value="CST4000/GST4001"><label for="CST4000/GST4001">메탈스티커</label></td>										<td class="t_left"><input type="checkbox" name="my_goods[]" id="CLP1000/GLP1001" value="CLP1000/GLP1001"><label for="CLP1000/GLP1001">라벨스티커(롤)</label></td>										<!-- <td class="t_left"><input type="checkbox" name="my_goods[]" id="CRP1100/GRP1101" value="CRP1100/GRP1101" /><label for="CRP1100/GRP1101">실사스티커</label></td> -->
+										<td class="t_left"><input type="checkbox" name="my_goods[]" id="CST5000/GST5001" value="CST5000/GST5001"><label for="CST5000/GST5001">스페셜스티커</label></td>										<!-- <td class="t_left"><input type="checkbox" name="my_goods[]" id="CLP1100/GLP1101" value="CLP1100/GLP1101" /><label for="CLP1100/GLP1101">옵셋라벨스티커</label></td> -->
+										<!-- <td class="t_left h_26"><input type="checkbox" name="my_goods[]" id="CDP1300/GDP1301" value="CDP1300/GDP1301" /><label for="CDP1300/GDP1301">디지털라벨스티커</label></td> -->
+										<!-- <td class="t_left"><input type="checkbox" name="my_goods[]" id="CST5100/GST5101" value="CST5100/GST5101" /><label for="CST5100/GST5101">스페셜라벨스티커</label></td> -->
+
+										<td class="t_left"></td>
+									</tr>
+									<tr>
+										<td class="h_26"></td>
+										<td class="t_left"><input type="checkbox" name="my_goods[]" id="CST6000/GST6001" value="CST6000/GST6001"><label for="CST6000/GST6001">팬시스티커</label></td>										<td class="t_left"><input type="checkbox" name="my_goods[]" id="CST7000/GST7001" value="CST7000/GST7001"><label for="CST7000/GST7001">팬시롤스티커</label></td>
+										<td class="t_left h_26"></td>
+										<td class="t_left h_26"></td>
+										<td class="t_left h_26"></td>
+										<td class="t_left h_26"></td>
+									</tr>
+                  <!-- <tr>
+										<th>선거홍보물</th>
+										<td class="bb_none h_26"></td>
+																														      
+									</tr>	 -->
+									<tr>
+										<th>봉투</th>
+										<td></td>
+										<td class="t_left"><input type="checkbox" name="my_goods[]" id="CEV1000/GEV1001" value="CEV1000/GEV1001"><label for="CEV1000/GEV1001">대/중/소</label></td>										<td class="t_left"><input type="checkbox" name="my_goods[]" id="CEV2000/GEV2001" value="CEV2000/GEV2001"><label for="CEV2000/GEV2001">규격형</label></td>										<td class="t_left"><input type="checkbox" name="my_goods[]" id="CEV3000/GEV3001" value="CEV3000/GEV3001"><label for="CEV3000/GEV3001">자켓형</label></td>										<td class="t_left"><input type="checkbox" name="my_goods[]" id="CEV4000/GEV4001" value="CEV4000/GEV4001"><label for="CEV4000/GEV4001">안내형</label></td>										<td class="t_left"><input type="checkbox" name="my_goods[]" id="CEV5000/GEV5001" value="CEV5000/GEV5001"><label for="CEV5000/GEV5001">기성형</label></td>																				<td class="t_left"></td>
+									</tr>
+									<tr>
+										<th>안내장</th>
+										<td></td> 
+										<td class="t_left"><input type="checkbox" name="my_goods[]" id="CVS1000/GVS1001" value="CVS1000/GVS1001"><label for="CVS1000/GVS1001">일반초대장/상품권</label></td>										<td class="t_left"><input type="checkbox" name="my_goods[]" id="CVS2000/GVS2001" value="CVS2000/GVS2001"><label for="CVS2000/GVS2001">고급초대장/상품권</label></td>										<td class="t_left"><input type="checkbox" name="my_goods[]" id="CVS3000/GVS3001" value="CVS3000/GVS3001"><label for="CVS3000/GVS3001">하이브리드초대장</label></td>										<td class="t_left"><input type="checkbox" name="my_goods[]" id="CVS6000/GVS6001" value="CVS6000/GVS6001"><label for="CVS6000/GVS6001">에폭시초대장</label></td>										<td class="t_left"><input type="checkbox" name="my_goods[]" id="CCM3000/GCM3001" value="CCM3000/GCM3001"><label for="CCM3000/GCM3001">청첩장/연하장/연하장</label></td>										<td class="t_left"><input type="checkbox" name="my_goods[]" id="CCM3000/GCM1001" value="CCM2000/GCM2001"><label for="CCM2000/GCM2001">디자인연하장</label></td>										<td class="t_left"></td>
+									</tr>
+									
+									<tr>
+										<th>경인쇄</th>
+										<td></td>
+										<td class="t_left"><input type="checkbox" name="my_goods[]" id="CNR1000/GNR1001" value="CNR1000/GNR1001"><label for="CNR1000/GNR1001">NCR지</label></td>										<td class="t_left"><input type="checkbox" name="my_goods[]" id="CNR2000/GNR2001" value="CNR2000/GNR2001"><label for="CNR2000/GNR2001">서식/양식</label></td>										<td class="t_left"><input type="checkbox" name="my_goods[]" id="CNR3000/GNR3001" value="CNR3000/GNR3001"><label for="CNR3000/GNR3001">떡메모지</label></td>										<td class="t_left"><input type="checkbox" name="my_goods[]" id="CNR5000/GNR5001" value="CNR5000/GNR5001"><label for="CNR5000/GNR5001">마스터책자</label></td>										<td class="t_left"></td>
+										<td class="t_left"></td>
+									</tr>
+									<tr>
+										<th>기타인쇄</th>
+										<td></td>
+										<td class="t_left"><input type="checkbox" name="my_goods[]" id="CET1000/GET1001" value="CET1000/GET1001"><label for="CET1000/GET1001">복권</label></td>										<td class="t_left"><input type="checkbox" name="my_goods[]" id="CET2000/GET2001" value="CET2000/GET2001"><label for="CET2000/GET2001">문어발</label></td>										<td class="t_left"><input type="checkbox" name="my_goods[]" id="CET3000/GET3001" value="CET3000/GET3001"><label for="CET3000/GET3001">문고리</label></td>										<td class="t_left"></td>
+										<td class="t_left"></td>
+										<td class="t_left"></td>
+									</tr>
+									<tr>
+										<th rowspan="3" class="h_26">디지털 인디고</th>
+										<td class="bb_none h_26"></td>
+										<td class="t_left bb_none h_26"><input type="checkbox" name="my_goods[]" id="CDP1000/GDP1001" value="CDP1000/GDP1001"><label for="CDP1000/GDP1001">디지털명함</label></td>										<td class="t_left bb_none h_26"><input type="checkbox" name="my_goods[]" id="CDP3000/GDP3001" value="CDP3000/GDP3001"><label for="CDP3000/GDP3001">디지털엽서/상품권</label></td>										<td class="t_left bb_none h_26"><input type="checkbox" name="my_goods[]" id="CDP2000/GDP2001" value="CDP2000/GDP2001"><label for="CDP2000/GDP2001">디지털초대장</label></td>										<td class="t_left bb_none h_26"><input type="checkbox" name="my_goods[]" id="CDP4000/GDP4001" value="CDP4000/GDP4001" checked=""><label for="CDP4000/GDP4001">디지털포스터</label></td>										<td class="t_left bb_none h_26"><input type="checkbox" name="my_goods[]" id="CDP5000/GDP5001" value="CDP5000/GDP5001"><label for="CDP5000/GDP5001">디지털책자</label></td>										<td class="t_left h_26"><input type="checkbox" name="my_goods[]" id="CDP6000/GDP6001" value="CDP6000/GDP6001"><label for="CDP6000/GDP6001">디지털전단지</label></td>									</tr>
+									<tr>
+										<td class="h_26"></td>
+										<td class="t_left h_26"><input type="checkbox" name="my_goods[]" id="CDP7000/GDP7001" value="CDP7000/GDP7001"><label for="CDP7000/GDP7001">디지털리플렛/팜플렛</label></td>										<td class="t_left h_26"><input type="checkbox" name="my_goods[]" id="CDP8000/GDP8001" value="CDP8000/GDP8001"><label for="CDP8000/GDP8001">디지털카탈로그/브로셔</label></td>										<td class="t_left h_26"><input type="checkbox" name="my_goods[]" id="CDP9000/GDP9001" value="CDP9000/GDP9001"><label for="CDP9000/GDP9001">디지털칼라봉투</label></td>										<td class="t_left h_26"><input type="checkbox" name="my_goods[]" id="CDP8100/GDP8101" value="CDP8100/GDP8101"><label for="CDP8100/GDP8101">초저가 디지털책자</label></td>										<td class="t_left h_26"><input type="checkbox" name="my_goods[]" id="CDP1200/GDP1201" value="CDP1200/GDP1201"><label for="CDP1200/GDP1201">디지털스티커</label></td>										<td class="t_left h_26"><input type="checkbox" name="my_goods[]" id="CDP1300/GDP1301" value="CDP1300/GDP1301"><label for="CDP1300/GDP1301">디지털라벨스티커</label></td>									</tr>
+										<tr>
+										<td class="h_26"></td>
+										<td class="t_left h_26"><input type="checkbox" name="my_goods[]" id="CDP1400/GDP1401" value="CDP1400/GDP1401"><label for="CDP1400/GDP1401">디지털박명함</label></td>										<td class="t_left h_26"><input type="checkbox" name="my_goods[]" id="CDP1500/GDP1501" value="CDP1500/GDP1501"><label for="CDP1500/GDP1501">디지털에폭시명함</label></td>										<!-- <td class="t_left h_26"><input type="checkbox" name="my_goods[]" id="CDP1600/GDP1601" value="CDP1600/GDP1601" /><label for="CDP1600/GDP1601">디지털판지/박스</label></td> -->
+										<td class="t_left h_26"><input type="checkbox" name="my_goods[]" id="CDP1600/GDP1601" value="CDP1600/GDP1601"><label for="CDP1600/GDP1601">디지털판지/박스</label></td>										<td class="t_left h_26"><input type="checkbox" name="my_goods[]" id="CDP5100/GDP5101" value="CDP5100/GDP5101"><label for="CDP5100/GDP5101">디지털노트</label></td>										
+										<td class="t_left h_26"></td>
+										<td class="t_left h_26"></td>
+										<td class="t_left h_26"></td>
+									</tr>
+									<tr>
+										<th rowspan="2" class="h_26">디지탈 토너</th>
+										<td class="bb_none h_26"></td>
+										<td class="t_left bb_none h_26"><input type="checkbox" name="my_goods[]" id="COD1000/GOD1001" value="COD1000/GOD1001"><label for="CDP1000/GDP1001">디지털명함</label></td>										<td class="t_left bb_none h_26"><input type="checkbox" name="my_goods[]" id="COD3000/GOD3001" value="COD3000/GOD3001"><label for="COD3000/GOD3001">디지털엽서/상품권</label></td>										<td class="t_left bb_none h_26"><input type="checkbox" name="my_goods[]" id="COD4000/GOD4001" value="COD4000/GOD4001"><label for="COD4000/GOD4001">디지털포스터</label></td>										<td class="t_left bb_none h_26"><input type="checkbox" name="my_goods[]" id="COD5000/GOD5001" value="COD5000/GOD5001"><label for="COD5000/GOD5001">디지털책자</label></td>										<td class="t_left bb_none h_26"><input type="checkbox" name="my_goods[]" id="COD6000/GOD6001" value="COD6000/GOD6001"><label for="COD6000/GOD6001">디지털전단지</label></td>										<td class="t_left bb_none h_26"><input type="checkbox" name="my_goods[]" id="COD7000/GOD7001" value="COD7000/GOD7001"><label for="COD7000/GOD7001">디지털리플렛/팜플렛</label></td>										
+									</tr>
+									<tr>
+										<td class="h_26"></td>
+										<td class="t_left h_26"><input type="checkbox" name="my_goods[]" id="COD8000/GOD8001" value="COD8000/GOD8001"><label for="COD8000/GOD8001">디지털카탈로그/브로셔</label></td>										<td class="t_left h_26"><input type="checkbox" name="my_goods[]" id="COD1100/GOD1101" value="COD1100/GOD1101"><label for="COD1100/GOD1101">종이미니배너</label></td>										<td class="t_left h_26"><input type="checkbox" name="my_goods[]" id="COD1200/GOD1201" value="COD1200/GOD1201"><label for="COD1200/GOD1201">디지털즉석명함</label></td>										<td class="t_left h_26"></td>
+										<td class="t_left h_26"></td>
+										<td class="t_left h_26"></td>
+									</tr>
+																		<tr>
+										<th>패키지</th>
+										<td></td>
+										<td class="t_left"><input type="checkbox" name="my_goods[]" id="CHI3000/GHI3001" value="CHI3000/GHI3001"><label for="CHI3000/GHI3001">판지/박스</label></td>										<td class="t_left"><input type="checkbox" name="my_goods[]" id="CPS2000/GPS2001" value="CPS2000/GPS2001" checked=""><label for="CPS2000/GPS2001">플라스틱/비닐</label></td>										<td class="t_left"><input type="checkbox" name="my_goods[]" id="CPK2000/GPK2001" value="CPK2000/GPK2001"><label for="CPK2000/GPK2001">리본&amp;브레이드쇼핑백</label></td>										<!-- <td class="t_left"><input type="checkbox" name="my_goods[]" id="CPK2100/GPK2101" value="CPK2100/GPK2101" /><label for="CPK2100/GPK2101">초저가쇼핑백</label></td> -->
+										<td class="t_left"><input type="checkbox" name="my_goods[]" id="CPK3000/GPK3001" value="CPK3000/GPK3001"><label for="CPK3000/GPK3001">손잡이쇼핑백</label></td>										<td class="t_left"><input type="checkbox" name="my_goods[]" id="CPK4000/GPK4001" value="CPK4000/GPK4001"><label for="CPK4000/GPK4001">일반쇼핑백</label></td>										<td class="t_left"><input type="checkbox" name="my_goods[]" id="CPK5000/GPK5001" value="CPK5000/GPK5001"><label for="CPK5000/GPK5001">소량쇼핑백</label></td>										<td class="t_left"><input type="checkbox" name="my_goods[]" id="CPK6000/GPK6001" value="CPK6000/GPK6001"><label for="CPK6000/GPK6001">프리미엄쇼핑백</label></td>									</tr>
+									<tr>
+										<th>판촉물</th>
+										<td></td>
+										<td class="t_left"><input type="checkbox" name="my_goods[]" id="CPS1000/GPS1001" value="CPS1000/GPS1001"><label for="CPS1000/GPS1001">부채</label></td>
+										<td class="t_left"><input type="checkbox" name="my_goods[]" id="CPS3000/GPS3001" value="CPS3000/GPS3001"><label for="CPS3000/GPS3001">책갈피</label></td>						
+										<td class="t_left"><input type="checkbox" name="my_goods[]" id="CPS4000/GPS4001" value="CPS4000/GPS4001"><label for="CPS4000/GPS4001">종이썬캡</label></td>
+										<td class="t_left"></td>
+										<td class="t_left"><input type="checkbox" name="my_goods[]" id="CPS5000/GPS5001" value="CPS5000/GPS5001"><label for="CPS5000/GPS5001">다용도PP</label></td>
+										<td class="t_left"></td>
+									</tr>
+
+									<tr>
+										<th>별도견적</th>
+										<td></td>
+										<td class="t_left"><input type="checkbox" name="my_goods[]" id="COR1000/GOR1001" value="COR1000/GOR1001"><label for="COR1000/GOR1001">별도견적 전단지</label></td>
+										<td class="t_left"><input type="checkbox" name="my_goods[]" id="COR2000/GOR2001" value="COR2000/GOR2001"><label for="COR2000/GOR2001">별도견적 카탈로그</label></td>
+										<td class="t_left"></td>
+										<td class="t_left"></td>
+										<td class="t_left"></td>
+										<td class="t_left"></td>
+									</tr>
+									<tr>
+										<th>캘린더</th>
+										<td></td>
+										<td class="t_left"><input type="checkbox" name="my_goods[]" id="CCD1000/GCD1001" value="CCD1000/GCD1001"><label for="CCD1000/GCD1001">대량캘린더</label></td>
+										<td class="t_left"></td>
+										<td class="t_left"></td>
+										<td class="t_left"></td>
+										<td class="t_left"></td>
+										<td class="t_left"></td>
+									</tr>
+								</tbody>
+							</table>
+							<p>
+								<button type="button" class="save" onclick="my_menu_reg()"><span class="re_bold">저 장</span></button>
+								<!-- <button type="button" class="reset"><span class="re_bold">재설정</span></button> -->
+								<button type="button" class="close" onclick="$j('#popup-mymenu').dialog('close');"><span class="re_bold">닫 기</span></button>
+							</p>		
+						</div>
+					<!--나만의 메뉴 설정END##############################################################################--><!-- 마이페이지 인 경우만 좌측 공지 출력 //추석기간 2019.09.15까지 출력-->
+ 	
+    <!---//Gnb-->
+    
+ 
+<div id="container"> 		
+	<div id="snbwraprea">
+		<h2 class="lnb_tit"><img src="https://image.swadpia.co.kr/mypage/lnb_tit.gif" alt="마이페이지"></h2>
+		<div class="left_menu">
+			<ul>
+				<li class="tit_top"><img src="https://image.swadpia.co.kr/mypage/lnb_menu01.gif" alt="주문정보">            
+				</li><li><a href="/mypage/order_unpaid">결제대기 주문내역</a></li>
+				<li><a href="/mypage/order_ing">주문완료/배송조회</a></li>	            
+				<li><a href="/mypage/special_order_list">별도견적내역</a></li>
+				<li><a href="/mypage/option_list">나의 저장옵션</a></li>
+				
+								<li><a href="/mypage/my_template_list">성원이지폼</a></li>
+								
+				<li style="margin-bottom:5px;"><a href="/mypage/order_color_chart">칼라차트북,샘플북 주문내역</a></li>
+				<!-- -->
+				<li class="tit"><img src="https://image.swadpia.co.kr/mypage/lnb_menu02_on.gif" alt="성원통장"></li>
+				<li><a href="/mypage/smoney">S머니내역/출금신청</a></li>
+				<li><a href="/mypage/in_money">결제내역 조회</a></li>
+				<li class="select"><a href="/mypage/spoint">S포인트 내역</a></li>
+					            
+				<li><a href="/mypage/bank_account">가상계좌 관리</a></li>
+				<li><a href="/mypage/accountnumber">환불계좌 관리</a></li>
+				<li><a href="javascript:alert('기업회원만 자동 세금계산서 발행이 가능합니다.\n\n개인회원은  『주민등록번호세금계산서』 또는  『현금영수증발급』만  가능하오니\n익월 10일까지 발급받으시기 바랍니다');">세금계산서 발행</a></li>
+				<li style="margin-bottom:5px;"><a href="/mypage/cash_receipt_issued_list">현금영수증 발급</a></li>
+				<!-- -->
+				<li class="tit"><img src="https://image.swadpia.co.kr/mypage/lnb_menu03.gif" alt="문의내역"></li>	            
+				<li><a href="/mypage/mantoman">1:1 상담</a></li>
+				<li><a href="/mypage/mantoman/as">A/S 상담</a></li>
+				<li style="margin-bottom:5px;"><a href="/mypage/goods_qna">상품 Q &amp; A</a></li>
+				<!-- -->
+				<li class="tit"><img src="https://image.swadpia.co.kr/mypage/lnb_menu04.gif" alt="회원정보"></li>
+				<li><a href="/member/mody">회원정보수정</a></li>
+				<li><a href="/mypage/delivery">나의 배송지 관리</a></li>
+				<li><a href="/mypage/delivery_month">월배송 신청/현황</a></li>
+				<li><a href="/mypage/day_deliv">주간배송 신청/현황</a></li>
+				<li style="margin-bottom:5px;"><a href="/member/delete">회원탈퇴</a></li>
+			</ul>
+        </div>
+        <div class="subside">
+
+          <ul>
+            <li><a href="/board_index/board_main/view/board_notice/board_idx/441/page/1/"><img src="https://image.swadpia.co.kr/comm/lnb_banner_webhard.gif" alt="나의웹하드"></a></li>
+            <li class="mar_tb5"><img src="https://image.swadpia.co.kr/comm/lnb_banner_customer.gif" alt="고객센터" width="129" height="89"></li>
+            <li class="mar_tb5"><a href="/mypage/mantoman"><img src="https://image.swadpia.co.kr/comm/btn_qna.gif" alt="1:1상담"></a></li>
+            <li class="cs_mar_b5 friend_talk_mp"><a href="https://www.swadpia.co.kr/board_index/board_main/view/board_notice/board_idx/377" target="_blank"><img src="https://image.swadpia.co.kr/comm/btn_qna02.gif" alt="친구톡상담"></a></li>
+          </ul>
+
+        </div>
+	</div>
+    <style>
+       .friend_talk_mp{float:left; position:relative; margin-left:5px; margin-top:5px;}
+    </style>
+        
+        
+<script type="text/javascript" src="https://www.swadpia.co.kr/js/mypage_spoint.js"></script>
+
+<!-- COMMON Library Javascript -->
+<script type="text/javascript" src="https://www.swadpia.co.kr/lib/jquery/jquery-1.3.2.js"></script>
+<link type="text/css" href="https://www.swadpia.co.kr/lib/jquery/themes/ui-lightness/ui.all.css" rel="stylesheet">
+<script type="text/javascript" src="https://www.swadpia.co.kr/lib/jquery/ui/ui.core.js"></script>
+<script type="text/javascript" src="https://www.swadpia.co.kr/lib/jquery/ui/ui.draggable.js"></script>
+<script type="text/javascript" src="https://www.swadpia.co.kr/lib/jquery/ui/ui.resizable.js"></script>
+<script type="text/javascript" src="https://www.swadpia.co.kr/lib/jquery/ui/ui.dialog.js"></script>
+<script type="text/javascript" src="https://www.swadpia.co.kr/lib/jquery/ui/effects.core.js"></script>
+<script type="text/javascript" src="https://www.swadpia.co.kr/lib/jquery/ui/effects.highlight.js"></script>
+<script type="text/javascript" src="https://www.swadpia.co.kr/lib/jquery/external/bgiframe/jquery.bgiframe.js"></script>
+<script type="text/javascript" src="https://www.swadpia.co.kr/lib/jquery/plugins/jquery.form.js"></script>
+<script type="text/javascript" src="https://www.swadpia.co.kr/lib/jsonpath-0.8.0.js"></script>
+<script type="text/javascript" src="https://www.swadpia.co.kr/lib/custom-form-elements.js"></script><style type="text/css">input.styled { display: none; } select.styled { position: relative; width: 190px; opacity: 0; filter: alpha(opacity=0); z-index: 5; } .disabled { opacity: 0.5; filter: alpha(opacity=50); }</style>
+<script type="text/javascript" src="https://www.swadpia.co.kr/lib/jquery/plugins/validate/jquery.validate.js"></script>
+<script type="text/javascript" src="https://www.swadpia.co.kr/lib/jquery/plugins/jquery.printElement.js"></script> 
+<link type="text/css" href="https://www.swadpia.co.kr/lib/jquery/plugins/uploadify/uploadify.css" rel="stylesheet">
+<script type="text/javascript" src="https://www.swadpia.co.kr/lib/jquery/plugins/uploadify/swfobject.js"></script>
+<script type="text/javascript" src="https://www.swadpia.co.kr/lib/jquery/plugins/uploadify/jquery.uploadify.v2.1.0.min.js"></script>
+<!-- COMMON Library Javascript -->
+
+<script>
+	//검색
+	function search_date(){
+	  f = document.spoint_frm;
+
+		 //3개월 이내만 검색............................................................
+	 	var db_sdate="2025-03-01";
+		var db_sdateArray = db_sdate.split("-");
+		var db_sdateObj = new Date(db_sdateArray[0], Number(db_sdateArray[1])-1, db_sdateArray[2]);  
+
+	 	var db_edate="2025-05-29";
+		var db_edateArray = db_edate.split("-");
+		var db_edateObj = new Date(db_edateArray[0], Number(db_edateArray[1])-1, db_edateArray[2]);  
+		
+		var db_betweenDay = (db_edateObj.getTime() - db_sdateObj.getTime());
+	 
+	 	var start_date = $j("#sdate").val();
+		var s_dateArray = start_date.split("-");
+		var s_dateObj = new Date(s_dateArray[0], Number(s_dateArray[1])-1, s_dateArray[2]);  
+
+		var end_date = $j("#edate").val();
+		var e_dateArray = end_date.split("-");
+		var e_dateObj = new Date(e_dateArray[0], Number(e_dateArray[1])-1, e_dateArray[2]);
+		
+		var betweenDay = (e_dateObj.getTime() - s_dateObj.getTime());
+		
+		if(betweenDay>db_betweenDay){alert("날짜검색을 3개월이내로 해주세요.");return false;}	 
+		 //3개월 이내만 검색<end>............................................................	 
+		 
+		  if(document.getElementById('sch_word'))  document.getElementById('sch_word').value = '';
+		  if(document.getElementById('sch_mode'))  document.getElementById('sch_mode').value = 'Y';
+		  
+		  f.action = '/mypage/spoint';
+		  f.submit();
+	}
+		
+
+	 	
+</script>
+
+      <!--Lnb-->
+ 			      <!--//Lnb--> 
+<form name="spoint_frm" id="spoint_frm" method="post" onsubmit="return search_go();">
+<input type="hidden" name="page_size" id="page_size" value="10">
+
+      <!---contents-->
+      <div id="contents">
+        <h1><img src="https://image.swadpia.co.kr/mypage/mypage_h1_07.gif" alt="S포인트 내역"></h1>
+        <div class="clear"></div>
+        <p class="t_right mar_b10">현재 S포인트 잔액 <span class="t_my_org">0</span>원</p>
+        <div class="boxstyle04 mar_b20"> 
+          <!--기간별 조회-->
+          <table class="my_sh" border="0" cellspacing="0" cellpadding="0">
+            <colgroup>
+            <col width="10%">
+            <col width="auto">
+            <col width="32%">
+            <col width="10%">
+            </colgroup>
+            <tbody><tr>
+              <td>기간</td>
+              <td align="left">
+	              <a href="javascript:select_date_picker('1');" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('date_img1','','https://image.swadpia.co.kr/mypage/btn_today_on.gif',1)"><img src="https://image.swadpia.co.kr/mypage/btn_today_off.gif" id="date_img1" alt="오늘" width="48" height="24"></a> 
+								<a href="javascript:select_date_picker('2');" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('date_img2','','https://image.swadpia.co.kr/mypage/btn_week_on.gif',1)"><img src="https://image.swadpia.co.kr/mypage/btn_week_off.gif" id="date_img2" alt="1주일" width="48" height="24"></a> 
+								<a href="javascript:select_date_picker('3');" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('date_img3','','https://image.swadpia.co.kr/mypage/btn_month1_on.gif',1)"><img src="https://image.swadpia.co.kr/mypage/btn_month1_on.gif" id="date_img3" alt="1개월" width="48" height="24"></a> 
+								<a href="javascript:select_date_picker('4');" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('date_img4','','https://image.swadpia.co.kr/mypage/btn_month3_on.gif',1)"><img src="https://image.swadpia.co.kr/mypage/btn_month3_off.gif" id="date_img4" alt="3개월" width="48" height="24"></a>
+<!--								 
+								<a href="javascript:select_date_picker('5');"  onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('date_img5','','https://image.swadpia.co.kr/mypage/btn_month6_on.gif',1)"><img src="https://image.swadpia.co.kr/mypage/btn_month6_off.gif" id="date_img5" alt="6개월" width="48" height="24" /></a> 
+								<a href="javascript:select_date_picker('6');"  onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('date_img6','','https://image.swadpia.co.kr/mypage/btn_month9_on.gif',1)"><img src="https://image.swadpia.co.kr/mypage/btn_month9_off.gif" id="date_img6" alt="9개월" width="48" height="24" /></a> 
+								<a href="javascript:select_date_picker('7');"  onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('date_img7','','https://image.swadpia.co.kr/mypage/btn_month12_on.gif',1)"><img src="https://image.swadpia.co.kr/mypage/btn_month12_off.gif" id="date_img7" alt="1년" width="48" height="24" /></a>
+-->								
+							</td>
+              <td><input type="text" name="sdate" class="w70 hasDatepicker" id="sdate" value="2025-04-29" readonly=""><img class="ui-datepicker-trigger" src="https://image.swadpia.co.kr/mypage/ico_calender.gif" alt="날짜선택" title="날짜선택" style="margin-left:5px; vertical-align:middle; cursor:pointer;">
+                <!--  <img src="https://image.swadpia.co.kr/mypage/ico_calender.gif" alt="달력" width="18" height="18" /> -->~
+                <input type="text" name="edate" class="w70 hasDatepicker" id="edate" value="2025-05-29" readonly=""><img class="ui-datepicker-trigger" src="https://image.swadpia.co.kr/mypage/ico_calender.gif" alt="날짜선택" title="날짜선택" style="margin-left:5px; vertical-align:middle; cursor:pointer;">
+               <!--  <a href="#"><img src="https://image.swadpia.co.kr/mypage/ico_calender.gif" alt="달력" width="18" height="18" /></a> --></td>
+              <td><img src="https://image.swadpia.co.kr/mypage/btn_inquiry.gif" onclick="search_date();" alt="조회" width="59" height="28" style="cursor:pointer;"></td>
+            </tr>
+          </tbody></table>
+        </div>
+        <div class="my_tab02">
+          <table class="s_tab02" border="0" cellspacing="0" cellpadding="0">
+            <colgroup>
+            <col width="50%">
+            <col width="50%">
+            </colgroup>
+            <tbody><tr>
+              <td><select name="sch_key" id="sch_key" style="width:130px; ">
+									<option value="" selected="">사용/적립 전체</option>
+              		<option value="in_point">적립</option>
+              		<option value="out_point">사용</option>
+								</select>
+							</td>
+              <td class="right"><select name="view_page_size" id="view_page_size" onchange="document.spoint_frm.page_size.value = this.value ; search_date();">
+                  <option value="10" selected="">10개씩</option>
+                  <option value="20">20개씩</option>
+                  <option value="30">30개씩</option>
+                  <option value="50">50개씩</option>
+                </select>
+              </td>
+            </tr>
+          </tbody></table>
+        </div>
+        <!--내역리스트-->
+        <table class="table02 mar_b20" cellpadding="0" cellspacing="0">
+          <colgroup>
+          <col width="18%">
+          <col width="15%">
+          <col width="15%">
+          <col width="15%">
+          <col width="auto">
+          </colgroup>
+          <tbody><tr>
+            <th class="first">거래일</th>
+            <th>적립(원)</th>
+            <th>사용(원)</th>
+            <th>잔액(원)</th>
+            <th>적립 누적 내용</th>
+          </tr>
+	
+	          
+          <tr>
+            <td class="first" colspan="5">데이타가 없습니다.</td>
+ 
+          </tr>
+	        </tbody></table>
+        <!--paginArea-->
+        <div class="paging mar_b30"> 
+        		        </div>
+        
+        <!--//paginArea--> 
+
+        <!--S포인트 안내문구--> 
+      
+        <div class="boxstyle03  mar_b30">
+          <table class="my_info" border="0" cellspacing="0" cellpadding="0">
+            <tbody><tr>
+              <td><img src="https://image.swadpia.co.kr/mypage/box_tit_check.gif" alt="유의사항" width="92" height="24"></td>
+            </tr>
+            <tr>
+              <td>1. S포인트는 결제 이후 환불하고자 하나 환불 처리가 불가능한 상태일 때 기존 결제를 유지시키고 환불 대신 고객에게 별도로 지급하는 수단입니다.</td>
+            </tr>
+            <tr>
+              <td>2. S포인트는 환불이 불가하며, S포인트를 사용하고자 할 때 고객센터로 연락 바랍니다. <b>고객센터 ☎1599-5555</b></td>
+            </tr>
+          </tbody></table>
+          </div>
+ 
+         <!--//S포인트 안내문구 끝-->            
+      </div>
+      
+    </form></div> <!-- //container  -->
+
+   
+<input type="hidden" name="page" id="page">
+<input type="hidden" name="sch_mode" id="sch_mode" value="Y">
+
+<!-- 기존사이트 로그인 폼(임시 사용 - 2011.07.26 권혁서)  /s --->
+<!-- 기존사이트 로그인 폼 (임시 사용 - 2011.07.26 권혁서) /e --->
+<script type="text/javascript" src="https://www.swadpia.co.kr/lib/prototype-1.6.0.3.js"></script>
+
+
+
+<link href="https://image.swadpia.co.kr/css/jquery-ui.css" rel="stylesheet" type="text/css">
+<script src="https://image.swadpia.co.kr/js/jquery.min.js"></script>
+<script src="https://image.swadpia.co.kr/js/jquery-ui.min.js"></script> 
+ 
+
+ 
+<script language="javascript" type="text/javascript">
+var $n = jQuery.noConflict();
+function select_date_picker(obj){
+	  var loadDt = new Date();
+	  var form = spoint_frm;
+	  $n("#edate").val("2025-05-29");
+	  if(obj == '1') 			{  $n("#sdate").val("2025-05-29");} 
+	  else if(obj == '2') {  $n("#sdate").val("2025-05-22");} 
+	  else if(obj == '3') {  $n("#sdate").val("2025-04-29");}
+	  else if(obj == '4') {  $n("#sdate").val("2025-03-01");}
+	  else if(obj == '5') {  $n("#sdate").val("2024-11-29");}
+	  else if(obj == '6') {  $n("#sdate").val("2024-08-29");}
+	  else if(obj == '7') {  $n("#sdate").val("2024-05-29");}
+	  
+	}
+	
+$n(document).ready(function(){
+
+	var intCalendar = {
+		monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+		dayNamesMin: ['일','월','화','수','목','금','토'],
+		weekHeader: 'Wk',
+		dateFormat: 'yy-mm-dd', //형식(2012-03-03)
+
+		autoSize: false, //오토리사이즈(body등 상위태그의 설정에 따른다)
+		changeMonth: true, //월변경가능
+		changeYear: true, //년변경가능
+		showMonthAfterYear: true, //년 뒤에 월 표시
+		buttonImageOnly: true, //이미지표시
+		buttonText: '날짜선택', //버튼 텍스트 표시
+		buttonImage: 'https://image.swadpia.co.kr/mypage/ico_calender.gif', //이미지주소
+		showOn: "both", //엘리먼트와 이미지 동시 사용(both,button)
+		yearRange: '1990:2080' //1990년부터 2080년까지
+
+	};
+
+	$n('#sdate,  #edate ').live('focus', function() {
+		$n(this).datepicker(intCalendar);
+	});
+
+	$n("#sdate,  #edate ").datepicker(intCalendar);
+	$n("img.ui-datepicker-trigger").attr("style","margin-left:5px; vertical-align:middle; cursor:pointer;"); //이미지버튼 style적용
+	$n("#ui-datepicker-div").hide(); //자동으로 생성되는 div객체 숨김
+ 
+
+});
+</script>
+
+
+    <footer>
+        <div class="max-1180">
+            <div class="container">
+                <div class="left">
+                    <div class="cates">
+                        <img src="/assets/img/logo_footer.svg" alt="로고">
+                        <ul>
+                            <li><a href="javascript:;">
+                                    회사소개
+                                </a></li>
+                            <li><a href="javascript:;">
+                                    이용약관
+                                </a></li>
+                            <li><a href="javascript:;">
+                                    개인정보처리방침
+                                </a></li>
+                            <li><a href="javascript:;">
+                                    오시는길
+                                </a></li>
+                            <li><a href="javascript:;">
+                                    공지사항
+                                </a></li>
+                            <li><a href="javascript:;">
+                                    FAQ
+                                </a></li>
+                            <li><a href="javascript:;">
+                                    고객센터
+                                </a></li>
+                            <li><a href="javascript:;">
+                                    채용공고
+                                </a></li>
+                        </ul>
+                    </div>
+                    <ul class="info flr">
+                        <li>(주)성원애드피아</li>
+                        <li>대표 : 정대원</li>
+                        <li>Tell : 1599-5555</li>
+                        <li>세금계산서발행 : 성수동 사업자등록번호 : 201-85-22977</li>
+                        <li>
+                            <button class="business_certificate">
+                                사업자등록증
+                            </button>
+                        </li>
+                    </ul>
+                    <ul class="info02 flr">
+                        <li>통신판매업신고 : 중구06853호 사업자등록번호 : 201-81-86819 </li>
+                        <li>
+                            <button class="business_infomation">
+                                사업자정보확인
+                            </button>
+                        </li>
+                    </ul>
+                    <ul class="info03 flr">
+                        <li>
+                            성수동
+                            <svg width="10" height="6" viewBox="0 0 10 6" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path opacity=".5" d="M9.348.654 5 5.002.652.654" stroke="#000" stroke-width="1.2"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                            <p class="detail_addr">
+                                서울 성동구 성수일로80 (성수동2가 284-51) 성원Ⅱ빌딩
+                            </p>
+                        </li>
+                        <li>
+                            충무로
+                            <svg width="10" height="6" viewBox="0 0 10 6" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path opacity=".5" d="M9.348.654 5 5.002.652.654" stroke="#000" stroke-width="1.2"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                            <p class="detail_addr">
+                                서울 성동구 성수일로80 (성수동2가 284-51) 성원Ⅱ빌딩2
+                            </p>
+                        </li>
+                        <li>
+                            인현동
+                            <svg width="10" height="6" viewBox="0 0 10 6" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path opacity=".5" d="M9.348.654 5 5.002.652.654" stroke="#000" stroke-width="1.2"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                            <p class="detail_addr">
+                                서울 성동구 성수일로80 (성수동2가 284-51) 성원Ⅱ빌딩3
+                            </p>
+                        </li>
+                    </ul>
+                    <p class="copyright">
+                        COPYRIGHTⓒ 2004 SUNGWONADPIA Co. Ltd. ALL RIGHTS RESERVED
+                    </p>
+                </div>
+                <div class="right">
+                    <div class="flc btn_group">
+                        <div class="flr top">
+                            <a class="button" href="javascript:;">
+                                <svg width="30" height="30" viewBox="0 0 30 30" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <g clip-path="url(#woc0wmfmja)" fill="#A3A0A0">
+                                        <path
+                                            d="M15.251 8H5.749C4.783 8 4 8.755 4 9.685v9.428c0 .49.412.887.92.887h.073a.04.04 0 0 0 .04-.039c0-1.576 1.331-2.859 2.967-2.859 1.635 0 2.966 1.283 2.966 2.859a.04.04 0 0 0 .04.039h5.567a.42.42 0 0 0 .427-.411V9.685C17 8.755 16.217 8 15.251 8zM25.737 13.704l-3.44-4.188A1.292 1.292 0 0 0 21.264 9h-2.888a.378.378 0 0 0-.377.38v10.24c0 .21.169.38.377.38h.562v-.04c0-1.608 1.297-2.916 2.891-2.916 1.595 0 2.893 1.308 2.893 2.916V20A1.3 1.3 0 0 0 26 18.695v-4.203a1.31 1.31 0 0 0-.263-.789zM24.03 15.08h-3.779a.97.97 0 0 1-.966-.975v-3.943c0-.09.072-.163.162-.163h1.537c.13 0 .254.061.332.166l3.194 3.942a.61.61 0 0 1 .122.367.605.605 0 0 1-.603.605z" />
+                                        <path
+                                            d="M8 18a2.002 2.002 0 0 0-2 2.032A2.008 2.008 0 0 0 8 22a2.008 2.008 0 0 0 2-1.968V20c0-1.103-.897-2-2-2zM22 18a2.002 2.002 0 0 0-2 2.032A2.008 2.008 0 0 0 22 22a2.009 2.009 0 0 0 2-1.968V20c0-1.103-.897-2-2-2z" />
+                                    </g>
+                                    <defs>
+                                        <clipPath id="woc0wmfmja">
+                                            <path fill="#fff" transform="translate(4 8)" d="M0 0h22v14H0z" />
+                                        </clipPath>
+                                    </defs>
+                                </svg>
+                                성원로지스
+                            </a>
+                            <a class="button" href="javascript:;">
+                                <svg class="mb-1" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <g clip-path="url(#2d0sul966a)">
+                                        <path
+                                            d="m16.736 14.721-5.21-9.311A1.754 1.754 0 0 0 10 4.5c-.63 0-1.212.347-1.528.91l-5.236 9.36a1.87 1.87 0 0 0 0 1.82c.315.563.897.91 1.527.91h10.474c.974 0 1.763-.815 1.763-1.82 0-.352-.097-.68-.264-.959z"
+                                            fill="#A3A0A0" />
+                                        <path
+                                            class="centers"
+                                            d="M10 13.028c-.498 0-.902-.355-.902-.793L9 8.727c0-.438.502-.793 1-.793s1 .355 1 .793l-.098 3.508c0 .438-.404.793-.902.793zM10 15.668c-.263 0-.521-.106-.707-.293A1.007 1.007 0 0 1 9 14.668c0-.263.107-.521.293-.707.186-.186.444-.293.707-.293.263 0 .521.107.707.293.186.186.293.444.293.707 0 .263-.107.521-.293.707a1.006 1.006 0 0 1-.707.293z"
+                                            fill="#F4F5F7" />
+                                    </g>
+                                    <defs>
+                                        <clipPath id="2d0sul966a">
+                                            <path fill="#fff" transform="translate(3 4.5)" d="M0 0h14v13H0z" />
+                                        </clipPath>
+                                    </defs>
+                                </svg>
+                                인쇄물정책
+                            </a>
+                            <a class="button" href="javascript:;">
+                                원격지원
+                            </a>
+                        </div>
+                        <div class="flr bottom">
+                            <a class="button" href="javascript:;">
+                                1:1 상담
+                            </a>
+                            <a class="button" href="javascript:;">
+                                AS 상담
+                            </a>
+                        </div>
+                    </div>
+                    <a href="" class="videoLink">
+                        <svg width="12" height="14" viewBox="0 0 12 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M10.617 6.149a1 1 0 0 1 0 1.702L2.274 12.99a1 1 0 0 1-1.524-.851V1.862a1 1 0 0 1 1.524-.851l8.343 5.138z"
+                                fill="#AAAAAD" />
+                        </svg>
+                        영상으로 보는 성원애드피아
+                    </a>
+                    <div class="flr sns_family_box">
+                        <ul class="flr sns_group">
+                            <li>
+                                <a class="sns_items" href="">
+                                    <img class="default" src="/assets/img/sns_kakao.svg" alt="">
+                                    <img class="hover" src="/assets/img/sns_kakao_on.svg" alt="">
+                                </a>
+                            </li>
+                            <li>
+                                <a class="sns_items" href="">
+                                    <img class="default" src="/assets/img/sns_naver.svg" alt="">
+                                    <img class="hover" src="/assets/img/sns_naver_on.svg" alt="">
+                                </a>
+                            </li>
+                            <li>
+                                <a class="sns_items" href="">
+                                    <img class="default" src="/assets/img/sns_instagram.svg" alt="">
+                                    <img class="hover" src="/assets/img/sns_instagram_on.png" alt="">
+                                </a>
+                            </li>
+                            <li>
+                                <a class="sns_items" href="">
+                                    <img class="default" src="/assets/img/sns_youtube.svg" alt="">
+                                    <img class="hover" src="/assets/img/sns_youtube_on.svg" alt="">
+                                </a>
+                            </li>
+                            <li>
+                                <a class="sns_items" href="">
+                                    <img class="default" src="/assets/img/sns_facebook.svg" alt="">
+                                    <img class="hover" src="/assets/img/sns_facebook_on.svg" alt="">
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="select_box">
+                            <p class="selectd_txt">
+                                FAMILY SITE
+                                <svg class="arrow" width="10" height="6" viewBox="0 0 10 6" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path opacity=".6" d="M9 1 5 5 1 1" stroke="#000" stroke-width="1.5"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                            </p>
+                            <ul class="family_site">
+                                <li>
+                                    <a href="http://www.swadpia.co.kr">
+                                        성원애드피아
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://www.adpiamall.com/home">
+                                        애드피아몰
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="http://www.pr5555.co.kr/parcel/">
+                                        성원로지스
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://www.stayrak.com/">
+                                        스테이락호텔
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://www.swfoodmall.com/home">
+                                        성원푸드몰
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 플로팅버튼 -->
+    <div class="abs">
+        <div class="floating_box">
+            <ul class="menus">
+                <li>
+                    <img class="default" src="/assets/img/floating_icon01.svg" alt="실시간문의">
+                    <img class="hover" src="/assets/img/floating_icon01-hover.svg" alt="실시간문의">
+                    실시간문의
+                </li>
+                <li>
+                    <img src="/assets/img/floating_icon02.png" alt="카톡상담">
+                    카톡상담
+                </li>
+                <li>
+                    <img class="multiples_2 default" src="/assets/img/floating_icon03.png" alt="매장위치">
+                    <img class="multiples_2 hover" src="/assets/img/floating_icon03-hover.png" alt="매장위치">
+                    매장위치
+                </li>
+            </ul>
+            <div class="top">
+                <svg width="8" height="6" viewBox="0 0 8 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M3.19 1.096a1 1 0 0 1 1.62 0l2.376 3.291a1 1 0 0 1-.81 1.586H1.624a1 1 0 0 1-.811-1.586l2.375-3.29z"
+                        fill="#2F2F2F" />
+                </svg>
+                TOP
+            </div>
+        </div>
+    </div>
+
+    <script src="https://www.swadpia.co.kr/js/2025/libs/swiper-min.js"></script>
+    <script defer src="/js/index.js"></script>
+  
+<script type="text/javascript"> 
+if (!wcs_add) var wcs_add={};
+wcs_add["wa"] = "s_5112a3a76396";
+if (!_nasa) var _nasa={};
+wcs.inflow();
+wcs_do(_nasa);
+</script><!-- 네이버 웹로그 -->
+
+<!-- (주)로그 웹로그 -->
+<!-- LOG corp Web Analitics & Live Chat START -->
+<!-- 
+<script type="text/javascript">    
+    function logCorpAScript_full(){
+		HTTP_MSN_MEMBER_NAME="";/*member name*/
+		var prtc=(document.location.protocol=="https:")?"https://":"http://";
+		var hst=prtc+"asp22.http.or.kr";
+		var rnd="r"+(new  Date().getTime()*Math.random()*9);
+		this.ch=function(){
+			if(document.getElementsByTagName("head")[0]){logCorpAnalysis_full.dls();}else{window.setTimeout(logCorpAnalysis_full.ch,30)}
+		}
+		this.dls=function(){
+			var  h=document.getElementsByTagName("head")[0];
+			var  s=document.createElement("script");s.type="text/jav"+"ascript";try{s.defer=true;}catch(e){};try{s.async=true;}catch(e){};
+			if(h){s.src=hst+"/HTTP_MSN/UsrConfig/swadpia/js/ASP_Conf.js?s="+rnd;h.appendChild(s);}
+		}
+		this.init= function(){
+			document.write('<img src="'+hst+'/sr.gif?d='+rnd+'"  style="width:1px;height:1px;position:absolute;" alt="" onload="logCorpAnalysis_full.ch()" />');
+		}
+	}
+	if(typeof logCorpAnalysis_full=="undefined"){	var logCorpAnalysis_full=new logCorpAScript_full();logCorpAnalysis_full.init();}
+</script>
+<noscript><img src="http://asp22.http.or.kr/HTTP_MSN/Messenger/Noscript.php?key=swadpia" border="0" style="display:none;width:0;height:0;" /></noscript>
+-->
+<!-- LOG corp Web Analitics & Live Chat END -->
+
+<!-- (주)로그 웹로그 -->
+
+<!-- 다음 배너광고 -->
+<!-- 다음 배너광고 -->
+<div id="ui-datepicker-div" class="ui-datepicker ui-widget ui-widget-content ui-helper-clearfix ui-corner-all" style="display: none;"></div></body></html>

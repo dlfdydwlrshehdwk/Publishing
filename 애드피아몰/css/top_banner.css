@@ -1,0 +1,109 @@
+.top_banner {
+    height: 40px;
+    width: 100%;
+    background-color: var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.top_banner_inner {
+  position: relative;
+  max-width: 1340px;
+  margin: 0 auto;
+  padding: 0 30px;
+  width: 100%;
+}
+
+.top_banner .swiper {
+    max-width: 800px;
+    width: 100%;
+}
+
+.top_banner .swiper-slide {
+    font-size: 14px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.29;
+    letter-spacing: -0.7px;
+    text-align: center;
+    color: #fff;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+.top_banner .swiper-slide img{
+    margin-right: 15px;
+}
+
+.top_banner .swiper-slide strong {
+    color: #fff;
+    font-weight: bold;
+    letter-spacing: normal;
+}
+
+.top_banner_util {
+  position: absolute;
+  right: 30px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.top_banner .top_banner_close {
+  width: 24px;
+  height: 24px;
+}
+
+.top_banner .swiper-pagination-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.top_banner .swiper-pagination-fraction,
+.top_banner .swiper-pagination-fraction span {
+    position: static;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.52px;
+    line-height: 1;
+    vertical-align: middle;
+}
+
+.top_banner .swiper-button-prev,
+.top_banner .swiper-button-next {
+    position: static;
+    width: 6px;
+    height: 10px;
+    flex-shrink: 0;
+    border: none;
+    background-color: transparent;
+    border-radius: 0;
+    margin: 0;
+    transform: none;
+    cursor: pointer;
+}
+
+.top_banner .swiper-button-prev {
+    background: url(../assets/img/arrow_left_white_min.svg) no-repeat center/cover;
+}
+
+.top_banner .swiper-button-next {
+    background: url(../assets/img/arrow_right_white_min.svg) no-repeat center/cover;
+}
+
+.top_banner .swiper-button-prev::after,
+.top_banner .swiper-button-next::after {
+    display: none;
+}
+
+.top_banner .swiper-navigation-icon {
+  display: none;
+}

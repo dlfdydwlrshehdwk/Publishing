@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>애드피아몰</title>
+
+    <link rel="stylesheet" href="./css/swiper.min.css">
+
+    <link rel="stylesheet" href="./css/reset.css">
+    <link rel="stylesheet" href="./css/common.css">
+    <link rel="stylesheet" href="./css/index.css">
+    <link rel="stylesheet" href="./css/layout.css">
+
+    <script src="./js/libs/swiper-bundle.min.js"></script>
+
+    <script src="./js/index.js"></script>
+</head> 
+  
+<body>
+    <div id="wrap">
+        <header id="header">
+            <div class="top_banner">
+                <div class="top_banner_inner">
+                    <div class="swiper">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide">
+                                <img src="/assets/img/top_banner_icon.png" alt="아이콘"><strong>[NEWS]</strong> 애드피아몰의 새로운 시작! 홈페이지가 새롭게 리뉴얼 됐어요 1
+                            </div>
+                            <div class="swiper-slide">
+                                <img src="/assets/img/top_banner_icon.png" alt="아이콘"><strong>[NEWS]</strong> 애드피아몰의 새로운 시작! 홈페이지가 새롭게 리뉴얼 됐어요 2
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="top_banner_util">
+                        <div class="swiper-pagination-wrap">
+                            <div class="swiper-button-prev"></div>
+                            <div class="swiper-pagination"></div>
+                            <div class="swiper-button-next"></div>
+                        </div>
+    
+                        <button class="top_banner_close">
+                            <img src="./assets/img/top_banner_close.svg" alt="닫기">
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+            <div class="header_inner">
+
+            </div>
+        </header>
+
+        <main id="container">
+            <!-- 메인배너 -->
+            <div class="main_banner">
+                <div class="swiper">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide">
+                            <img width="100%" src="/assets/img/banner01.webp" alt="">
+                        </div>
+                        <div class="swiper-slide">
+                            <img width="100%" src="/assets/img/banner02.webp" alt="">
+                        </div>
+                        <div class="swiper-slide">
+                            <img width="100%" src="/assets/img/banner01.webp" alt="">
+                        </div>
+                        <div class="swiper-slide">
+                            <img width="100%" src="/assets/img/banner01.webp" alt="">
+                        </div>
+                        <div class="swiper-slide">
+                            <img width="100%" src="/assets/img/banner02.webp" alt="">
+                        </div>
+                        <div class="swiper-slide">
+                            <img width="100%" src="/assets/img/banner01.webp" alt="">
+                        </div>
+                    </div>
+
+                    <div class="swiper-pagination-wrap">
+                        <div class="swiper-pagination">
+                            <div class="swiper-pagination"></div>
+                        </div>
+                    </div>
+                    <div class="swiper_navigation">
+                        <button type="button" class="swiper-button-prev">
+                            <img src="/assets/img/product_slide_next_on.svg" alt="">
+                        </button>
+                        <button type="button" class="swiper-button-next">
+                            <img src="/assets/img/product_slide_next_on.svg" alt="">
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 빠른 서비스 -->
+            <div class="service_banner content_box">
+                <div class="inner">
+                    <div class="intro">
+                        <h4>
+                            <img class="multiples_2" src="/assets/img/quick_service.png" alt="빠른 서비스">
+                            빠른 서비스
+                        </h4>
+                        <p class="sub_tit">쉽고 빠르게 서비스를 찾아보세요.</p>
+                        <div class="tel">1688-6611</div>
+                    </div>
+    
+                    <ul class="service_list">
+                        <li>
+                            <a href="">
+                                <div class="img_set"><img src="/assets/img/sec02_img01.svg" alt="주문/배송"></div>
+                                <p>주문/배송</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <div class="img_set"><img src="/assets/img/sec02_img02.svg" alt="묶음배송"></div>
+                                <p>상품 가이드</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <div class="img_set"><img src="/assets/img/sec02_img03.svg" alt="출고일"></div>
+                                <p>제작 가이드</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <div class="img_set"><img src="/assets/img/sec02_img04.svg" alt="AS상담"></div>
+                                <p>이용 가이드</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <div class="img_set"><img src="/assets/img/sec02_img05.svg" alt="대량명함"></div>
+                                <p>매장위치</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <div class="img_set"><img src="/assets/img/sec02_img05.svg" alt="대량명함"></div>
+                                <p>1:1 문의</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <div class="img_set"><img src="/assets/img/sec02_img06.svg" alt="매장위치"></div>
+                                <p>고객센터</p>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 인기상품 -->
+            <div class="product_cont content_box">
+                <div class="product_cont_header">
+                    <div class="tit_box">
+                        <div class="badge">가장 인기있는 아이템</div>
+                        <h3>인기상품</h3>
+                    </div>
+
+                    <div class="swiper-button-wrap">
+                        <div class="swiper-button-prev"></div>
+                        <div class="swiper-button-next"></div>
+                    </div>
+                </div>
+
+                <div class="product_list swiper">
+                    <div class="swiper-wrapper">
+                        <div class="product_item swiper-slide">
+                            <a href="">
+                                <div class="product_image">
+                                    <div class="img_set"><img src="/assets/img/sec03_img01.webp" alt=""></div>
+                                    <div class="num">1</div>
+                                </div>
+                                <div class="product_info">
+                                    <div class="badge">포스터</div>
+                                    <div class="product_name">표준규격 포스터 (A1 ~ B6) </div>
+                                    <div class="product_price">1,760원~</div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="product_item swiper-slide">
+                            <a href="">
+                                <div class="product_image">
+                                    <div class="img_set"><img src="/assets/img/sec03_img01.webp" alt=""></div>
+                                    <div class="num">2</div>
+                                </div>
+                                <div class="product_info">
+                                    <div class="badge">포스터</div>
+                                    <div class="product_name">표준규격 포스터 (A1 ~ B6) </div>
+                                    <div class="product_price">1,760원~</div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="product_item swiper-slide">
+                            <a href="">
+                                <div class="product_image">
+                                    <div class="img_set"><img src="/assets/img/sec03_img01.webp" alt=""></div>
+                                    <div class="num">3</div>
+                                </div>
+                                <div class="product_info">
+                                    <div class="badge">포스터</div>
+                                    <div class="product_name">표준규격 포스터 (A1 ~ B6) </div>
+                                    <div class="product_price">1,760원~</div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="product_item swiper-slide">
+                            <a href="">
+                                <div class="product_image">
+                                    <div class="img_set"><img src="/assets/img/sec03_img01.webp" alt=""></div>
+                                    <div class="num">4</div>
+                                </div>
+                                <div class="product_info">
+                                    <div class="badge">포스터</div>
+                                    <div class="product_name">표준규격 포스터 (A1 ~ B6) </div>
+                                    <div class="product_price">1,760원~</div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="product_item swiper-slide">
+                            <a href="">
+                                <div class="product_image">
+                                    <div class="img_set"><img src="/assets/img/sec03_img01.webp" alt=""></div>
+                                    <div class="num">5</div>
+                                </div>
+                                <div class="product_info">
+                                    <div class="badge">포스터</div>
+                                    <div class="product_name">표준규격 포스터 (A1 ~ B6) </div>
+                                    <div class="product_price">1,760원~</div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="product_item swiper-slide">
+                            <a href="">
+                                <div class="product_image">
+                                    <div class="img_set"><img src="/assets/img/sec03_img01.webp" alt=""></div>
+                                    <div class="num">6</div>
+                                </div>
+                                <div class="product_info">
+                                    <div class="badge">포스터</div>
+                                    <div class="product_name">표준규격 포스터 (A1 ~ B6) </div>
+                                    <div class="product_price">1,760원~</div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="product_item swiper-slide">
+                            <a href="">
+                                <div class="product_image">
+                                    <div class="img_set"><img src="/assets/img/sec03_img01.webp" alt=""></div>
+                                    <div class="num">7</div>
+                                </div>
+                                <div class="product_info">
+                                    <div class="badge">포스터</div>
+                                    <div class="product_name">표준규격 포스터 (A1 ~ B6) </div>
+                                    <div class="product_price">1,760원~</div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="product_item swiper-slide">
+                            <a href="">
+                                <div class="product_image">
+                                    <div class="img_set"><img src="/assets/img/sec03_img01.webp" alt=""></div>
+                                    <div class="num">1</div>
+                                </div>
+                                <div class="product_info">
+                                    <div class="badge">포스터</div>
+                                    <div class="product_name">표준규격 포스터 (A1 ~ B6) </div>
+                                    <div class="product_price">1,760원~</div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 추천상품 -->
+            <div class="product_cont content_box">
+                <div class="product_cont_header">
+                    <div class="tit_box">
+                        <div class="badge">애드피아몰 pick!</div>
+                        <h3>추천상품</h3>
+                    </div>
+
+                    <div class="swiper-button-wrap">
+                        <div class="swiper-button-prev"></div>
+                        <div class="swiper-button-next"></div>
+                    </div>
+                </div>
+
+                <div class="product_list swiper">
+                    <div class="swiper-wrapper">
+                        <div class="product_item swiper-slide">
+                            <a href="">
+                                <div class="product_image">
+                                    <div class="img_set"><img src="/assets/img/sec03_img01.webp" alt=""></div>
+                                    <div class="num">1</div>
+                                </div>
+                                <div class="product_info">
+                                    <div class="badge">포스터</div>
+                                    <div class="product_name">표준규격 포스터 (A1 ~ B6) </div>
+                                    <div class="product_price">1,760원~</div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="product_item swiper-slide">
+                            <a href="">
+                                <div class="product_image">
+                                    <div class="img_set"><img src="/assets/img/sec03_img01.webp" alt=""></div>
+                                    <div class="num">2</div>
+                                </div>
+                                <div class="product_info">
+                                    <div class="badge">포스터</div>
+                                    <div class="product_name">표준규격 포스터 (A1 ~ B6) </div>
+                                    <div class="product_price">1,760원~</div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="product_item swiper-slide">
+                            <a href="">
+                                <div class="product_image">
+                                    <div class="img_set"><img src="/assets/img/sec03_img01.webp" alt=""></div>
+                                    <div class="num">3</div>
+                                </div>
+                                <div class="product_info">
+                                    <div class="badge">포스터</div>
+                                    <div class="product_name">표준규격 포스터 (A1 ~ B6) </div>
+                                    <div class="product_price">1,760원~</div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="product_item swiper-slide">
+                            <a href="">
+                                <div class="product_image">
+                                    <div class="img_set"><img src="/assets/img/sec03_img01.webp" alt=""></div>
+                                    <div class="num">4</div>
+                                </div>
+                                <div class="product_info">
+                                    <div class="badge">포스터</div>
+                                    <div class="product_name">표준규격 포스터 (A1 ~ B6) </div>
+                                    <div class="product_price">1,760원~</div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="product_item swiper-slide">
+                            <a href="">
+                                <div class="product_image">
+                                    <div class="img_set"><img src="/assets/img/sec03_img01.webp" alt=""></div>
+                                    <div class="num">5</div>
+                                </div>
+                                <div class="product_info">
+                                    <div class="badge">포스터</div>
+                                    <div class="product_name">표준규격 포스터 (A1 ~ B6) </div>
+                                    <div class="product_price">1,760원~</div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="product_item swiper-slide">
+                            <a href="">
+                                <div class="product_image">
+                                    <div class="img_set"><img src="/assets/img/sec03_img01.webp" alt=""></div>
+                                    <div class="num">6</div>
+                                </div>
+                                <div class="product_info">
+                                    <div class="badge">포스터</div>
+                                    <div class="product_name">표준규격 포스터 (A1 ~ B6) </div>
+                                    <div class="product_price">1,760원~</div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="product_item swiper-slide">
+                            <a href="">
+                                <div class="product_image">
+                                    <div class="img_set"><img src="/assets/img/sec03_img01.webp" alt=""></div>
+                                    <div class="num">7</div>
+                                </div>
+                                <div class="product_info">
+                                    <div class="badge">포스터</div>
+                                    <div class="product_name">표준규격 포스터 (A1 ~ B6) </div>
+                                    <div class="product_price">1,760원~</div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="product_item swiper-slide">
+                            <a href="">
+                                <div class="product_image">
+                                    <div class="img_set"><img src="/assets/img/sec03_img01.webp" alt=""></div>
+                                    <div class="num">1</div>
+                                </div>
+                                <div class="product_info">
+                                    <div class="badge">포스터</div>
+                                    <div class="product_name">표준규격 포스터 (A1 ~ B6) </div>
+                                    <div class="product_price">1,760원~</div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 신상품 모아보기 -->
+            <div class="new_product_cont content_box">
+                <div class="new_product">
+                    <div class="img_set"><img src="/assets/img/sec03_img01.webp" alt=""></div>
+                    <div class="product_info">
+                        <div class="badge">포스터</div>
+                        <div class="product_name">표준규격 포스터 (A1 ~ B6) </div>
+                        <div class="product_price">1,760원~</div>
+                    </div>
+                </div>
+
+                <div class="product_cont">
+                    <div class="product_cont_header">
+                        <div class="tit_box">
+                            <div class="badge">애드피아몰의 새로움을 경험하세요</div>
+                            <h3>신상품 모아보기</h3>
+                            <p>다양하고 새로운 여러 제품들을 만나보아요</p>
+                        </div>
+
+                        <div class="swiper-button-wrap">
+                            <button class="swiper-button-prev"></button>
+                            <button class="swiper-button-next"></button>
+                        </div>
+                    </div>
+
+                    <div class="product_list_wrap">
+                        <div class="product_list swiper">
+                            <div class="swiper-wrapper">
+                                <div class="product_item swiper-slide">
+                                    <a href="">
+                                        <div class="product_image">
+                                            <div class="img_set"><img src="/assets/img/sec03_img01.webp" alt=""></div>
+                                            <div class="num">1</div>
+                                        </div>
+                                        <div class="product_info">
+                                            <div class="badge">포스터</div>
+                                            <div class="product_name">표준규격 포스터 (A1 ~ B6) </div>
+                                            <div class="product_price">1,760원~</div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="product_item swiper-slide">
+                                    <a href="">
+                                        <div class="product_image">
+                                            <div class="img_set"><img src="/assets/img/sec03_img01.webp" alt=""></div>
+                                            <div class="num">2</div>
+                                        </div>
+                                        <div class="product_info">
+                                            <div class="badge">포스터</div>
+                                            <div class="product_name">표준규격 포스터 (A1 ~ B6) </div>
+                                            <div class="product_price">1,760원~</div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="product_item swiper-slide">
+                                    <a href="">
+                                        <div class="product_image">
+                                            <div class="img_set"><img src="/assets/img/sec03_img01.webp" alt=""></div>
+                                            <div class="num">3</div>
+                                        </div>
+                                        <div class="product_info">
+                                            <div class="badge">포스터</div>
+                                            <div class="product_name">표준규격 포스터 (A1 ~ B6) </div>
+                                            <div class="product_price">1,760원~</div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="product_item swiper-slide">
+                                    <a href="">
+                                        <div class="product_image">
+                                            <div class="img_set"><img src="/assets/img/sec03_img01.webp" alt=""></div>
+                                            <div class="num">4</div>
+                                        </div>
+                                        <div class="product_info">
+                                            <div class="badge">포스터</div>
+                                            <div class="product_name">표준규격 포스터 (A1 ~ B6) </div>
+                                            <div class="product_price">1,760원~</div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="product_item swiper-slide">
+                                    <a href="">
+                                        <div class="product_image">
+                                            <div class="img_set"><img src="/assets/img/sec03_img01.webp" alt=""></div>
+                                            <div class="num">5</div>
+                                        </div>
+                                        <div class="product_info">
+                                            <div class="badge">포스터</div>
+                                            <div class="product_name">표준규격 포스터 (A1 ~ B6) </div>
+                                            <div class="product_price">1,760원~</div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="product_item swiper-slide">
+                                    <a href="">
+                                        <div class="product_image">
+                                            <div class="img_set"><img src="/assets/img/sec03_img01.webp" alt=""></div>
+                                            <div class="num">6</div>
+                                        </div>
+                                        <div class="product_info">
+                                            <div class="badge">포스터</div>
+                                            <div class="product_name">표준규격 포스터 (A1 ~ B6) </div>
+                                            <div class="product_price">1,760원~</div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="product_item swiper-slide">
+                                    <a href="">
+                                        <div class="product_image">
+                                            <div class="img_set"><img src="/assets/img/sec03_img01.webp" alt=""></div>
+                                            <div class="num">7</div>
+                                        </div>
+                                        <div class="product_info">
+                                            <div class="badge">포스터</div>
+                                            <div class="product_name">표준규격 포스터 (A1 ~ B6) </div>
+                                            <div class="product_price">1,760원~</div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="product_item swiper-slide">
+                                    <a href="">
+                                        <div class="product_image">
+                                            <div class="img_set"><img src="/assets/img/sec03_img01.webp" alt=""></div>
+                                            <div class="num">1</div>
+                                        </div>
+                                        <div class="product_info">
+                                            <div class="badge">포스터</div>
+                                            <div class="product_name">표준규격 포스터 (A1 ~ B6) </div>
+                                            <div class="product_price">1,760원~</div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 셀프 디자인 -->
+            <div class="product_cont content_box">
+                <div class="product_cont_header">
+                    <div class="tit_box">
+                        <div class="badge">쉽게 직접 만드는 나만의 디자인</div>
+                        <h3>셀프디자인</h3>
+                    </div>
+
+                    <div class="swiper-button-wrap">
+                        <div class="swiper-button-prev"></div>
+                        <div class="swiper-button-next"></div>
+                    </div>
+                </div>
+
+                <div class="product_list swiper">
+                    <div class="swiper-wrapper">
+                        <div class="product_item overlay swiper-slide">
+                            <a href="">
+                                <div class="product_image">
+                                    <div class="img_set"><img src="/assets/img/sec03_img01.webp" alt=""></div>
+                                </div>
+                                <div class="product_info">
+                                    <h4>아크릴 톡</h4>
+                                    <p>소량도 가능한 커스텀 굿즈</p>
+                                </div>
+                                <div class="product_overlay_content">
+                                    <h4>아크릴 톡</h4>
+                                    <p>소량도 가능한 커스텀 굿즈</p>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 35 35" fill="none">
+                                    <circle cx="17.5" cy="17.5" r="17.5" fill="#335CFF"/>
+                                    <path d="M14 21L21 14M21 14H14.8787M21 14V20.1213" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </div>
+
+                            </a>
+                        </div>
+                        <div class="product_item overlay swiper-slide">
+                            <a href="">
+                                <div class="product_image">
+                                    <div class="img_set"><img src="/assets/img/sec03_img01.webp" alt=""></div>
+                                </div>
+                                <div class="product_info">
+                                    <h4>아크릴 톡</h4>
+                                    <p>소량도 가능한 커스텀 굿즈</p>
+                                </div>
+                                <div class="product_overlay_content">
+                                    <h4>아크릴 톡</h4>
+                                    <p>소량도 가능한 커스텀 굿즈</p>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 35 35" fill="none">
+                                    <circle cx="17.5" cy="17.5" r="17.5" fill="#335CFF"/>
+                                    <path d="M14 21L21 14M21 14H14.8787M21 14V20.1213" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </div>
+
+                            </a>
+                        </div>
+                        <div class="product_item overlay swiper-slide">
+                            <a href="">
+                                <div class="product_image">
+                                    <div class="img_set"><img src="/assets/img/sec03_img01.webp" alt=""></div>
+                                </div>
+                                <div class="product_info">
+                                    <h4>아크릴 톡</h4>
+                                    <p>소량도 가능한 커스텀 굿즈</p>
+                                </div>
+                                <div class="product_overlay_content">
+                                    <h4>아크릴 톡</h4>
+                                    <p>소량도 가능한 커스텀 굿즈</p>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 35 35" fill="none">
+                                    <circle cx="17.5" cy="17.5" r="17.5" fill="#335CFF"/>
+                                    <path d="M14 21L21 14M21 14H14.8787M21 14V20.1213" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </div>
+
+                            </a>
+                        </div>
+                        <div class="product_item overlay swiper-slide">
+                            <a href="">
+                                <div class="product_image">
+                                    <div class="img_set"><img src="/assets/img/sec03_img01.webp" alt=""></div>
+                                </div>
+                                <div class="product_info">
+                                    <h4>아크릴 톡</h4>
+                                    <p>소량도 가능한 커스텀 굿즈</p>
+                                </div>
+                                <div class="product_overlay_content">
+                                    <h4>아크릴 톡</h4>
+                                    <p>소량도 가능한 커스텀 굿즈</p>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 35 35" fill="none">
+                                    <circle cx="17.5" cy="17.5" r="17.5" fill="#335CFF"/>
+                                    <path d="M14 21L21 14M21 14H14.8787M21 14V20.1213" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </div>
+
+                            </a>
+                        </div>
+                        <div class="product_item overlay swiper-slide">
+                            <a href="">
+                                <div class="product_image">
+                                    <div class="img_set"><img src="/assets/img/sec03_img01.webp" alt=""></div>
+                                </div>
+                                <div class="product_info">
+                                    <h4>아크릴 톡</h4>
+                                    <p>소량도 가능한 커스텀 굿즈</p>
+                                </div>
+                                <div class="product_overlay_content">
+                                    <h4>아크릴 톡</h4>
+                                    <p>소량도 가능한 커스텀 굿즈</p>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 35 35" fill="none">
+                                    <circle cx="17.5" cy="17.5" r="17.5" fill="#335CFF"/>
+                                    <path d="M14 21L21 14M21 14H14.8787M21 14V20.1213" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </div>
+
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 전체 업종별 -->
+        </main>
+        
+        <footer id="footer">
+            <div class="footer_inner">
+                <div class="left_cont">
+                    <div class="category">
+                        <div class="logo"><img src="/assets/img/logo_footer.svg" alt="로고"></div>
+                        <ul>
+                            <li><a href="">회사소개</a></li>
+                            <li><a href="">이용약관</a></li>
+                            <li><a href="">개인정보처리방침</a></li>
+                            <li><a href="">오시는길</a></li>
+                            <li><a href="">공지사항</a></li>
+                            <li><a href="">FAQ</a></li>
+                            <li><a href="">고객센터</a></li>
+                            <li><a href="">출고 운영시간</a></li>
+                        </ul>
+                    </div>
+
+                    <ul class="info">
+                        <li>(주)성원애드피아</li>
+                        <li>대표 : 정창희</li>
+                        <li>사업자등록번호 : 367-87-00976</li>
+                        <li class="no_divider">
+                            <button class="business_certificate">
+                                사업자등록증
+                            </button>
+                        </li>
+                        <li class="no_divider">
+                            <button class="business_infomation">
+                                사업자정보확인
+                            </button>
+                        </li>
+                    </ul>
+
+                    <ul class="info">
+                        <li>호스팅 제공자 : ㈜성원애드피아 </li>
+                        <li>webmaster@adpiamall.com</li>
+                        <li>통신판매업신고 : 제 2018-서울성동-0259호</li>
+                    </ul>
+
+                    <ul class="sns_list">
+                        <li>
+                            <a href="">
+                                <img class="default" src="/assets/img/sns_kakao.svg" alt="">
+                                <img class="hover" src="/assets/img/sns_kakao_on.svg" alt="">
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <img class="default" src="/assets/img/sns_naver.svg" alt="">
+                                <img class="hover" src="/assets/img/sns_naver_on.svg" alt="">
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <img class="default" src="/assets/img/sns_instagram.svg" alt="">
+                                <img class="hover" src="/assets/img/sns_instagram_on.png" alt="">
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <img class="default" src="/assets/img/sns_youtube.svg" alt="">
+                                <img class="hover" src="/assets/img/sns_youtube_on.svg" alt="">
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <img class="default" src="/assets/img/sns_facebook.svg" alt="">
+                                <img class="hover" src="/assets/img/sns_facebook_on.svg" alt="">
+                            </a>
+                        </li>
+                    </ul>
+
+                    <p class="copyright">
+                        COPYRIGHTⓒ 2004 SUNGWONADPIA Co. Ltd. ALL RIGHTS RESERVED
+                    </p>
+                </div>
+
+                <div class="right_cont">
+
+                    <ul class="address_list">
+                        <li>성수동 본사 : 서울시 성동구 성수일로84 (성수동2가 284-49) 남영 디지털 타워</li>
+                        <li>고객센터 : 서울시 성동구 성수일로89 (성수동1가 13-189) Metamorpho(지식산업센터) 703호</li>
+                        <li>성수동 출고실 : 서울시 성동구 성수일로80 (성수동2가 284-51) 1층</li>
+                        <li>충무로 출고실 : 서울시 중구 퇴계로 41길 6 (충무로4가 112-1) 1층</li>
+                        <li>인현동 출고실 : 서울 중구 마른내로 79(인현동2가 151-1) 세운푸르지오헤리시티 1층</li>
+                    </ul>
+
+
+                    <div class="flex_group">
+                        <div class="family_site">
+                            <button type="button" class="family_btn">
+                                <span>FAMILY SITE</span>
+                                <svg class="arrow" width="10" height="6" viewBox="0 0 10 6" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path opacity=".6" d="M9 1 5 5 1 1" stroke="#000" stroke-width="1.5"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                            </button>
+    
+                            <ul class="family_site_list">
+                                <li>
+                                    <a href="http://www.swadpia.co.kr">
+                                        성원애드피아
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://www.adpiamall.com/home">
+                                        애드피아몰
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="http://www.pr5555.co.kr/parcel/">
+                                        성원로지스
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://www.stayrak.com/">
+                                        스테이락호텔
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://www.swfoodmall.com/home">
+                                        성원푸드몰
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="btn_group">
+                            <a class="button" href="javascript:;">
+                                <svg class="mb-1" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <g clip-path="url(#2d0sul966a)">
+                                        <path
+                                            d="m16.736 14.721-5.21-9.311A1.754 1.754 0 0 0 10 4.5c-.63 0-1.212.347-1.528.91l-5.236 9.36a1.87 1.87 0 0 0 0 1.82c.315.563.897.91 1.527.91h10.474c.974 0 1.763-.815 1.763-1.82 0-.352-.097-.68-.264-.959z"
+                                            fill="#A3A0A0" />
+                                        <path
+                                            class="centers"
+                                            d="M10 13.028c-.498 0-.902-.355-.902-.793L9 8.727c0-.438.502-.793 1-.793s1 .355 1 .793l-.098 3.508c0 .438-.404.793-.902.793zM10 15.668c-.263 0-.521-.106-.707-.293A1.007 1.007 0 0 1 9 14.668c0-.263.107-.521.293-.707.186-.186.444-.293.707-.293.263 0 .521.107.707.293.186.186.293.444.293.707 0 .263-.107.521-.293.707a1.006 1.006 0 0 1-.707.293z"
+                                            fill="#F4F5F7" />
+                                    </g>
+                                    <defs>
+                                        <clipPath id="2d0sul966a">
+                                            <path fill="#fff" transform="translate(3 4.5)" d="M0 0h14v13H0z" />
+                                        </clipPath>
+                                    </defs>
+                                </svg>
+                                인쇄물정책
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+</body>
+</html>

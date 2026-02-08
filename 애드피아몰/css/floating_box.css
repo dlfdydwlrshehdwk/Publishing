@@ -1,0 +1,86 @@
+
+/* 플로팅 박스 */
+.floating_box {
+    position: sticky;
+    top: calc(50vh - 154px);
+    left: 0;
+    z-index: 8;
+}
+
+.floating_box .top {
+    cursor: pointer;
+    margin-top: 8px;
+    border-radius: 12px;
+    border: solid 1px #e6e7eb;
+    background-color: #fff;
+    width: 74px;
+    height: 74px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 600;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.71;
+    letter-spacing: -0.28px;
+    text-align: left;
+    color: #2f2f2f;
+}
+
+.floating_box .menus {
+    padding: 14px 7px;
+    border-radius: 12px;
+    border: solid 1px #e6e7eb;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    row-gap: 29px;
+}
+
+.floating_box .menus li {
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: -0.6px;
+    text-align: center;
+    color: #000;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    width: 100%;
+}
+.floating_box .menus li img.hover{
+    display: none;
+}
+.floating_box .menus li:hover{
+    color: #335cff;
+}
+.floating_box .menus li:hover img.default{
+    display: none;
+}
+.floating_box .menus li:hover img.hover{
+    display: block;
+}
+.floating_box .menus li:hover svg{
+    fill: #335cff;
+}
+.floating_box .menus li + li::before{
+    content: "";
+    position: absolute;
+    bottom: calc(100% + 15px);
+    width: 100%;
+    height: 1px;
+    background-color: #e6e7eb;
+}
+.floating_box .menus li img {
+    margin-bottom: 8px;
+}
