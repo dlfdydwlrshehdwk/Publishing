@@ -1,6 +1,8 @@
 :root{
     --primary: #335cff;
-
+    --signage-color: #335CFF;
+    --gift-color: #66c3cc;
+    --utong-color: #f39800;
 }
 
 html, body, div, span, applet, object, iframe,

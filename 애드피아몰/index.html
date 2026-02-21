@@ -19,7 +19,8 @@
   
 <body>
     <div id="wrap">
-        <header id="header">
+        <header id="header" class="signage">
+            <input type="hidden" id="now_cate" value="signage">
             <div class="top_banner">
                 <div class="top_banner_inner">
                     <div class="swiper">
@@ -51,16 +52,17 @@
             <div class="header_main">
                 <div class="header_main_inner">
                     <div class="left_cont">
-                        <h1 class="header_logo"><a href=""><img src="/assets/img/logo.svg" alt="로고"></a></h1>
-                        <div class="service_switch">
-                            <button type="button" class="active">샤이니지</button>
-                            <button type="button">기프트</button>
-                            <button type="button">유통</button>
-                        </div>
+                        <h1 class="header_logo"><a href="/"><img src="/assets/img/adpiamall_logo.png" alt="로고"></a></h1>
+                    </div>
+
+                    <div class="service_switch">
+                        <button type="button" class="active" data-color="#335CFF" data-cate="signage">사이니지</button>
+                        <button type="button" data-color="#66C3CC" data-cate="gift">기프트</button>
+                        <button type="button" data-color="#F39800" data-cate="utong">유통</button>
                     </div>
     
                     <div class="right_cont">
-                        <form action="" class="search_cont">
+                        <!-- <form action="" class="search_cont">
                             <input type="text" placeholder="#셀프디자인으로 주문하기">
                             <button type="submit">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
@@ -68,15 +70,20 @@
                                     <path d="M17.4995 17.5012L13.5 13.501" stroke="#212121" stroke-width="1.5" stroke-linecap="round"/>
                                 </svg>
                             </button>
-                        </form>
+                        </form> -->
                         <div class="header_util">
-                            <a href="" class="btn">회원가입</a>
-                            <a href="" class="btn active">로그인</a>
+                            <a href="" class="btn icon search">
+                                <img src="/assets/img/search.svg" alt="">
+                            </a>
                             <a href="" class="btn icon basket">
                                 <img src="/assets/img/basket.svg" alt="">
                                 <p class="basket_count"></p>
                             </a>
-                            <a href="" class="btn icon">글</a>
+                            <a href="" class="btn icon">
+                                <img src="/assets/img/language.svg" alt="">
+                            </a>
+                            <a href="" class="btn">회원가입</a>
+                            <a href="" class="btn active">로그인</a>
                         </div>
                     </div>
                 </div>
@@ -86,48 +93,49 @@
                 <div class="gnb_inner">
                     <div class="left_cont">
                         <div class="ham">
-                            <img class="default" src="/assets/img/ham_default.svg" alt="">
-                            <img class="on" src="/assets/img/ham_on.svg" alt="">
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
                         </div>
 
                         <ul class="gnb_list signage_list active">
                             <li>
-                                <a class="" href="">
-                                    상업인쇄
+                                <a href="" data-id="signage01">
+                                    실사출력
                                     <p class="chip">대량주문</p>
                                 </a>
                             </li>
-                            <li><a href="">현수막</a></li>
-                            <li><a href="">배너</a></li>
-                            <li><a href="">간판</a> </li>
-                            <li><a href="">액자</a></li>
-                            <li><a href="">LED</a></li>
-                            <li><a href="">아크릴</a> </li>
-                            <li><a href="">금속/우드</a> </li>
-                            <li><a href="">POP/등신대</a></li>
+                            <li><a href="" data-id="signage02">현수막</a></li>
+                            <li><a href="" data-id="signage03">배너</a></li>
+                            <li><a href="" data-id="signage04">간판</a> </li>
+                            <li><a href="" data-id="signage05">액자</a></li>
+                            <li><a href="" data-id="signage06">LED</a></li>
+                            <li><a href="" data-id="signage07">아크릴</a> </li>
+                            <li><a href="" data-id="signage08">금속/우드</a> </li>
+                            <li><a href="" data-id="signage09">POP/등신대</a></li>
                             <li><a href="">셀프디자인</a></li>
-                            <li><a href="">일일출고<span class="icon"></span></a></li>
+                            <li><a href="" data-id="signage10">일일출고<span class="icon"></span></a></li>
                         </ul>
 
                         <ul class="gnb_list gift_list">
-                            <li><a href="">굿즈</a></li>
-                            <li><a href="">판촉물</a></li>
-                            <li><a href="">포장백</a></li>
-                            <li><a href="">부자재</a></li>
+                            <li><a href="" data-id="gift01">굿즈</a></li>
+                            <li><a href="" data-id="gift02">판촉물</a></li>
+                            <li><a href="" data-id="gift03">포장백</a></li>
+                            <li><a href="" data-id="gift04">부자재</a></li>
                         </ul>
 
                         <ul class="gnb_list distribution_list">
-                            <li><a href="">베스트</a></li>
-                            <li><a href="">패션의류</a></li>
-                            <li><a href="">디지털/가전</a></li>
-                            <li><a href="">가구/인테리어</a></li>
-                            <li><a href="">출산/육아</a></li>
-                            <li><a href="">식품</a></li>
-                            <li><a href="">스포츠/레저</a></li>
-                            <li><a href="">생활/건강</a></li>
-                            <li><a href="">화장품/미용</a></li>
-                            <li><a href="">여가/생활편의</a></li>
-                            <li><a href="">전체상품</a></li>
+                            <li><a href=""data-id="utong01">베스트</a></li>
+                            <li><a href=""data-id="utong02">패션의류</a></li>
+                            <li><a href=""data-id="utong03">디지털/가전</a></li>
+                            <li><a href=""data-id="utong04">가구/인테리어</a></li>
+                            <li><a href=""data-id="utong05">출산/육아</a></li>
+                            <li><a href=""data-id="utong06">식품</a></li>
+                            <li><a href=""data-id="utong07">스포츠/레저</a></li>
+                            <li><a href=""data-id="utong08">생활/건강</a></li>
+                            <li><a href=""data-id="utong09">화장품/미용</a></li>
+                            <li><a href=""data-id="utong10">여가/생활편의</a></li>
+                            <li><a href=""data-id="utong11">전체상품</a></li>
                         </ul>
                     </div>
     
@@ -147,9 +155,395 @@
                         <a href="" class="btn active" class="active">웹하드</a>
                     </div>
                 </div>
+                
                 <div class="menu_wrap">
-                    <div class="menu_inner">
-                        <div id="type01" class="category on">
+                    <div class="menu_inner signage">
+                        <div id="signageAll" class="category">
+                            <div class="category_grid">
+                                <div class="items">
+                                    <div class="item">
+                                        <h4>실사출력</h4>
+                                        <ul>
+                                            <li><a href="">포스터</a></li>
+                                            <li><a href="">종이류</a></li>
+                                            <li><a href="">인화지</a></li>
+                                            <li><a href="">보드지</a></li>
+                                            <li><a href="">스티커/시트지</a></li>
+                                            <li><a href="">PET/특수소재</a></li>
+                                            <li><a href="">천소재</a></li>
+                                            <li><a href="">통자석</a></li>
+                                            <li><a href="">시트컷팅</a></li>
+                                            <li><a href="">패브릭스티커</a></li>
+                                            <li><a href="">DTF(판박이)스티커</a></li>
+                                            <li class="new"><a href="">에폭시스티커</a></li>
+                                            <li class="new"><a href="">띠부스티커</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="items">
+                                    <div class="item">
+                                        <h4>현수막</h4>
+                                        <ul>
+                                            <li><a href="">일반현수막</a></li>
+                                            <li><a href="">대형현수막</a></li>
+                                            <li><a href="">초대형현수막</a></li>
+                                            <li><a href="">어깨띠</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="item">
+                                        <h4>금속/우드</h4>
+                                        <ul>
+                                            <li><a href="">신주인쇄</a></li>
+                                            <li><a href="">신주마킹</a></li>
+                                            <li><a href="">알루미늄인쇄</a></li>
+                                            <li><a href="">알루미늄명함</a></li>
+                                            <li><a href="">알루미늄명찰</a></li>
+                                            <li><a href="">스텐인쇄</a></li>
+                                            <li><a href="">스텐입간판</a></li>
+                                            <li><a href="">스텐현판</a></li>
+                                            <li><a href="">우드인쇄</a></li>
+                                            <li><a href="">우드입간판</a></li>
+                                            <li><a href="">우드현판</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="items">
+                                    <div class="item">
+                                        <h4>배너</h4>
+                                        <ul>
+                                            <li class="new"><a href="">실내용배너</a></li>
+                                            <li class="new"><a href="">실외용배너</a></li>
+                                            <li><a href="">와이드배너</a></li>
+                                            <li><a href="">미니배너</a></li>
+                                            <li><a href="">초대형배너</a></li>
+                                            <li><a href="">배너출력</a></li>
+                                            <li><a href="">백월배너</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="item">
+                                        <h4>POP/등신대</h4>
+                                        <ul>
+                                            <li><a href="">합지POP</a></li>
+                                            <li><a href="">포맥스POP</a></li>
+                                            <li><a href="">폼보드POP</a></li>
+                                            <li><a href="">합지등신대</a></li>
+                                            <li><a href="">포맥스등신대</a></li>
+                                            <li><a href="">폼보드등신대</a></li>
+                                            <li><a href="">포맥스절곡</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="items">
+                                    <div class="item">
+                                        <h4>간판</h4>
+                                        <ul>
+                                            <li><a href="">후렉스조명</a></li>
+                                            <li><a href="">백릿조명</a></li>
+                                            <li class="new"><a href="">철제입간판</a></li>
+                                            <li><a href="">우드입간판</a></li>
+                                            <li><a href="">우드현판</a></li>
+                                            <li><a href="">스텐입간판</a></li>
+                                            <li><a href="">스텐현판</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="item">
+                                        <h4>일일출고</h4>
+                                        <ul>
+                                            <li><a href="">실내용배너</a></li>
+                                            <li><a href="">실외용배너</a></li>
+                                            <li><a href="">실사출력 보드지</a></li>
+                                            <li><a href="">일반현수막</a></li>
+                                            <li><a href="">스티커/시트지</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="items">
+                                    <div class="item">
+                                        <h4>액자</h4>
+                                        <ul>
+                                            <li><a href="">원목액자</a></li>
+                                            <li><a href="">알루미늄 액자</a></li>
+                                            <li><a href="">캔버스 액자</a></li>
+                                            <li><a href="">하이브리드초대장</a></li>
+                                            <li><a href="">아크릴다이액 액자</a></li>
+                                            <li><a href="">초슬림 아트룩스 액자</a></li>
+                                            <li><a href="">베젤 액자</a></li>
+                                            <li><a href="">자작나무 액자</a></li>
+                                            <li><a href="">아크릴자석 액자</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="items">
+                                    <div class="item">
+                                        <h4>LED</h4>
+                                        <ul>
+                                            <li><a href="">LED 원형입간판</a></li>
+                                            <li><a href="">윈도우부착 LED패널</a></li>
+                                            <li class="new"><a href="">LED 3D사인간판</a></li>
+                                            <li class="new"><a href="">LED 백걸이형 실내용배너</a></li>
+                                            <li><a href="">LED 스탠드형 실외용배너</a></li>
+                                            <li><a href="">LED A형 철제입간판</a></li>
+                                            <li class="new"><a href="">LED 아크릴간판</a></li>
+                                            <li><a href="">LED 액자</a></li>
+                                            <li><a href="">LED 라운드 입간판</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="items">
+                                    <div class="item">
+                                        <h4>아크릴</h4>
+                                        <ul>
+                                            <li><a href="">아크릴판</a></li>
+                                            <li><a href="">아크릴인쇄</a></li>
+                                            <li><a href="">아크릴컷팅</a></li>
+                                            <li><a href="">아크릴루트등</a></li>
+                                            <li><a href="">아크릴가림막</a></li>
+                                            <li><a href="">아크릴톡</a></li>
+                                            <li><a href="">아크릴키링</a></li>
+                                            <li><a href="">아크릴명찰</a></li>
+                                            <li><a href="">아크릴뱃지</a></li>
+                                            <li><a href="">아크릴화병</a></li>
+                                            <li><a href="">아크릴트레이</a></li>
+                                            <li><a href="">아크릴박스</a></li>
+                                            <li><a href="">아크릴절곡</a></li>
+                                            <li><a href="">아크릴단봉액자</a></li>
+                                            <li><a href="">우드무드등액자</a></li>
+                                            <li><a href="">아크릴시계</a></li>
+                                            <li><a href="">아크릴집게</a></li>
+                                            <li class="new"><a href="">아크릴등신대</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="signage01" class="category">
+                            <div class="items">
+                                <div class="item">
+                                    <h4>실사출력</h4>
+                                    <div class="category_flex">
+                                        <ul>
+                                            <li><a href="">포스터</a></li>
+                                            <li><a href="">종이류</a></li>
+                                            <li><a href="">인화지</a></li>
+                                            <li><a href="">보드지</a></li>
+                                            <li><a href="">스티커/시트지</a></li>
+                                            <li><a href="">PET/특수소재</a></li>
+                                            <li><a href="">천소재</a></li>
+                                        </ul>
+                                        
+                                        <ul>
+                                            <li><a href="">통자석</a></li>
+                                            <li><a href="">시트컷팅</a></li>
+                                            <li><a href="">패브릭스티커</a></li>
+                                            <li><a href="">DTF(판박이)스티커</a></li>
+                                            <li class="new"><a href="">에폭시스티커</a></li>
+                                            <li class="new"><a href="">띠부스티커</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="signage02" class="category">
+                            <div class="items">
+                                <div class="item">
+                                    <h4>현수막</h4>
+                                    <div class="category_flex">
+                                        <ul>
+                                            <li><a href="">명함</a></li>
+                                            <li><a href="">일반지명함</a></li>
+                                            <li><a href="">고급지명함</a></li>
+                                            <li><a href="">카드명함</a></li>
+                                            <li><a href="">하이브리드명함</a></li>
+                                            <li><a href="">투명하이브리드명함</a></li>
+                                            <li><a href="">하이브리드명함</a></li>
+                                        </ul>
+                                        
+                                        <ul>
+                                            <li><a href="">에폭시명함</a></li>
+                                            <li><a href="">프리컷팅</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="signage03" class="category">
+                            <div class="items">
+                                <div class="item">
+                                    <h4>배너</h4>
+                                    <ul>
+                                        <li class="new"><a href="">실내용배너</a></li>
+                                        <li class="new"><a href="">실외용배너</a></li>
+                                        <li><a href="">와이드배너</a></li>
+                                        <li><a href="">미니배너</a></li>
+                                        <li><a href="">초대형배너</a></li>
+                                        <li><a href="">배너출력</a></li>
+                                        <li><a href="">백월배너</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="signage04" class="category">
+                            <div class="items">
+                                <div class="item">
+                                    <h4>간판</h4>
+                                    <ul>
+                                        <li><a href="">후렉스조명</a></li>
+                                        <li><a href="">백릿조명</a></li>
+                                        <li class="new"><a href="">철제입간판</a></li>
+                                        <li><a href="">우드입간판</a></li>
+                                        <li><a href="">우드현판</a></li>
+                                        <li><a href="">스텐입간판</a></li>
+                                        <li><a href="">스텐현판</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="signage05" class="category">
+                            <div class="items">
+                                <div class="item">
+                                    <h4>액자</h4>
+                                    <div class="category_flex">
+                                        <ul>
+                                            <li><a href="">원목액자</a></li>
+                                            <li><a href="">알루미늄 액자</a></li>
+                                            <li><a href="">캔버스 액자</a></li>
+                                            <li><a href="">아크릴다이액 액자</a></li>
+                                            <li><a href="">초슬림 아트룩스 액자</a></li>
+                                            <li><a href="">베젤 액자</a></li>
+                                            <li><a href="">자작나무 액자</a></li>
+                                        </ul>
+                                        
+                                        <ul>
+                                            <li><a href="">아크릴자석 액자</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="signage06" class="category">
+                            <div class="items">
+                                <div class="item">
+                                    <h4>LED</h4>
+                                    <div class="category_flex">
+                                        <ul>
+                                            <li><a href="">LED 원형입간판</a></li>
+                                            <li><a href="">윈도우부착 LED패널</a></li>
+                                            <li class="new"><a href="">LED 3D사인간판</a></li>
+                                            <li class="new"><a href="">LED 백걸이형 실내용배너</a></li>
+                                            <li><a href="">LED 스탠드형 실외용배너</a></li>
+                                            <li><a href="">LED A형 철제입간판</a></li>
+                                            <li><a href="">LED A형 철제입간판</a></li>
+                                        </ul>
+
+                                        <ul>
+                                            <li class="new"><a href="">LED 아크릴간판</a></li>
+                                            <li><a href="">LED 액자</a></li>
+                                            <li><a href="">LED 라운드 입간판</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="signage07" class="category has_other_box">
+                            <div class="items">
+                                <div class="item">
+                                    <h4>아크릴</h4>
+                                    <div class="category_flex">
+                                        <ul>
+                                            <li><a href="">아크릴판</a></li>
+                                            <li><a href="">아크릴인쇄</a></li>
+                                            <li><a href="">아크릴컷팅</a></li>
+                                            <li><a href="">아크릴루트등</a></li>
+                                            <li><a href="">아크릴가림막</a></li>
+                                            <li><a href="">아크릴톡</a></li>
+                                            <li><a href="">아크릴키링</a></li>
+                                        </ul>
+
+                                        <ul>
+                                            <li><a href="">아크릴명찰</a></li>
+                                            <li><a href="">아크릴뱃지</a></li>
+                                            <li><a href="">아크릴화병</a></li>
+                                            <li><a href="">아크릴트레이</a></li>
+                                            <li><a href="">아크릴박스</a></li>
+                                            <li><a href="">아크릴절곡</a></li>
+                                            <li><a href="">아크릴단봉액자</a></li>
+                                        </ul>
+                                        
+                                        <ul>
+                                            <li><a href="">우드무드등액자</a></li>
+                                            <li><a href="">아크릴시계</a></li>
+                                            <li><a href="">아크릴집게</a></li>
+                                            <li class="new"><a href="">아크릴등신대</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="other_box">
+                                <div class="img_set">
+                                    <img src="/assets/img/mall1.png" alt="이미지">
+                                </div>
+                            </div>
+                        </div>
+                        <div id="signage08" class="category">
+                            <div class="items">
+                                <div class="item">
+                                    <h4>금속/우드</h4>
+                                    <div class="category_flex">
+                                        <ul>
+                                            <li><a href="">신주인쇄</a></li>
+                                            <li><a href="">신주마킹</a></li>
+                                            <li><a href="">알루미늄인쇄</a></li>
+                                            <li><a href="">알루미늄명함</a></li>
+                                            <li><a href="">알루미늄명찰</a></li>
+                                            <li><a href="">스텐인쇄</a></li>
+                                            <li><a href="">스텐입간판</a></li>
+                                        </ul>
+
+                                        <ul>
+                                            <li><a href="">스텐현판</a></li>
+                                            <li><a href="">우드인쇄</a></li>
+                                            <li><a href="">우드입간판</a></li>
+                                            <li><a href="">우드현판</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="signage09" class="category">
+                            <div class="items">
+                                <div class="item">
+                                    <h4>POP/등신대</h4>
+                                    <ul>
+                                        <li><a href="">합지POP</a></li>
+                                        <li><a href="">포맥스POP</a></li>
+                                        <li><a href="">폼보드POP</a></li>
+                                        <li><a href="">합지등신대</a></li>
+                                        <li><a href="">포맥스등신대</a></li>
+                                        <li><a href="">폼보드등신대</a></li>
+                                        <li><a href="">포맥스절곡</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="signage10" class="category">
+                            <div class="items">
+                                <div class="item">
+                                    <h4>일일출고</h4>
+                                    <ul>
+                                        <li><a href="">실내용배너</a></li>
+                                        <li><a href="">실외용배너</a></li>
+                                        <li><a href="">실사출력 보드지</a></li>
+                                        <li><a href="">일반현수막</a></li>
+                                        <li><a href="">스티커/시트지</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="menu_inner gift">
+                        <div id="giftAll" class="category">
                             <div class="items">
                                 <div class="item">
                                     <h4>실사출력</h4>
@@ -305,7 +699,163 @@
                                 </div>
                             </div>
                         </div>
-                        <div id="type02" class="category">
+                        <div id="gift01" class="category">
+                            <div class="items">
+                                <div class="item">
+                                    <h4>실사출력</h4>
+                                    <ul>
+                                        <li><a href="">포스터</a></li>
+                                        <li><a href="">종이류</a></li>
+                                        <li><a href="">인화지</a></li>
+                                        <li><a href="">보드지</a></li>
+                                        <li><a href="">스티커/시트지</a></li>
+                                        <li><a href="">PET/특수소재</a></li>
+                                        <li><a href="">천소재</a></li>
+                                        <li><a href="">통자석</a></li>
+                                        <li><a href="">시트컷팅</a></li>
+                                        <li><a href="">패브릭스티커</a></li>
+                                        <li><a href="">DTF(판박이)스티커</a></li>
+                                        <li class="new"><a href="">에폭시스티커</a></li>
+                                        <li class="new"><a href="">띠부스티커</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="items">
+                                <div class="item">
+                                    <h4>현수막</h4>
+                                    <ul>
+                                        <li><a href="">일반현수막</a></li>
+                                        <li><a href="">대형현수막</a></li>
+                                        <li><a href="">초대형현수막</a></li>
+                                        <li><a href="">어깨띠</a></li>
+                                    </ul>
+                                </div>
+                                <div class="item">
+                                    <h4>금속/우드</h4>
+                                    <ul>
+                                        <li><a href="">신주인쇄</a></li>
+                                        <li><a href="">신주마킹</a></li>
+                                        <li><a href="">알루미늄인쇄</a></li>
+                                        <li><a href="">알루미늄명함</a></li>
+                                        <li><a href="">알루미늄명찰</a></li>
+                                        <li><a href="">스텐인쇄</a></li>
+                                        <li><a href="">스텐입간판</a></li>
+                                        <li><a href="">스텐현판</a></li>
+                                        <li><a href="">우드인쇄</a></li>
+                                        <li><a href="">우드입간판</a></li>
+                                        <li><a href="">우드현판</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="items">
+                                <div class="item">
+                                    <h4>배너</h4>
+                                    <ul>
+                                        <li><a href="">실내용배너</a></li>
+                                        <li><a href="">실외용배너</a></li>
+                                        <li><a href="">와이드배너</a></li>
+                                        <li><a href="">미니배너</a></li>
+                                        <li><a href="">초대형배너</a></li>
+                                        <li><a href="">배너출력</a></li>
+                                        <li><a href="">백월배너</a></li>
+                                    </ul>
+                                </div>
+                                <div class="item">
+                                    <h4>POP/등신대</h4>
+                                    <ul>
+                                        <li><a href="">합지POP</a></li>
+                                        <li><a href="">포맥스POP</a></li>
+                                        <li><a href="">폼보드POP</a></li>
+                                        <li><a href="">합지등신대</a></li>
+                                        <li><a href="">포맥스등신대</a></li>
+                                        <li><a href="">폼보드등신대</a></li>
+                                        <li><a href="">포맥스절곡</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="items">
+                                <div class="item">
+                                    <h4>간판</h4>
+                                    <ul>
+                                        <li><a href="">후렉스조명</a></li>
+                                        <li><a href="">백릿조명</a></li>
+                                        <li class="new"><a href="">철제입간판</a></li>
+                                        <li><a href="">우드입간판</a></li>
+                                        <li><a href="">우드현판</a></li>
+                                        <li><a href="">스텐입간판</a></li>
+                                        <li><a href="">스텐현판</a></li>
+                                    </ul>
+                                </div>
+                                <div class="item">
+                                    <h4>일일출고</h4>
+                                    <ul>
+                                        <li><a href="">실내용배너</a></li>
+                                        <li><a href="">실외용배너</a></li>
+                                        <li><a href="">실사출력 보드지</a></li>
+                                        <li><a href="">일반현수막</a></li>
+                                        <li><a href="">스티커/시트지</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="items">
+                                <div class="item">
+                                    <h4>액자</h4>
+                                    <ul>
+                                        <li><a href="">원목액자</a></li>
+                                        <li><a href="">알루미늄 액자</a></li>
+                                        <li><a href="">캔버스 액자</a></li>
+                                        <li><a href="">하이브리드초대장</a></li>
+                                        <li><a href="">아크릴다이액 액자</a></li>
+                                        <li><a href="">초슬림 아트룩스 액자</a></li>
+                                        <li><a href="">베젤 액자</a></li>
+                                        <li><a href="">자작나무 액자</a></li>
+                                        <li><a href="">아크릴자석 액자</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="items">
+                                <div class="item">
+                                    <h4>LED</h4>
+                                    <ul>
+                                        <li><a href="">LED 원형입간판</a></li>
+                                        <li><a href="">윈도우부착 LED패널</a></li>
+                                        <li class="new"><a href="">LED 3D사인간판</a></li>
+                                        <li class="new"><a href="">LED 백걸이형 실내용배너</a></li>
+                                        <li><a href="">LED 스탠드형 실외용배너</a></li>
+                                        <li><a href="">LED A형 철제입간판</a></li>
+                                        <li class="new"><a href="">LED 아크릴간판</a></li>
+                                        <li><a href="">LED 액자</a></li>
+                                        <li><a href="">LED 라운드 입간판</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="items">
+                                <div class="item">
+                                    <h4>아크릴</h4>
+                                    <ul>
+                                        <li><a href="">아크릴판</a></li>
+                                        <li><a href="">아크릴인쇄</a></li>
+                                        <li><a href="">아크릴컷팅</a></li>
+                                        <li><a href="">아크릴루트등</a></li>
+                                        <li><a href="">아크릴가림막</a></li>
+                                        <li><a href="">아크릴톡</a></li>
+                                        <li><a href="">아크릴키링</a></li>
+                                        <li><a href="">아크릴명찰</a></li>
+                                        <li><a href="">아크릴뱃지</a></li>
+                                        <li><a href="">아크릴화병</a></li>
+                                        <li><a href="">아크릴트레이</a></li>
+                                        <li><a href="">아크릴박스</a></li>
+                                        <li><a href="">아크릴절곡</a></li>
+                                        <li><a href="">아크릴단봉액자</a></li>
+                                        <li><a href="">우드무드등액자</a></li>
+                                        <li><a href="">아크릴시계</a></li>
+                                        <li><a href="">아크릴집게</a></li>
+                                        <li class="new"><a href="">아크릴등신대</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="gift02" class="category">
                             <div class="items">
                                 <ul>
                                     <li><a href="">명함</a></li>
@@ -414,7 +964,7 @@
                                 </ul>
                             </div>
                         </div>
-                        <div id="type03" class="category">
+                        <div id="gift03" class="category">
                             <div class="items line_none">
                                 <ul>
                                     <li><a href="">디지털</a>
@@ -469,7 +1019,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div id="type04" class="category">
+                        <div id="gift04" class="category">
                             <div class="items line_none">
                                 <ul>
                                     <li><a href="">판촉물</a></li>
@@ -520,7 +1070,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div id="type05" class="category">
+                        <div id="gift05" class="category">
                             <div class="items">
                                 <ul>
                                     <li><a href="">패키지</a>
@@ -557,7 +1107,605 @@
                                 </div>
                             </div>
                         </div>
-                        <div id="type06" class="category">
+                        <div id="gift06" class="category">
+                            <div class="items">
+                                <ul>
+                                    <li><a href="">판촉물</a></li>
+                                    <li><a href="">부채</a></li>
+                                    <li><a href="">다용도PP</a></li>
+                                    <li><a href="">책갈피</a></li>
+                                    <li><a href="">종이썬캡</a></li>
+                                    <li><a href="">PP썬캡</a></li>
+                                    <li><a href="">대량캘린더</a></li>
+                                    <li><a href="">소량캘린더</a></li>
+                                </ul>
+                            </div>
+                            <div class="other_box">
+                                <div class="left_txt_box">
+                                    <div class="inner_item">
+                                        <img src="/assets/img/category_type06_img01.svg" alt="">
+                                        <p>샘플북 6종류<br />
+                                            컬러차트북 3종류</p>
+                                    </div>
+                                    <div class="inner_item">
+                                        <img src="/assets/img/category_type06_img02.svg" alt="">
+                                        <p>운영시간<br />
+                                            오전 9시~오후 7시</p>
+                                    </div>
+                                </div>
+                                <div class="img_box">
+                                    <img src="/assets/img/category_img01.webp" alt="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="menu_inner utong">
+                        <div id="utongAll" class="category">
+                            <div class="items">
+                                <div class="item">
+                                    <h4>실사출력</h4>
+                                    <ul>
+                                        <li><a href="">포스터</a></li>
+                                        <li><a href="">종이류</a></li>
+                                        <li><a href="">인화지</a></li>
+                                        <li><a href="">보드지</a></li>
+                                        <li><a href="">스티커/시트지</a></li>
+                                        <li><a href="">PET/특수소재</a></li>
+                                        <li><a href="">천소재</a></li>
+                                        <li><a href="">통자석</a></li>
+                                        <li><a href="">시트컷팅</a></li>
+                                        <li><a href="">패브릭스티커</a></li>
+                                        <li><a href="">DTF(판박이)스티커</a></li>
+                                        <li class="new"><a href="">에폭시스티커</a></li>
+                                        <li class="new"><a href="">띠부스티커</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="items">
+                                <div class="item">
+                                    <h4>현수막</h4>
+                                    <ul>
+                                        <li><a href="">일반현수막</a></li>
+                                        <li><a href="">대형현수막</a></li>
+                                        <li><a href="">초대형현수막</a></li>
+                                        <li><a href="">어깨띠</a></li>
+                                    </ul>
+                                </div>
+                                <div class="item">
+                                    <h4>금속/우드</h4>
+                                    <ul>
+                                        <li><a href="">신주인쇄</a></li>
+                                        <li><a href="">신주마킹</a></li>
+                                        <li><a href="">알루미늄인쇄</a></li>
+                                        <li><a href="">알루미늄명함</a></li>
+                                        <li><a href="">알루미늄명찰</a></li>
+                                        <li><a href="">스텐인쇄</a></li>
+                                        <li><a href="">스텐입간판</a></li>
+                                        <li><a href="">스텐현판</a></li>
+                                        <li><a href="">우드인쇄</a></li>
+                                        <li><a href="">우드입간판</a></li>
+                                        <li><a href="">우드현판</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="items">
+                                <div class="item">
+                                    <h4>배너</h4>
+                                    <ul>
+                                        <li><a href="">실내용배너</a></li>
+                                        <li><a href="">실외용배너</a></li>
+                                        <li><a href="">와이드배너</a></li>
+                                        <li><a href="">미니배너</a></li>
+                                        <li><a href="">초대형배너</a></li>
+                                        <li><a href="">배너출력</a></li>
+                                        <li><a href="">백월배너</a></li>
+                                    </ul>
+                                </div>
+                                <div class="item">
+                                    <h4>POP/등신대</h4>
+                                    <ul>
+                                        <li><a href="">합지POP</a></li>
+                                        <li><a href="">포맥스POP</a></li>
+                                        <li><a href="">폼보드POP</a></li>
+                                        <li><a href="">합지등신대</a></li>
+                                        <li><a href="">포맥스등신대</a></li>
+                                        <li><a href="">폼보드등신대</a></li>
+                                        <li><a href="">포맥스절곡</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="items">
+                                <div class="item">
+                                    <h4>간판</h4>
+                                    <ul>
+                                        <li><a href="">후렉스조명</a></li>
+                                        <li><a href="">백릿조명</a></li>
+                                        <li class="new"><a href="">철제입간판</a></li>
+                                        <li><a href="">우드입간판</a></li>
+                                        <li><a href="">우드현판</a></li>
+                                        <li><a href="">스텐입간판</a></li>
+                                        <li><a href="">스텐현판</a></li>
+                                    </ul>
+                                </div>
+                                <div class="item">
+                                    <h4>일일출고</h4>
+                                    <ul>
+                                        <li><a href="">실내용배너</a></li>
+                                        <li><a href="">실외용배너</a></li>
+                                        <li><a href="">실사출력 보드지</a></li>
+                                        <li><a href="">일반현수막</a></li>
+                                        <li><a href="">스티커/시트지</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="items">
+                                <div class="item">
+                                    <h4>액자</h4>
+                                    <ul>
+                                        <li><a href="">원목액자</a></li>
+                                        <li><a href="">알루미늄 액자</a></li>
+                                        <li><a href="">캔버스 액자</a></li>
+                                        <li><a href="">하이브리드초대장</a></li>
+                                        <li><a href="">아크릴다이액 액자</a></li>
+                                        <li><a href="">초슬림 아트룩스 액자</a></li>
+                                        <li><a href="">베젤 액자</a></li>
+                                        <li><a href="">자작나무 액자</a></li>
+                                        <li><a href="">아크릴자석 액자</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="items">
+                                <div class="item">
+                                    <h4>LED</h4>
+                                    <ul>
+                                        <li><a href="">LED 원형입간판</a></li>
+                                        <li><a href="">윈도우부착 LED패널</a></li>
+                                        <li class="new"><a href="">LED 3D사인간판</a></li>
+                                        <li class="new"><a href="">LED 백걸이형 실내용배너</a></li>
+                                        <li><a href="">LED 스탠드형 실외용배너</a></li>
+                                        <li><a href="">LED A형 철제입간판</a></li>
+                                        <li class="new"><a href="">LED 아크릴간판</a></li>
+                                        <li><a href="">LED 액자</a></li>
+                                        <li><a href="">LED 라운드 입간판</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="items">
+                                <div class="item">
+                                    <h4>아크릴</h4>
+                                    <ul>
+                                        <li><a href="">아크릴판</a></li>
+                                        <li><a href="">아크릴인쇄</a></li>
+                                        <li><a href="">아크릴컷팅</a></li>
+                                        <li><a href="">아크릴루트등</a></li>
+                                        <li><a href="">아크릴가림막</a></li>
+                                        <li><a href="">아크릴톡</a></li>
+                                        <li><a href="">아크릴키링</a></li>
+                                        <li><a href="">아크릴명찰</a></li>
+                                        <li><a href="">아크릴뱃지</a></li>
+                                        <li><a href="">아크릴화병</a></li>
+                                        <li><a href="">아크릴트레이</a></li>
+                                        <li><a href="">아크릴박스</a></li>
+                                        <li><a href="">아크릴절곡</a></li>
+                                        <li><a href="">아크릴단봉액자</a></li>
+                                        <li><a href="">우드무드등액자</a></li>
+                                        <li><a href="">아크릴시계</a></li>
+                                        <li><a href="">아크릴집게</a></li>
+                                        <li class="new"><a href="">아크릴등신대</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="utong01" class="category">
+                            <div class="items">
+                                <div class="item">
+                                    <h4>실사출력</h4>
+                                    <ul>
+                                        <li><a href="">포스터</a></li>
+                                        <li><a href="">종이류</a></li>
+                                        <li><a href="">인화지</a></li>
+                                        <li><a href="">보드지</a></li>
+                                        <li><a href="">스티커/시트지</a></li>
+                                        <li><a href="">PET/특수소재</a></li>
+                                        <li><a href="">천소재</a></li>
+                                        <li><a href="">통자석</a></li>
+                                        <li><a href="">시트컷팅</a></li>
+                                        <li><a href="">패브릭스티커</a></li>
+                                        <li><a href="">DTF(판박이)스티커</a></li>
+                                        <li class="new"><a href="">에폭시스티커</a></li>
+                                        <li class="new"><a href="">띠부스티커</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="items">
+                                <div class="item">
+                                    <h4>현수막</h4>
+                                    <ul>
+                                        <li><a href="">일반현수막</a></li>
+                                        <li><a href="">대형현수막</a></li>
+                                        <li><a href="">초대형현수막</a></li>
+                                        <li><a href="">어깨띠</a></li>
+                                    </ul>
+                                </div>
+                                <div class="item">
+                                    <h4>금속/우드</h4>
+                                    <ul>
+                                        <li><a href="">신주인쇄</a></li>
+                                        <li><a href="">신주마킹</a></li>
+                                        <li><a href="">알루미늄인쇄</a></li>
+                                        <li><a href="">알루미늄명함</a></li>
+                                        <li><a href="">알루미늄명찰</a></li>
+                                        <li><a href="">스텐인쇄</a></li>
+                                        <li><a href="">스텐입간판</a></li>
+                                        <li><a href="">스텐현판</a></li>
+                                        <li><a href="">우드인쇄</a></li>
+                                        <li><a href="">우드입간판</a></li>
+                                        <li><a href="">우드현판</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="items">
+                                <div class="item">
+                                    <h4>배너</h4>
+                                    <ul>
+                                        <li><a href="">실내용배너</a></li>
+                                        <li><a href="">실외용배너</a></li>
+                                        <li><a href="">와이드배너</a></li>
+                                        <li><a href="">미니배너</a></li>
+                                        <li><a href="">초대형배너</a></li>
+                                        <li><a href="">배너출력</a></li>
+                                        <li><a href="">백월배너</a></li>
+                                    </ul>
+                                </div>
+                                <div class="item">
+                                    <h4>POP/등신대</h4>
+                                    <ul>
+                                        <li><a href="">합지POP</a></li>
+                                        <li><a href="">포맥스POP</a></li>
+                                        <li><a href="">폼보드POP</a></li>
+                                        <li><a href="">합지등신대</a></li>
+                                        <li><a href="">포맥스등신대</a></li>
+                                        <li><a href="">폼보드등신대</a></li>
+                                        <li><a href="">포맥스절곡</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="items">
+                                <div class="item">
+                                    <h4>간판</h4>
+                                    <ul>
+                                        <li><a href="">후렉스조명</a></li>
+                                        <li><a href="">백릿조명</a></li>
+                                        <li class="new"><a href="">철제입간판</a></li>
+                                        <li><a href="">우드입간판</a></li>
+                                        <li><a href="">우드현판</a></li>
+                                        <li><a href="">스텐입간판</a></li>
+                                        <li><a href="">스텐현판</a></li>
+                                    </ul>
+                                </div>
+                                <div class="item">
+                                    <h4>일일출고</h4>
+                                    <ul>
+                                        <li><a href="">실내용배너</a></li>
+                                        <li><a href="">실외용배너</a></li>
+                                        <li><a href="">실사출력 보드지</a></li>
+                                        <li><a href="">일반현수막</a></li>
+                                        <li><a href="">스티커/시트지</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="items">
+                                <div class="item">
+                                    <h4>액자</h4>
+                                    <ul>
+                                        <li><a href="">원목액자</a></li>
+                                        <li><a href="">알루미늄 액자</a></li>
+                                        <li><a href="">캔버스 액자</a></li>
+                                        <li><a href="">하이브리드초대장</a></li>
+                                        <li><a href="">아크릴다이액 액자</a></li>
+                                        <li><a href="">초슬림 아트룩스 액자</a></li>
+                                        <li><a href="">베젤 액자</a></li>
+                                        <li><a href="">자작나무 액자</a></li>
+                                        <li><a href="">아크릴자석 액자</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="items">
+                                <div class="item">
+                                    <h4>LED</h4>
+                                    <ul>
+                                        <li><a href="">LED 원형입간판</a></li>
+                                        <li><a href="">윈도우부착 LED패널</a></li>
+                                        <li class="new"><a href="">LED 3D사인간판</a></li>
+                                        <li class="new"><a href="">LED 백걸이형 실내용배너</a></li>
+                                        <li><a href="">LED 스탠드형 실외용배너</a></li>
+                                        <li><a href="">LED A형 철제입간판</a></li>
+                                        <li class="new"><a href="">LED 아크릴간판</a></li>
+                                        <li><a href="">LED 액자</a></li>
+                                        <li><a href="">LED 라운드 입간판</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="items">
+                                <div class="item">
+                                    <h4>아크릴</h4>
+                                    <ul>
+                                        <li><a href="">아크릴판</a></li>
+                                        <li><a href="">아크릴인쇄</a></li>
+                                        <li><a href="">아크릴컷팅</a></li>
+                                        <li><a href="">아크릴루트등</a></li>
+                                        <li><a href="">아크릴가림막</a></li>
+                                        <li><a href="">아크릴톡</a></li>
+                                        <li><a href="">아크릴키링</a></li>
+                                        <li><a href="">아크릴명찰</a></li>
+                                        <li><a href="">아크릴뱃지</a></li>
+                                        <li><a href="">아크릴화병</a></li>
+                                        <li><a href="">아크릴트레이</a></li>
+                                        <li><a href="">아크릴박스</a></li>
+                                        <li><a href="">아크릴절곡</a></li>
+                                        <li><a href="">아크릴단봉액자</a></li>
+                                        <li><a href="">우드무드등액자</a></li>
+                                        <li><a href="">아크릴시계</a></li>
+                                        <li><a href="">아크릴집게</a></li>
+                                        <li class="new"><a href="">아크릴등신대</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="utong02" class="category">
+                            <div class="items">
+                                <ul>
+                                    <li><a href="">명함</a></li>
+                                    <li><a href="">일반지명함</a></li>
+                                    <li><a href="">고급지명함</a></li>
+                                    <li><a href="">카드명함</a></li>
+                                    <li><a href="">하이브리드명함</a></li>
+                                    <li><a href="">투명하이브리드명함</a></li>
+                                    <li><a href="">하이브리드명함</a></li>
+                                    <li><a href="">에폭시명함</a></li>
+                                    <li><a href="">프리컷팅</a></li>
+                                </ul>
+                                <ul>
+                                    <li><a href="">패키지</a>
+                                        <p class="sp_tit">
+                                            특수인쇄
+                                        </p>
+                                    </li>
+                                    <li><a href="">판지/박스</a></li>
+                                    <li><a href="">플라스틱/비닐</a></li>
+                                    <li><a href="">리본&브레이드 쇼핑백</a></li>
+                                    <li><a href="">손잡이쇼핑백</a></li>
+                                    <li class="new"><a href="">일반쇼핑백</a></li>
+                                    <li class="new"><a href="">소량쇼핑백</a></li>
+                                </ul>
+                            </div>
+                            <div class="items">
+                                <ul>
+                                    <li><a href="">스티커</a></li>
+                                    <li><a href="">재단형</a></li>
+                                    <li><a href="">도무송형</a></li>
+                                    <li><a href="">차량스티커</a></li>
+                                    <li><a href="">메탈스티커</a></li>
+                                    <li><a href="">라벨스티커(롤)</a></li>
+                                    <li class="new"><a href="">스페셜스티커</a></li>
+                                    <li class="new"><a href="">팬시스티커</a></li>
+                                    <li class="new"><a href="">팬시롤스티커</a></li>
+                                </ul>
+                                <ul>
+                                    <li><a href="">기타인쇄</a></li>
+                                    <li><a href="">복권</a></li>
+                                    <li><a href="">문어발</a></li>
+                                    <li><a href="">문고리</a></li>
+                                </ul>
+                            </div>
+                            <div class="items">
+                                <ul>
+                                    <li><a href="">홍보물</a></li>
+                                    <li><a href="">카탈로그/브로셔</a></li>
+                                    <li><a href="">포스터</a></li>
+                                    <li><a href="">리플렛/팜플렛</a></li>
+                                    <li><a href="">책자</a></li>
+                                    <li><a href="">종이홀더</a></li>
+                                    <li><a href="">L홀더(PP홀더)</a></li>
+                                    <li><a href="">투포켓홀더</a></li>
+                                    <li><a href="">클리어화일</a></li>
+                                    <li><a href="">서류화일</a></li>
+                                </ul>
+                            </div>
+                            <div class="items">
+                                <ul>
+                                    <li><a href="">고급인쇄</a></li>
+                                    <li><a href="">일반지</a></li>
+                                    <li><a href="">고급지/특수지/펄지</a></li>
+                                    <li><a href="">판지/박스</a></li>
+                                    <li><a href="">하이브리드인쇄</a></li>
+                                    <li><a href="">플라스틱/비닐</a></li>
+                                </ul>
+                            </div>
+                            <div class="items">
+                                <ul>
+                                    <li><a href="">안내장</a></li>
+                                    <li><a href="">일반초대장/상품권</a></li>
+                                    <li><a href="">고급초대장/상품권</a></li>
+                                    <li><a href="">하이브리드초대장</a></li>
+                                    <li><a href="">에폭시초대장</a></li>
+                                    <li><a href="">청첩장/연하장</a></li>
+                                    <li><a href="">디자인연하장</a></li>
+                                </ul>
+                            </div>
+                            <div class="items">
+                                <ul>
+                                    <li><a href="">전단</a></li>
+                                    <li><a href="">합판전단</a></li>
+                                    <li><a href="">고급전단</a></li>
+                                    <li><a href="">랑데뷰합판</a></li>
+                                </ul>
+                            </div>
+                            <div class="items">
+                                <ul>
+                                    <li><a href="">봉투</a></li>
+                                    <li><a href="">대/중/소</a></li>
+                                    <li><a href="">자켓형</a></li>
+                                    <li><a href="">안내형</a></li>
+                                    <li><a href="">기성형</a></li>
+                                    <li><a href="">캘린더봉투</a></li>
+                                </ul>
+                            </div>
+                            <div class="items">
+                                <ul>
+                                    <li><a href="">경인쇄</a></li>
+                                    <li><a href="">NCR지</a></li>
+                                    <li><a href="">서식/양식</a></li>
+                                    <li><a href="">떡메모지</a></li>
+                                    <li><a href="">마스터책자</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div id="utong03" class="category">
+                            <div class="items line_none">
+                                <ul>
+                                    <li><a href="">디지털</a>
+                                        <p class="sp_tit">
+                                            인디고인쇄
+                                        </p>
+                                    </li>
+                                    <li><a href="">디지털명함</a></li>
+                                    <li class="new"><a href="">디지털박/에폭시명함</a></li>
+                                    <li><a href="">디지털엽서/상품권</a></li>
+                                    <li><a href="">디지털초대장</a></li>
+                                    <li><a href="">디지털포스터</a></li>
+                                    <li><a href="">디지털책자</a></li>
+                                    <li><a href="">초저가 디지털책자</a></li>
+                                    <li><a href="">디지털전단지</a></li>
+                                    <li><a href="">디지털리플렛/팜플렛</a></li>
+                                    <li><a href="">디지털카탈로그/브로셔</a></li>
+                                    <li><a href="">디지털칼라봉투</a></li>
+                                    <li><a href="">디지털캘린더</a></li>
+                                </ul>
+                            </div>
+                            <div class="items">
+                                <ul>
+                                    <li>&nbsp;</li>
+                                    <li><a href="">디지털스티커</a></li>
+                                    <li class="new"><a href="">디지털라벨스티커</a></li>
+                                    <li class="new"><a href="">디지털판지/박스</a></li>
+                                    <li class="new"><a href="">디지털노트</a></li>
+                                </ul>
+                            </div>
+                            <div class="items line_none">
+                                <ul>
+                                    <li><a href="">디지털</a>
+                                        <p class="sp_tit">
+                                            토너인쇄
+                                        </p>
+                                    </li>
+                                    <li><a href="">디지털명함</a></li>
+                                    <li><a href="">디지털엽서/상품권</a></li>
+                                    <li><a href="">디지털포스터</a></li>
+                                    <li><a href="">디지털책자</a></li>
+                                    <li><a href="">디지털전단지</a></li>
+                                    <li><a href="">디지털리플렛/팜플렛</a></li>
+                                    <li><a href="">디지털카탈로그/브로셔</a></li>
+                                    <li><a href="">종이미니배너</a></li>
+                                    <li><a href="">디지털즉석명함</a></li>
+                                </ul>
+                            </div>
+                            <div class="other_box">
+                                <div class="img_box">
+                                    <img src="/assets/img/category_img01.webp" alt="">
+                                </div>
+                            </div>
+                        </div>
+                        <div id="utong04" class="category">
+                            <div class="items line_none">
+                                <ul>
+                                    <li><a href="">판촉물</a></li>
+                                    <li><a href="">부채</a></li>
+                                    <li><a href="">다용도PP</a></li>
+                                    <li><a href="">책갈피</a></li>
+                                    <li><a href="">종이썬캡</a></li>
+                                    <li><a href="">PP썬캡</a></li>
+                                    <li><a href="">대량캘린더</a></li>
+                                    <li><a href="">소량캘린더</a></li>
+                                </ul>
+                            </div>
+                            <div class="items">
+                                <ul>
+                                    <li>&nbsp;</li>
+                                    <li class="new"><a href="">대량벽걸이캘린더</a></li>
+                                    <li class="new"><a href="">소량벽걸이캘린더</a></li>
+                                    <li><a href="">사각포스트잇</a></li>
+                                    <li><a href="">모양포스트잇</a></li>
+                                    <li><a href="">휴대폰케이스</a></li>
+                                </ul>
+                            </div>
+                            <div class="other_box">
+                                <div class="left_txt_box">
+                                    <div class="left">
+                                        <img src="/assets/img/category_type04_img.svg" alt="">
+                                    </div>
+                                    <div class="right">
+                                        <p class="head">
+                                            제작문의
+                                        </p>
+                                        <p>
+                                            02-6262-5509
+                                        </p>
+                                        <p>
+                                            02-6262-5741
+                                        </p>
+                                        <p>
+                                            02-6262-5500
+                                        </p>
+                                        <p>
+                                            02-6262-5536
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="img_box">
+                                    <img src="/assets/img/category_img02.webp" alt="">
+                                </div>
+                            </div>
+                        </div>
+                        <div id="utong05" class="category">
+                            <div class="items">
+                                <ul>
+                                    <li><a href="">패키지</a>
+                                        <p class="sp_tit">
+                                            특수인쇄
+                                        </p>
+                                    </li>
+                                    <li><a href="">판지/박스</a></li>
+                                    <li><a href="">플라스틱/비닐</a></li>
+                                    <li><a href="">리본&브레이드 쇼핑백</a></li>
+                                    <li><a href="">손잡이쇼핑백</a></li>
+                                    <li class="new"><a href="">일반쇼핑백</a></li>
+                                    <li class="new"><a href="">소량쇼핑백</a></li>
+                                </ul>
+                            </div>
+                            <div class="other_box">
+                                <div class="left_txt_box">
+                                    <div class="inner_item">
+                                        <img src="/assets/img/category_type05_img01.svg" alt="">
+                                        <p>박스, 포장재,<br />
+                                            홀더, 표지, 상품텍</p>
+                                    </div>
+                                    <div class="inner_item">
+                                        <img src="/assets/img/category_type05_img02.svg" alt="">
+                                        <p>옵션인쇄, UV인쇄</p>
+                                    </div>
+                                    <div class="inner_item">
+                                        <img src="/assets/img/category_type05_img03.svg" alt="">
+                                        <p>전지기준 25매 부터</p>
+                                    </div>
+                                </div>
+                                <div class="img_box">
+                                    <img src="/assets/img/category_img02.webp" alt="">
+                                </div>
+                            </div>
+                        </div>
+                        <div id="utong06" class="category">
                             <div class="items">
                                 <ul>
                                     <li><a href="">판촉물</a></li>
@@ -596,7 +1744,7 @@
 
         <main id="container">
             <!-- 메인배너 -->
-            <div class="main_banner">
+            <div class="main_banner" style="display: none;">
                 <div class="swiper">
                     <div class="swiper-wrapper">
                         <div class="swiper-slide">
@@ -694,8 +1842,13 @@
                 </div>
             </div>
 
+            <!-- 중간배너 -->
+            <div class="mid_banner content_box">
+                <img src="/assets/img/mid_banner.jpg" alt="중간배너이미지">
+            </div>
+
             <!-- 인기상품 -->
-            <div class="product_cont content_box">
+            <div class="product_cont has_swiper_content_box best_product_cont">
                 <div class="product_cont_header">
                     <div class="tit_box">
                         <div class="badge">가장 인기있는 아이템</div>
@@ -818,8 +1971,10 @@
                 </div>
             </div>
 
+            <div class="divider"></div>
+
             <!-- 추천상품 -->
-            <div class="product_cont content_box">
+            <div class="product_cont has_swiper_content_box">
                 <div class="product_cont_header">
                     <div class="tit_box">
                         <div class="badge">애드피아몰 pick!</div>
@@ -942,8 +2097,19 @@
                 </div>
             </div>
 
+            <div class="divider"></div>
+
             <!-- 신상품 모아보기 -->
-            <div class="new_product_cont content_box">
+            <div class="new_product_cont has_swiper_content_box">
+                <div class="product_cont mo">
+                    <div class="product_cont_header">
+                        <div class="tit_box">
+                            <div class="badge">애드피아몰의 새로움을 경험하세요</div>
+                            <h3>신상품 모아보기</h3>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="new_product">
                     <div class="img_set"><img src="/assets/img/sec03_img01.webp" alt=""></div>
                     <div class="product_info">
@@ -954,7 +2120,7 @@
                 </div>
 
                 <div class="product_cont">
-                    <div class="product_cont_header">
+                    <div class="product_cont_header pc flex">
                         <div class="tit_box">
                             <div class="badge">애드피아몰의 새로움을 경험하세요</div>
                             <h3>신상품 모아보기</h3>
@@ -1080,8 +2246,10 @@
                 </div>
             </div>
 
+            <div class="divider"></div>
+
             <!-- 셀프 디자인 -->
-            <div class="product_cont content_box">
+            <div class="product_cont mo_wide_product_cont has_swiper_content_box">
                 <div class="product_cont_header">
                     <div class="tit_box">
                         <div class="badge">쉽게 직접 만드는 나만의 디자인</div>
@@ -1200,7 +2368,127 @@
                 </div>
             </div>
 
+            <div class="divider"></div>
+
             <!-- 전체 업종별 -->
+            <div class="product_cont mo_wide_product_cont has_swiper_content_box">
+                <div class="product_cont_header">
+                    <div class="tit_box">
+                        <div class="badge">업종에 맞는 제작물을 한눈에 확인하세요</div>
+                        <h3>전체 업종별</h3>
+                    </div>
+
+                    <div class="swiper-button-wrap">
+                        <div class="swiper-button-prev"></div>
+                        <div class="swiper-button-next"></div>
+                    </div>
+                </div>
+
+                <div class="product_list swiper">
+                    <div class="swiper-wrapper">
+                        <div class="product_item overlay swiper-slide">
+                            <a href="">
+                                <div class="product_image">
+                                    <div class="img_set"><img src="/assets/img/sec03_img01.webp" alt=""></div>
+                                </div>
+                                <div class="product_info">
+                                    <h4>음식 · 요식업</h4>
+                                    <p> 매장에 꼭 필요한 필수템</p>
+                                </div>
+                                <div class="product_overlay_content">
+                                    <h4>음식 · 요식업</h4>
+                                    <p> 매장에 꼭 필요한 필수템</p>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 35 35" fill="none">
+                                    <circle cx="17.5" cy="17.5" r="17.5" fill="#335CFF"/>
+                                    <path d="M14 21L21 14M21 14H14.8787M21 14V20.1213" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </div>
+
+                            </a>
+                        </div>
+                        <div class="product_item overlay swiper-slide">
+                            <a href="">
+                                <div class="product_image">
+                                    <div class="img_set"><img src="/assets/img/sec03_img01.webp" alt=""></div>
+                                </div>
+                                <div class="product_info">
+                                    <h4>카페 · 베이커리</h4>
+                                    <p>감성 매장 완성 아이템</p>
+                                </div>
+                                <div class="product_overlay_content">
+                                    <h4>카페 · 베이커리</h4>
+                                    <p>감성 매장 완성 아이템</p>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 35 35" fill="none">
+                                    <circle cx="17.5" cy="17.5" r="17.5" fill="#335CFF"/>
+                                    <path d="M14 21L21 14M21 14H14.8787M21 14V20.1213" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </div>
+
+                            </a>
+                        </div>
+                        <div class="product_item overlay swiper-slide">
+                            <a href="">
+                                <div class="product_image">
+                                    <div class="img_set"><img src="/assets/img/sec03_img01.webp" alt=""></div>
+                                </div>
+                                <div class="product_info">
+                                    <h4>아크릴 톡</h4>
+                                    <p>소량도 가능한 커스텀 굿즈</p>
+                                </div>
+                                <div class="product_overlay_content">
+                                    <h4>아크릴 톡</h4>
+                                    <p>소량도 가능한 커스텀 굿즈</p>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 35 35" fill="none">
+                                    <circle cx="17.5" cy="17.5" r="17.5" fill="#335CFF"/>
+                                    <path d="M14 21L21 14M21 14H14.8787M21 14V20.1213" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </div>
+
+                            </a>
+                        </div>
+                        <div class="product_item overlay swiper-slide">
+                            <a href="">
+                                <div class="product_image">
+                                    <div class="img_set"><img src="/assets/img/sec03_img01.webp" alt=""></div>
+                                </div>
+                                <div class="product_info">
+                                    <h4>아크릴 톡</h4>
+                                    <p>소량도 가능한 커스텀 굿즈</p>
+                                </div>
+                                <div class="product_overlay_content">
+                                    <h4>아크릴 톡</h4>
+                                    <p>소량도 가능한 커스텀 굿즈</p>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 35 35" fill="none">
+                                    <circle cx="17.5" cy="17.5" r="17.5" fill="#335CFF"/>
+                                    <path d="M14 21L21 14M21 14H14.8787M21 14V20.1213" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </div>
+
+                            </a>
+                        </div>
+                        <div class="product_item overlay swiper-slide">
+                            <a href="">
+                                <div class="product_image">
+                                    <div class="img_set"><img src="/assets/img/sec03_img01.webp" alt=""></div>
+                                </div>
+                                <div class="product_info">
+                                    <h4>아크릴 톡</h4>
+                                    <p>소량도 가능한 커스텀 굿즈</p>
+                                </div>
+                                <div class="product_overlay_content">
+                                    <h4>아크릴 톡</h4>
+                                    <p>소량도 가능한 커스텀 굿즈</p>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 35 35" fill="none">
+                                    <circle cx="17.5" cy="17.5" r="17.5" fill="#335CFF"/>
+                                    <path d="M14 21L21 14M21 14H14.8787M21 14V20.1213" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </div>
+
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </main>
         
         <footer id="footer">
