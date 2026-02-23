@@ -45,6 +45,10 @@
     display: none !important;
 }
 
+.dn {
+    display: none !important;
+}
+
 @media (max-width: 767px) {
     .content_box {
         padding: 0 15px;

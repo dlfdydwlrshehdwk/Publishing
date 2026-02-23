@@ -1,0 +1,190 @@
+.aside {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 9999;
+}
+
+.aside::after {
+    content: '';
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.aside_inner {
+    width: calc(100% - 30px);
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: #fff;
+    height: 100%;
+    z-index: 1;
+}
+
+.aside_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 13px 15px;
+    border-bottom: 1px solid #edeef0;
+}
+
+.aside_header button {
+    border-radius: 20px;
+    background-color: #fff;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: -0.6px;
+    padding: 0 11px;
+    border: 1px solid transparent;
+}
+
+.aside_header .btn_logout {
+    border: 1px solid #edeef0;
+    color: rgba(0, 0, 0, 0.5);
+    display: none;
+}
+.aside_header .btn_join {
+    border: 1px solid var(--signage-color);
+    color: var(--signage-color);
+}
+
+.aside_header .aside_util {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+}
+
+.aside_header .aside_util .btn {
+    display: flex;
+    width: 36px;
+    height: 36px;
+    border: 1px solid #edeef0;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    border-radius: 7px;
+}
+
+.aside_header .aside_util .icon img {
+    width: 27px;
+    height: 27px;
+}
+
+.aside_header .basket_count {
+    display: block;
+    width: 12px;
+    height: 12px;
+    border-radius: 100%;
+    background-color: #335cff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-weight: bold;
+    font-size: 9px;
+    letter-spacing: -0.36px;
+    position: absolute;
+    bottom: 7px;
+    right: 4px;
+}
+
+/* aside_intro S */
+.aside_intro {
+    padding: 25px 25px 30px;
+}
+.aside_intro .intro_title {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.aside_intro .intro_title h2 {
+    font-weight: 600;
+    font-size: 21px;
+    line-height: 1.5;
+    letter-spacing: -1.1px;
+    color: #000;
+}
+.aside_intro p {
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 1.5;
+    letter-spacing: -0.65px;
+    color: rgba(0, 0, 0, 0.5);
+    margin-top: 2px;
+}
+.aside_intro .btn_mypage {
+    display: block;
+    width: 20px;
+    height: 20px;
+    border-radius: 100%;
+    background-color: #f4f5f7;
+}
+/* aside_intro E */
+
+
+.aside_footer {
+    margin-top: 40px;
+    padding: 0 20px;
+}
+
+.aside_footer ul {
+    display: flex;
+    gap: 4px;
+    width: 100%;
+}
+.aside_footer ul li {
+    flex: 1;
+}
+.aside_footer ul li a {
+    height: 41px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    background-color: #f4f5f7;
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: -0.7px;
+    color: rgba(0, 0, 0, 0.7);
+}
+.aside_footer ul li a.on {
+    background-color: #f0f3ff;
+    color: var(--signage-color);
+}
+
+
+.aside .login_n {
+    
+}
+.aside .login_y {
+    display: none;
+}
+.aside.is_login .btn_logout {
+    display: flex;
+}
+.aside.is_login .btn_join {
+    display: none;
+}
+.aside.is_login .login_n {
+    display: none;
+}
+.aside.is_login .login_y {
+    display: block;
+}
+
+@media (min-width : 1024px) {
+    .aside {
+        display: none;
+    }
+}

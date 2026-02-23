@@ -4,23 +4,26 @@ document.addEventListener('DOMContentLoaded', function(){
     initServiceSwitch();
     initHamburgerMenu();
     initGnbMenu();
+    initCategoryTabs();
 })
 
 function initFamilySite() {
-    const familySite = document.querySelector('.family_site');
-    if (!familySite) return;
+    const familySite = document.querySelectorAll('.family_site');
+    if (!familySite.length > 0) return;
 
-    const familyBtn = familySite.querySelector('.family_btn');
-
-    familyBtn.addEventListener('click', function () {
-        familySite.classList.toggle('open');
-    });
-
-    document.addEventListener('click', function (e) {
-        if (!e.target.closest('.family_site')) {
-            familySite.classList.remove('open');
-        }
-    });
+    familySite.forEach(ct => {
+        const familyBtn = ct.querySelector('.family_btn');
+    
+        familyBtn.addEventListener('click', function () {
+            ct.classList.toggle('open');
+        });
+    
+        document.addEventListener('click', function (e) {
+            if (!e.target.closest('.family_site')) {
+                ct.classList.remove('open');
+            }
+        });
+    })
 }
 
 function initHamburgerMenu() {
@@ -31,6 +34,7 @@ function initHamburgerMenu() {
     if (!ham) return;
 
     ham.addEventListener('click', function() {
+        console.log('햄버거 클릭')
         this.classList.toggle('on');
 
         // 현재 카테고리 확인 디폴트값 -> 사이니지
@@ -59,10 +63,13 @@ function initHamburgerMenu() {
                 if (signageAll) {
                     signageAll.classList.add('on');
                 }
-            } else if (currentCate === 'gift') {
-                // 기프트 처리 (추후 구현)
-            } else if (currentCate === 'utong') {
-                // 유통 처리 (추후 구현)
+            } else {
+                console.log(currentCate)
+                const all = document.querySelector(`#${currentCate}All`);
+                console.log(all)
+                if (all) {
+                    all.classList.add('on');
+                }
             }
         }
     });
@@ -194,13 +201,20 @@ function initServiceSwitch() {
     const buttons = document.querySelectorAll('.service_switch button');
     const nowCate = document.querySelector('#now_cate');
     const header = document.querySelector('#header');
+    const gnbList = document.querySelectorAll('.gnb_list');
     if (!buttons.length) return;
 
-    buttons.forEach(btn => {
+    buttons.forEach((btn, index) => {
         btn.addEventListener('click', function() {
+            // 이미 active인 버튼을 클릭한 경우 return
+            if (this.classList.contains('active')) {
+                return;
+            }
+
             const color = this.dataset.color;
             const cate = this.dataset.cate;
             const currentCate = nowCate?.value ?? 'signage';
+            const gnbLists = document.querySelectorAll('.gnb_list');
 
             // 기존과 다른 카테고리로 변경하는 경우만 초기화
             if (currentCate !== cate) {
@@ -209,6 +223,14 @@ function initServiceSwitch() {
 
             buttons.forEach(b => b.classList.remove('active'));
             this.classList.add('active');
+
+            // 모든 gnb_list에서 active 제거
+            gnbLists.forEach(list => list.classList.remove('active'));
+
+            // 해당 인덱스의 gnb_list에 active 추가
+            if (gnbLists[index]) {
+                gnbLists[index].classList.add('active');
+            }
 
             document.documentElement.style.setProperty('--primary', color);
 
@@ -220,6 +242,46 @@ function initServiceSwitch() {
                 header.classList.remove('signage', 'gift', 'utong');
                 header.classList.add(cate);
             }
+        });
+    });
+}
+
+function initCategoryTabs() {
+    // .has_category_tab을 가진 모든 category 찾기
+    const categoryContainers = document.querySelectorAll('.has_category_tab');
+
+    if (!categoryContainers.length) return;
+
+    categoryContainers.forEach(container => {
+        // a 태그는 data-idx, grid는 data-tab 사용
+        const tabLinks = container.querySelectorAll('.category_tab a[data-idx]');
+        const grids = container.querySelectorAll('.category_grid[data-tab]');
+
+        if (!tabLinks.length || !grids.length) return;
+
+        tabLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+
+                const targetIdx = this.dataset.idx;
+
+                // 모든 탭 링크에서 active 제거
+                tabLinks.forEach(l => l.classList.remove('active'));
+
+                // 클릭한 탭에만 active 추가
+                this.classList.add('active');
+
+                // 모든 category_grid에서 active 제거
+                grids.forEach(grid => grid.classList.remove('active'));
+
+                // data-idx 값으로 data-tab이 같은 grid 찾기
+                const targetGrid = container.querySelector(`.category_grid[data-tab="${targetIdx}"]`);
+                if (targetGrid) {
+                    targetGrid.classList.add('active');
+                }
+
+                return false;
+            });
         });
     });
 }
