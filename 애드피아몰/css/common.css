@@ -32,6 +32,12 @@
     display: block;
 }
 
+body.over_hidden {
+    overflow: hidden;
+    width: 100%;
+    position: fixed;
+}
+
 .pc {
     display: block !important;
 }

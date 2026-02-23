@@ -5,6 +5,10 @@
     bottom: 0;
     right: 0;
     z-index: 9999;
+    display: none;
+}
+.aside.on {
+    display: block;
 }
 
 .aside::after {
@@ -24,6 +28,7 @@
     right: 0;
     background-color: #fff;
     height: 100%;
+    overflow-y: auto;
     z-index: 1;
 }
 
@@ -132,10 +137,85 @@
 }
 /* aside_intro E */
 
+/* aside_category S */
+.aside_category {
+    padding: 0 20px;
+    border-top: 1px solid #edeef0;
+}
+.aside_category .cate_1depth_btn {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+    height: 50px;
+    font-weight: 600;
+    font-size: 17px;
+    letter-spacing: -0.85px;
+    color: #000;
+    border-bottom: 1px solid #edeef0;
+}
+.aside_category .cate_1depth_btn.active {
+    color: var(--signage-color);
+}
+.aside_category .cate_1depth_btn.active svg {
+    transform: rotate(180deg);
+}
+.aside_category .cate_2depth_wrap {
+    padding: 20px 0 27px;
+    flex-direction: column;
+    gap: 16px;
+    display: none;
+}
+.aside_category .cate_2depth_wrap.active {
+    display: flex;
+    border-bottom: 1px solid #edeef0;
+}
+.aside_category .cate_2depth_btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+.aside_category .cate_2depth_btn h4 {
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 1.5;
+    letter-spacing: -0.75px;
+    color: #000;
+}
+.aside_category .cate_2depth_btn h4::before {
+    content: '- ';
+}
 
+.aside_category .cate_3depth {
+    display: none;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 10px;
+    row-gap: 18px;
+    padding: 25px;
+    background: #f4f5f7;
+    border-radius: 6px;
+    margin-top: 12px;
+}
+.aside_category .cate_3depth.active {
+    display: grid;
+}
+.aside_category .cate_3depth a {
+    font-size: 14px;
+    line-height: 1.4;
+    letter-spacing: -0.56px;
+    color: rgba(0, 0, 0, 0.5);
+}
+.aside_category .cate_3depth a.active {
+    color: #000;
+}
+/* aside_category E */
+
+
+/* aside_footer S */
 .aside_footer {
     margin-top: 40px;
-    padding: 0 20px;
+    padding: 0 20px 30px;
 }
 
 .aside_footer ul {
@@ -162,7 +242,7 @@
     background-color: #f0f3ff;
     color: var(--signage-color);
 }
-
+/* aside_footer E */
 
 .aside .login_n {
     
