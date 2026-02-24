@@ -142,6 +142,12 @@
     padding: 0 20px;
     border-top: 1px solid #edeef0;
 }
+.aside_category .cate_list {
+    display: none;
+}
+.aside_category .cate_list.active {
+    display: block;
+}
 .aside_category .cate_1depth_btn {
     display: flex;
     align-items: center;

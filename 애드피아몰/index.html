@@ -26,10 +26,10 @@
                     <div class="swiper">
                         <div class="swiper-wrapper">
                             <div class="swiper-slide">
-                                <img src="/assets/img/top_banner_icon.png" alt="아이콘"><strong>[NEWS]</strong> 애드피아몰의 새로운 시작! 홈페이지가 새롭게 리뉴얼 됐어요 1
+                                <img src="./assets/img/top_banner_icon.png" alt="아이콘"><strong>[NEWS]</strong> 애드피아몰의 새로운 시작! 홈페이지가 새롭게 리뉴얼 됐어요 1
                             </div>
                             <div class="swiper-slide">
-                                <img src="/assets/img/top_banner_icon.png" alt="아이콘"><strong>[NEWS]</strong> 애드피아몰의 새로운 시작! 홈페이지가 새롭게 리뉴얼 됐어요 2
+                                <img src="./assets/img/top_banner_icon.png" alt="아이콘"><strong>[NEWS]</strong> 애드피아몰의 새로운 시작! 홈페이지가 새롭게 리뉴얼 됐어요 2
                             </div>
                         </div>
                     </div>
@@ -52,59 +52,77 @@
             <div class="header_main">
                 <div class="header_main_inner">
                     <div class="left_cont">
-                        <h1 class="header_logo"><a href="/"><img src="/assets/img/adpiamall_logo.png" alt="로고"></a></h1>
+                        <h1 class="header_logo"><a href="/"><img src="./assets/img/adpiamall_logo.png" alt="로고"></a></h1>
                     </div>
 
-                    <div class="service_switch pc">
-                        <button type="button" class="active" data-color="#335CFF" data-cate="signage">사이니지</button>
-                        <button type="button" data-color="#66C3CC" data-cate="gift">기프트</button>
-                        <button type="button" data-color="#F39800" data-cate="utong">유통</button>
+                    <div class="service_switch">
+                        <div class="button_wrap">
+                            <button type="button" class="active" data-color="#335CFF" data-cate="signage">
+                                <img class="circle mo" src="./assets/img/switch_mo_signage.svg" alt="">
+                                <div>
+                                    <p>사이니지</p>
+                                    <p class="mo">전시·매장·행사를 위한 사이니지 한 번에</p>
+                                </div>
+                                <img class="arrow mo" src="./assets/img/switch_mo_arrow.svg" alt="">
+                            </button>
+                            <button type="button" data-color="#66C3CC" data-cate="gift">
+                                <img class="circle mo" src="./assets/img/switch_mo_gift.svg" alt="">
+                                <div>
+                                    <p>기프트</p>
+                                    <p class="mo">판촉부터 맞춤 제작까지 기프트 한번에</p>
+                                </div>
+                                <img class="arrow mo" src="./assets/img/switch_mo_arrow.svg" alt="">
+                            </button>
+                            <button type="button" data-color="#F39800" data-cate="utong">
+                                <img class="circle mo" src="./assets/img/switch_mo_utong.svg" alt="">
+                                <div>
+                                    <p>유통</p>
+                                    <p class="mo">다양한 카테고리 상품을 한번에</p>
+                                </div>
+                                <img class="arrow mo" src="./assets/img/switch_mo_arrow.svg" alt="">
+                            </button>
+
+                            <div class="handle mo">
+                                <div></div>
+                            </div>
+                        </div>
+
+
+                        <div class="dim"></div>
                     </div>
     
                     <div class="right_cont">
-                        <!-- <form action="" class="search_cont">
-                            <input type="text" placeholder="#셀프디자인으로 주문하기">
-                            <button type="submit">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                                    <path d="M2.5 8.90339C2.5 9.74443 2.66556 10.5772 2.98724 11.3542C3.30891 12.1313 3.7804 12.8373 4.37478 13.432C4.96915 14.0267 5.67478 14.4984 6.45137 14.8203C7.22797 15.1421 8.06031 15.3078 8.90089 15.3078C9.74146 15.3078 10.5738 15.1421 11.3504 14.8203C12.127 14.4984 12.8326 14.0267 13.427 13.432C14.0214 12.8373 14.4929 12.1313 14.8145 11.3542C15.1362 10.5772 15.3018 9.74443 15.3018 8.90339C15.3018 8.06236 15.1362 7.22956 14.8145 6.45255C14.4929 5.67553 14.0214 4.96952 13.427 4.37482C12.8326 3.78012 12.127 3.30838 11.3504 2.98653C10.5738 2.66468 9.74146 2.49902 8.90089 2.49902C8.06031 2.49902 7.22797 2.66468 6.45137 2.98653C5.67478 3.30838 4.96915 3.78012 4.37478 4.37482C3.7804 4.96952 3.30891 5.67553 2.98724 6.45255C2.66556 7.22956 2.5 8.06236 2.5 8.90339Z" stroke="#212121" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                    <path d="M17.4995 17.5012L13.5 13.501" stroke="#212121" stroke-width="1.5" stroke-linecap="round"/>
-                                </svg>
-                            </button>
-                        </form> -->
+
                         <div class="header_util pc flex">
-                            <a href="" class="btn icon search">
-                                <img src="/assets/img/search.svg" alt="">
-                            </a>
+                            <button class="btn icon search">
+                                <img src="./assets/img/search.svg" alt="">
+                            </button>
                             <a href="" class="btn icon basket">
-                                <img src="/assets/img/basket.svg" alt="">
+                                <img src="./assets/img/basket.svg" alt="">
                                 <p class="basket_count"></p>
                             </a>
                             <a href="" class="btn icon">
-                                <img src="/assets/img/language.svg" alt="">
+                                <img src="./assets/img/language.svg" alt="">
                             </a>
                             <a href="" class="btn">회원가입</a>
                             <a href="" class="btn active">로그인</a>
                         </div>
 
-                        <button class="btn_service_switch mo flex">
-                            <span class="img"><img src="/assets/img/btn_service_switch_1.png" alt="아이콘"></span>
-                            <span class="text">샤이니지</span>
+                        <button class="btn_service_switch">
+                            <div class="type_signage active">
+                                <span class="img"><img src="./assets/img/btn_service_switch_1.png" alt="아이콘"></span>
+                                <span class="text">샤이니지</span>
+                            </div>
+                            <div class="type_gift">
+                                <span class="img"><img src="./assets/img/btn_service_switch_2.png" alt="아이콘"></span>
+                                <span class="text">기프트</span>
+                            </div>
+                            <div class="type_utong">
+                                <span class="img"><img src="./assets/img/btn_service_switch_3.png" alt="아이콘"></span>
+                                <span class="text">유통</span>
+                            </div>
                         </button>
                     </div>
-                </div>
-
-                <div class="search_area mo">
-                    <form action="">
-
-                        <input type="text" placeholder="이제 모바일에서도 자유롭게 주문하세요!">
-
-                        <button type="submit">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="55" height="55" viewBox="0 0 55 55" fill="none">
-                                <path d="M11.5078 25.1595C11.5078 26.9533 11.8609 28.7296 12.547 30.3868C13.2331 32.0441 14.2387 33.5499 15.5064 34.8183C16.7741 36.0867 18.2791 37.0928 19.9355 37.7793C21.5918 38.4658 23.3671 38.8191 25.1599 38.8191C26.9527 38.8191 28.728 38.4658 30.3844 37.7793C32.0407 37.0928 33.5457 36.0867 34.8134 34.8183C36.0811 33.5499 37.0868 32.0441 37.7728 30.3868C38.4589 28.7296 38.812 26.9533 38.812 25.1595C38.812 23.3657 38.4589 21.5895 37.7728 19.9323C37.0868 18.275 36.0811 16.7692 34.8134 15.5008C33.5457 14.2324 32.0407 13.2262 30.3844 12.5398C28.728 11.8533 26.9527 11.5 25.1599 11.5C23.3671 11.5 21.5918 11.8533 19.9355 12.5398C18.2791 13.2262 16.7741 14.2324 15.5064 15.5008C14.2387 16.7692 13.2331 18.275 12.547 19.9323C11.8609 21.5895 11.5078 23.3657 11.5078 25.1595Z" stroke="black" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M43.499 43.4995L34.9688 34.9678" stroke="black" stroke-width="3" stroke-linecap="round"/>
-                            </svg>
-                        </button>
-                    </form>
                 </div>
             </div>
 
@@ -500,7 +518,7 @@
 
                             <div class="other_box">
                                 <div class="img_set">
-                                    <img src="/assets/img/mall1.png" alt="이미지">
+                                    <img src="./assets/img/mall1.png" alt="이미지">
                                 </div>
                             </div>
                         </div>
@@ -1294,6 +1312,39 @@
                     </div>
                 </div>
             </nav>
+
+            <div class="search_area">
+                <div class="inner">
+                    <form action="">
+                        <input type="text" placeholder="이제 모바일에서도 자유롭게 주문하세요!">
+    
+                        <button type="submit">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="55" height="55" viewBox="0 0 55 55" fill="none">
+                                <path d="M11.5078 25.1595C11.5078 26.9533 11.8609 28.7296 12.547 30.3868C13.2331 32.0441 14.2387 33.5499 15.5064 34.8183C16.7741 36.0867 18.2791 37.0928 19.9355 37.7793C21.5918 38.4658 23.3671 38.8191 25.1599 38.8191C26.9527 38.8191 28.728 38.4658 30.3844 37.7793C32.0407 37.0928 33.5457 36.0867 34.8134 34.8183C36.0811 33.5499 37.0868 32.0441 37.7728 30.3868C38.4589 28.7296 38.812 26.9533 38.812 25.1595C38.812 23.3657 38.4589 21.5895 37.7728 19.9323C37.0868 18.275 36.0811 16.7692 34.8134 15.5008C33.5457 14.2324 32.0407 13.2262 30.3844 12.5398C28.728 11.8533 26.9527 11.5 25.1599 11.5C23.3671 11.5 21.5918 11.8533 19.9355 12.5398C18.2791 13.2262 16.7741 14.2324 15.5064 15.5008C14.2387 16.7692 13.2331 18.275 12.547 19.9323C11.8609 21.5895 11.5078 23.3657 11.5078 25.1595Z" stroke="black" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M43.499 43.4995L34.9688 34.9678" stroke="black" stroke-width="3" stroke-linecap="round"/>
+                            </svg>
+                        </button>
+                    </form>
+
+                    <div class="navigation">
+                        <h4></h4>
+                    </div>
+
+                    <div class="hot_keyword">
+                        <h4>인기검색어</h4>
+                        <ul>
+                            <li><a href="#">출고일정</a></li>
+                            <li><a href="#">출고일정</a></li>
+                            <li><a href="#">출고일정</a></li>
+                            <li><a href="#">출고일정</a></li>
+                            <li><a href="#">출고일정</a></li>
+                            <li><a href="#">출고일정</a></li>
+                            <li><a href="#">출고일정</a></li>
+                            <li><a href="#">출고일정</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
             
         </header>
 
@@ -1303,22 +1354,28 @@
                 <div class="swiper">
                     <div class="swiper-wrapper">
                         <div class="swiper-slide">
-                            <img width="100%" src="/assets/img/banner01.webp" alt="">
+                            <img class="pc" width="100%" src="./assets/img/banner01.webp" alt="">
+                            <img class="mo" width="100%" src="./assets/img/banner_mo.png" alt="">
                         </div>
                         <div class="swiper-slide">
-                            <img width="100%" src="/assets/img/banner02.webp" alt="">
+                            <img class="pc" width="100%" src="./assets/img/banner02.webp" alt="">
+                            <img class="mo" width="100%" src="./assets/img/banner_mo.png" alt="">
                         </div>
                         <div class="swiper-slide">
-                            <img width="100%" src="/assets/img/banner01.webp" alt="">
+                            <img class="pc" width="100%" src="./assets/img/banner01.webp" alt="">
+                            <img class="mo" width="100%" src="./assets/img/banner_mo.png" alt="">
                         </div>
                         <div class="swiper-slide">
-                            <img width="100%" src="/assets/img/banner01.webp" alt="">
+                            <img class="pc" width="100%" src="./assets/img/banner01.webp" alt="">
+                            <img class="mo" width="100%" src="./assets/img/banner_mo.png" alt="">
                         </div>
                         <div class="swiper-slide">
-                            <img width="100%" src="/assets/img/banner02.webp" alt="">
+                            <img class="pc" width="100%" src="./assets/img/banner02.webp" alt="">
+                            <img class="mo" width="100%" src="./assets/img/banner_mo.png" alt="">
                         </div>
                         <div class="swiper-slide">
-                            <img width="100%" src="/assets/img/banner01.webp" alt="">
+                            <img class="pc" width="100%" src="./assets/img/banner01.webp" alt="">
+                            <img class="mo" width="100%" src="./assets/img/banner_mo.png" alt="">
                         </div>
                     </div>
 
@@ -1329,10 +1386,10 @@
                     </div>
                     <div class="swiper_navigation">
                         <button type="button" class="swiper-button-prev">
-                            <img src="/assets/img/product_slide_next_on.svg" alt="">
+                            <img src="./assets/img/product_slide_next_on.svg" alt="">
                         </button>
                         <button type="button" class="swiper-button-next">
-                            <img src="/assets/img/product_slide_next_on.svg" alt="">
+                            <img src="./assets/img/product_slide_next_on.svg" alt="">
                         </button>
                     </div>
                 </div>
@@ -1343,53 +1400,61 @@
                 <div class="inner">
                     <div class="intro">
                         <h4>
-                            <img class="multiples_2" src="/assets/img/quick_service.png" alt="빠른 서비스">
+                            <img class="multiples_2" src="./assets/img/quick_service.png" alt="빠른 서비스">
                             빠른 서비스
                         </h4>
                         <p class="sub_tit">쉽고 빠르게 서비스를 찾아보세요.</p>
-                        <div class="tel">1688-6611</div>
+                        <a href="tel:1688-6611" class="tel">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                <g opacity="0.7">
+                                <path d="M4.06338 12.3594C3.76623 12.3594 3.51471 12.2528 3.30882 12.0395C3.10294 11.8262 3 11.5656 3 11.2578V7.1797C3 6.46724 3.13123 5.79693 3.39368 5.16876C3.65613 4.54059 4.01436 3.99139 4.46838 3.52116C4.9223 3.05082 5.45245 2.67971 6.05882 2.40783C6.6652 2.13594 7.31225 2 8 2C8.68775 2 9.3348 2.13594 9.94118 2.40783C10.5475 2.67971 11.0777 3.05082 11.5316 3.52116C11.9856 3.99139 12.3439 4.54059 12.6063 5.16876C12.8688 5.79693 13 6.46724 13 7.1797V12.8984C13 13.2062 12.8971 13.4668 12.6912 13.6801C12.4853 13.8934 12.2338 14 11.9366 14H8.44118C8.31598 14 8.21118 13.9562 8.12676 13.8687C8.04225 13.7812 8 13.6727 8 13.543C8 13.4133 8.04225 13.3047 8.12676 13.2173C8.21118 13.1297 8.31598 13.0859 8.44118 13.0859H11.9366C11.9895 13.0859 12.0328 13.0684 12.0668 13.0332C12.1007 12.9981 12.1176 12.9531 12.1176 12.8984V12.3594H11.0996C10.8062 12.3594 10.5557 12.2518 10.3479 12.0366C10.1401 11.8213 10.0362 11.5617 10.0362 11.2578V9.14845C10.0362 8.84457 10.1401 8.58503 10.3479 8.36982C10.5557 8.1545 10.8062 8.04685 11.0996 8.04685H12.1176V7.1797C12.1176 6.00157 11.7157 4.9961 10.9118 4.16329C10.1078 3.33047 9.13726 2.91407 8 2.91407C6.86275 2.91407 5.89216 3.33047 5.08824 4.16329C4.28431 4.9961 3.88235 6.00157 3.88235 7.1797V8.04685H4.90044C5.19377 8.04685 5.44431 8.1545 5.65206 8.36982C5.8599 8.58503 5.96382 8.84457 5.96382 9.14845V11.2578C5.96382 11.5617 5.8599 11.8213 5.65206 12.0366C5.44431 12.2518 5.19377 12.3594 4.90044 12.3594H4.06338ZM4.06338 11.4453H4.90044C4.95319 11.4453 4.99657 11.4278 5.03059 11.3926C5.06451 11.3575 5.08147 11.3125 5.08147 11.2578V9.14845C5.08147 9.09381 5.06451 9.04886 5.03059 9.01362C4.99657 8.97848 4.95319 8.96091 4.90044 8.96091H3.88235V11.2578C3.88235 11.3125 3.89931 11.3575 3.93324 11.3926C3.96716 11.4278 4.01054 11.4453 4.06338 11.4453ZM11.0996 11.4453H12.1176V8.96091H11.0996C11.0468 8.96091 11.0034 8.97848 10.9694 9.01362C10.9355 9.04886 10.9185 9.09381 10.9185 9.14845V11.2578C10.9185 11.3125 10.9355 11.3575 10.9694 11.3926C11.0034 11.4278 11.0468 11.4453 11.0996 11.4453ZM11.0996 8.96091H10.9185H12.1176H11.0996Z" fill="black"/>
+                                <path d="M3.88235 8.96091H4.90044C4.95319 8.96091 4.99657 8.97848 5.03059 9.01362C5.06451 9.04886 5.08147 9.09381 5.08147 9.14845V11.2578C5.08147 11.3125 5.06451 11.3575 5.03059 11.3926C4.99657 11.4278 4.95319 11.4453 4.90044 11.4453H4.06338C4.01054 11.4453 3.96716 11.4278 3.93324 11.3926C3.89931 11.3575 3.88235 11.3125 3.88235 11.2578V8.96091ZM3.88235 8.96091H5.08147M12.1176 8.96091V11.4453H11.0996C11.0468 11.4453 11.0034 11.4278 10.9694 11.3926C10.9355 11.3575 10.9185 11.3125 10.9185 11.2578V9.14845C10.9185 9.09381 10.9355 9.04886 10.9694 9.01362C11.0034 8.97848 11.0468 8.96091 11.0996 8.96091M12.1176 8.96091H11.0996M12.1176 8.96091H10.9185H11.0996M4.06338 12.3594C3.76623 12.3594 3.51471 12.2528 3.30882 12.0395C3.10294 11.8262 3 11.5656 3 11.2578V7.1797C3 6.46724 3.13123 5.79693 3.39368 5.16876C3.65613 4.54059 4.01436 3.99139 4.46838 3.52116C4.9223 3.05082 5.45245 2.67971 6.05882 2.40783C6.6652 2.13594 7.31226 2 8 2C8.68775 2 9.3348 2.13594 9.94118 2.40783C10.5475 2.67971 11.0777 3.05082 11.5316 3.52116C11.9856 3.99139 12.3439 4.54059 12.6063 5.16876C12.8688 5.79693 13 6.46724 13 7.1797V12.8984C13 13.2062 12.8971 13.4668 12.6912 13.6801C12.4853 13.8934 12.2338 14 11.9366 14H8.44118C8.31598 14 8.21118 13.9562 8.12676 13.8687C8.04226 13.7812 8 13.6727 8 13.543C8 13.4133 8.04226 13.3047 8.12676 13.2173C8.21118 13.1297 8.31598 13.0859 8.44118 13.0859H11.9366C11.9895 13.0859 12.0328 13.0684 12.0668 13.0332C12.1007 12.9981 12.1176 12.9531 12.1176 12.8984V12.3594H11.0996C10.8062 12.3594 10.5557 12.2518 10.3479 12.0366C10.1401 11.8213 10.0362 11.5617 10.0362 11.2578V9.14845C10.0362 8.84457 10.1401 8.58503 10.3479 8.36982C10.5557 8.1545 10.8062 8.04685 11.0996 8.04685H12.1176V7.1797C12.1176 6.00157 11.7157 4.9961 10.9118 4.16329C10.1078 3.33047 9.13726 2.91407 8 2.91407C6.86275 2.91407 5.89216 3.33047 5.08824 4.16329C4.28431 4.9961 3.88235 6.00157 3.88235 7.1797V8.04685H4.90044C5.19377 8.04685 5.44431 8.1545 5.65206 8.36982C5.8599 8.58503 5.96382 8.84457 5.96382 9.14845V11.2578C5.96382 11.5617 5.8599 11.8213 5.65206 12.0366C5.44431 12.2518 5.19377 12.3594 4.90044 12.3594H4.06338Z" stroke="black" stroke-width="0.3"/>
+                                </g>
+                            </svg>
+                            <span>1688-6611</span>
+                        </a>
                     </div>
     
                     <ul class="service_list">
                         <li>
                             <a href="">
-                                <div class="img_set"><img src="/assets/img/sec02_img01.svg" alt="주문/배송"></div>
+                                <div class="img_set"><img src="./assets/img/sec02_img01.png" alt="주문/배송"></div>
                                 <p>주문/배송</p>
                             </a>
                         </li>
                         <li>
                             <a href="">
-                                <div class="img_set"><img src="/assets/img/sec02_img02.svg" alt="묶음배송"></div>
+                                <div class="img_set"><img src="./assets/img/sec02_img02.png" alt="묶음배송"></div>
                                 <p>상품 가이드</p>
                             </a>
                         </li>
                         <li>
                             <a href="">
-                                <div class="img_set"><img src="/assets/img/sec02_img03.svg" alt="출고일"></div>
+                                <div class="img_set"><img src="./assets/img/sec02_img03.png" alt="출고일"></div>
                                 <p>제작 가이드</p>
                             </a>
                         </li>
                         <li>
                             <a href="">
-                                <div class="img_set"><img src="/assets/img/sec02_img04.svg" alt="AS상담"></div>
+                                <div class="img_set"><img src="./assets/img/sec02_img04.png" alt="AS상담"></div>
                                 <p>이용 가이드</p>
                             </a>
                         </li>
                         <li>
                             <a href="">
-                                <div class="img_set"><img src="/assets/img/sec02_img05.svg" alt="대량명함"></div>
+                                <div class="img_set"><img src="./assets/img/sec02_img05.png" alt="대량명함"></div>
                                 <p>매장위치</p>
                             </a>
                         </li>
                         <li>
                             <a href="">
-                                <div class="img_set"><img src="/assets/img/sec02_img05.svg" alt="대량명함"></div>
+                                <div class="img_set"><img src="./assets/img/sec02_img06.png" alt="대량명함"></div>
                                 <p>1:1 문의</p>
                             </a>
                         </li>
-                        <li>
+                        <li class="pc">
                             <a href="">
-                                <div class="img_set"><img src="/assets/img/sec02_img06.svg" alt="매장위치"></div>
+                                <div class="img_set"><img src="./assets/img/sec02_img07.png" alt="매장위치"></div>
                                 <p>고객센터</p>
                             </a>
                         </li>
@@ -1398,8 +1463,8 @@
             </div>
 
             <!-- 중간배너 -->
-            <div class="mid_banner content_box">
-                <img src="/assets/img/mid_banner.jpg" alt="중간배너이미지">
+            <div class="mid_banner content_box mo">
+                <img src="./assets/img/mid_banner.jpg" alt="중간배너이미지">
             </div>
 
             <!-- 인기상품 -->
@@ -1421,7 +1486,7 @@
                         <div class="product_item swiper-slide">
                             <a href="">
                                 <div class="product_image">
-                                    <div class="img_set"><img src="/assets/img/sec03_img01.webp" alt=""></div>
+                                    <div class="img_set"><img src="./assets/img/sec03_img01.webp" alt=""></div>
                                     <div class="num">1</div>
                                 </div>
                                 <div class="product_info">
@@ -1434,7 +1499,7 @@
                         <div class="product_item swiper-slide">
                             <a href="">
                                 <div class="product_image">
-                                    <div class="img_set"><img src="/assets/img/sec03_img01.webp" alt=""></div>
+                                    <div class="img_set"><img src="./assets/img/sec03_img01.webp" alt=""></div>
                                     <div class="num">2</div>
                                 </div>
                                 <div class="product_info">
@@ -1447,7 +1512,7 @@
                         <div class="product_item swiper-slide">
                             <a href="">
                                 <div class="product_image">
-                                    <div class="img_set"><img src="/assets/img/sec03_img01.webp" alt=""></div>
+                                    <div class="img_set"><img src="./assets/img/sec03_img01.webp" alt=""></div>
                                     <div class="num">3</div>
                                 </div>
                                 <div class="product_info">
@@ -1460,7 +1525,7 @@
                         <div class="product_item swiper-slide">
                             <a href="">
                                 <div class="product_image">
-                                    <div class="img_set"><img src="/assets/img/sec03_img01.webp" alt=""></div>
+                                    <div class="img_set"><img src="./assets/img/sec03_img01.webp" alt=""></div>
                                     <div class="num">4</div>
                                 </div>
                                 <div class="product_info">
@@ -1473,7 +1538,7 @@
                         <div class="product_item swiper-slide">
                             <a href="">
                                 <div class="product_image">
-                                    <div class="img_set"><img src="/assets/img/sec03_img01.webp" alt=""></div>
+                                    <div class="img_set"><img src="./assets/img/sec03_img01.webp" alt=""></div>
                                     <div class="num">5</div>
                                 </div>
                                 <div class="product_info">
@@ -1486,7 +1551,7 @@
                         <div class="product_item swiper-slide">
                             <a href="">
                                 <div class="product_image">
-                                    <div class="img_set"><img src="/assets/img/sec03_img01.webp" alt=""></div>
+                                    <div class="img_set"><img src="./assets/img/sec03_img01.webp" alt=""></div>
                                     <div class="num">6</div>
                                 </div>
                                 <div class="product_info">
@@ -1499,7 +1564,7 @@
                         <div class="product_item swiper-slide">
                             <a href="">
                                 <div class="product_image">
-                                    <div class="img_set"><img src="/assets/img/sec03_img01.webp" alt=""></div>
+                                    <div class="img_set"><img src="./assets/img/sec03_img01.webp" alt=""></div>
                                     <div class="num">7</div>
                                 </div>
                                 <div class="product_info">
@@ -1512,7 +1577,7 @@
                         <div class="product_item swiper-slide">
                             <a href="">
                                 <div class="product_image">
-                                    <div class="img_set"><img src="/assets/img/sec03_img01.webp" alt=""></div>
+                                    <div class="img_set"><img src="./assets/img/sec03_img01.webp" alt=""></div>
                                     <div class="num">1</div>
                                 </div>
                                 <div class="product_info">
@@ -1547,7 +1612,7 @@
                         <div class="product_item swiper-slide">
                             <a href="">
                                 <div class="product_image">
-                                    <div class="img_set"><img src="/assets/img/sec03_img01.webp" alt=""></div>
+                                    <div class="img_set"><img src="./assets/img/sec03_img01.webp" alt=""></div>
                                     <div class="num">1</div>
                                 </div>
                                 <div class="product_info">
@@ -1560,7 +1625,7 @@
                         <div class="product_item swiper-slide">
                             <a href="">
                                 <div class="product_image">
-                                    <div class="img_set"><img src="/assets/img/sec03_img01.webp" alt=""></div>
+                                    <div class="img_set"><img src="./assets/img/sec03_img01.webp" alt=""></div>
                                     <div class="num">2</div>
                                 </div>
                                 <div class="product_info">
@@ -1573,7 +1638,7 @@
                         <div class="product_item swiper-slide">
                             <a href="">
                                 <div class="product_image">
-                                    <div class="img_set"><img src="/assets/img/sec03_img01.webp" alt=""></div>
+                                    <div class="img_set"><img src="./assets/img/sec03_img01.webp" alt=""></div>
                                     <div class="num">3</div>
                                 </div>
                                 <div class="product_info">
@@ -1586,7 +1651,7 @@
                         <div class="product_item swiper-slide">
                             <a href="">
                                 <div class="product_image">
-                                    <div class="img_set"><img src="/assets/img/sec03_img01.webp" alt=""></div>
+                                    <div class="img_set"><img src="./assets/img/sec03_img01.webp" alt=""></div>
                                     <div class="num">4</div>
                                 </div>
                                 <div class="product_info">
@@ -1599,7 +1664,7 @@
                         <div class="product_item swiper-slide">
                             <a href="">
                                 <div class="product_image">
-                                    <div class="img_set"><img src="/assets/img/sec03_img01.webp" alt=""></div>
+                                    <div class="img_set"><img src="./assets/img/sec03_img01.webp" alt=""></div>
                                     <div class="num">5</div>
                                 </div>
                                 <div class="product_info">
@@ -1612,7 +1677,7 @@
                         <div class="product_item swiper-slide">
                             <a href="">
                                 <div class="product_image">
-                                    <div class="img_set"><img src="/assets/img/sec03_img01.webp" alt=""></div>
+                                    <div class="img_set"><img src="./assets/img/sec03_img01.webp" alt=""></div>
                                     <div class="num">6</div>
                                 </div>
                                 <div class="product_info">
@@ -1625,7 +1690,7 @@
                         <div class="product_item swiper-slide">
                             <a href="">
                                 <div class="product_image">
-                                    <div class="img_set"><img src="/assets/img/sec03_img01.webp" alt=""></div>
+                                    <div class="img_set"><img src="./assets/img/sec03_img01.webp" alt=""></div>
                                     <div class="num">7</div>
                                 </div>
                                 <div class="product_info">
@@ -1638,7 +1703,7 @@
                         <div class="product_item swiper-slide">
                             <a href="">
                                 <div class="product_image">
-                                    <div class="img_set"><img src="/assets/img/sec03_img01.webp" alt=""></div>
+                                    <div class="img_set"><img src="./assets/img/sec03_img01.webp" alt=""></div>
                                     <div class="num">1</div>
                                 </div>
                                 <div class="product_info">
@@ -1666,7 +1731,7 @@
                 </div>
 
                 <div class="new_product">
-                    <div class="img_set"><img src="/assets/img/sec03_img01.webp" alt=""></div>
+                    <div class="img_set"><img src="./assets/img/sec03_img01.webp" alt=""></div>
                     <div class="product_info">
                         <div class="badge">포스터</div>
                         <div class="product_name">표준규격 포스터 (A1 ~ B6) </div>
@@ -1694,7 +1759,7 @@
                                 <div class="product_item swiper-slide">
                                     <a href="">
                                         <div class="product_image">
-                                            <div class="img_set"><img src="/assets/img/sec03_img01.webp" alt=""></div>
+                                            <div class="img_set"><img src="./assets/img/sec03_img01.webp" alt=""></div>
                                             <div class="num">1</div>
                                         </div>
                                         <div class="product_info">
@@ -1707,7 +1772,7 @@
                                 <div class="product_item swiper-slide">
                                     <a href="">
                                         <div class="product_image">
-                                            <div class="img_set"><img src="/assets/img/sec03_img01.webp" alt=""></div>
+                                            <div class="img_set"><img src="./assets/img/sec03_img01.webp" alt=""></div>
                                             <div class="num">2</div>
                                         </div>
                                         <div class="product_info">
@@ -1720,7 +1785,7 @@
                                 <div class="product_item swiper-slide">
                                     <a href="">
                                         <div class="product_image">
-                                            <div class="img_set"><img src="/assets/img/sec03_img01.webp" alt=""></div>
+                                            <div class="img_set"><img src="./assets/img/sec03_img01.webp" alt=""></div>
                                             <div class="num">3</div>
                                         </div>
                                         <div class="product_info">
@@ -1733,7 +1798,7 @@
                                 <div class="product_item swiper-slide">
                                     <a href="">
                                         <div class="product_image">
-                                            <div class="img_set"><img src="/assets/img/sec03_img01.webp" alt=""></div>
+                                            <div class="img_set"><img src="./assets/img/sec03_img01.webp" alt=""></div>
                                             <div class="num">4</div>
                                         </div>
                                         <div class="product_info">
@@ -1746,7 +1811,7 @@
                                 <div class="product_item swiper-slide">
                                     <a href="">
                                         <div class="product_image">
-                                            <div class="img_set"><img src="/assets/img/sec03_img01.webp" alt=""></div>
+                                            <div class="img_set"><img src="./assets/img/sec03_img01.webp" alt=""></div>
                                             <div class="num">5</div>
                                         </div>
                                         <div class="product_info">
@@ -1759,7 +1824,7 @@
                                 <div class="product_item swiper-slide">
                                     <a href="">
                                         <div class="product_image">
-                                            <div class="img_set"><img src="/assets/img/sec03_img01.webp" alt=""></div>
+                                            <div class="img_set"><img src="./assets/img/sec03_img01.webp" alt=""></div>
                                             <div class="num">6</div>
                                         </div>
                                         <div class="product_info">
@@ -1772,7 +1837,7 @@
                                 <div class="product_item swiper-slide">
                                     <a href="">
                                         <div class="product_image">
-                                            <div class="img_set"><img src="/assets/img/sec03_img01.webp" alt=""></div>
+                                            <div class="img_set"><img src="./assets/img/sec03_img01.webp" alt=""></div>
                                             <div class="num">7</div>
                                         </div>
                                         <div class="product_info">
@@ -1785,7 +1850,7 @@
                                 <div class="product_item swiper-slide">
                                     <a href="">
                                         <div class="product_image">
-                                            <div class="img_set"><img src="/assets/img/sec03_img01.webp" alt=""></div>
+                                            <div class="img_set"><img src="./assets/img/sec03_img01.webp" alt=""></div>
                                             <div class="num">1</div>
                                         </div>
                                         <div class="product_info">
@@ -1822,7 +1887,7 @@
                         <div class="product_item overlay swiper-slide">
                             <a href="">
                                 <div class="product_image">
-                                    <div class="img_set"><img src="/assets/img/sec03_img01.webp" alt=""></div>
+                                    <div class="img_set"><img src="./assets/img/sec03_img01.webp" alt=""></div>
                                 </div>
                                 <div class="product_info">
                                     <h4>아크릴 톡</h4>
@@ -1842,7 +1907,7 @@
                         <div class="product_item overlay swiper-slide">
                             <a href="">
                                 <div class="product_image">
-                                    <div class="img_set"><img src="/assets/img/sec03_img01.webp" alt=""></div>
+                                    <div class="img_set"><img src="./assets/img/sec03_img01.webp" alt=""></div>
                                 </div>
                                 <div class="product_info">
                                     <h4>아크릴 톡</h4>
@@ -1862,7 +1927,7 @@
                         <div class="product_item overlay swiper-slide">
                             <a href="">
                                 <div class="product_image">
-                                    <div class="img_set"><img src="/assets/img/sec03_img01.webp" alt=""></div>
+                                    <div class="img_set"><img src="./assets/img/sec03_img01.webp" alt=""></div>
                                 </div>
                                 <div class="product_info">
                                     <h4>아크릴 톡</h4>
@@ -1882,7 +1947,7 @@
                         <div class="product_item overlay swiper-slide">
                             <a href="">
                                 <div class="product_image">
-                                    <div class="img_set"><img src="/assets/img/sec03_img01.webp" alt=""></div>
+                                    <div class="img_set"><img src="./assets/img/sec03_img01.webp" alt=""></div>
                                 </div>
                                 <div class="product_info">
                                     <h4>아크릴 톡</h4>
@@ -1902,7 +1967,7 @@
                         <div class="product_item overlay swiper-slide">
                             <a href="">
                                 <div class="product_image">
-                                    <div class="img_set"><img src="/assets/img/sec03_img01.webp" alt=""></div>
+                                    <div class="img_set"><img src="./assets/img/sec03_img01.webp" alt=""></div>
                                 </div>
                                 <div class="product_info">
                                     <h4>아크릴 톡</h4>
@@ -1944,7 +2009,7 @@
                         <div class="product_item overlay swiper-slide">
                             <a href="">
                                 <div class="product_image">
-                                    <div class="img_set"><img src="/assets/img/sec03_img01.webp" alt=""></div>
+                                    <div class="img_set"><img src="./assets/img/sec03_img01.webp" alt=""></div>
                                 </div>
                                 <div class="product_info">
                                     <h4>음식 · 요식업</h4>
@@ -1964,7 +2029,7 @@
                         <div class="product_item overlay swiper-slide">
                             <a href="">
                                 <div class="product_image">
-                                    <div class="img_set"><img src="/assets/img/sec03_img01.webp" alt=""></div>
+                                    <div class="img_set"><img src="./assets/img/sec03_img01.webp" alt=""></div>
                                 </div>
                                 <div class="product_info">
                                     <h4>카페 · 베이커리</h4>
@@ -1984,7 +2049,7 @@
                         <div class="product_item overlay swiper-slide">
                             <a href="">
                                 <div class="product_image">
-                                    <div class="img_set"><img src="/assets/img/sec03_img01.webp" alt=""></div>
+                                    <div class="img_set"><img src="./assets/img/sec03_img01.webp" alt=""></div>
                                 </div>
                                 <div class="product_info">
                                     <h4>아크릴 톡</h4>
@@ -2004,7 +2069,7 @@
                         <div class="product_item overlay swiper-slide">
                             <a href="">
                                 <div class="product_image">
-                                    <div class="img_set"><img src="/assets/img/sec03_img01.webp" alt=""></div>
+                                    <div class="img_set"><img src="./assets/img/sec03_img01.webp" alt=""></div>
                                 </div>
                                 <div class="product_info">
                                     <h4>아크릴 톡</h4>
@@ -2024,7 +2089,7 @@
                         <div class="product_item overlay swiper-slide">
                             <a href="">
                                 <div class="product_image">
-                                    <div class="img_set"><img src="/assets/img/sec03_img01.webp" alt=""></div>
+                                    <div class="img_set"><img src="./assets/img/sec03_img01.webp" alt=""></div>
                                 </div>
                                 <div class="product_info">
                                     <h4>아크릴 톡</h4>
@@ -2050,7 +2115,7 @@
             <div class="footer_inner pc">
                 <div class="left_cont">
                     <div class="category">
-                        <div class="logo"><img src="/assets/img/logo_footer.svg" alt="로고"></div>
+                        <div class="logo"><img src="./assets/img/logo_footer.svg" alt="로고"></div>
                         <ul>
                             <li><a href="">회사소개</a></li>
                             <li><a href="">이용약관</a></li>
@@ -2088,32 +2153,32 @@
                     <ul class="sns_list">
                         <li>
                             <a href="">
-                                <img class="default" src="/assets/img/sns_kakao.svg" alt="">
-                                <img class="hover" src="/assets/img/sns_kakao_on.svg" alt="">
+                                <img class="default" src="./assets/img/sns_kakao.svg" alt="">
+                                <img class="hover" src="./assets/img/sns_kakao_on.svg" alt="">
                             </a>
                         </li>
                         <li>
                             <a href="">
-                                <img class="default" src="/assets/img/sns_naver.svg" alt="">
-                                <img class="hover" src="/assets/img/sns_naver_on.svg" alt="">
+                                <img class="default" src="./assets/img/sns_naver.svg" alt="">
+                                <img class="hover" src="./assets/img/sns_naver_on.svg" alt="">
                             </a>
                         </li>
                         <li>
                             <a href="">
-                                <img class="default" src="/assets/img/sns_instagram.svg" alt="">
-                                <img class="hover" src="/assets/img/sns_instagram_on.png" alt="">
+                                <img class="default" src="./assets/img/sns_instagram.svg" alt="">
+                                <img class="hover" src="./assets/img/sns_instagram_on.png" alt="">
                             </a>
                         </li>
                         <li>
                             <a href="">
-                                <img class="default" src="/assets/img/sns_youtube.svg" alt="">
-                                <img class="hover" src="/assets/img/sns_youtube_on.svg" alt="">
+                                <img class="default" src="./assets/img/sns_youtube.svg" alt="">
+                                <img class="hover" src="./assets/img/sns_youtube_on.svg" alt="">
                             </a>
                         </li>
                         <li>
                             <a href="">
-                                <img class="default" src="/assets/img/sns_facebook.svg" alt="">
-                                <img class="hover" src="/assets/img/sns_facebook_on.svg" alt="">
+                                <img class="default" src="./assets/img/sns_facebook.svg" alt="">
+                                <img class="hover" src="./assets/img/sns_facebook_on.svg" alt="">
                             </a>
                         </li>
                     </ul>
@@ -2203,7 +2268,7 @@
             <div class="footer_inner mo flex">
                 <div class="left_cont">
                     <div class="category">
-                        <div class="logo"><img src="/assets/img/logo_footer.svg" alt="로고"></div>
+                        <div class="logo"><img src="./assets/img/logo_footer.svg" alt="로고"></div>
                         <ul>
                             <li><a href="">회사소개</a></li>
                             <li><a href="">이용약관</a></li>
@@ -2272,32 +2337,32 @@
                         <ul class="sns_list">
                             <li>
                                 <a href="">
-                                    <img class="default" src="/assets/img/sns_kakao.svg" alt="">
-                                    <img class="hover" src="/assets/img/sns_kakao_on.svg" alt="">
+                                    <img class="default" src="./assets/img/sns_kakao.svg" alt="">
+                                    <img class="hover" src="./assets/img/sns_kakao_on.svg" alt="">
                                 </a>
                             </li>
                             <li>
                                 <a href="">
-                                    <img class="default" src="/assets/img/sns_naver.svg" alt="">
-                                    <img class="hover" src="/assets/img/sns_naver_on.svg" alt="">
+                                    <img class="default" src="./assets/img/sns_naver.svg" alt="">
+                                    <img class="hover" src="./assets/img/sns_naver_on.svg" alt="">
                                 </a>
                             </li>
                             <li>
                                 <a href="">
-                                    <img class="default" src="/assets/img/sns_instagram.svg" alt="">
-                                    <img class="hover" src="/assets/img/sns_instagram_on.png" alt="">
+                                    <img class="default" src="./assets/img/sns_instagram.svg" alt="">
+                                    <img class="hover" src="./assets/img/sns_instagram_on.png" alt="">
                                 </a>
                             </li>
                             <li>
                                 <a href="">
-                                    <img class="default" src="/assets/img/sns_youtube.svg" alt="">
-                                    <img class="hover" src="/assets/img/sns_youtube_on.svg" alt="">
+                                    <img class="default" src="./assets/img/sns_youtube.svg" alt="">
+                                    <img class="hover" src="./assets/img/sns_youtube_on.svg" alt="">
                                 </a>
                             </li>
                             <li>
                                 <a href="">
-                                    <img class="default" src="/assets/img/sns_facebook.svg" alt="">
-                                    <img class="hover" src="/assets/img/sns_facebook_on.svg" alt="">
+                                    <img class="default" src="./assets/img/sns_facebook.svg" alt="">
+                                    <img class="hover" src="./assets/img/sns_facebook_on.svg" alt="">
                                 </a>
                             </li>
                         </ul>
@@ -2363,15 +2428,15 @@
             <div class="aside_inner">
                 <div class="aside_header">
                     <button type="button" class="btn_logout">로그아웃하기</button>
-                    <button type="button" class="btn_join">회원가입하기</button>
+                    <button type="button" class="btn_join">로그인하기</button>
     
                     <div class="aside_util">
                         <a href="" class="btn icon basket">
-                            <img src="/assets/img/basket.svg" alt="장바구니">
+                            <img src="./assets/img/basket.svg" alt="장바구니">
                             <p class="basket_count">1</p>
                         </a>
                         <button class="btn icon aside_close">
-                            <img src="/assets/img/aside_close.svg" alt="사이드 닫기">
+                            <img src="./assets/img/aside_close.svg" alt="사이드 닫기">
                         </button>
                     </div>
                 </div>
@@ -2396,7 +2461,7 @@
                     <ul class="cate_list active" data-cate="signage">
                         <li class="cate_1depth">
                             <button type="button" class="cate_1depth_btn">
-                                <span>스티커/시트지</span>
+                                <span>실사출력</span>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
                                     <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                 </svg>
@@ -2404,22 +2469,22 @@
                             <div class="cate_2depth_wrap">
                                 <div class="cate_2depth">
                                     <button type="button" class="cate_2depth_btn">
-                                        <h4>스티커</h4>
+                                        <h4>실사출력</h4>
                                     </button>
                                     <ul class="cate_3depth">
-                                        <li><a href="">일반스티커</a></li>
-                                        <li><a href="">투명스티커</a></li>
-                                        <li><a href="">홀로그램스티커</a></li>
-                                        <li><a href="">유포지스티커</a></li>
-                                    </ul>
-                                </div>
-                                <div class="cate_2depth">
-                                    <button type="button" class="cate_2depth_btn">
-                                        <h4>시트지</h4>
-                                    </button>
-                                    <ul class="cate_3depth">
-                                        <li><a href="">일반시트지</a></li>
-                                        <li><a href="">투명시트지</a></li>
+                                        <li><a href="">포스터</a></li>
+                                        <li><a href="">종이류</a></li>
+                                        <li><a href="">인화지</a></li>
+                                        <li><a href="">보드지</a></li>
+                                        <li><a href="">스티커/시트지</a></li>
+                                        <li><a href="">PET/특수소재</a></li>
+                                        <li><a href="">천소재</a></li>
+                                        <li><a href="">통자석</a></li>
+                                        <li><a href="">시트컷팅</a></li>
+                                        <li><a href="">패브릭스티커</a></li>
+                                        <li><a href="">DTF(판박이)스티커</a></li>
+                                        <li class="new"><a href="">에폭시스티커</a></li>
+                                        <li class="new"><a href="">띠부스티커</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -2437,21 +2502,22 @@
                                         <h4>현수막</h4>
                                     </button>
                                     <ul class="cate_3depth">
-                                        <li><a href="">일반현수막</a></li>
-                                        <li><a href="">대형현수막</a></li>
-                                        <li><a href="">초대형현수막</a></li>
-                                        <li><a href="">어깨띠</a></li>
+                                        <li><a href="">명함</a></li>
+                                        <li><a href="">일반지명함</a></li>
+                                        <li><a href="">고급지명함</a></li>
+                                        <li><a href="">카드명함</a></li>
+                                        <li><a href="">하이브리드명함</a></li>
+                                        <li><a href="">투명하이브리드명함</a></li>
+                                        <li><a href="">하이브리드명함</a></li>
+                                        <li><a href="">에폭시명함</a></li>
+                                        <li><a href="">프리컷팅</a></li>
                                     </ul>
                                 </div>
                             </div>
                         </li>
-                    </ul>
-
-                    <!-- gift 카테고리 -->
-                    <ul class="cate_list" data-cate="gift">
                         <li class="cate_1depth">
                             <button type="button" class="cate_1depth_btn">
-                                <span>명함</span>
+                                <span>배너</span>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
                                     <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                 </svg>
@@ -2459,13 +2525,383 @@
                             <div class="cate_2depth_wrap">
                                 <div class="cate_2depth">
                                     <button type="button" class="cate_2depth_btn">
-                                        <h4>일반명함</h4>
+                                        <h4>배너</h4>
                                     </button>
                                     <ul class="cate_3depth">
-                                        <li><a href="">스노우지명함</a></li>
-                                        <li><a href="">랑데뷰명함</a></li>
-                                        <li><a href="">몽블랑명함</a></li>
-                                        <li><a href="">카드명함</a></li>
+                                        <li><a href="">실내용배너</a></li>
+                                        <li><a href="">실외용배너</a></li>
+                                        <li><a href="">와이드배너</a></li>
+                                        <li><a href="">미니배너</a></li>
+                                        <li><a href="">초대형배너</a></li>
+                                        <li><a href="">배너출력</a></li>
+                                        <li><a href="">백월배너</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="cate_1depth">
+                            <button type="button" class="cate_1depth_btn">
+                                <span>간판</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                    <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </button>
+                            <div class="cate_2depth_wrap">
+                                <div class="cate_2depth">
+                                    <button type="button" class="cate_2depth_btn">
+                                        <h4>간판</h4>
+                                    </button>
+                                    <ul class="cate_3depth">
+                                        <li><a href="">후렉스조명</a></li>
+                                        <li><a href="">백릿조명</a></li>
+                                        <li><a href="">철제입간판</a></li>
+                                        <li><a href="">우드입간판</a></li>
+                                        <li><a href="">우드현판</a></li>
+                                        <li><a href="">스텐입간판</a></li>
+                                        <li><a href="">스텐현판</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="cate_1depth">
+                            <button type="button" class="cate_1depth_btn">
+                                <span>액자</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                    <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </button>
+                            <div class="cate_2depth_wrap">
+                                <div class="cate_2depth">
+                                    <button type="button" class="cate_2depth_btn">
+                                        <h4>액자</h4>
+                                    </button>
+                                    <ul class="cate_3depth">
+                                        <li><a href="">원목액자</a></li>
+                                        <li><a href="">알루미늄 액자</a></li>
+                                        <li><a href="">캔버스 액자</a></li>
+                                        <li><a href="">아크릴다이액 액자</a></li>
+                                        <li><a href="">초슬림 아트룩스 액자</a></li>
+                                        <li><a href="">베젤 액자</a></li>
+                                        <li><a href="">자작나무 액자</a></li>
+                                        <li><a href="">아크릴자석 액자</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="cate_1depth">
+                            <button type="button" class="cate_1depth_btn">
+                                <span>LED</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                    <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </button>
+                            <div class="cate_2depth_wrap">
+                                <div class="cate_2depth">
+                                    <button type="button" class="cate_2depth_btn">
+                                        <h4>LED</h4>
+                                    </button>
+                                    <ul class="cate_3depth">
+                                        <li><a href="">LED 원형입간판</a></li>
+                                        <li><a href="">윈도우부착 LED패널</a></li>
+                                        <li><a href="">LED 3D사인간판</a></li>
+                                        <li><a href="">LED 백걸이형 실내용배너</a></li>
+                                        <li><a href="">LED 스탠드형 실외용배너</a></li>
+                                        <li><a href="">LED A형 철제입간판</a></li>
+                                        <li><a href="">LED A형 철제입간판</a></li>
+                                        <li><a href="">LED 아크릴간판</a></li>
+                                        <li><a href="">LED 액자</a></li>
+                                        <li><a href="">LED 라운드 입간판</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="cate_1depth">
+                            <button type="button" class="cate_1depth_btn">
+                                <span>아크릴</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                    <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </button>
+                            <div class="cate_2depth_wrap">
+                                <div class="cate_2depth">
+                                    <button type="button" class="cate_2depth_btn">
+                                        <h4>아크릴</h4>
+                                    </button>
+                                    <ul class="cate_3depth">
+                                        <li><a href="">아크릴판</a></li>
+                                        <li><a href="">아크릴인쇄</a></li>
+                                        <li><a href="">아크릴컷팅</a></li>
+                                        <li><a href="">아크릴루트등</a></li>
+                                        <li><a href="">아크릴가림막</a></li>
+                                        <li><a href="">아크릴톡</a></li>
+                                        <li><a href="">아크릴키링</a></li>
+                                        <li><a href="">아크릴명찰</a></li>
+                                        <li><a href="">아크릴뱃지</a></li>
+                                        <li><a href="">아크릴화병</a></li>
+                                        <li><a href="">아크릴트레이</a></li>
+                                        <li><a href="">아크릴박스</a></li>
+                                        <li><a href="">아크릴절곡</a></li>
+                                        <li><a href="">아크릴단봉액자</a></li>
+                                        <li><a href="">우드무드등액자</a></li>
+                                        <li><a href="">아크릴시계</a></li>
+                                        <li><a href="">아크릴집게</a></li>
+                                        <li><a href="">아크릴등신대</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="cate_1depth">
+                            <button type="button" class="cate_1depth_btn">
+                                <span>금속/우드</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                    <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </button>
+                            <div class="cate_2depth_wrap">
+                                <div class="cate_2depth">
+                                    <button type="button" class="cate_2depth_btn">
+                                        <h4>금속/우드</h4>
+                                    </button>
+                                    <ul class="cate_3depth">
+                                        <li><a href="">신주인쇄</a></li>
+                                        <li><a href="">신주마킹</a></li>
+                                        <li><a href="">알루미늄인쇄</a></li>
+                                        <li><a href="">알루미늄명함</a></li>
+                                        <li><a href="">알루미늄명찰</a></li>
+                                        <li><a href="">스텐인쇄</a></li>
+                                        <li><a href="">스텐입간판</a></li>
+                                        <li><a href="">스텐현판</a></li>
+                                        <li><a href="">우드인쇄</a></li>
+                                        <li><a href="">우드입간판</a></li>
+                                        <li><a href="">우드현판</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="cate_1depth">
+                            <button type="button" class="cate_1depth_btn">
+                                <span>일일출고</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                    <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </button>
+                            <div class="cate_2depth_wrap">
+                                <div class="cate_2depth">
+                                    <button type="button" class="cate_2depth_btn">
+                                        <h4>일일출고</h4>
+                                    </button>
+                                    <ul class="cate_3depth">
+                                        <li><a href="">실내용배너</a></li>
+                                        <li><a href="">실외용배너</a></li>
+                                        <li><a href="">실사출력 보드지</a></li>
+                                        <li><a href="">일반현수막</a></li>
+                                        <li><a href="">스티커/시트지</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="cate_1depth">
+                            <button type="button" class="cate_1depth_btn">
+                                <span>POP/등신대</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                    <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </button>
+                            <div class="cate_2depth_wrap">
+                                <div class="cate_2depth">
+                                    <button type="button" class="cate_2depth_btn">
+                                        <h4>POP/등신대</h4>
+                                    </button>
+                                    <ul class="cate_3depth">
+                                        <li><a href="">합지POP</a></li>
+                                        <li><a href="">포맥스POP</a></li>
+                                        <li><a href="">폼보드POP</a></li>
+                                        <li><a href="">합지등신대</a></li>
+                                        <li><a href="">포맥스등신대</a></li>
+                                        <li><a href="">폼보드등신대</a></li>
+                                        <li><a href="">포맥스절곡</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+
+                    </ul>
+
+                    <!-- gift 카테고리 -->
+                    <ul class="cate_list" data-cate="gift">
+                        <li class="cate_1depth">
+                            <button type="button" class="cate_1depth_btn">
+                                <span>굿즈</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                    <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </button>
+                            <div class="cate_2depth_wrap">
+                                <div class="cate_2depth">
+                                    <button type="button" class="cate_2depth_btn">
+                                        <h4>굿즈</h4>
+                                    </button>
+                                    <ul class="cate_3depth">
+                                        <li><a href="">버튼</a></li>
+                                        <li><a href="">패브릭버튼</a></li>
+                                        <li><a href="">캐릭터등신대</a></li>
+                                        <li><a href="">마스킹테이프</a></li>
+                                        <li><a href="">OPP테이프</a></li>
+                                        <li><a href="">크라프트테이프</a></li>
+                                        <li><a href="">클립</a></li>
+                                        <li><a href="">부채</a></li>
+                                        <li><a href="">퓨어펜</a></li>
+                                        <li><a href="">아크릴판츠 퓨어펜</a></li>
+                                        <li><a href="">커스텀 텀블러</a></li>
+                                        <li><a href="">폰케이스</a></li>
+                                        <li><a href="">에어팟/버즈케이스</a></li>
+                                        <li><a href="">에폭시톡</a></li>
+                                        <li><a href="">말랑키링</a></li>
+                                        <li><a href="">포토카드 홀더</a></li>
+                                        <li><a href="">맥세이프 카드지갑</a></li>
+                                        <li><a href="">패브릭 포스터</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="cate_1depth">
+                            <button type="button" class="cate_1depth_btn">
+                                <span>판촉물</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                    <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </button>
+                            <div class="cate_2depth_wrap">
+                                <div class="cate_2depth">
+                                    <button type="button" class="cate_2depth_btn">
+                                        <h4>가정용품</h4>
+                                    </button>
+                                    <ul class="cate_3depth">
+                                        <li><a href="">가방</a></li>
+                                        <li><a href="">타올</a></li>
+                                        <li><a href="">우산</a></li>
+                                        <li><a href="">물티슈/휴대용티슈</a></li>
+                                        <li><a href="">담요</a></li>
+                                        <li><a href="">의류</a></li>
+                                        <li><a href="">칫솔치약세트</a></li>
+                                        <li><a href="">손톱깎이</a></li>
+                                        <li><a href="">쿠토시/쿨스카프/우의/쿨팩</a></li>
+                                        <li><a href="">휴대폰 액정클리너/안경닦이</a></li>
+                                        <li><a href="">홍보용 밴드</a></li>
+                                        <li><a href="">구급함/위생함</a></li>
+                                        <li><a href="">핫팩</a></li>
+                                        <li><a href="">칫솔살균기/구강세정기</a></li>
+                                        <li><a href="">방향용품</a></li>
+                                        <li><a href="">디퓨저/방향제</a></li>
+                                        <li><a href="">시계</a></li>
+                                        <li><a href="">자개상품</a></li>
+                                        <li><a href="">손수건/스카프</a></li>
+                                        <li><a href="">지갑/카드지갑</a></li>
+                                        <li><a href="">미용용품/화장품</a></li>
+                                    </ul>
+                                </div>
+                                <div class="cate_2depth">
+                                    <button type="button" class="cate_2depth_btn">
+                                        <h4>사무/문구</h4>
+                                    </button>
+                                    <ul class="cate_3depth">
+                                        <li><a href="">볼펜/필기류</a></li>
+                                        <li><a href="">마우스패드</a></li>
+                                        <li><a href="">다이어리</a></li>
+                                        <li><a href="">접착메모지(포스트잇)</a></li>
+                                        <li><a href="">기성캘린더</a></li>
+                                        <li><a href="">대량캘린더</a></li>
+                                        <li><a href="">소량캘린더</a></li>
+                                        <li><a href="">대량벽걸이캘린더</a></li>
+                                        <li><a href="">소량벽걸이캘린더</a></li>
+                                        <li><a href="">연필</a></li>
+                                        <li><a href="">홀더/길패드/메모패드</a></li>
+                                        <li><a href="">독서대</a></li>
+                                        <li><a href="">메모판</a></li>
+                                    </ul>
+                                </div>
+                                <div class="cate_2depth">
+                                    <button type="button" class="cate_2depth_btn">
+                                        <h4>주방용품/식품</h4>
+                                    </button>
+                                    <ul class="cate_3depth">
+                                        <li><a href="">텀블러/보틀</a></li>
+                                        <li><a href="">머그컵</a></li>
+                                        <li><a href="">소금</a></li>
+                                        <li><a href="">햄참치세트</a></li>
+                                        <li><a href="">식초/오일세트</a></li>
+                                        <li><a href="">홍삼세트</a></li>
+                                        <li><a href="">소금선물세트</a></li>
+                                        <li><a href="">냄비받침/컵받침</a></li>
+                                        <li><a href="">도마/트레이</a></li>
+                                        <li><a href="">위생장갑/위생백</a></li>
+                                        <li><a href="">수저</a></li>
+                                        <li><a href="">종이컵/네프킨</a></li>
+                                        <li><a href="">앞치마</a></li>
+                                        <li><a href="">주방장갑</a></li>
+                                        <li><a href="">밀폐용기</a></li>
+                                    </ul>
+                                </div>
+                                <div class="cate_2depth">
+                                    <button type="button" class="cate_2depth_btn">
+                                        <h4>스포츠/레저/가전</h4>
+                                    </button>
+                                    <ul class="cate_3depth">
+                                        <li><a href="">골프용품</a></li>
+                                        <li><a href="">보조배터리(USB메모리)</a></li>
+                                        <li><a href="">카카오골프용품</a></li>
+                                        <li><a href="">선풍기</a></li>
+                                        <li><a href="">가습기</a></li>
+                                        <li><a href="">무선충전기/충전케이블</a></li>
+                                        <li><a href="">여행용품</a></li>
+                                        <li><a href="">블루투스 스피커/이어폰</a></li>
+                                        <li><a href="">충전기/공기청정기</a></li>
+                                        <li><a href="">돗자리/매트</a></li>
+                                        <li><a href="">모자</a></li>
+                                        <li><a href="">마사지기</a></li>
+                                        <li><a href="">키보드</a></li>
+                                        <li><a href="">주방가전</a></li>
+                                        <li><a href="">캠핑용품</a></li>
+                                        <li><a href="">생활가전</a></li>
+                                        <li><a href="">부채</a></li>
+                                    </ul>
+                                </div>
+                                <div class="cate_2depth">
+                                    <button type="button" class="cate_2depth_btn">
+                                        <h4>상패/명패/상장케이스</h4>
+                                    </button>
+                                    <ul class="cate_3depth">
+                                        <li><a href="">상패</a></li>
+                                        <li><a href="">상장케이스</a></li>
+                                    </ul>
+                                </div>
+                                <div class="cate_2depth">
+                                    <button type="button" class="cate_2depth_btn">
+                                        <h4>브랜드관</h4>
+                                    </button>
+                                    <ul class="cate_3depth">
+                                        <li><a href="">카카오프렌즈</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="cate_1depth">
+                            <button type="button" class="cate_1depth_btn">
+                                <span>포장백/부자재</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                    <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </button>
+                            <div class="cate_2depth_wrap">
+                                <div class="cate_2depth">
+                                    <button type="button" class="cate_2depth_btn">
+                                        <h4>포장백(기성형)</h4>
+                                    </button>
+                                    <ul class="cate_3depth">
+                                        <li><a href="">디자인봉투</a></li>
+                                        <li><a href="">스탠드봉투</a></li>
+                                        <li><a href="">지퍼봉투</a></li>
+                                        <li><a href="">삼방봉투</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -2476,7 +2912,7 @@
                     <ul class="cate_list" data-cate="utong">
                         <li class="cate_1depth">
                             <button type="button" class="cate_1depth_btn">
-                                <span>패션잡화</span>
+                                <span>베스트</span>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
                                     <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                 </svg>
@@ -2484,13 +2920,254 @@
                             <div class="cate_2depth_wrap">
                                 <div class="cate_2depth">
                                     <button type="button" class="cate_2depth_btn">
-                                        <h4>의류</h4>
+                                        <h4>베스트 상품</h4>
                                     </button>
                                     <ul class="cate_3depth">
+                                        <li><a href="">베스트 상품 1</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="cate_1depth">
+                            <button type="button" class="cate_1depth_btn">
+                                <span>패션의류</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                    <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </button>
+                            <div class="cate_2depth_wrap">
+                                <div class="cate_2depth">
+                                    <button type="button" class="cate_2depth_btn">
+                                        <h4>여성의류</h4>
+                                    </button>
+                                    <ul class="cate_3depth">
+                                        <li><a href="">블라우스/셔츠</a></li>
+                                        <li><a href="">바지</a></li>
+                                        <li><a href="">트레이닝복</a></li>
+                                        <li><a href="">정장세트</a></li>
                                         <li><a href="">티셔츠</a></li>
-                                        <li><a href="">모자</a></li>
-                                        <li><a href="">가방</a></li>
-                                        <li><a href="">신발</a></li>
+                                        <li><a href="">원피스</a></li>
+                                        <li><a href="">레깅스</a></li>
+                                        <li><a href="">점퍼</a></li>
+                                        <li><a href="">스커트</a></li>
+                                        <li><a href="">니트</a></li>
+                                        <li><a href="">아우터</a></li>
+                                    </ul>
+                                </div>
+                                <div class="cate_2depth">
+                                    <button type="button" class="cate_2depth_btn">
+                                        <h4>남성의류</h4>
+                                    </button>
+                                    <ul class="cate_3depth">
+                                        <li><a href="">블라우스/셔츠</a></li>
+                                        <li><a href="">바지</a></li>
+                                        <li><a href="">트레이닝복</a></li>
+                                        <li><a href="">정장세트</a></li>
+                                        <li><a href="">티셔츠</a></li>
+                                        <li><a href="">원피스</a></li>
+                                        <li><a href="">레깅스</a></li>
+                                        <li><a href="">점퍼</a></li>
+                                        <li><a href="">스커트</a></li>
+                                        <li><a href="">니트</a></li>
+                                        <li><a href="">아우터</a></li>
+                                    </ul>
+                                </div>
+                                <div class="cate_2depth">
+                                    <button type="button" class="cate_2depth_btn">
+                                        <h4>여성언더웨어/잠옷</h4>
+                                    </button>
+                                    <ul class="cate_3depth">
+                                        <li><a href="">블라우스/셔츠</a></li>
+                                        <li><a href="">바지</a></li>
+                                        <li><a href="">트레이닝복</a></li>
+                                        <li><a href="">정장세트</a></li>
+                                        <li><a href="">티셔츠</a></li>
+                                        <li><a href="">원피스</a></li>
+                                        <li><a href="">레깅스</a></li>
+                                        <li><a href="">점퍼</a></li>
+                                        <li><a href="">스커트</a></li>
+                                        <li><a href="">니트</a></li>
+                                        <li><a href="">아우터</a></li>
+                                    </ul>
+                                </div>
+                                <div class="cate_2depth">
+                                    <button type="button" class="cate_2depth_btn">
+                                        <h4>남성언더웨어/잠옷</h4>
+                                    </button>
+                                    <ul class="cate_3depth">
+                                        <li><a href="">블라우스/셔츠</a></li>
+                                        <li><a href="">바지</a></li>
+                                        <li><a href="">트레이닝복</a></li>
+                                        <li><a href="">정장세트</a></li>
+                                        <li><a href="">티셔츠</a></li>
+                                        <li><a href="">원피스</a></li>
+                                        <li><a href="">레깅스</a></li>
+                                        <li><a href="">점퍼</a></li>
+                                        <li><a href="">스커트</a></li>
+                                        <li><a href="">니트</a></li>
+                                        <li><a href="">아우터</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="cate_1depth">
+                            <button type="button" class="cate_1depth_btn">
+                                <span>디지털/가전</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                    <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </button>
+                            <div class="cate_2depth_wrap">
+                                <div class="cate_2depth">
+                                    <button type="button" class="cate_2depth_btn">
+                                        <h4>디지털/가전 상품</h4>
+                                    </button>
+                                    <ul class="cate_3depth">
+                                        <li><a href="">디지털/가전 상품 1</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="cate_1depth">
+                            <button type="button" class="cate_1depth_btn">
+                                <span>가구/인테리어</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                    <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </button>
+                            <div class="cate_2depth_wrap">
+                                <div class="cate_2depth">
+                                    <button type="button" class="cate_2depth_btn">
+                                        <h4>가구/인테리어 상품</h4>
+                                    </button>
+                                    <ul class="cate_3depth">
+                                        <li><a href="">가구/인테리어 상품 1</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="cate_1depth">
+                            <button type="button" class="cate_1depth_btn">
+                                <span>식품</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                    <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </button>
+                            <div class="cate_2depth_wrap">
+                                <div class="cate_2depth">
+                                    <button type="button" class="cate_2depth_btn">
+                                        <h4>식품 상품</h4>
+                                    </button>
+                                    <ul class="cate_3depth">
+                                        <li><a href="">식품 상품 1</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="cate_1depth">
+                            <button type="button" class="cate_1depth_btn">
+                                <span>스포츠/레저</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                    <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </button>
+                            <div class="cate_2depth_wrap">
+                                <div class="cate_2depth">
+                                    <button type="button" class="cate_2depth_btn">
+                                        <h4>스포츠/레저 상품</h4>
+                                    </button>
+                                    <ul class="cate_3depth">
+                                        <li><a href="">스포츠/레저 상품 1</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="cate_1depth">
+                            <button type="button" class="cate_1depth_btn">
+                                <span>생활/건강</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                    <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </button>
+                            <div class="cate_2depth_wrap">
+                                <div class="cate_2depth">
+                                    <button type="button" class="cate_2depth_btn">
+                                        <h4>생활/건강 상품</h4>
+                                    </button>
+                                    <ul class="cate_3depth">
+                                        <li><a href="">생활/건강 상품 1</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="cate_1depth">
+                            <button type="button" class="cate_1depth_btn">
+                                <span>화장품/미용</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                    <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </button>
+                            <div class="cate_2depth_wrap">
+                                <div class="cate_2depth">
+                                    <button type="button" class="cate_2depth_btn">
+                                        <h4>화장품/미용 상품</h4>
+                                    </button>
+                                    <ul class="cate_3depth">
+                                        <li><a href="">화장품/미용 상품 1</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="cate_1depth">
+                            <button type="button" class="cate_1depth_btn">
+                                <span>여가/생활편의</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                    <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </button>
+                            <div class="cate_2depth_wrap">
+                                <div class="cate_2depth">
+                                    <button type="button" class="cate_2depth_btn">
+                                        <h4>여가/생활편의 상품</h4>
+                                    </button>
+                                    <ul class="cate_3depth">
+                                        <li><a href="">여가/생활편의 상품 1</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="cate_1depth">
+                            <button type="button" class="cate_1depth_btn">
+                                <span>전체상품</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                    <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </button>
+                            <div class="cate_2depth_wrap">
+                                <div class="cate_2depth">
+                                    <button type="button" class="cate_2depth_btn">
+                                        <h4>전체상품 상품</h4>
+                                    </button>
+                                    <ul class="cate_3depth">
+                                        <li><a href="">전체상품 상품 1</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="cate_1depth">
+                            <button type="button" class="cate_1depth_btn">
+                                <span>출산/육아</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                    <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </button>
+                            <div class="cate_2depth_wrap">
+                                <div class="cate_2depth">
+                                    <button type="button" class="cate_2depth_btn">
+                                        <h4>출산/육아 상품</h4>
+                                    </button>
+                                    <ul class="cate_3depth">
+                                        <li><a href="">출산/육아 상품 1</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -2529,7 +3206,7 @@
                     </button>
                 </li>
                 <li>
-                    <button type="button">
+                    <button type="button" class="search">
                         <div class="icon">
                             <svg xmlns="http://www.w3.org/2000/svg" width="54" height="54" viewBox="0 0 54 54" fill="none">
                                 <path d="M11.0078 24.6595C11.0078 26.4533 11.3609 28.2296 12.047 29.8868C12.7331 31.5441 13.7387 33.0499 15.0064 34.3183C16.2741 35.5867 17.7791 36.5928 19.4355 37.2793C21.0918 37.9658 22.8671 38.3191 24.6599 38.3191C26.4527 38.3191 28.228 37.9658 29.8844 37.2793C31.5407 36.5928 33.0457 35.5867 34.3134 34.3183C35.5811 33.0499 36.5868 31.5441 37.2728 29.8868C37.9589 28.2296 38.312 26.4533 38.312 24.6595C38.312 22.8657 37.9589 21.0895 37.2728 19.4323C36.5868 17.775 35.5811 16.2692 34.3134 15.0008C33.0457 13.7324 31.5407 12.7262 29.8844 12.0398C28.228 11.3533 26.4527 11 24.6599 11C22.8671 11 21.0918 11.3533 19.4355 12.0398C17.7791 12.7262 16.2741 13.7324 15.0064 15.0008C13.7387 16.2692 12.7331 17.775 12.047 19.4323C11.3609 21.0895 11.0078 22.8657 11.0078 24.6595Z" stroke="#80838A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>

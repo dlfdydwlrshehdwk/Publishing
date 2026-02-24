@@ -55,6 +55,11 @@ body.over_hidden {
     display: none !important;
 }
 
+/* 2안 사용 시: top_banner 깜빡임 방지 */
+html.top-banner-hidden .top_banner {
+    display: none !important;
+}
+
 @media (max-width: 767px) {
     .content_box {
         padding: 0 15px;

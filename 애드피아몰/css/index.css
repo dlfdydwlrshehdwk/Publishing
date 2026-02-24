@@ -148,13 +148,34 @@ main .best_product_cont {
     background-color: #f4f5f7;
     padding: 3px 8px;
     display: flex;
-    gap: 11px;
     align-items: center;
     font-weight: 500;
     font-size: 14px;
     line-height: 1.5;
     letter-spacing: -0.42px;
     color: rgba(0, 0, 0, 0.7);
+}
+
+.service_banner .intro .tel svg {
+}
+.service_banner .intro .tel span {
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 1.5;
+    letter-spacing: -0.42px;
+    color: rgba(0, 0, 0, 0.7);
+}
+.service_banner .intro .tel span::before {
+    content: '';
+    display: block;
+    content: '';
+    width: 1px;
+    height: 10px;
+    background-color: rgba(0, 0, 0, 0.1);
+    margin-left: 4px;
+    margin-right: 7px;
 }
 
 .service_banner .service_list {
@@ -186,8 +207,8 @@ main .best_product_cont {
 .service_banner .service_list li:hover {
     background-color: #edf1fa;
 }
-.service_banner .service_list .li:hover p{
-    color: var(--primary);
+.service_banner .service_list li:hover p{
+    color: var(--signage-color);
 }
 /* service_banner E */
 
@@ -462,10 +483,11 @@ main .best_product_cont {
     }
 
     .main_banner .swiper-slide {
-        width: 1280px;
-        height: 480px;
-        border-radius: 22px;
+        width: 100%;
+        height: auto;
+        border-radius: 0;
         overflow: hidden;
+        aspect-ratio: 720/690;
     }
 
     .main_banner .swiper-slide img {

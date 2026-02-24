@@ -1,3 +1,24 @@
+// 브레이크포인트 상수
+const BREAKPOINT_DESKTOP = 1024;
+
+// top banner 24시간 미노출
+// (function() {
+//     const STORAGE_KEY = 'topBannerClosed';
+//     const EXPIRE_TIME = 24 * 60 * 60 * 1000;
+//     const closedData = localStorage.getItem(STORAGE_KEY);
+
+//     if (closedData) {
+//         const { timestamp } = JSON.parse(closedData);
+//         const now = new Date().getTime();
+
+//         if (now - timestamp < EXPIRE_TIME) {
+//             document.documentElement.classList.add('top-banner-hidden');
+//         } else {
+//             localStorage.removeItem(STORAGE_KEY);
+//         }
+//     }
+// })();
+
 document.addEventListener('DOMContentLoaded', function(){
     initSwiper();
     initFamilySite();
@@ -6,6 +27,9 @@ document.addEventListener('DOMContentLoaded', function(){
     initGnbMenu();
     initCategoryTabs();
     initAside();
+    initTopBanner();
+    initServiceSwitchToggle();
+    // initSearch();
 })
 
 function initFamilySite() {
@@ -217,6 +241,12 @@ function initServiceSwitch() {
             const currentCate = nowCate?.value ?? 'signage';
             const gnbLists = document.querySelectorAll('.gnb_list');
 
+            // 모바일에서 service_switch의 active 제거
+            const serviceSwitch = document.querySelector('.service_switch');
+            if (window.innerWidth < BREAKPOINT_DESKTOP && serviceSwitch) {
+                serviceSwitch.classList.remove('active');
+            }
+
             // 기존과 다른 카테고리로 변경하는 경우만 초기화
             if (currentCate !== cate) {
                 resetAllMenus();
@@ -242,6 +272,27 @@ function initServiceSwitch() {
             if (header) {
                 header.classList.remove('signage', 'gift', 'utong');
                 header.classList.add(cate);
+            }
+
+            // aside_category의 cate_list에도 active 추가
+            const cateLists = document.querySelectorAll('.aside_category .cate_list');
+            cateLists.forEach(list => list.classList.remove('active'));
+
+            const targetCateList = document.querySelector(`.aside_category .cate_list[data-cate="${cate}"]`);
+            if (targetCateList) {
+                targetCateList.classList.add('active');
+            }
+
+            // btn_service_switch의 type에도 active 추가
+            const btnServiceSwitch = document.querySelector('.btn_service_switch');
+            if (btnServiceSwitch) {
+                const types = btnServiceSwitch.querySelectorAll('div[class^="type_"]');
+                types.forEach(type => type.classList.remove('active'));
+
+                const targetType = btnServiceSwitch.querySelector(`.type_${cate}`);
+                if (targetType) {
+                    targetType.classList.add('active');
+                }
             }
         });
     });
@@ -292,7 +343,6 @@ function initAside() {
     const closeBtn = aside?.querySelector('.aside_close');
     if (!aside || !closeBtn) return;
 
-    const ASIDE_BREAKPOINT = 1024;
     let savedScrollY = 0;
 
     function openAside() {
@@ -354,7 +404,7 @@ function initAside() {
     });
 
     window.addEventListener('resize', function() {
-        if (window.innerWidth >= ASIDE_BREAKPOINT && aside.classList.contains('on')) {
+        if (window.innerWidth >= BREAKPOINT_DESKTOP && aside.classList.contains('on')) {
             aside.classList.remove('on');
             document.body.classList.remove('over_hidden');
             document.body.style.top = '';
@@ -382,10 +432,10 @@ function initSwiper() {
         },
         breakpoints: {
             0: {
-
+                spaceBetween: 0,
             },
             768: {
-
+                spaceBetween: 30,
             }
         }
     })
@@ -440,6 +490,105 @@ function initSwiper() {
                     slidesOffsetAfter: 0,
                 }
             }
+        });
+    });
+}
+
+function initTopBanner() {
+    const topBanner = document.querySelector('.top_banner');
+    const closeBtn = document.querySelector('.top_banner_close');
+
+    if (!topBanner || !closeBtn) return;
+
+    // 1안: 단순 닫기 (페이지 새로고침하면 다시 나타남)
+    closeBtn.addEventListener('click', function() {
+        topBanner.classList.add('dn');
+    });
+
+    // 2안: localStorage 사용 (24시간 동안 미노출)
+    // const STORAGE_KEY = 'topBannerClosed';
+
+    // closeBtn.addEventListener('click', function() {
+    //     topBanner.classList.add('dn');
+    //     document.documentElement.classList.add('top-banner-hidden');
+
+    //     const data = {
+    //         timestamp: new Date().getTime()
+    //     };
+    //     localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    // });
+}
+
+function initServiceSwitchToggle() {
+    const btnServiceSwitch = document.querySelector('.btn_service_switch');
+    const serviceSwitch = document.querySelector('.service_switch');
+    const dim = document.querySelector('.service_switch .dim');
+
+    if (!btnServiceSwitch || !serviceSwitch) return;
+
+    // 버튼 클릭 시 active 토글
+    btnServiceSwitch.addEventListener('click', function() {
+        serviceSwitch.classList.toggle('active');
+    });
+
+    // dim 클릭 시 active 제거
+    if (dim) {
+        dim.addEventListener('click', function() {
+            serviceSwitch.classList.remove('active');
+        });
+    }
+
+    // resize 시 desktop 사이즈에서 active 제거
+    window.addEventListener('resize', function() {
+        if (window.innerWidth >= BREAKPOINT_DESKTOP && serviceSwitch.classList.contains('active')) {
+            serviceSwitch.classList.remove('active');
+        }
+    });
+}
+
+function initSearch() {
+    const searchBtns = document.querySelectorAll('button.search');
+    const searchArea = document.querySelector('.search_area');
+
+    if (!searchBtns.length || !searchArea) return;
+
+    // 검색 버튼들 클릭 시 active 토글 및 메뉴 닫기
+    searchBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            searchArea.classList.toggle('active');
+
+            // 메뉴들 모두 닫기
+            resetAllMenus();
+        });
+    });
+
+    // header 영역 밖 클릭 시 active 제거
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('header') && !e.target.closest('button.search')) {
+            searchArea.classList.remove('active');
+        }
+    });
+
+    // 햄버거, gnb, category 클릭 시 active 제거
+    const ham = document.querySelector('.ham');
+    const gnbLinks = document.querySelectorAll('.gnb_list a');
+    const categories = document.querySelectorAll('.menu_wrap .category');
+
+    if (ham) {
+        ham.addEventListener('click', function() {
+            searchArea.classList.remove('active');
+        });
+    }
+
+    gnbLinks.forEach(link => {
+        link.addEventListener('click', function() {
+            searchArea.classList.remove('active');
+        });
+    });
+
+    categories.forEach(cat => {
+        cat.addEventListener('click', function() {
+            searchArea.classList.remove('active');
         });
     });
 }
