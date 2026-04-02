@@ -268,41 +268,44 @@
 
 
     <style>
-        .tab_260326 {}
-        .tab_260326 li > a {
+        .event_260326 .tab_260326 {}
+        .event_260326 .tab_260326 li > a {
             position: relative;
         }
-        .tab_260326 img.default {}
-        .tab_260326 img.active {
+        .event_260326 .tab_260326 img.default {}
+        .event_260326 .tab_260326 img.active {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             opacity: 0;
         }
-        .tab_260326 img.active.on {
+        .event_260326 .tab_260326 ul {
+            display: flex;
+        }
+        .event_260326 .tab_260326 ul > li.active img.active {
             opacity: 1;
         }
     </style>
-    <div class="naos_event_cont event_260326">
+    <div class="naos_event_cont event_260401">
         <div><img src="/img/event/260326/1.png" alt="이미지" class="fr-fic fr-dii"></div>
 
-        <div class="tab_260326">
+        <div class="tab_260401">
             <ul>
                 <li class="active">
-                    <a href="#cont260326-1">
+                    <a href="#cont260401-1">
                         <img src="/img/event/260326/2-1-default.png" class="default" alt="">
                         <img src="/img/event/260326/2-1-active.png" class="active" alt="">
                     </a>
                 </li>
                 <li>
-                    <a href="#cont260326-2">
+                    <a href="#cont260401-2">
                         <img src="/img/event/260326/2-2-default.png" class="default" alt="">
                         <img src="/img/event/260326/2-2-active.png" class="active" alt="">
                     </a>
                 </li>
                 <li>
-                    <a href="#cont260326-3">
+                    <a href="#cont260401-3">
                         <img src="/img/event/260326/2-3-default.png" class="default" alt="">
                         <img src="/img/event/260326/2-3-active.png" class="active" alt="">
                     </a>
@@ -310,31 +313,36 @@
             </ul>
         </div>
 
-        <div><img src="/img/event/260326/2.png" alt="이미지" class="fr-fic fr-dii"></div>
+        <div id="cont260401-1"><img src="/img/event/260326/2.png" alt="이미지" class="fr-fic fr-dii"></div>
 
-        <div class="slide_260326" style="position: relative;">
-            <div class="swiper_wrap_260326">
+        <div class="slide_260401" style="position: relative;">
+            <div class="swiper_wrap_260401">
                 <div class="swiper">
                     <div class="swiper-wrapper">
                         <div class="swiper-slide">
-                            <a class="link" href="https://naosmall.kr/product/category/1048"><img src="/img/event/260326/4-1.png" alt="이미지" class="fr-fic fr-dii"></a></div>
-                        <div class="swiper-slide">
-                            <a class="link" href="https://naosmall.kr/product/category/1358"><img src="/img/event/260326/4-2.png" alt="이미지" class="fr-fic fr-dii"></a></div>
-                        <div class="swiper-slide">
-                            <a class="link" href="https://naosmall.kr/product/category/1127"><img src="/img/event/260326/4-3.png" alt="이미지" class="fr-fic fr-dii"></a></div>
+                            <a class="link" href="https://naosmall.kr/product/category/1048"><img src="/img/event/260326/4-1.png" alt="이미지" class="fr-fic fr-dii"></a>
                         </div>
-                    <div class="swiper-button-next"></div>
-                    <div class="swiper-button-prev"></div>
+                        <div class="swiper-slide">
+                            <a class="link" href="https://naosmall.kr/product/category/1358"><img src="/img/event/260326/4-2.png" alt="이미지" class="fr-fic fr-dii"></a>
+                        </div>
+                        <div class="swiper-slide">
+                            <a class="link" href="https://naosmall.kr/product/category/1127"><img src="/img/event/260326/4-3.png" alt="이미지" class="fr-fic fr-dii"></a>
+                        </div>
+                    </div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
                 </div>
             </div>
-            <div class="bg"><img src="/img/event/260326/3.png" alt="배경이미지" class="fr-fic fr-dii"></div>
+            <div class="bg">
+                <img src="/img/event/260326/3.png" alt="배경이미지" class="fr-fic fr-dii">
+            </div>
         </div>
 
         <button id="toggle_260326"><img src="/img/event/260326/5-1.png" alt="이미지" class="fr-fic fr-dii"></button>
         <div data-toggle="toggle_260326" class="dis-no"><img src="/img/event/260326/5-2.png" alt="이미지" class="fr-fic fr-dii"></div>
 
-        <div><img src="/img/event/260326/6.png" alt="이미지" class="fr-fic fr-dii"></div>
-        <div><img src="/img/event/260326/7.png" alt="이미지" class="fr-fic fr-dii"></div>
+        <div id="cont260401-2"><img src="/img/event/260326/6.png" alt="이미지" class="fr-fic fr-dii"></div>
+        <div id="cont260401-3"><img src="/img/event/260326/7.png" alt="이미지" class="fr-fic fr-dii"></div>
         <a href="https://naosmall.kr/member/join.html"><img src="/img/event/260326/8.png" alt="" class="fr-fic fr-dii"></a>
         <div><img src="/img/event/260326/9.png" alt="이미지" class="fr-fic fr-dii"></div>
         <div><img src="/img/event/260326/10.png" alt="이미지" class="fr-fic fr-dii"></div>
@@ -342,9 +350,6 @@
 
 
     </div>
-
-
-
 
     <script>
         // 스크롤 기반 탭 기능
@@ -443,6 +448,11 @@
         setDailyCoupon();
 
 
+
+    </script>
+
+    <!-- 20260326 -->
+    <script>
         // event_260316 토글 기능
         const toggleBtn260316 = document.querySelector('.event_260316 button[type="button"]');
         const toggleTarget260316 = document.querySelector('.toggle_target_1');
